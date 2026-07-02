@@ -1,0 +1,119 @@
+<!-- 文件：code/ch10/index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>纯 JS 待办清单</title>
+    <style>
+      :root {
+        --border: #d0d7de;
+        --muted: #6e7781;
+        --accent: #2563eb;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        max-width: 480px;
+        margin: 40px auto;
+        padding: 0 16px;
+        color: #1f2328;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .add-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      #new-todo {
+        flex: 1;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 15px;
+      }
+      button {
+        cursor: pointer;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #fff;
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+      #add-btn {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .filters {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        margin-bottom: 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .filters button.active {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      #count {
+        margin-left: auto;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 4px;
+        border-bottom: 1px solid var(--border);
+      }
+      li .text {
+        flex: 1;
+        cursor: pointer;
+      }
+      li.done .text {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+      .del-btn {
+        color: #cf222e;
+        border-color: transparent;
+        padding: 4px 8px;
+      }
+      .empty {
+        color: var(--muted);
+        text-align: center;
+        padding: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>我的待办清单</h1>
+
+    <div class="add-row">
+      <input id="new-todo" type="text" placeholder="今天要做点什么？" autocomplete="off" />
+      <button id="add-btn">添加</button>
+    </div>
+
+    <div class="filters">
+      <button data-filter="all" class="active">全部</button>
+      <button data-filter="active">未完成</button>
+      <button data-filter="done">已完成</button>
+      <span id="count"></span>
+    </div>
+
+    <ul id="todo-list"></ul>
+
+    <!-- defer 确保脚本在 DOM 解析完成后才执行，同时不阻塞页面渲染 -->
+    <script src="app.js" defer></script>
+  </body>
+</html>

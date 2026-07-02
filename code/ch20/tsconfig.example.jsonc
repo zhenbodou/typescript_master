@@ -1,0 +1,67 @@
+// 文件：code/ch20/tsconfig.example.jsonc
+// 这是一份「讲解用」的示例配置，带注释说明每个选项的含义。
+// 它是 .jsonc（JSON with Comments），不会被本书主 tsconfig 的 include 收录。
+// 你可以把它当成新项目 tsconfig.json 的起点（去掉注释、按需增删）。
+{
+  // extends：继承另一份配置，自己只写「差异项」。
+  // 实际项目常写成 "extends": "@tsconfig/node20/tsconfig.json"（社区维护的基线）。
+  // "extends": "../tsconfig.base.json",
+
+  "compilerOptions": {
+    /* ---------- 输出：目标、模块、路径 ---------- */
+    "target": "ES2022",           // 编译到哪个 JS 版本（决定语法降级程度）
+    "module": "ESNext",           // 生成哪种模块格式（import/export vs require）
+    "moduleResolution": "Bundler",// 模块解析策略：node / nodenext / bundler
+    "lib": ["ES2022"],            // 允许使用的内置 API 类型（如加 "DOM" 才有 window）
+    "outDir": "./dist",           // 编译产物输出目录
+    "rootDir": "./src",           // 源码根目录（决定 outDir 里的目录结构）
+    "declaration": true,          // 顺便生成 .d.ts（发布库时必开）
+    "sourceMap": true,            // 生成 .map，方便在浏览器/调试器里看原始 TS
+
+    /* ---------- 严格性 ---------- */
+    "strict": true,               // 一键打开一整组严格检查（强烈建议开）
+    // strict 打开后，下面这些子项默认就是 true，这里只是列出来给你认识：
+    // "noImplicitAny": true,        // 不允许「隐式 any」
+    // "strictNullChecks": true,     // null/undefined 必须显式处理
+    // "strictFunctionTypes": true,  // 函数参数按逆变更严格地检查
+    // "strictBindCallApply": true,  // bind/call/apply 参数类型检查
+    // "strictPropertyInitialization": true, // 类字段必须初始化
+    // "alwaysStrict": true,         // 输出 "use strict"
+    "noUncheckedIndexedAccess": true,   // arr[i] / obj[key] 结果带上 | undefined
+    "exactOptionalPropertyTypes": true, // 区分「没有该属性」与「属性值是 undefined」
+
+    /* ---------- 额外检查（strict 之外，需单独开） ---------- */
+    "noUnusedLocals": true,           // 未使用的局部变量报错
+    "noUnusedParameters": true,       // 未使用的参数报错（用 _ 前缀可豁免）
+    "noImplicitReturns": true,        // 函数有的分支 return、有的不 return 时报错
+    "noFallthroughCasesInSwitch": true, // switch case 漏写 break 时报错
+
+    /* ---------- 互操作 & JS ---------- */
+    "esModuleInterop": true,      // 让 import x from "cjs-mod" 这种默认导入好用
+    "allowJs": true,              // 允许编译 .js（与 TS 混编、渐进迁移时开）
+    "checkJs": false,             // 顺带对 .js 做类型检查（配合 JSDoc）
+    "resolveJsonModule": true,    // 允许 import data from "./x.json"
+    "skipLibCheck": true,         // 跳过对 .d.ts 的检查（大幅加速、避开第三方类型冲突）
+    "isolatedModules": true,      // 保证每个文件能被单独转译（tsx/esbuild/swc 需要）
+    "verbatimModuleSyntax": true, // import/export 原样保留，类型导入必须写 type
+    "forceConsistentCasingInFileNames": true, // 文件名大小写必须一致
+
+    /* ---------- 类型来源 ---------- */
+    // "types": ["node"],         // 只加载这些全局类型包（不写=自动加载全部 @types）
+    // "typeRoots": ["./node_modules/@types", "./typings"], // 去哪些目录找类型包
+
+    /* ---------- 路径别名 ---------- */
+    "baseUrl": ".",               // 非相对 import 的解析基准目录
+    "paths": {                    // 路径别名（需配合打包器/tsx 的等价配置）
+      "@/*": ["src/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+
+    "noEmit": false               // 是否只检查不产出（本书主 tsconfig 用 true）
+  },
+
+  // include / exclude / files：决定「编译哪些文件」。
+  "include": ["src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "dist"]
+  // "files": ["src/index.ts"]   // 精确列出少量入口文件（与 include 二选一即可）
+}

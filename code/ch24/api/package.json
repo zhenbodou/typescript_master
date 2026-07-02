@@ -1,0 +1,17 @@
+{
+  "name": "ch24-task-api",
+  "version": "1.0.0",
+  "description": "第 24 章 · 给任务 API 接数据库（node:sqlite 持久化 + 类型化配置）",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo:sqlite": "tsx scripts/demo-sqlite.ts",
+    "demo:config": "tsx scripts/demo-config.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

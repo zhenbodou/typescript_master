@@ -1,0 +1,14 @@
+# 文件：code/ch25/.dockerignore
+# 这些不要拷进构建上下文：减小上下文体积、加快构建、避免把本机产物/密钥带进镜像。
+
+node_modules
+dist
+npm-debug.log*
+.git
+.gitignore
+.env
+.env.*
+*.md
+coverage
+.DS_Store
+.vscode

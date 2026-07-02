@@ -1,0 +1,8 @@
+# 依赖与构建产物不需要格式化
+node_modules
+dist
+coverage
+
+# 锁文件由包管理器维护
+package-lock.json
+pnpm-lock.yaml

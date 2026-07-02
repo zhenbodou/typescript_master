@@ -1,0 +1,20 @@
+{
+  "//": "本章使用 TS5 标准装饰器（Stage 3）。父级 code/tsconfig.json 开了 experimentalDecorators（旧实验装饰器），所以本目录用一份独立配置关掉它，让 tsx 走标准装饰器。运行方式见 ch19.md：进入本目录 `cd ch19` 后 `npx tsx 文件.ts`，或从 code/ 下 `npx tsx --tsconfig ch19/tsconfig.json ch19/文件.ts`。",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": false,
+    "emitDecoratorMetadata": false,
+    "noEmit": true
+  },
+  "include": ["**/*.ts"]
+}

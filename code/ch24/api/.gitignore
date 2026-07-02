@@ -1,0 +1,10 @@
+# 文件：code/ch24/api/.gitignore
+# 敏感配置与数据库文件不入库。
+.env
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+data/*.json
+
+node_modules/

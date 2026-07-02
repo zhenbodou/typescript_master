@@ -1,0 +1,39 @@
+// 文件：code/ch25/launch.json
+// 放到项目的 .vscode/launch.json 即可用 VS Code 调试。这里作为示例单独保存。
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // 配置一：用 tsx 直接跑 TS 源码，可在 .ts 文件上打断点（推荐日常调试）。
+      "name": "Debug: graceful-shutdown (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx", "${workspaceFolder}/code/ch25/graceful-shutdown.ts"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "PORT": "3000",
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      // 配置二：调试已编译的 JS，并借助 source map 在原始 TS 上断点。
+      "name": "Debug: compiled dist (source map)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/dist/graceful-shutdown.js",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      // 配置三：附加（attach）到一个已用 node --inspect 启动的进程。
+      "name": "Attach: node --inspect",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+# 保留空的 data 目录（数据库/JSON 文件运行时生成，被 .gitignore 忽略）

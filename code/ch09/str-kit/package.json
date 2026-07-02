@@ -1,0 +1,21 @@
+{
+  "name": "str-kit",
+  "version": "1.0.0",
+  "description": "几个常用的字符串小工具：capitalize / slugify / truncate。",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "demo": "node usage.js"
+  },
+  "keywords": ["string", "slugify", "capitalize", "truncate", "utils"],
+  "author": "你的名字 <you@example.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,27 @@
+[book]
+title = "JavaScript & TypeScript 从入门到精通"
+authors = ["Master Book"]
+description = "一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。"
+language = "zh-CN"
+src = "src"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/zhenbodou/typescript_master"
+edit-url-template = "https://github.com/zhenbodou/typescript_master/edit/main/{path}"
+no-section-label = false
+mathjax-support = false
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.playground]
+editable = false
+copyable = true
+
+[output.html.search]
+enable = true
+limit-results = 30
+use-boolean-and = true

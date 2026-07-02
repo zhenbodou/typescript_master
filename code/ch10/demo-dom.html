@@ -1,0 +1,46 @@
+<!-- 文件：code/ch10/demo-dom.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DOM 与事件小实验</title>
+  </head>
+  <body>
+    <h1 id="title">Hello DOM</h1>
+    <p class="note">这是一段说明文字。</p>
+    <ul id="fruits">
+      <li>苹果</li>
+      <li>香蕉</li>
+    </ul>
+    <button id="btn">点我</button>
+
+    <script>
+      // 查询
+      const title = document.getElementById("title");
+      const note = document.querySelector(".note");
+      const items = document.querySelectorAll("#fruits li");
+
+      console.log(title.textContent); // "Hello DOM"
+      console.log(items.length); // 2
+
+      // 读写内容
+      title.textContent = "内容被 JS 改了";
+
+      // 读写属性 / class / style
+      note.setAttribute("data-role", "hint");
+      note.classList.add("highlight");
+      note.style.color = "crimson";
+
+      // 创建并插入节点
+      const li = document.createElement("li");
+      li.textContent = "橙子";
+      document.getElementById("fruits").appendChild(li);
+
+      // 事件
+      document.getElementById("btn").addEventListener("click", (event) => {
+        console.log("按钮被点了！", event.type);
+        event.currentTarget.textContent = "已点击";
+      });
+    </script>
+  </body>
+</html>

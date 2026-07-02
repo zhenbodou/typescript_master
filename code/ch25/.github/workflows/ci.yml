@@ -1,0 +1,41 @@
+# 文件：code/ch25/.github/workflows/ci.yml
+# 最小 CI：每次 push / PR 都跑 类型检查 + 测试 + 构建。
+# 任一步失败，工作流即失败，PR 上会显示红叉。
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1) 把仓库代码检出到 runner。
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2) 安装 Node，并开启 npm 依赖缓存以加速。
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # 3) 用 lockfile 精确安装依赖（比 npm install 更可复现）。
+      - name: Install deps
+        run: npm ci
+
+      # 4) 类型检查：只查类型不产出文件。
+      - name: Typecheck
+        run: npm run typecheck
+
+      # 5) 跑测试。
+      - name: Test
+        run: npm test
+
+      # 6) 构建产物，确保能真正编译通过。
+      - name: Build
+        run: npm run build
