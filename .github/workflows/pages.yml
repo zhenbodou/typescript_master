@@ -7,9 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -31,18 +29,15 @@ jobs:
       - name: Build book
         run: mdbook build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: book
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          touch book/.nojekyll
+          git fetch origin gh-pages
+          git worktree add gh-pages-worktree origin/gh-pages
+          find gh-pages-worktree -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R book/. gh-pages-worktree/
+          git -C gh-pages-worktree add -A
+          git -C gh-pages-worktree commit -m "Deploy mdBook site" || exit 0
+          git -C gh-pages-worktree push origin HEAD:gh-pages
