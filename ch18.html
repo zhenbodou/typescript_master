@@ -1,0 +1,1095 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 18 章 · 类型收窄、类型守卫与断言 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch18.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-18-章--类型收窄类型守卫与断言"><a class="header" href="#第-18-章--类型收窄类型守卫与断言">第 18 章 · 类型收窄、类型守卫与断言</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>到目前为止，你已经会用<strong>联合类型（union type）</strong> <code>A | B</code> 来表达“这个值可能是好几种类型之一“，也见过 <code>unknown</code> 这个“安全的任意类型“。但很快你会发现一个尴尬的处境：<strong>一个 <code>number | string</code> 类型的变量，你既不能对它调用 <code>.toFixed()</code>（那是 <code>number</code> 的方法），也不能调用 <code>.toUpperCase()</code>（那是 <code>string</code> 的方法）。</strong> 因为在那一刻，TypeScript 并不知道它究竟是哪一种，只好把两边都不允许，免得你出错。</p>
+<p>要安全地使用它，你必须先做一件事——<strong>类型收窄（narrowing）</strong>：通过某种检查，把“宽“的联合类型缩小到“窄“的具体类型，让 TypeScript 确信“在这段代码里，它一定是 <code>number</code>“。这一章就是关于收窄的方方面面。</p>
+<p>学完本章，你将能够：</p>
+<ul>
+<li>说清楚<strong>为什么需要收窄</strong>：联合类型、<code>unknown</code> 必须先收窄才能安全使用。</li>
+<li>熟练运用各种收窄手段：<code>typeof</code>、<code>instanceof</code>、<code>in</code>、真值收窄、相等收窄、<strong>可辨识联合（discriminated union）</strong> 的 <code>switch</code>。</li>
+<li>理解 TypeScript 的<strong>控制流分析（control flow analysis, CFA）</strong> 是怎么“跟着代码走“推算类型的。</li>
+<li>编写<strong>用户自定义类型守卫（user-defined type guard）</strong>，即返回值为 <code>x is T</code> 的**类型谓词（type predicate）**函数：<code>isString</code>、<code>isUser</code>……</li>
+<li>编写<strong>断言函数（assertion function）</strong>：<code>asserts condition</code> 与 <code>asserts x is T</code>。</li>
+<li>用好各种<strong>类型断言（type assertion）</strong>：<code>as</code>、<code>as const</code>、非空断言 <code>!</code>、双重断言 <code>as unknown as T</code>，并牢记它们的危险。</li>
+<li>分清 <code>unknown</code> 与 <code>any</code>，掌握 <code>never</code> 的用途（穷尽检查、不可能分支）。</li>
+<li>让可选链 <code>?.</code>、空值合并 <code>??</code> 与收窄默契配合。</li>
+<li>认清<strong>运行时校验与类型之间的鸿沟</strong>：TS 类型在运行时不存在，外部数据（JSON / 网络）必须做运行时校验。你将<strong>亲手写一个迷你版 zod</strong>，让运行时校验与编译期类型联动。</li>
+</ul>
+<p>本章代码用 <code>npx tsx</code> 运行，例如 <code>npx tsx ch18/01-why-narrowing.ts</code>。</p>
+<p>📌 <strong>一句话记住收窄</strong>：收窄就是**“用运行时能做的检查（<code>typeof</code>、<code>in</code>、<code>instanceof</code>……），换取编译期更精确的类型”**。你在代码里做了一次判断，TypeScript 就顺着这次判断，把变量的类型“变窄“。</p>
+<hr>
+<h2 id="为什么需要收窄联合类型的两难"><a class="header" href="#为什么需要收窄联合类型的两难">为什么需要收窄：联合类型的两难</a></h2>
+<p>先把开头那个“两难“的处境用代码坐实。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/01-why-narrowing.ts
+
+// 一个联合类型的参数：id 可能是数字，也可能是字符串。
+function formatId(id: number | string): string {
+  // 此时 id 的类型是 number | string，
+  // 直接调用 .toFixed()（只有 number 有）会报错，
+  // 直接调用 .toUpperCase()（只有 string 有）也会报错。
+  // id.toFixed(2);    // ❌ 报错：string 上没有 toFixed
+  // id.toUpperCase(); // ❌ 报错：number 上没有 toUpperCase
+
+  // 必须先「收窄」到某一个具体类型，才能安全使用它专属的方法。
+  if (typeof id === "number") {
+    // 这个分支里，TS 知道 id 一定是 number
+    return `#${id.toFixed(0)}`;
+  } else {
+    // 排除了 number，剩下只能是 string
+    return `#${id.toUpperCase()}`;
+  }
+}
+
+console.log(formatId(42)); // #42
+console.log(formatId("abc")); // #ABC
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>参数 <code>id</code> 类型是 <code>number | string</code>。在函数体最开始，TS 对 <code>id</code> 只允许你做“两种类型都支持“的操作。<code>.toFixed</code> 只有 <code>number</code> 有，<code>.toUpperCase</code> 只有 <code>string</code> 有，所以两个都被拦下——这不是 TS 在刁难你，而是在<strong>保护</strong>你：万一实参传的是字符串，你却调 <code>.toFixed()</code>，运行时就会崩。</li>
+<li><code>if (typeof id === "number")</code>：这是一次<strong>运行时检查</strong>。TS 看懂了这个检查的含义，于是在 <code>if</code> 的<strong>内部</strong>，把 <code>id</code> 的类型收窄为 <code>number</code>。此时 <code>id.toFixed(0)</code> 完全合法。</li>
+<li><code>else</code> 分支：既然进了 <code>else</code>，说明 <code>typeof id === "number"</code> 为假，那么在 <code>number | string</code> 里排除掉 <code>number</code>，<strong>剩下只能是 <code>string</code></strong>。TS 自动把 <code>id</code> 收窄为 <code>string</code>，<code>id.toUpperCase()</code> 合法。</li>
+</ul>
+<p>📌 <strong>收窄的本质</strong>：<code>if</code> 判断把一个类型“劈“成两半，每一半里变量的类型都比外面更精确。TS 会<strong>分别</strong>记住每个分支里的类型。</p>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/01-why-narrowing.ts
+</code></pre>
+<hr>
+<h2 id="收窄手段一typeofinstanceofin"><a class="header" href="#收窄手段一typeofinstanceofin">收窄手段（一）：typeof、instanceof、in</a></h2>
+<p>TS 认识好几种“运行时检查“的写法，看到它们就会自动收窄。先看最常用的三种。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/02-typeof-instanceof-in.ts
+
+// ---------- 1) typeof 收窄：适合原始类型 ----------
+function double(x: number | string): number | string {
+  if (typeof x === "number") {
+    return x * 2; // x: number
+  }
+  return x.repeat(2); // x: string
+}
+
+// typeof 能识别的字符串："string" | "number" | "bigint" | "boolean"
+// | "symbol" | "undefined" | "object" | "function"
+function describe(x: unknown): string {
+  if (typeof x === "string") return `字符串:${x}`;
+  if (typeof x === "number") return `数字:${x}`;
+  if (typeof x === "boolean") return `布尔:${x}`;
+  if (typeof x === "function") return `函数`;
+  return `其他:${String(x)}`;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>typeof x === "number"</code>：<code>typeof</code> 是 JavaScript 运行时就有的运算符，返回一个字符串。TS 专门认得这个模式，能据此收窄。<code>double</code> 里进入 <code>if</code> 后 <code>x: number</code>，剩下的自然是 <code>string</code>。</li>
+<li><code>describe</code> 展示 <code>typeof</code> 能返回的<strong>全部 8 种字符串</strong>。⚠️ 注意 <code>typeof null === "object"</code>（JavaScript 的历史遗留 bug），所以想判断“是不是对象且非 null“，光靠 <code>typeof x === "object"</code> 是不够的，还得额外 <code>x !== null</code>——这一点在后面校验库里会反复用到。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/02-typeof-instanceof-in.ts（续）
+
+// ---------- 2) instanceof 收窄：适合类 / 构造函数 ----------
+class Dog {
+  bark(): string {
+    return "汪";
+  }
+}
+class Cat {
+  meow(): string {
+    return "喵";
+  }
+}
+
+function speak(animal: Dog | Cat): string {
+  if (animal instanceof Dog) {
+    return animal.bark(); // animal: Dog
+  }
+  return animal.meow(); // animal: Cat
+}
+
+// instanceof 对内置类同样有效
+function toISO(x: Date | string): string {
+  if (x instanceof Date) {
+    return x.toISOString(); // x: Date
+  }
+  return x; // x: string
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>animal instanceof Dog</code>：<code>instanceof</code> 检查“某个对象是不是由某个构造函数（类）创建的“。适合区分<strong>类的实例</strong>。进入 <code>if</code> 后 <code>animal</code> 收窄为 <code>Dog</code>。</li>
+<li><code>x instanceof Date</code>：对内置类（<code>Date</code>、<code>Array</code>、<code>Map</code>、<code>RegExp</code> 等）同样有效。⚠️ <code>typeof</code> 只能区分原始类型，遇到对象一律返回 <code>"object"</code>，区分不了具体是哪个类——那正是 <code>instanceof</code> 的用武之地。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/02-typeof-instanceof-in.ts（续）
+
+// ---------- 3) in 收窄：靠「属性是否存在」区分对象 ----------
+type Fish = { swim: () =&gt; string };
+type Bird = { fly: () =&gt; string };
+
+function move(animal: Fish | Bird): string {
+  if ("swim" in animal) {
+    return animal.swim(); // animal: Fish
+  }
+  return animal.fly(); // animal: Bird
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>"swim" in animal</code>：<code>in</code> 运算符检查“对象上有没有某个属性“。当两个类型的**区别在于“有没有某个字段“**时，<code>in</code> 是最自然的收窄方式。<code>Fish</code> 有 <code>swim</code>，<code>Bird</code> 没有，所以 <code>"swim" in animal</code> 为真时收窄为 <code>Fish</code>。</li>
+<li>这类“用普通对象字面量类型（而非 <code>class</code>）“的场景，用不了 <code>instanceof</code>（<code>Fish</code> 不是一个构造函数），<code>in</code> 就成了首选。</li>
+</ul>
+<p>运行三种收窄：</p>
+<pre><code class="language-bash">npx tsx ch18/02-typeof-instanceof-in.ts
+</code></pre>
+<p>💡 <strong>怎么选</strong>：区分原始类型用 <code>typeof</code>；区分类的实例用 <code>instanceof</code>；区分“形状不同的普通对象“用 <code>in</code>（或后面讲的可辨识联合，更佳）。</p>
+<hr>
+<h2 id="收窄手段二真值收窄相等收窄与控制流分析"><a class="header" href="#收窄手段二真值收窄相等收窄与控制流分析">收窄手段（二）：真值收窄、相等收窄，与控制流分析</a></h2>
+<p>除了显式的 <code>typeof</code>/<code>instanceof</code>/<code>in</code>，TS 还认得更“隐式“的收窄。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/03-truthy-equality-cfa.ts
+
+// ---------- 1) 真值收窄（truthiness narrowing） ----------
+// 一个值可能是 string，也可能是 null / undefined。
+function greet(name: string | null | undefined): string {
+  // if (name) 会同时排除 null、undefined 以及空字符串 ""
+  if (name) {
+    return `你好, ${name.toUpperCase()}`; // name: string
+  }
+  return "你好, 陌生人";
+}
+
+// ⚠️ 真值收窄的陷阱：0、""、NaN 也是「假值」，会被一起排除
+function lengthOf(list: string[] | null): number {
+  if (list) {
+    return list.length; // list: string[]
+  }
+  return 0;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>if (name)</code>：把 <code>name</code> 放进条件里做“真假判断“，就是<strong>真值收窄</strong>。JavaScript 的“假值（falsy）“有：<code>false</code>、<code>0</code>、<code>""</code>、<code>null</code>、<code>undefined</code>、<code>NaN</code>。进入 <code>if</code> 说明 <code>name</code> 是真值，于是 <code>null</code> 和 <code>undefined</code> 都被排除，剩下 <code>string</code>。</li>
+<li>⚠️ <strong>陷阱</strong>：真值收窄会把<strong>空字符串 <code>""</code> 一起当假值排除</strong>！如果 <code>name</code> 传入 <code>""</code>，会走进 <code>else</code>。若你只想排除 <code>null</code>/<code>undefined</code> 而保留 <code>""</code>，就不能用真值收窄，得用下面的 <code>!= null</code>。</li>
+<li><code>lengthOf</code> 里 <code>list</code> 是 <code>string[] | null</code>，<code>if (list)</code> 排除 <code>null</code>（对象永远是真值），得到 <code>string[]</code>。这里没有 <code>""</code> 的问题，用真值收窄很安全。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/03-truthy-equality-cfa.ts（续）
+
+// ---------- 2) 相等收窄（equality narrowing） ----------
+function compare(a: string | number, b: string | boolean): void {
+  if (a === b) {
+    // 只有当两者相等时才可能进入——此时公共类型只能是 string
+    console.log(a.toUpperCase(), b.toUpperCase()); // a、b 都是 string
+  }
+}
+
+// 用 != null 一次排除 null 和 undefined
+function trim(s: string | null | undefined): string {
+  if (s != null) {
+    return s.trim(); // s: string
+  }
+  return "";
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>if (a === b)</code>：<code>a</code> 是 <code>string | number</code>，<code>b</code> 是 <code>string | boolean</code>。两者要相等，只可能在它们<strong>类型的交集</strong>上相等——<code>string | number</code> 和 <code>string | boolean</code> 的交集是 <code>string</code>。所以 <code>if</code> 内部 <code>a</code> 和 <code>b</code> 都被收窄为 <code>string</code>。这就是<strong>相等收窄</strong>。</li>
+<li><code>if (s != null)</code>：这里用的是<strong>宽松不等 <code>!=</code></strong>（不是 <code>!==</code>）。JavaScript 里 <code>null != undefined</code> 为假——也就是说 <code>!= null</code> 会<strong>同时</strong>把 <code>null</code> 和 <code>undefined</code> 都算作“等于 null“。所以这一个判断就排除了 <code>null</code> <strong>和</strong> <code>undefined</code>，只剩 <code>string</code>。这是排除空值的经典惯用法。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/03-truthy-equality-cfa.ts（续）
+
+// ---------- 3) 控制流分析（control flow analysis, CFA） ----------
+function cfa(input: string | number): string {
+  let out: string;
+  if (typeof input === "string") {
+    out = input; // 这里 input: string
+  } else {
+    out = input.toFixed(2); // 这里 input: number
+  }
+  // 两个分支都给 out 赋了 string，合流之后 out: string
+  return out;
+}
+
+// 提前 return 也会影响后续类型：这叫「收窄的持续生效」
+function afterReturn(x: string | null): string {
+  if (x === null) {
+    return "空";
+  }
+  // 上面 null 分支已经 return，走到这里 x 只可能是 string
+  return x.toLowerCase(); // x: string
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>这两个例子展示 TS 的<strong>控制流分析</strong>：编译器像“跟着程序执行一样“，逐行推算每个位置上每个变量的类型。它不是“整个函数里 <code>input</code> 是一个固定类型“，而是“在这一行、这个分支里，<code>input</code> 是什么类型“。</li>
+<li><code>afterReturn</code> 里，<code>if (x === null) return</code> 提前返回了。TS 明白：能走到 <code>if</code> <strong>之后</strong>的代码，一定意味着 <code>x !== null</code>。于是后面 <code>x</code> 被收窄为 <code>string</code>——<strong>尽管这里没有把后续代码包在 <code>else</code> 里</strong>。这种“提前 return 造成后续收窄“的模式叫<strong>早返回（early return）</strong>，是收窄配合 CFA 最常用、最清爽的写法。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/03-truthy-equality-cfa.ts
+</code></pre>
+<p>📌 <strong>CFA 心智模型</strong>：不要问“这个变量是什么类型“，要问“在<strong>这一行</strong>，这个变量是什么类型“。TS 的答案会随着你写的每一个 <code>if</code>、<code>return</code>、赋值而变化。</p>
+<hr>
+<h2 id="收窄手段三可辨识联合与-never-穷尽检查"><a class="header" href="#收窄手段三可辨识联合与-never-穷尽检查">收窄手段（三）：可辨识联合与 never 穷尽检查</a></h2>
+<p>这是收窄里最优雅、也最值得掌握的一招。你在前面章节见过联合类型，这里我们深入它的“可辨识“变体。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/04-discriminated-union.ts
+
+// 可辨识联合（discriminated union）：每个成员都带一个「公共字面量标签」字段。
+// 这里的公共字段是 kind，取值互不相同。
+type Circle = { kind: "circle"; radius: number };
+type Square = { kind: "square"; side: number };
+type Rectangle = { kind: "rectangle"; width: number; height: number };
+
+type Shape = Circle | Square | Rectangle;
+
+// never 的经典用途：穷尽检查（exhaustiveness check）
+function assertNever(x: never): never {
+  throw new Error(`未处理的分支: ${JSON.stringify(x)}`);
+}
+
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle":
+      // 这个分支里 shape 被收窄成 Circle
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.side ** 2;
+    case "rectangle":
+      return shape.width * shape.height;
+    default:
+      // 如果上面覆盖了所有成员，走到这里 shape 的类型就是 never。
+      return assertNever(shape);
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>可辨识联合</strong>的关键：每个成员都有一个<strong>公共字段</strong>（这里叫 <code>kind</code>），且它的类型是<strong>互不相同的字面量类型</strong>（<code>"circle"</code>、<code>"square"</code>、<code>"rectangle"</code>）。这个字段叫<strong>判别式（discriminant）</strong>。</li>
+<li><code>switch (shape.kind)</code>：TS 看到你在对判别式做 <code>switch</code>，就在每个 <code>case</code> 里把 <code>shape</code> 收窄为对应成员。<code>case "circle"</code> 里 <code>shape</code> 是 <code>Circle</code>，能安全访问 <code>.radius</code>；而 <code>.side</code>、<code>.width</code> 在这个分支里不可用。这比一堆 <code>in</code> 判断清爽得多。</li>
+<li><code>default</code> 分支里的 <code>assertNever(shape)</code> 是精髓所在。<strong>如果前面三个 <code>case</code> 已经覆盖了 <code>Shape</code> 的所有成员</strong>，那么走到 <code>default</code> 时，<code>shape</code> 的类型经过层层排除会变成 <code>never</code>（一个成员都不剩）。<code>assertNever</code> 的参数类型正是 <code>never</code>，所以这里能编译通过。</li>
+<li>现在设想：将来有人给 <code>Shape</code> 加了个 <code>Triangle</code> 成员，却忘了在 <code>switch</code> 里加 <code>case</code>。此时 <code>default</code> 里的 <code>shape</code> 就还剩 <code>Triangle</code>，<strong>不再是 <code>never</code></strong>，<code>assertNever(shape)</code> 会<strong>编译报错</strong>——编译器逼着你补上遗漏的分支。这就是 <strong><code>never</code> 穷尽检查（exhaustiveness check）</strong>：用类型系统保证“所有情况都处理到了“。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/04-discriminated-union.ts
+</code></pre>
+<p>💡 <strong>强烈推荐</strong>：任何“一个值有有限几种形态“的建模，都优先用可辨识联合 + <code>switch</code> + <code>assertNever</code>。它既让每个分支自动收窄，又在新增成员时给你编译期提醒，是 TS 里少数“越用越安心“的模式。</p>
+<hr>
+<h2 id="用户自定义类型守卫x-is-t-类型谓词"><a class="header" href="#用户自定义类型守卫x-is-t-类型谓词">用户自定义类型守卫：<code>x is T</code> 类型谓词</a></h2>
+<p>前面的收窄都靠内置运算符。但有时判断逻辑比较复杂（比如“这是不是一个合法的 User 对象“），你想把它抽成一个函数复用。问题来了：<strong>普通的返回 <code>boolean</code> 的函数，TS 不会用它来收窄。</strong></p>
+<pre><code class="language-typescript">// 文件：code/ch18/05-type-predicate.ts
+
+// 普通的布尔函数：TS 只知道它返回 boolean，不会用它来收窄类型。
+function isStringPlain(x: unknown): boolean {
+  return typeof x === "string";
+}
+
+// 类型守卫：返回值类型写成 `x is string`。
+// 当它返回 true 时，TS 就把实参收窄为 string。
+function isString(x: unknown): x is string {
+  return typeof x === "string";
+}
+
+function demo(value: unknown): void {
+  if (isStringPlain(value)) {
+    // ⚠️ value 仍然是 unknown，下面这行会报错（已注释）
+    // value.toUpperCase();
+    console.log("isStringPlain 判定为字符串，但类型没有收窄");
+  }
+
+  if (isString(value)) {
+    // ✅ 这里 value 被收窄为 string
+    console.log("收窄为 string:", value.toUpperCase());
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>isStringPlain</code> 返回 <code>boolean</code>。你在 <code>if (isStringPlain(value))</code> 里明明知道 <code>value</code> 是字符串了，但 TS <strong>不知道</strong>——它只看到“一个返回 <code>boolean</code> 的函数“，<code>value</code> 在 <code>if</code> 里仍是 <code>unknown</code>。</li>
+<li><code>isString</code> 的返回类型写成 <strong><code>x is string</code></strong>——这就是<strong>类型谓词（type predicate）</strong>。它的读法是：“如果这个函数返回 <code>true</code>，那么参数 <code>x</code> 就是 <code>string</code>。” TS 于是把 <code>isString</code> 当作一个<strong>收窄工具</strong>：<code>if (isString(value))</code> 内部，<code>value</code> 被收窄为 <code>string</code>。</li>
+<li>⚠️ <strong>责任在你</strong>：写 <code>x is string</code> 是你对编译器的<strong>承诺</strong>。TS <strong>不会验证</strong>你的函数体是否真的正确判断了！如果你写 <code>function isString(x: unknown): x is string { return true; }</code>，TS 会照单全收，然后运行时爆炸。类型守卫的函数体必须<strong>如实地</strong>检查它承诺的类型。</li>
+</ul>
+<p>再看给自定义对象写守卫，以及一个超实用的应用：用类型守卫过滤数组。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/05-type-predicate.ts（续）
+
+interface User {
+  id: number;
+  name: string;
+}
+
+function isUser(x: unknown): x is User {
+  // 注意：函数体里要真的把「所有必要条件」都检查到，
+  // 否则守卫在「撒谎」——运行时和类型会脱节。
+  return (
+    typeof x === "object" &amp;&amp;
+    x !== null &amp;&amp;
+    typeof (x as Record&lt;string, unknown&gt;).id === "number" &amp;&amp;
+    typeof (x as Record&lt;string, unknown&gt;).name === "string"
+  );
+}
+
+// filter + 类型守卫：把 (T | null)[] 过滤成 T[]
+function isNotNull&lt;T&gt;(x: T | null): x is T {
+  return x !== null;
+}
+
+const raw: (User | null)[] = [
+  { id: 1, name: "Alice" },
+  null,
+  { id: 2, name: "Bob" },
+];
+
+// 用了 isNotNull 后，users 精确地是 User[]。
+const users: User[] = raw.filter(isNotNull);
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>isUser</code> 逐条检查：是对象、非 <code>null</code>、<code>id</code> 是数字、<code>name</code> 是字符串。四个条件全满足才返回 <code>true</code>。注意这里用了 <code>x as Record&lt;string, unknown&gt;</code>——因为在 <code>typeof x === "object" &amp;&amp; x !== null</code> 之后，<code>x</code> 只是 <code>object</code>，TS 还不允许直接访问任意属性，需要用断言“打开“它来读字段（这是收窄链条中常见的小妥协）。</li>
+<li><code>isNotNull</code> 是个<strong>泛型类型守卫</strong>：<code>x is T</code> 里的 <code>T</code> 会随调用推断。它的妙用在最后一行。</li>
+<li><code>raw.filter(isNotNull)</code>：<code>Array.filter</code> 有一个特殊重载——如果传给它的回调是<strong>类型守卫</strong>，那么返回数组的类型会被收窄。这里 <code>raw</code> 是 <code>(User | null)[]</code>，用 <code>isNotNull</code> 过滤后，<code>users</code> 精确地是 <strong><code>User[]</code></strong>（<code>null</code> 被从类型里剔除了）。若换成普通 <code>raw.filter(x =&gt; x !== null)</code>，结果类型仍是 <code>(User | null)[]</code>，你还得再断言一次。<strong>这是类型守卫在日常代码里最高频的应用之一。</strong></li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/05-type-predicate.ts
+</code></pre>
+<hr>
+<h2 id="断言函数asserts-condition-与-asserts-x-is-t"><a class="header" href="#断言函数asserts-condition-与-asserts-x-is-t">断言函数：<code>asserts condition</code> 与 <code>asserts x is T</code></a></h2>
+<p>类型守卫是“返回布尔、交给你 <code>if</code> 分流“。但有时你想要的语义是“<strong>不满足就直接抛错</strong>，满足了就默认成立、往下走“。这就是<strong>断言函数（assertion function）</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/06-assertion-functions.ts
+
+// 形式一：asserts condition —— 断言「某个布尔条件成立」。
+function assert(condition: unknown, message: string): asserts condition {
+  if (!condition) {
+    throw new Error(message);
+  }
+}
+
+function useAssert(x: string | null): string {
+  assert(x !== null, "x 不应为 null");
+  // 上面这行之后，TS 知道 x !== null 恒成立 → x: string
+  return x.toUpperCase();
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>assert</code> 的返回类型写成 <strong><code>asserts condition</code></strong>（<code>condition</code> 是它的参数名）。含义是：“<strong>如果这个函数正常返回了（没抛错），那么 <code>condition</code> 一定为真。</strong>” 它自己返回 <code>void</code>，不返回布尔。</li>
+<li><code>assert(x !== null, ...)</code>：调用之后，TS 知道“既然没抛错，说明 <code>x !== null</code> 成立“，于是把 <code>x</code> 从 <code>string | null</code> 收窄为 <code>string</code>。<strong>不需要 <code>if</code></strong>——断言函数是“直接改变后续代码里的类型“。</li>
+<li>这与 Node.js 内置的 <code>assert</code> 模块、许多测试框架的断言用法完全一致，只是这里额外带上了类型收窄的能力。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/06-assertion-functions.ts（续）
+
+// 形式二：asserts x is T —— 断言「参数就是某个类型」。
+function assertIsString(x: unknown): asserts x is string {
+  if (typeof x !== "string") {
+    throw new Error(`期望 string，实际是 ${typeof x}`);
+  }
+}
+
+function useAssertIsString(input: unknown): number {
+  assertIsString(input);
+  // 断言之后 input: string
+  return input.length;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>asserts x is string</code>：这是断言函数的第二种形式。含义是：“<strong>如果正常返回，那么 <code>x</code> 就是 <code>string</code>。</strong>” 相比 <code>asserts condition</code>（断言一个布尔表达式），这个直接断言“参数的类型“。</li>
+<li><code>useAssertIsString</code> 里，<code>assertIsString(input)</code> 之后 <code>input</code> 从 <code>unknown</code> 收窄为 <code>string</code>，<code>input.length</code> 合法。</li>
+</ul>
+<p>📌 <strong>类型守卫 vs 断言函数，怎么选</strong>：</p>
+<ul>
+<li><strong>类型守卫 <code>x is T</code></strong>：返回布尔，你要自己写 <code>if</code> 分流两个情况——“是 T 就这样，不是 T 就那样”。适合<strong>两种情况都要处理</strong>。</li>
+<li><strong>断言函数 <code>asserts x is T</code></strong>：不返回布尔，不满足<strong>直接抛错</strong>，之后代码默认成立。适合**“这里必须是 T，否则就是 bug / 脏数据，直接停下”**的场景。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/06-assertion-functions.ts
+</code></pre>
+<hr>
+<h2 id="类型断言as--as-const--非空断言--双重断言"><a class="header" href="#类型断言as--as-const--非空断言--双重断言">类型断言：as / as const / 非空断言 / 双重断言</a></h2>
+<p>前面所有收窄都是“TS 根据你的检查，<strong>自己推断</strong>出更窄的类型“。而<strong>类型断言（type assertion）<strong>是另一回事：你</strong>强行告诉</strong>编译器“它就是这个类型，别管你怎么想的“。断言不做任何运行时检查，因此<strong>危险</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/07-assertions-as.ts
+
+// 1) as：告诉编译器「相信我，它就是这个类型」。不做任何运行时检查！
+const el = { tagName: "INPUT" } as { tagName: string; value: string };
+// 编译期 el.value 合法，但运行时 el 里根本没有 value → 得到 undefined
+console.log("as 断言（危险）:", el.value); // undefined
+
+// 2) 双重断言 as unknown as T：强行绕过限制（几乎总是坏味道）。
+const forced = "abc" as unknown as number;
+console.log("双重断言（更危险）:", forced, typeof forced); // 运行时还是 string！
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>as T</code>：让 TS <strong>无条件相信</strong>这个值是 <code>T</code>。上面 <code>el</code> 明明没有 <code>value</code> 字段，但断言后 TS 允许你访问 <code>el.value</code>——运行时得到 <code>undefined</code>。<strong><code>as</code> 只改变编译期的看法，不改变运行时的现实。</strong></li>
+<li>⚠️ <code>as</code> 有个安全底线：它只允许在“<strong>类型有交集</strong>“时转换。<code>"abc" as number</code> 会直接报错（<code>string</code> 与 <code>number</code> 毫无重叠）。</li>
+<li><strong>双重断言 <code>as unknown as T</code></strong>：先断言成 <code>unknown</code>（任何类型都能变成 <code>unknown</code>），再从 <code>unknown</code> 断言成目标类型（<code>unknown</code> 能变成任何类型），<strong>绕过</strong>了上面的安全底线。<code>"abc" as unknown as number</code> 得到一个类型上是 <code>number</code>、运行时却是字符串的“骗局值“。<strong>这几乎总是代码坏味道</strong>，只在极少数与第三方类型定义打架时才勉强用，且必须写注释说明为什么。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/07-assertions-as.ts（续）
+
+// 3) as const：把字面量「锁死」为最窄的只读类型。
+const config = {
+  method: "GET",
+  retries: 3,
+} as const;
+// config.method 的类型是 "GET"（不是 string），且整个对象只读
+
+const roles = ["admin", "guest"] as const;
+// roles 的类型是 readonly ["admin", "guest"]，可用来派生联合类型
+type Role = (typeof roles)[number]; // "admin" | "guest"
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>as const</code>：和 <code>as T</code> 是两回事，它是个<strong>安全、常用</strong>的断言。它把值“锁死“为<strong>最窄的只读类型</strong>：普通 <code>const config = { method: "GET" }</code> 里 <code>method</code> 会被推断为 <code>string</code>，加上 <code>as const</code> 后 <code>method</code> 的类型精确地是字面量 <code>"GET"</code>，且整个对象变成只读（<code>config.retries = 5</code> 会报错）。</li>
+<li><code>roles ... as const</code>：数组加 <code>as const</code> 变成只读元组 <code>readonly ["admin", "guest"]</code>。配合 <code>(typeof roles)[number]</code>（取元组所有元素类型的联合）就能<strong>从一个值派生出联合类型</strong> <code>Role = "admin" | "guest"</code>。这是“单一数据源（single source of truth）“的常用技巧——值和类型不会各写一份、互相脱节。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/07-assertions-as.ts（续）
+
+// 4) 非空断言 !：断言「这个值一定不是 null / undefined」。
+function findUser(id: number): { id: number } | undefined {
+  return id &gt; 0 ? { id } : undefined;
+}
+const u = findUser(1)!; // 断言结果非空 → u: { id: number }
+
+// ⚠️ 若断言错了，运行时就会「炸得莫名其妙」：
+const maybe = findUser(-1)!; // 类型上是 { id: number }，运行时其实是 undefined
+try {
+  console.log(maybe.id); // TypeError: Cannot read properties of undefined
+} catch (e) {
+  console.log("非空断言的雷:", (e as Error).message);
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>非空断言 <code>!</code></strong>：写在表达式后面，断言“这个值一定不是 <code>null</code>/<code>undefined</code>“，把类型里的 <code>null | undefined</code> 去掉。<code>findUser(1)!</code> 让 <code>u</code> 从 <code>{ id: number } | undefined</code> 变成 <code>{ id: number }</code>。</li>
+<li>⚠️ <strong>它的危险和 <code>as</code> 一样</strong>：不做运行时检查。<code>findUser(-1)</code> 明明返回 <code>undefined</code>，你却用 <code>!</code> 断言它非空，TS 就不再提醒你判空，于是 <code>maybe.id</code> 在运行时抛出经典的 <code>Cannot read properties of undefined</code>——而且报错位置离你写 <code>!</code> 的地方可能很远，很难查。<strong>能用收窄（<code>if</code>、<code>??</code>）就别用 <code>!</code>。</strong></li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/07-assertions-as.ts
+</code></pre>
+<hr>
+<h2 id="unknown-与-never安全的顶层与不可能的底层"><a class="header" href="#unknown-与-never安全的顶层与不可能的底层">unknown 与 never：安全的顶层与不可能的底层</a></h2>
+<p>这两个类型是收窄体系的“两极“。搞清楚它们，收窄的图景才完整。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/08-unknown-never.ts
+
+// any：彻底关闭检查。下面全部「编译通过」，但运行时会炸。
+function withAny(x: any): void {
+  x.foo.bar.baz; // 编译不拦
+  x(); // 编译不拦
+}
+
+// unknown：安全的顶层类型。可以「接收任何值」，但用之前必须先收窄。
+function withUnknown(x: unknown): void {
+  // x.foo;            // ❌ 报错：对象类型未知
+  // x();              // ❌ 报错：不确定能不能调用
+  if (typeof x === "object" &amp;&amp; x !== null &amp;&amp; "foo" in x) {
+    console.log("收窄后可安全访问:", (x as { foo: unknown }).foo);
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>any</code> 和 <code>unknown</code> 都能“接收任何值“，区别在<strong>之后</strong>：<code>any</code> <strong>彻底关闭检查</strong>——<code>x.foo.bar.baz</code>、<code>x()</code> 全部编译通过，把错误推迟到运行时爆炸。<code>any</code> 是“我放弃类型检查“。</li>
+<li><code>unknown</code> 是“<strong>安全的 <code>any</code></strong>“：它同样能接收任何值，但<strong>用之前必须先收窄</strong>。直接 <code>x.foo</code> 会报错，你得先 <code>typeof</code>/<code>in</code> 检查证明它的形状，TS 才让你用。<code>unknown</code> 把“必须先验证“这件事<strong>强制</strong>了下来。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/08-unknown-never.ts（续）
+
+// 处理外部数据（如 JSON.parse）时，unknown 是最佳落点。
+function parseConfig(json: string): { port: number } {
+  const data: unknown = JSON.parse(json); // 不要用 any！
+  if (
+    typeof data === "object" &amp;&amp;
+    data !== null &amp;&amp;
+    "port" in data &amp;&amp;
+    typeof (data as Record&lt;string, unknown&gt;).port === "number"
+  ) {
+    return { port: (data as { port: number }).port };
+  }
+  throw new Error("配置格式不合法");
+}
+
+// never：「不可能存在的值」的类型。
+// 用途 1：永不返回的函数（总是抛错或死循环）。
+function fail(msg: string): never {
+  throw new Error(msg);
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>JSON.parse</code> 的返回类型其实是 <code>any</code>——这是个历史遗留的“类型黑洞“。⚠️ <strong>最佳实践</strong>：拿到 <code>JSON.parse</code> 的结果，立刻用 <code>const data: unknown = ...</code> 把它“降级“为 <code>unknown</code>，逼自己在使用前校验。这正是本章小项目要系统化解决的问题。</li>
+<li><code>never</code> 是**“不可能有值“的类型**，它是所有类型的“底”（<code>unknown</code> 是“顶“）。三大用途：(1) 永不返回的函数（<code>fail</code> 总是抛错，返回 <code>never</code>）；(2) <strong>穷尽检查</strong>（前面 <code>assertNever</code> 的参数）；(3) 表示“空联合“——某个联合被收窄到一个成员都不剩时，就是 <code>never</code>（例如 <code>string &amp; number</code> 没有任何公共值，即为 <code>never</code>）。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/08-unknown-never.ts
+</code></pre>
+<p>📌 <strong>口诀</strong>：外部数据先落到 <code>unknown</code>，收窄后再用；<code>any</code> 是投降，<code>unknown</code> 是“先证明再使用“；<code>never</code> 是“这里不该有值“。</p>
+<hr>
+<h2 id="可选链--与空值合并--如何配合收窄"><a class="header" href="#可选链--与空值合并--如何配合收窄">可选链 ?. 与空值合并 ?? 如何配合收窄</a></h2>
+<p>处理“可能缺失“的数据时，<code>?.</code> 和 <code>??</code> 是收窄的好搭档。</p>
+<pre><code class="language-typescript">// 文件：code/ch18/09-optional-chaining-nullish.ts
+
+interface Address {
+  city: string;
+  zip?: string; // 可选
+}
+interface Profile {
+  name: string;
+  address?: Address; // 可选
+}
+
+// 可选链 ?.：链条中任意一环是 null / undefined，整体短路为 undefined。
+function getCity(p: Profile | null | undefined): string {
+  const city = p?.address?.city;
+  // city 的类型是 string | undefined
+  // 用 ?? 提供「仅在 null/undefined 时」生效的默认值
+  return city ?? "未知城市";
+}
+
+// ⚠️ ?? 与 || 的区别
+function withDefaults(count: number | undefined): void {
+  console.log("|| :", count || 10); // count=0 时 → 10（可能不是你想要的）
+  console.log("?? :", count ?? 10); // count=0 时 → 0（更精确）
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>p?.address?.city</code>：<strong>可选链</strong>。链条中任意一环是 <code>null</code>/<code>undefined</code>，整个表达式<strong>短路</strong>返回 <code>undefined</code>，不会报错。所以 <code>city</code> 的类型是 <code>string | undefined</code>。可选链本身就是一种“收窄的自动化“——你不必写一串 <code>if (p &amp;&amp; p.address)</code>。</li>
+<li><code>city ?? "未知城市"</code>：<strong>空值合并</strong>。仅当左边是 <code>null</code>/<code>undefined</code> 时才用右边的默认值。</li>
+<li>⚠️ <strong><code>??</code> vs <code>||</code> 的关键区别</strong>：<code>||</code> 对<strong>所有假值</strong>（<code>0</code>、<code>""</code>、<code>false</code>、<code>NaN</code>）都会走默认值；<code>??</code> <strong>只对 <code>null</code>/<code>undefined</code></strong> 走默认值。当 <code>count</code> 是合法的 <code>0</code> 时，<code>count || 10</code> 错误地变成 <code>10</code>，而 <code>count ?? 10</code> 正确地保留 <code>0</code>。处理数字、布尔时，几乎总该用 <code>??</code>。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch18/09-optional-chaining-nullish.ts（续）
+
+// 可选链配合收窄：收窄之后 ?. 就不再需要
+function describe(p: Profile | null): string {
+  if (p == null) return "无资料";
+  // 这里 p: Profile，但 address 仍是可选
+  if (p.address) {
+    // 收窄后 p.address: Address，直接访问不用 ?.
+    return `${p.name} 住在 ${p.address.city}`;
+  }
+  return `${p.name}（地址未填）`;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>这个例子展示“<strong>先收窄，就不必反复 <code>?.</code></strong>“。<code>if (p == null) return</code> 之后 <code>p</code> 已是 <code>Profile</code>；<code>if (p.address)</code> 之后 <code>p.address</code> 已是 <code>Address</code>。此时直接写 <code>p.address.city</code> 即可，不需要 <code>p.address?.city</code>。可选链适合“一次性访问”，而当你要多次访问同一条链时，先用 <code>if</code> 收窄一次更清爽、也更高效。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/09-optional-chaining-nullish.ts
+</code></pre>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<p>把本章容易踩的坑集中列一遍：</p>
+<ul>
+<li>⚠️ <strong>类型守卫会“撒谎“</strong>：<code>x is T</code> 是你对编译器的承诺，TS <strong>不验证</strong>函数体。守卫内部必须如实检查它承诺的所有条件，否则运行时和类型就脱节了——这种 bug 极难查，因为编译期一片绿。</li>
+<li>⚠️ <strong>真值收窄误伤 <code>0</code> / <code>""</code> / <code>false</code></strong>：想只排除 <code>null</code>/<code>undefined</code> 时，用 <code>x != null</code>（宽松不等）或 <code>x !== undefined &amp;&amp; x !== null</code>，别用 <code>if (x)</code>。</li>
+<li>⚠️ <strong><code>as</code> 和 <code>!</code> 不做运行时检查</strong>：它们只改变编译期的看法。断言错了，运行时照样炸，且报错位置往往离断言处很远。<strong>能用收窄就别用断言</strong>。把 <code>as</code>、<code>!</code> 当成“我为这行的安全负全责“的签字。</li>
+<li>⚠️ <strong>双重断言 <code>as unknown as T</code> 是最后手段</strong>：它绕过了 <code>as</code> 的安全底线，几乎总是坏味道。用它必写注释解释原因。</li>
+<li>💡 <strong>优先可辨识联合 + <code>assertNever</code></strong>：给“有限几种形态“的数据建模时，加一个字面量判别字段，用 <code>switch</code> 收窄，<code>default</code> 里放 <code>assertNever</code>。新增成员忘了处理时，编译器会当场提醒你。</li>
+<li>💡 <strong>外部数据一律先落 <code>unknown</code></strong>：<code>JSON.parse</code>、<code>fetch().json()</code>、<code>localStorage.getItem</code> 之后，别信它们标注的类型（往往是 <code>any</code>），先当 <code>unknown</code>，校验后再用。</li>
+<li>💡 <strong><code>filter</code> + 类型守卫</strong>：<code>arr.filter(isNotNull)</code> 能把 <code>(T | null)[]</code> 收窄成 <code>T[]</code>，比事后断言优雅得多。</li>
+<li>📌 <strong>收窄会“失效“</strong>：如果在收窄后，你在两次检查之间调用了一个函数、或给变量重新赋值，TS 可能“忘记“之前的收窄（因为它无法确定那期间值没变）。遇到这种情况，把值存进一个 <code>const</code> 局部变量再用，收窄会更稳。</li>
+</ul>
+<hr>
+<h2 id="本章小项目运行时校验--类型联动"><a class="header" href="#本章小项目运行时校验--类型联动">本章小项目：运行时校验 + 类型联动</a></h2>
+<p>现在把本章所有知识拧成一股绳，解决一个<strong>真实且棘手</strong>的问题：</p>
+<blockquote>
+<p>TypeScript 的类型在<strong>运行时不存在</strong>——编译成 JS 后，所有类型注解都被抹掉了。所以当你从<strong>外部</strong>（HTTP 接口、<code>JSON.parse</code>、用户输入）拿到数据时，你标注的 <code>User</code> 类型<strong>保证不了任何事</strong>。数据可能字段缺失、类型不对、多出脏字段。你必须在运行时<strong>真的去检查</strong>。</p>
+</blockquote>
+<p>我们要手写一个<strong>迷你校验库</strong>，让“运行时校验“和“编译期类型“<strong>联动</strong>：定义一组校验器（每个都是类型守卫思路的产物），组合起来校验一个 <code>unknown</code> 输入；校验通过后，TS 能把类型<strong>自动收窄</strong>成强类型的 <code>User</code>——而且 <code>User</code> 的静态类型是从校验规则<strong>反推</strong>出来的，不用手写两遍。这正是 <code>zod</code> 这类库的核心思想。</p>
+<h3 id="第一步校验器的类型契约"><a class="header" href="#第一步校验器的类型契约">第一步：校验器的类型契约</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.ts（节选）
+
+export type Ok&lt;T&gt; = { ok: true; value: T };
+export type Err = { ok: false; errors: string[] };
+export type Result&lt;T&gt; = Ok&lt;T&gt; | Err;
+
+// Validator&lt;T&gt;：把 unknown 校验为 T 的函数。
+export interface Validator&lt;T&gt; {
+  (input: unknown, path: string): Result&lt;T&gt;;
+  // 幽灵字段：只用来在类型层面记住 T，运行时不存在。
+  readonly _type?: T;
+}
+
+// 从 Validator 中「反推」出它校验的类型：Infer&lt;typeof userSchema&gt; === User
+export type Infer&lt;V&gt; = V extends Validator&lt;infer T&gt; ? T : never;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>Result&lt;T&gt;</code> 是个<strong>可辨识联合</strong>（判别字段 <code>ok</code>）：成功带 <code>value: T</code>，失败带 <code>errors: string[]</code>。整个库都用它传递结果——你马上会看到 <code>if (r.ok)</code> 的收窄贯穿始终。</li>
+<li><code>Validator&lt;T&gt;</code> 是一个<strong>可调用的接口（callable interface）</strong>：本体是函数 <code>(input, path) =&gt; Result&lt;T&gt;</code>。<code>path</code> 参数用来记录“当前校验到数据的哪个位置“（如 <code>user.tags[1]</code>），失败时好给出清晰路径。</li>
+<li><code>readonly _type?: T</code> 是一个<strong>幽灵字段（phantom field）</strong>：运行时永远是 <code>undefined</code>，存在的唯一目的是让 <code>T</code> 出现在类型结构里，方便下面的 <code>Infer</code> 把它“抠“出来。</li>
+<li><code>Infer&lt;V&gt;</code> 用<strong>条件类型 + <code>infer</code></strong>（第 17 章学过）从一个 <code>Validator&lt;T&gt;</code> 反推出 <code>T</code>。有了它，我们能做到“<strong>写一遍校验规则，静态类型自动派生</strong>“，不必手写 <code>interface User</code> 再和校验规则对齐——两者永不脱节。</li>
+</ul>
+<h3 id="第二步基础校验器原始类型本质是类型守卫"><a class="header" href="#第二步基础校验器原始类型本质是类型守卫">第二步：基础校验器（原始类型，本质是类型守卫）</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.ts（节选）
+
+const ok = &lt;T&gt;(value: T): Ok&lt;T&gt; =&gt; ({ ok: true, value });
+const err = (path: string, expected: string, got: unknown): Err =&gt; ({
+  ok: false,
+  errors: [`${path || "&lt;root&gt;"}: 期望 ${expected}，实际得到 ${typeInfo(got)}`],
+});
+
+function typeInfo(x: unknown): string {
+  if (x === null) return "null";
+  if (Array.isArray(x)) return "array";
+  return typeof x;
+}
+
+export const isString: Validator&lt;string&gt; = (input, path) =&gt;
+  typeof input === "string" ? ok(input) : err(path, "string", input);
+
+export const isNumber: Validator&lt;number&gt; = (input, path) =&gt;
+  typeof input === "number" &amp;&amp; !Number.isNaN(input)
+    ? ok(input)
+    : err(path, "number", input);
+
+export const isBoolean: Validator&lt;boolean&gt; = (input, path) =&gt;
+  typeof input === "boolean" ? ok(input) : err(path, "boolean", input);
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>ok</code> / <code>err</code> 是两个小工厂，构造成功 / 失败结果。<code>err</code> 把“路径 + 期望类型 + 实际类型“拼成一条清晰的错误信息。<code>typeInfo</code> 修正了 <code>typeof null === "object"</code> 和“数组也是 object“这两个 JS 陷阱，让错误信息更准确。</li>
+<li><code>isString</code> 标注为 <code>Validator&lt;string&gt;</code>：它接收 <code>unknown</code>，内部用 <code>typeof</code> 收窄——<strong>这就是类型守卫的思路</strong>，只不过我们不返回布尔，而是返回带值的 <code>Result&lt;string&gt;</code>。校验通过时 <code>ok(input)</code> 里的 <code>input</code> 已被收窄为 <code>string</code>，所以 <code>ok&lt;string&gt;</code> 成立。</li>
+<li><code>isNumber</code> 额外排除了 <code>NaN</code>（<code>NaN</code> 的 <code>typeof</code> 也是 <code>"number"</code>，但通常不是你想要的合法数字）。这体现了“运行时校验能比类型系统更严“——类型系统区分不了 <code>NaN</code> 和普通数字，运行时校验可以。</li>
+</ul>
+<h3 id="第三步组合校验器数组可选字面量联合"><a class="header" href="#第三步组合校验器数组可选字面量联合">第三步：组合校验器（数组、可选、字面量联合）</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.ts（节选）
+
+// isArrayOf(item)：校验「元素都满足 item 的数组」。
+export function isArrayOf&lt;T&gt;(item: Validator&lt;T&gt;): Validator&lt;T[]&gt; {
+  return (input, path) =&gt; {
+    if (!Array.isArray(input)) return err(path, "array", input);
+    const out: T[] = [];
+    const errors: string[] = [];
+    input.forEach((el, i) =&gt; {
+      const r = item(el, `${path}[${i}]`);
+      if (r.ok) out.push(r.value);
+      else errors.push(...r.errors);
+    });
+    return errors.length ? { ok: false, errors } : ok(out);
+  };
+}
+
+// optional(v)：允许该值缺失（undefined），否则按 v 校验。
+export function optional&lt;T&gt;(v: Validator&lt;T&gt;): Validator&lt;T | undefined&gt; {
+  return (input, path) =&gt;
+    input === undefined ? ok(undefined) : v(input, path);
+}
+
+// literalUnion(...values)：校验值是给定字面量之一。
+export function literalUnion&lt;const T extends readonly (string | number | boolean)[]&gt;(
+  ...values: T
+): Validator&lt;T[number]&gt; {
+  return (input, path) =&gt;
+    values.includes(input as T[number])
+      ? ok(input as T[number])
+      : err(path, values.map((v) =&gt; JSON.stringify(v)).join(" | "), input);
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>isArrayOf(item)</code> 是一个<strong>高阶校验器</strong>：接收一个校验单个元素的 <code>Validator&lt;T&gt;</code>，返回一个校验 <code>T[]</code> 的 <code>Validator&lt;T[]&gt;</code>。它遍历数组，对每个元素调用 <code>item</code>，并把<strong>索引拼进路径</strong>（<code>${path}[${i}]</code>）——所以错误会精确到 <code>tags[1]</code>。注意它<strong>收集所有错误</strong>再一起返回，而不是遇到第一个就停，用户体验更好。</li>
+<li><code>optional(v)</code>：把一个 <code>Validator&lt;T&gt;</code> 包装成 <code>Validator&lt;T | undefined&gt;</code>。输入是 <code>undefined</code> 就直接放行，否则交给内层校验。返回类型里的 <code>| undefined</code> 正好对应对象里的“可选字段“。</li>
+<li><code>literalUnion(...values)</code>：校验“值是给定字面量之一“。<code>&lt;const T ...&gt;</code> 里的 <strong><code>const</code> 类型参数</strong>（TS 5.0+）让传入的 <code>"admin", "guest"</code> 被推断为字面量元组而非 <code>string[]</code>，于是 <code>T[number]</code> 得到精确的联合 <code>"admin" | "guest"</code>——这就是校验规则和类型联动的又一处体现。</li>
+</ul>
+<h3 id="第四步对象校验器-isobjectofschema联动的核心"><a class="header" href="#第四步对象校验器-isobjectofschema联动的核心">第四步：对象校验器 <code>isObjectOf(schema)</code>——联动的核心</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.ts（节选）
+
+// ShapeOf：把 { name: Validator&lt;string&gt;, age: Validator&lt;number&gt; }
+// 映射成      { name: string; age: number }
+type ShapeOf&lt;S extends Record&lt;string, Validator&lt;unknown&gt;&gt;&gt; = {
+  [K in keyof S]: Infer&lt;S[K]&gt;;
+};
+
+export function isObjectOf&lt;S extends Record&lt;string, Validator&lt;any&gt;&gt;&gt;(
+  schema: S
+): Validator&lt;ShapeOf&lt;S&gt;&gt; {
+  return (input, path) =&gt; {
+    if (typeof input !== "object" || input === null || Array.isArray(input)) {
+      return err(path, "object", input);
+    }
+    const record = input as Record&lt;string, unknown&gt;;
+    const out: Record&lt;string, unknown&gt; = {};
+    const errors: string[] = [];
+    for (const key of Object.keys(schema)) {
+      const childPath = path ? `${path}.${key}` : key;
+      const r = schema[key](record[key], childPath);
+      if (r.ok) out[key] = r.value;
+      else errors.push(...r.errors);
+    }
+    return errors.length
+      ? { ok: false, errors }
+      : ok(out as ShapeOf&lt;S&gt;);
+  };
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>ShapeOf&lt;S&gt;</code> 是个<strong>映射类型（mapped type）</strong>（第 17 章）：它遍历 schema 的每个键 <code>K</code>，用 <code>Infer&lt;S[K]&gt;</code> 把那个字段的校验器 <code>Validator&lt;X&gt;</code> 反推成 <code>X</code>。于是 <code>{ id: isNumber, name: isString }</code> 这样一个<strong>校验器对象</strong>，在类型层面被“翻译“成 <code>{ id: number; name: string }</code>——这就是<strong>运行时规则 → 编译期类型</strong>的自动联动。</li>
+<li>运行时逻辑：先确认 <code>input</code> 是“非 null、非数组的对象“（三重检查，绕开 <code>typeof null</code> 陷阱），再逐字段校验，把<strong>字段名拼进路径</strong>（<code>${path}.${key}</code>），收集所有错误。</li>
+<li>返回类型 <code>Validator&lt;ShapeOf&lt;S&gt;&gt;</code>：这就是全部魔法的落点——<strong>校验通过后，调用方拿到的值类型是从 schema 推导出的强类型对象</strong>。</li>
+</ul>
+<h3 id="第五步便捷入口-parse-与断言版-assertvalid"><a class="header" href="#第五步便捷入口-parse-与断言版-assertvalid">第五步：便捷入口 <code>parse</code> 与断言版 <code>assertValid</code></a></h3>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.ts（节选）
+
+// parse：校验成功返回强类型值，失败抛出带完整错误路径的异常。
+export function parse&lt;T&gt;(validator: Validator&lt;T&gt;, input: unknown): T {
+  const r = validator(input, "");
+  if (r.ok) return r.value;
+  throw new Error("校验失败:\n" + r.errors.map((e) =&gt; "  - " + e).join("\n"));
+}
+
+// assertValid：断言函数版本 —— 校验失败即抛，之后 input 被收窄为 T。
+export function assertValid&lt;T&gt;(
+  validator: Validator&lt;T&gt;,
+  input: unknown
+): asserts input is T {
+  const r = validator(input, "");
+  if (!r.ok) {
+    throw new Error("校验失败:\n" + r.errors.map((e) =&gt; "  - " + e).join("\n"));
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>parse</code> 返回强类型 <code>T</code>（成功）或抛错（失败）。注意 <code>if (r.ok) return r.value</code> 这行——<code>r</code> 是可辨识联合 <code>Result&lt;T&gt;</code>，<code>r.ok</code> 为真时 TS 把 <code>r</code> 收窄为 <code>Ok&lt;T&gt;</code>，才允许访问 <code>r.value</code>。<strong>本章开头讲的收窄，在这个库的实现里无处不在。</strong></li>
+<li><code>assertValid</code> 是<strong>断言函数</strong>版本：返回类型 <code>asserts input is T</code>。校验失败就抛；正常返回后，调用处的 <code>input</code> 变量会被<strong>收窄为 <code>T</code></strong>。适合“我就地校验一个已有变量，之后直接用它“的场景。</li>
+</ul>
+<h3 id="第六步跑起来看联动效果"><a class="header" href="#第六步跑起来看联动效果">第六步：跑起来看联动效果</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.demo.ts（节选）
+
+const userSchema = isObjectOf({
+  id: isNumber,
+  name: isString,
+  active: isBoolean,
+  role: literalUnion("admin", "guest"),
+  tags: isArrayOf(isString),
+  nickname: optional(isString),
+});
+
+// 关键：用 Infer 从 schema「反推」出静态类型，无需手写 interface！
+type User = Infer&lt;typeof userSchema&gt;;
+// User === {
+//   id: number; name: string; active: boolean;
+//   role: "admin" | "guest"; tags: string[]; nickname: string | undefined;
+// }
+
+// 模拟一段来自网络、类型未知的数据
+const rawGood: unknown = JSON.parse(
+  '{"id":1,"name":"Alice","active":true,"role":"admin","tags":["x","y"]}'
+);
+
+const user: User = parse(userSchema, rawGood);
+console.log("  name:", user.name.toUpperCase()); // string 方法安全
+console.log("  role:", user.role); // "admin" | "guest"
+console.log("  tags:", user.tags.join(", ")); // string[]
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>我们只写了 <strong>一遍</strong> <code>userSchema</code>（运行时规则），<code>User</code> 类型由 <code>Infer&lt;typeof userSchema&gt;</code> <strong>自动派生</strong>。改 schema，<code>User</code> 跟着变，永不脱节——这是相比“手写 <code>interface User</code> + 手写校验函数“的巨大进步。</li>
+<li><code>rawGood</code> 特意标注为 <code>unknown</code>（模拟 <code>JSON.parse</code> 的真实处境）。经过 <code>parse(userSchema, rawGood)</code>，<code>user</code> 就成了完全强类型的 <code>User</code>：<code>.name.toUpperCase()</code>、<code>.role</code>（联合）、<code>.tags.join()</code>（数组）全部类型安全。<strong>运行时的校验，换来了编译期的强类型</strong>——这就是“类型联动“。</li>
+</ul>
+<p>再看非法输入的错误路径：</p>
+<pre><code class="language-typescript">// 文件：code/ch18/validate.demo.ts（节选）
+
+const rawBad: unknown = {
+  id: "not-a-number", // 类型错
+  name: "Bob",
+  active: "yes", // 应为 boolean
+  role: "superuser", // 不在字面量联合内
+  tags: ["ok", 42, "fine"], // tags[1] 类型错
+};
+
+try {
+  parse(userSchema, rawBad);
+} catch (e) {
+  console.log((e as Error).message);
+}
+</code></pre>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch18/validate.demo.ts
+</code></pre>
+<p>预期输出（节选）：</p>
+<pre><code>✅ 校验通过:
+  name: ALICE
+  role: admin
+  tags: x, y
+  nickname: (无)
+
+❌ 校验失败，错误路径清晰:
+校验失败:
+  - id: 期望 number，实际得到 string
+  - active: 期望 boolean，实际得到 string
+  - role: 期望 "admin" | "guest"，实际得到 string
+  - tags[1]: 期望 string，实际得到 number
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>每条错误都带<strong>精确路径</strong>：<code>id</code>、<code>active</code>、<code>role</code>、<code>tags[1]</code>。<code>tags[1]</code> 尤其能看出 <code>isArrayOf</code> 把索引拼进路径的价值——它没有笼统地说“tags 有问题“，而是指到出错的那个元素。</li>
+<li>库<strong>收集了全部错误</strong>再一次性抛出，而不是只报第一个。对调用方（尤其是表单校验、API 网关）来说，一次看清所有问题远比“改一个报一个“高效。</li>
+</ul>
+<h3 id="扩展练习加分项"><a class="header" href="#扩展练习加分项">扩展练习（加分项）</a></h3>
+<ol>
+<li><strong><code>nullable(v)</code></strong>：仿照 <code>optional</code>，写一个允许 <code>null</code> 的包装器，返回 <code>Validator&lt;T | null&gt;</code>。想清楚它和 <code>optional</code> 的语义差别。</li>
+<li><strong><code>min</code> / <code>max</code> 约束</strong>：给 <code>isNumber</code> 加一个变体 <code>numberRange(min, max)</code>，校验数字在区间内，错误信息里带上区间。体会“运行时校验能表达类型系统表达不了的约束“。</li>
+<li><strong><code>union(...validators)</code></strong>：写一个“满足其中任一校验器即可“的组合器，返回 <code>Validator&lt;A | B | ...&gt;</code>。提示：依次尝试，全失败才报错。</li>
+<li><strong>严格模式</strong>：给 <code>isObjectOf</code> 加一个选项，当输入对象<strong>含有 schema 里没有的多余字段</strong>时报错（防止脏数据混入）。</li>
+<li><strong>收集 vs 快速失败</strong>：给 <code>parse</code> 加一个 <code>{ abortEarly: true }</code> 选项，遇到第一个错误就停，对比两种模式的取舍。</li>
+<li><strong>和 <code>assertNever</code> 结合</strong>：给校验结果加一种 <code>warning</code> 状态，用可辨识联合 + <code>switch</code> + <code>assertNever</code> 处理三种状态，体会穷尽检查如何防止你漏掉分支。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们把“如何安全地使用宽类型“这件事讲透了：</p>
+<ul>
+<li><strong>为什么要收窄</strong>：联合类型、<code>unknown</code> 在收窄前只允许“两边都支持“的操作。你在运行时做一次检查，TS 就把类型变窄，让你能用专属方法。</li>
+<li><strong>收窄手段</strong>：<code>typeof</code>（原始类型）、<code>instanceof</code>（类实例）、<code>in</code>（对象属性）、真值收窄（注意误伤 <code>0</code>/<code>""</code>）、相等收窄（<code>===</code> 取交集、<code>!= null</code> 一并排除空值）、<strong>可辨识联合 <code>switch</code></strong>（最优雅）。</li>
+<li><strong>控制流分析</strong>：TS 逐行推算类型，<code>return</code>、赋值、<code>if</code> 都会改变某个位置的类型。用<strong>早返回</strong>能写出清爽的收窄。</li>
+<li><strong>类型守卫 <code>x is T</code></strong>：把复杂判断抽成可复用的收窄函数。经典应用是 <code>arr.filter(isNotNull)</code> 收窄数组。⚠️ 守卫会“撒谎“，函数体必须如实检查。</li>
+<li><strong>断言函数 <code>asserts</code></strong>：<code>asserts condition</code> 和 <code>asserts x is T</code>——“不满足就抛，满足就默认成立”，不需要 <code>if</code>。</li>
+<li><strong>类型断言</strong>：<code>as</code>（无条件相信，危险）、<code>as const</code>（锁死为只读字面量，安全常用）、非空断言 <code>!</code>（危险）、双重断言 <code>as unknown as T</code>（最后手段）。断言都<strong>不做运行时检查</strong>。</li>
+<li><strong><code>unknown</code> vs <code>any</code></strong>：<code>unknown</code> 是“先证明再使用“，<code>any</code> 是“放弃检查“。外部数据一律先落 <code>unknown</code>。<strong><code>never</code></strong>：不返回、穷尽检查、空联合。</li>
+<li><strong><code>?.</code> 与 <code>??</code></strong>：可选链自动短路，空值合并只对 <code>null</code>/<code>undefined</code> 兜底（区别于 <code>||</code>）。</li>
+<li><strong>小项目</strong>：手写迷你校验库，用类型守卫思路 + 条件类型 <code>Infer</code> + 映射类型 <code>ShapeOf</code>，让<strong>运行时校验</strong>与<strong>编译期类型</strong>联动——一份 schema，既在运行时把关脏数据（带精确错误路径），又在编译期派生出强类型。</li>
+</ul>
+<p><strong>自测题</strong>（先自己想，再回代码验证）：</p>
+<ol>
+<li><code>number | string</code> 类型的变量，为什么直接调 <code>.toUpperCase()</code> 会报错？要怎么才能安全调用？</li>
+<li><code>if (x)</code> 和 <code>if (x != null)</code> 收窄的结果有什么不同？什么时候必须用后者？</li>
+<li>可辨识联合的 <code>switch</code> 里，<code>default</code> 分支放 <code>assertNever(x)</code> 有什么用？新增一个成员却忘了处理时会发生什么？</li>
+<li>类型守卫 <code>x is T</code> 和断言函数 <code>asserts x is T</code>，语义上最大的区别是什么？各自适合什么场景？</li>
+<li><code>as</code>、<code>!</code> 和收窄（<code>if</code>）都能“去掉 <code>undefined</code>“，为什么说前两者危险？举一个断言错了会在运行时炸的例子。</li>
+<li>为什么从 <code>JSON.parse</code> / 网络拿到的数据，标注成 <code>User</code> 也不安全？小项目是如何让运行时校验和 <code>User</code> 类型“联动“的？</li>
+</ol>
+<p>答得上来，说明你已经掌握了 TypeScript 里“安全使用类型“的整套功夫。</p>
+<hr>
+<p>收窄、守卫、断言，让你能在<strong>值的层面</strong>安全地驾驭类型。但 TypeScript 还有一个更“元“的能力——在<strong>声明的层面</strong>给类、方法、属性附加行为和元数据，而不改动它们的实现。想象一下：给一个方法加上 <code>@log</code> 就自动记录调用、给一个类加上 <code>@Entity</code> 就自动注册到框架、给一个属性加上 <code>@Column</code> 就映射到数据库字段……这些“贴在声明上的小标签“就是<strong>装饰器（decorator）</strong>。</p>
+<p><strong>第 19 章 · 装饰器与元编程</strong>将带你理解装饰器的运行机制、五种装饰器（类、方法、访问器、属性、参数）各自的能力，以及配套的<strong>元数据（metadata）反射</strong>——TypeScript 如何在运行时“看见“本该被抹掉的类型信息。学完那章，你就能读懂 Angular、NestJS、TypeORM 这些框架“魔法“背后的原理，甚至自己造一个。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch17.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch19.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch17.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch19.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

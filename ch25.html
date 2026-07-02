@@ -1,0 +1,720 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 25 章 · 性能、调试、打包与发布部署 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch25.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-25-章--性能调试打包与发布部署"><a class="header" href="#第-25-章--性能调试打包与发布部署">第 25 章 · 性能、调试、打包与发布部署</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前面 24 章，你已经能写出功能正确、类型安全、有测试的应用了。但“能跑“和“能上线“之间还差一段路：程序够快吗？出了 bug 怎么定位？怎么把 TS 源码变成可分发的产物？怎么把服务真正部署到服务器上？本章就补上这最后一公里。读完你将掌握：</p>
+<ul>
+<li><strong>性能</strong>：建立 Big-O 直觉，学会“先测量、再优化“，用 <code>performance.now()</code> / <code>console.time</code> 做基准测试，识别并消除常见性能坑。</li>
+<li><strong>Node 性能</strong>：理解“不要阻塞事件循环“，知道 CPU 密集任务该交给谁。</li>
+<li><strong>调试</strong>：会用 VS Code 断点、<code>--inspect</code>、source map 调试 TS，读懂调用栈。</li>
+<li><strong>内存</strong>：认识常见的内存泄漏来源。</li>
+<li><strong>打包产物</strong>：把 TS 编译成 <code>dist/</code>，带上 source map 与类型声明。</li>
+<li><strong>发布部署</strong>：环境变量与 <code>NODE_ENV</code>、优雅关闭、健康检查、结构化日志、写一个多阶段 <strong>Dockerfile</strong>、配一条最小 <strong>CI</strong> 流水线。</li>
+</ul>
+<p>本章的可运行代码在 <code>code/ch25/</code> 下，两个能直接跑的脚本是 <code>bench.ts</code>（性能）和 <code>graceful-shutdown.ts</code>（上线完善）；<code>Dockerfile</code>、<code>.dockerignore</code>、<code>.github/workflows/ci.yml</code>、<code>launch.json</code> 是配置产物，我们会逐一讲解。</p>
+<hr>
+<h2 id="251-性能先测量再优化"><a class="header" href="#251-性能先测量再优化">25.1 性能：先测量，再优化</a></h2>
+<p>关于性能，最重要的一句话不是任何技巧，而是一条纪律：</p>
+<blockquote>
+<p>📌 <strong>先测量，再优化（Measure first, optimize later）。</strong> 未经测量的优化，十有八九是在优化一个根本不慢的地方，还顺手把代码改得更难懂。</p>
+</blockquote>
+<h3 id="big-o一点点直觉"><a class="header" href="#big-o一点点直觉">Big-O：一点点直觉</a></h3>
+<p><strong>Big-O</strong> 描述的是“当数据量 n 变大时，耗时/内存怎么增长“，它不关心常数，只关心趋势。你只需要建立几个直觉：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>记法</th><th>名字</th><th>典型例子</th><th>n 翻倍时</th></tr>
+</thead>
+<tbody>
+<tr><td><code>O(1)</code></td><td>常数</td><td><code>Map.get</code>、<code>Set.has</code>、数组按下标访问</td><td>不变</td></tr>
+<tr><td><code>O(log n)</code></td><td>对数</td><td>二分查找</td><td>几乎不变</td></tr>
+<tr><td><code>O(n)</code></td><td>线性</td><td>遍历一遍数组、<code>Array.includes</code></td><td>翻倍</td></tr>
+<tr><td><code>O(n log n)</code></td><td>线性对数</td><td><code>Array.sort</code></td><td>略超两倍</td></tr>
+<tr><td><code>O(n²)</code></td><td>平方</td><td>双重循环、循环里套 <code>includes</code></td><td>变四倍</td></tr>
+</tbody>
+</table>
+</div>
+<p>⚠️ 新手最常见的性能灾难，就是<strong>在循环里做了一次 <code>O(n)</code> 的查找</strong>，于是整体变成 <code>O(n²)</code>。数据量一大就卡死。</p>
+<h3 id="用-performancenow-做基准测试"><a class="header" href="#用-performancenow-做基准测试">用 <code>performance.now()</code> 做基准测试</a></h3>
+<p>我们用一个统一的计时工具 <code>timeit</code>，把同一段逻辑跑很多次、量出总耗时：</p>
+<pre><code class="language-typescript">// 文件：code/ch25/bench.ts
+import { performance } from "node:perf_hooks";
+
+// 工具：把一段函数跑 rounds 次，返回耗时（毫秒）。
+function timeit(label: string, fn: () =&gt; void, rounds = 1): number {
+  // warm-up：先空跑一次，避免第一次运行的即时编译（JIT）预热影响读数。
+  fn();
+  const start = performance.now();
+  for (let i = 0; i &lt; rounds; i++) fn();
+  const elapsed = performance.now() - start;
+  console.log(`${label.padEnd(28)} ${elapsed.toFixed(3)} ms  (${rounds} 次)`);
+  return elapsed;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>performance.now()</code></strong>：来自 <code>node:perf_hooks</code>，返回一个高精度的毫秒时间戳（带小数），比 <code>Date.now()</code> 精确得多，专门用于测耗时。两次相减就是这段代码花的时间。</li>
+<li><strong>warm-up（预热）</strong>：V8 引擎会对热点代码做即时编译（JIT，Just-In-Time compilation）优化。第一次运行往往偏慢，先空跑一次把它“热起来“，读数更公平。</li>
+<li><strong><code>rounds</code> 循环</strong>：单次运行可能只要零点几毫秒，噪声太大。跑几千次再看总时间，结论才稳。</li>
+</ul>
+<h3 id="演示-1把循环里的重复工作提出去"><a class="header" href="#演示-1把循环里的重复工作提出去">演示 1：把循环里的重复工作提出去</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch25/bench.ts（节选）
+const data = Array.from({ length: 50_000 }, (_, i) =&gt; i);
+
+function sumBad(): number {
+  let total = 0;
+  for (let i = 0; i &lt; data.length; i++) {
+    // ⚠️ 每一轮都重新构造同一个 config——重复计算，纯属浪费。
+    const config = buildConfig();
+    total += data[i] * config.factor;
+  }
+  return total;
+}
+
+function sumGood(): number {
+  let total = 0;
+  const len = data.length;      // 长度提到循环外。
+  const config = buildConfig(); // 只构造一次，提到循环外。
+  for (let i = 0; i &lt; len; i++) {
+    total += data[i] * config.factor;
+  }
+  return total;
+}
+</code></pre>
+<p><code>buildConfig()</code> 每次返回的都是同一个结果，但 <code>sumBad</code> 在 5 万次循环里<strong>每一轮都重新算一遍</strong>。<code>sumGood</code> 把不随循环变化的东西（<code>config</code>、<code>len</code>）提到循环外，只算一次。实测差距是数量级的：</p>
+<pre><code class="language-text">=== 演示 1：循环里的重复工作 ===
+sumBad                       15076.503 ms  (2000 次)
+sumGood                      95.147 ms  (2000 次)
+</code></pre>
+<blockquote>
+<p>💡 这类“循环不变量外提（loop-invariant hoisting）“是最朴素也最有效的优化：不需要任何高级技巧，只是别做无用功。</p>
+</blockquote>
+<h3 id="演示-2用数据结构把-on²-降到-on"><a class="header" href="#演示-2用数据结构把-on²-降到-on">演示 2：用数据结构把 O(n²) 降到 O(n)</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch25/bench.ts（节选）
+function countHitsQuadratic(): number {
+  let hits = 0;
+  for (const n of needles) {
+    if (haystack.includes(n)) hits++; // includes 是 O(n)，套在循环里就是 O(n²)。
+  }
+  return hits;
+}
+
+function countHitsLinear(): number {
+  const set = new Set(haystack); // 一次性建索引，O(n)。
+  let hits = 0;
+  for (const n of needles) {
+    if (set.has(n)) hits++; // has 是 O(1)。
+  }
+  return hits;
+}
+</code></pre>
+<p><code>Array.includes</code> 要从头扫到尾，是 <code>O(n)</code>；套在另一个循环里就成了 <code>O(n²)</code>。而 <code>Set.has</code> 是 <code>O(1)</code>——只要先花 <code>O(n)</code> 把数组灌进 <code>Set</code> 建好“索引“，后面每次查找都是常数时间。实测：</p>
+<pre><code class="language-text">=== 演示 2：O(n^2) vs O(n) ===
+countHitsQuadratic           81.533 ms  (20 次)
+countHitsLinear              5.320 ms  (20 次)
+</code></pre>
+<blockquote>
+<p>📌 这是第 7 章 <code>Map</code>/<code>Set</code> 的实战价值：<strong>当你需要频繁判断“存不存在“或“按 key 取值“，用 <code>Set</code>/<code>Map</code> 而不是数组。</strong></p>
+</blockquote>
+<h3 id="演示-3memoize记忆化缓存纯函数结果"><a class="header" href="#演示-3memoize记忆化缓存纯函数结果">演示 3：memoize（记忆化）缓存纯函数结果</a></h3>
+<p>对于<strong>纯函数</strong>（同样的输入永远给同样的输出，见第 4 章），可以把算过的结果缓存起来，下次直接取：</p>
+<pre><code class="language-typescript">// 文件：code/ch25/bench.ts（节选）
+function memoize&lt;A, R&gt;(fn: (arg: A) =&gt; R): (arg: A) =&gt; R {
+  const cache = new Map&lt;A, R&gt;();
+  return (arg: A): R =&gt; {
+    if (cache.has(arg)) return cache.get(arg)!;
+    const result = fn(arg);
+    cache.set(arg, result);
+    return result;
+  };
+}
+</code></pre>
+<p>这正是第 4 章闭包 + 第 16 章泛型的组合：闭包保存 <code>cache</code>，泛型 <code>&lt;A, R&gt;</code> 让它对任意“单参数纯函数“都类型安全。实测第二次调用几乎瞬间返回：</p>
+<pre><code class="language-text">=== 演示 3：memoize ===
+slowFib(32) 第一次              20.478 ms  (1 次)
+fastFib(32) 第一次              0.001 ms  (1 次)
+fastFib(32) 第二次(命中缓存)        0.000 ms  (1 次)
+</code></pre>
+<p>⚠️ memoize 不是银弹：缓存会占内存、只对纯函数安全、参数是对象时用 <code>Map</code> 按引用比较可能永远命不中。用对场景才有效。</p>
+<h3 id="演示-4consoletime--最省事的临时计时"><a class="header" href="#演示-4consoletime--最省事的临时计时">演示 4：<code>console.time</code> —— 最省事的临时计时</a></h3>
+<p>想快速量一段代码，不必写 <code>timeit</code>，用内置的一对即可：</p>
+<pre><code class="language-typescript">// 文件：code/ch25/bench.ts（节选）
+console.time("build-big-string");
+let s = "";
+for (let i = 0; i &lt; 100_000; i++) s += "x";
+console.timeEnd("build-big-string"); // 打印 build-big-string: X ms
+</code></pre>
+<p><code>console.time(标签)</code> 和 <code>console.timeEnd(同一标签)</code> 之间的耗时会被打印出来。适合临时插桩。</p>
+<p>运行整个基准：</p>
+<pre><code class="language-bash">cd code
+npx tsx ch25/bench.ts
+</code></pre>
+<hr>
+<h2 id="252-node-性能别阻塞事件循环"><a class="header" href="#252-node-性能别阻塞事件循环">25.2 Node 性能：别阻塞事件循环</a></h2>
+<p>回顾第 8 章：Node 是<strong>单线程 + 事件循环</strong>。这意味着——</p>
+<blockquote>
+<p>⚠️ <strong>一段同步的、耗时的代码会把整个事件循环卡住</strong>，在它跑完之前，服务器无法处理任何其它请求。</p>
+</blockquote>
+<p>典型元凶：在请求处理里做了一个巨大的同步循环、同步读一个大文件（<code>fs.readFileSync</code>）、或一次 <code>JSON.parse</code> 一个几百 MB 的字符串。应对：</p>
+<ul>
+<li><strong>I/O 用异步版本</strong>：<code>fs/promises</code> 而不是 <code>fs.readFileSync</code>（第 11 章）。异步 I/O 交给底层去等，不占用事件循环。</li>
+<li><strong>大数据用流（stream）</strong>：边读边处理，不要一次性载入内存（第 11 章的日志分析 CLI 就是范例）。</li>
+<li><strong>CPU 密集任务用 <code>worker_threads</code></strong>：图像处理、加密、大规模计算这类“纯算“的活，放进 worker 线程，别占用主线程。（本书不展开，知道有这个出口即可。）</li>
+</ul>
+<blockquote>
+<p>📌 一句话记忆：<strong>Node 擅长 I/O 密集（等数据库、等网络），不擅长 CPU 密集（狂算）。</strong> 后者要么拆成异步分片，要么丢给 worker。</p>
+</blockquote>
+<hr>
+<h2 id="253-调试让-bug-无处可藏"><a class="header" href="#253-调试让-bug-无处可藏">25.3 调试：让 bug 无处可藏</a></h2>
+<p><code>console.log</code> 能解决大部分问题，但当调用栈很深、状态很复杂时，<strong>断点调试</strong>效率高得多。</p>
+<h3 id="vs-code-断点调试-typescript"><a class="header" href="#vs-code-断点调试-typescript">VS Code 断点调试 TypeScript</a></h3>
+<p>VS Code 通过 <code>.vscode/launch.json</code> 配置调试任务。本章在 <code>code/ch25/launch.json</code> 放了一份示例（用时把它拷到项目的 <code>.vscode/launch.json</code>）：</p>
+<pre><code class="language-jsonc">// 文件：code/ch25/launch.json（节选）
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // 配置一：用 tsx 直接跑 TS 源码，可在 .ts 文件上打断点（推荐日常调试）。
+      "name": "Debug: graceful-shutdown (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx", "${workspaceFolder}/code/ch25/graceful-shutdown.ts"],
+      "console": "integratedTerminal",
+      "skipFiles": ["&lt;node_internals&gt;/**"]
+    }
+  ]
+}
+</code></pre>
+<p>关键字段：</p>
+<ul>
+<li><strong><code>request: "launch"</code></strong>：启动一个新进程来调试（另一种是 <code>"attach"</code>，附加到已运行的进程）。</li>
+<li><strong><code>runtimeExecutable</code> + <code>runtimeArgs</code></strong>：用 <code>npx tsx</code> 直接跑 <code>.ts</code>，于是你能<strong>直接在 TypeScript 源码上打断点</strong>，无需先编译。这是日常最省事的方式。</li>
+<li><strong><code>skipFiles: ["&lt;node_internals&gt;/**"]</code></strong>：调试时跳过 Node 内部代码，别让单步执行掉进引擎源码里。</li>
+</ul>
+<p>打好断点后按 F5，程序会停在断点处，你可以查看变量、单步执行（F10 逐行 / F11 步入函数）、看**调用栈（call stack）**面板了解“是谁调用到这里的“。条件断点（右键断点设条件）在循环里只想停某一轮时特别有用。</p>
+<h3 id="--inspect--chrome-devtools"><a class="header" href="#--inspect--chrome-devtools"><code>--inspect</code> + Chrome DevTools</a></h3>
+<p>不想用 VS Code 也行。给 Node 加 <code>--inspect</code>：</p>
+<pre><code class="language-bash">node --inspect dist/app.js
+# 或调试 TS：
+node --inspect --import tsx ch25/graceful-shutdown.ts
+</code></pre>
+<p>然后在 Chrome 打开 <code>chrome://inspect</code>，就能用熟悉的 DevTools 面板下断点、看内存快照。</p>
+<h3 id="source-map为什么调试-ts-却停在-ts-上"><a class="header" href="#source-map为什么调试-ts-却停在-ts-上">source map：为什么调试 TS 却停在 TS 上</a></h3>
+<p>你运行的其实是编译后的 JavaScript，为什么断点能停在 <code>.ts</code> 源码？靠的是 <strong>source map（源码映射）</strong>——一份记录“编译后某行对应源码某行“的映射文件（<code>.js.map</code>）。只要编译时开启 <code>"sourceMap": true</code>，调试器就能把运行位置反查回 TS 源码。上面 <code>launch.json</code> 的“配置二“就演示了调试已编译产物时用 <code>sourceMaps: true</code> + <code>outFiles</code> 定位到原始 TS。</p>
+<h3 id="读懂-stack-trace"><a class="header" href="#读懂-stack-trace">读懂 stack trace</a></h3>
+<p>程序抛错时打印的<strong>调用栈（stack trace）<strong>是定位 bug 的地图，从上往下读：最上面是</strong>出错的那一行</strong>，往下是<strong>一层层调用它的函数</strong>。学会看第一行的文件名:行号，直接跳过去，比盲猜快得多（第 6 章讲过 Error 的 <code>stack</code> 属性）。</p>
+<hr>
+<h2 id="254-内存常见泄漏来源"><a class="header" href="#254-内存常见泄漏来源">25.4 内存：常见泄漏来源</a></h2>
+<p>JavaScript 有垃圾回收（GC），但<strong>只要还有引用指向一个对象，它就不会被回收</strong>。“内存泄漏（memory leak）“往往是你无意间留了引用：</p>
+<ul>
+<li>⚠️ <strong>未清理的定时器 / 监听器</strong>：<code>setInterval</code>、<code>addEventListener</code>、<code>emitter.on</code> 注册了却从不 <code>clear</code>/<code>off</code>，回调闭包引用的东西就一直活着。用完记得清。</li>
+<li>⚠️ <strong>不断增长的全局缓存</strong>：一个 <code>Map</code> 当缓存却从不淘汰旧数据，越积越大（考虑用有上限的 LRU 缓存或 <code>WeakMap</code>）。</li>
+<li>⚠️ <strong>闭包意外捕获大对象</strong>：闭包引用了一个大数组，而这个闭包被长期持有（比如塞进了全局数组），大数组就跟着一直不释放。</li>
+</ul>
+<blockquote>
+<p>💡 排查手段：<code>node --inspect</code> 打开 DevTools 的 Memory 面板，抓两次 **heap snapshot（堆快照）**做对比，看哪类对象在持续增长——那通常就是泄漏点。</p>
+</blockquote>
+<hr>
+<h2 id="255-打包产物从-ts-源码到可分发的-dist"><a class="header" href="#255-打包产物从-ts-源码到可分发的-dist">25.5 打包产物：从 TS 源码到可分发的 dist</a></h2>
+<p>开发时用 <code>tsx</code> 直接跑 <code>.ts</code> 很爽，但<strong>分发/部署时应该交付编译后的 JavaScript</strong>（更快启动、不依赖 tsx）。回顾第 20、21 章，产物由 tsc 或 tsup 生成。一个“库/服务“典型的构建配置会开启：</p>
+<ul>
+<li><code>"outDir": "dist"</code>：产物输出目录。</li>
+<li><code>"declaration": true</code>：额外生成 <code>.d.ts</code> 类型声明（第 20 章），别人用你的库时能拿到类型。</li>
+<li><code>"sourceMap": true</code>：生成 source map，线上报错能映射回 TS 源码行号。</li>
+</ul>
+<p><code>package.json</code> 里用 <code>main</code> / <code>exports</code> / <code>bin</code> / <code>files</code> 字段（第 9 章）声明入口与要发布的文件。构建后 <code>node dist/xxx.js</code> 就能直接运行，不再需要 TypeScript。</p>
+<hr>
+<h2 id="256-发布部署让服务在真实世界活下去"><a class="header" href="#256-发布部署让服务在真实世界活下去">25.6 发布部署：让服务在真实世界活下去</a></h2>
+<p>一个能“上线“的服务，比“本地能跑“多了几样东西。我们用 <code>code/ch25/graceful-shutdown.ts</code> 这个最小 HTTP 服务把它们都演示一遍。</p>
+<h3 id="配置来自环境变量"><a class="header" href="#配置来自环境变量">配置来自环境变量</a></h3>
+<p>线上不能把端口、密钥写死在代码里，要从**环境变量（environment variables）**读（第 24 章）：</p>
+<pre><code class="language-typescript">// 文件：code/ch25/graceful-shutdown.ts（节选）
+interface Config {
+  port: number;
+  nodeEnv: string;
+  shutdownTimeoutMs: number;
+}
+
+function loadConfig(): Config {
+  return {
+    port: Number(process.env.PORT ?? 3000),
+    nodeEnv: process.env.NODE_ENV ?? "development",
+    shutdownTimeoutMs: Number(process.env.SHUTDOWN_TIMEOUT_MS ?? 10_000),
+  };
+}
+</code></pre>
+<p>用 <code>??</code>（空值合并，第 1 章）给每个配置项一个合理默认值，并用 <code>Number(...)</code> 把字符串环境变量转成数字。<code>NODE_ENV=production</code> 是业界约定，很多库据此关闭调试信息、开启优化。</p>
+<h3 id="结构化日志"><a class="header" href="#结构化日志">结构化日志</a></h3>
+<p>线上日志会被采集系统（如 Loki、CloudWatch）收走检索，输出<strong>一行 JSON</strong>远比人类可读的花括号好解析：</p>
+<pre><code class="language-typescript">// 文件：code/ch25/graceful-shutdown.ts（节选）
+function log(level: "info" | "warn" | "error", msg: string, extra: Record&lt;string, unknown&gt; = {}): void {
+  const line = JSON.stringify({ ts: new Date().toISOString(), level, msg, ...extra });
+  // 错误走 stderr，其余走 stdout——这是进程管理器/容器的惯例。
+  if (level === "error") console.error(line);
+  else console.log(line);
+}
+</code></pre>
+<p>每条日志都带时间戳 <code>ts</code>、级别 <code>level</code>、消息 <code>msg</code>，外加任意结构化字段（<code>...extra</code>）。⚠️ 注意 <strong>error 走 <code>stderr</code>、其余走 <code>stdout</code></strong>——这是容器和进程管理器区分正常输出与错误的惯例。</p>
+<h3 id="计时中间件--健康检查端点"><a class="header" href="#计时中间件--健康检查端点">计时中间件 + 健康检查端点</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch25/graceful-shutdown.ts（节选）
+function handleRequest(req: IncomingMessage, res: ServerResponse): void {
+  const start = performance.now();
+  const { method = "GET", url = "/" } = req;
+
+  // --- 计时中间件：请求结束时记录耗时 ---
+  res.on("finish", () =&gt; {
+    const ms = performance.now() - start;
+    log("info", "request", { method, url, status: res.statusCode, ms: Number(ms.toFixed(2)) });
+  });
+
+  const send = (status: number, body: unknown): void =&gt; {
+    res.writeHead(status, { "content-type": "application/json" });
+    res.end(JSON.stringify(body));
+  };
+
+  // --- 健康检查端点 ---
+  if (url === "/health") {
+    if (shuttingDown) return send(503, { status: "shutting_down" });
+    return send(200, { status: "ok", uptime: process.uptime() });
+  }
+  // ...业务端点略
+}
+</code></pre>
+<ul>
+<li><strong>计时中间件</strong>：请求一进来记 <code>start</code>，监听响应的 <code>finish</code> 事件，在请求真正结束时算出耗时并记日志。这样你能观测每个端点的响应时间（呼应 25.1 的“先测量“）。</li>
+<li><strong>健康检查端点 <code>/health</code></strong>：容器编排（如 Kubernetes）和负载均衡会定期请求它，判断这个实例“活着且能服务吗“。注意：一旦开始关闭，它返回 <code>503</code>，好让负载均衡<strong>把流量从这个即将退出的实例上摘走</strong>。</li>
+</ul>
+<h3 id="优雅关闭graceful-shutdown"><a class="header" href="#优雅关闭graceful-shutdown">优雅关闭（graceful shutdown）</a></h3>
+<p>这是“上线“和“玩具“最大的区别之一。当运维要停服务时，操作系统会发一个<strong>信号（signal）</strong>：容器/pm2 发 <code>SIGTERM</code>，你按 Ctrl+C 发 <code>SIGINT</code>。如果进程收到信号就立刻硬退出，<strong>正在处理中的请求会被粗暴掐断</strong>，用户看到报错。优雅关闭的做法是：停止接收新请求，等手头的请求处理完，再退出。</p>
+<pre><code class="language-typescript">// 文件：code/ch25/graceful-shutdown.ts（节选）
+const shutdown = (signal: string): void =&gt; {
+  if (shuttingDown) return; // 防止重复触发。
+  shuttingDown = true;
+  log("warn", "shutdown_start", { signal });
+
+  // server.close 会等所有活跃连接结束，然后回调。
+  server.close(() =&gt; {
+    log("info", "shutdown_complete");
+    process.exit(0);
+  });
+
+  // 兜底：超过 shutdownTimeoutMs 还没关完，就强制退出，避免进程"卡死"。
+  const timer = setTimeout(() =&gt; {
+    log("error", "shutdown_forced_timeout");
+    process.exit(1);
+  }, config.shutdownTimeoutMs);
+  timer.unref(); // 让这个定时器不要单独把进程"钉住"。
+};
+
+process.on("SIGTERM", () =&gt; shutdown("SIGTERM")); // 容器/pm2 停止时发送。
+process.on("SIGINT", () =&gt; shutdown("SIGINT")); // Ctrl+C。
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>server.close(cb)</code></strong>：停止接收新连接，等所有<strong>活跃连接</strong>处理完毕后调用 <code>cb</code>，我们在里面 <code>process.exit(0)</code> 正常退出。</li>
+<li><strong>超时兜底</strong>：万一有请求卡住导致迟迟关不掉，<code>setTimeout</code> 到点就强制退出（exit code 1），避免进程僵死。<code>timer.unref()</code> 让这个定时器不要单独把事件循环撑住（否则明明可以关了却因为定时器还在而不退出）。</li>
+<li><strong><code>process.on("SIGTERM" / "SIGINT")</code></strong>：注册信号处理器。<code>shuttingDown</code> 标志防止收到多个信号时重复触发。</li>
+</ul>
+<blockquote>
+<p>📌 进程管理：生产上常用 <strong>pm2</strong> 或直接由容器编排托管进程，负责崩溃自动重启、多实例、日志收集。它们停止进程的方式正是发 <code>SIGTERM</code>——所以你的优雅关闭必须响应它。</p>
+</blockquote>
+<h3 id="docker把服务打包成镜像"><a class="header" href="#docker把服务打包成镜像">Docker：把服务打包成镜像</a></h3>
+<p><strong>Docker</strong> 把“代码 + 运行时 + 依赖“一起打包成<strong>镜像（image）</strong>，做到“这台能跑，那台也能跑“。我们用<strong>多阶段构建（multi-stage build）</strong>：一个阶段负责编译，另一个只带上产物，最终镜像更小更安全。</p>
+<pre><code class="language-dockerfile"># 文件：code/ch25/Dockerfile
+# ---------- 阶段 1：构建 ----------
+FROM node:22-slim AS builder
+WORKDIR /app
+
+# 先只拷贝清单文件，利用 Docker 层缓存：依赖没变时不重复 npm ci。
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# 再拷贝源码并编译。假设 npm run build 会把 TS 编译到 dist/。
+COPY . .
+RUN npm run build
+
+# ---------- 阶段 2：运行 ----------
+FROM node:22-slim AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+# 只安装生产依赖（跳过 devDependencies，如 typescript / vitest）。
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+# 从 builder 阶段拷贝编译好的产物。
+COPY --from=builder /app/dist ./dist
+
+# 不用 root 运行：node 官方镜像自带非特权用户 node。
+USER node
+EXPOSE 3000
+CMD ["node", "dist/graceful-shutdown.js"]
+</code></pre>
+<p>几个要点：</p>
+<ul>
+<li><strong>先拷清单再拷源码</strong>：<code>package.json</code> 没变时，Docker 会复用 <code>npm ci</code> 那一层的缓存，不必每次改代码都重装依赖——构建快很多。这是“利用层缓存“的经典技巧。</li>
+<li><strong>两个阶段</strong>：<code>builder</code> 装了全部依赖（含 TypeScript）来编译；<code>runner</code> 只 <code>npm ci --omit=dev</code> 装生产依赖、再从 builder 拷 <code>dist/</code>。最终镜像里没有 TypeScript、没有源码，更小、攻击面更少。</li>
+<li><strong><code>USER node</code></strong>：不用 root 跑应用，降低被攻破后的风险。</li>
+<li><strong><code>CMD</code> 用 <code>node dist/...</code></strong>：跑编译产物，PID 1 收到编排发来的 <code>SIGTERM</code> 正好被我们的优雅关闭接住。</li>
+</ul>
+<p>配套的 <code>.dockerignore</code>（形同 <code>.gitignore</code>）避免把 <code>node_modules</code>、<code>.env</code>、<code>.git</code> 拷进构建上下文：</p>
+<pre><code class="language-text"># 文件：code/ch25/.dockerignore（节选）
+node_modules
+dist
+.git
+.env
+.env.*
+</code></pre>
+<p>⚠️ <strong>务必忽略 <code>.env</code></strong>——绝不能把密钥打进镜像。</p>
+<p>常用命令（本机需装 Docker）：</p>
+<pre><code class="language-bash">docker build -t task-service .      # 构建镜像
+docker run -p 3000:3000 task-service # 运行，映射端口
+</code></pre>
+<h3 id="ci每次提交自动检查"><a class="header" href="#ci每次提交自动检查">CI：每次提交自动检查</a></h3>
+<p>**CI（持续集成，Continuous Integration）**让每次 <code>push</code>/PR 自动跑类型检查、测试、构建，坏代码进不了主干。下面是一条最小的 <strong>GitHub Actions</strong> 流水线：</p>
+<pre><code class="language-yaml"># 文件：code/ch25/.github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install deps
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build
+</code></pre>
+<p>逐段：</p>
+<ul>
+<li><strong><code>on</code></strong>：触发时机——推送到 <code>main</code> 或任何 PR。</li>
+<li><strong><code>runs-on</code></strong>：在 GitHub 提供的全新 Ubuntu 虚拟机上跑。</li>
+<li><strong><code>steps</code></strong>：检出代码 → 装 Node（带 npm 缓存加速）→ <code>npm ci</code> 精确安装 → 类型检查 → 测试 → 构建。<strong>任一步失败，整个流水线失败</strong>，PR 上显示红叉，评审就知道这次改动有问题。</li>
+</ul>
+<blockquote>
+<p>💡 把这份文件放到项目根的 <code>.github/workflows/</code> 下，推到 GitHub 即自动生效。CI 绿了再合并，是团队协作的底线纪律。</p>
+</blockquote>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>凭感觉优化</strong>：改了半天“感觉更快“，其实没量过。✅ 永远先 <code>performance.now()</code> / 基准测试定位真正的瓶颈。</li>
+<li>⚠️ <strong>循环里套 <code>O(n)</code> 查找</strong>导致 <code>O(n²)</code>。✅ 需要频繁“查存在/取值“就上 <code>Set</code>/<code>Map</code>。</li>
+<li>⚠️ <strong>在请求处理里跑同步重活</strong>卡死事件循环。✅ I/O 用异步、大数据用流、纯算用 worker_threads。</li>
+<li>⚠️ <strong>忘了清理定时器/监听器</strong>造成内存泄漏。✅ 有 <code>on</code>/<code>setInterval</code> 就要有对应的 <code>off</code>/<code>clearInterval</code>。</li>
+<li>⚠️ <strong>收到 SIGTERM 直接硬退出</strong>掐断在途请求。✅ 实现优雅关闭：<code>server.close</code> + 超时兜底。</li>
+<li>⚠️ <strong>把密钥写死在代码或打进镜像</strong>。✅ 用环境变量，<code>.env</code> 加进 <code>.gitignore</code> 和 <code>.dockerignore</code>。</li>
+<li>⚠️ <strong>部署编译前的 TS 或带着 devDependencies</strong>，镜像臃肿。✅ 交付 <code>dist/</code>，生产只装 <code>--omit=dev</code>，用多阶段构建。</li>
+<li>✅ <strong>上线三件套别省</strong>：健康检查端点、结构化日志、CI 流水线。</li>
+</ul>
+<hr>
+<h2 id="本章小项目完善并发布服务"><a class="header" href="#本章小项目完善并发布服务">本章小项目：完善并“发布“服务</a></h2>
+<p><strong>需求</strong>：把一个最小任务服务打磨到“可上线“的状态——具备健康检查、结构化日志、环境变量配置、请求计时、优雅关闭，并配好 Dockerfile 与 CI。</p>
+<p><strong>实现</strong>：就是本章反复引用的 <code>code/ch25/graceful-shutdown.ts</code>（服务）+ <code>Dockerfile</code> + <code>.dockerignore</code> + <code>.github/workflows/ci.yml</code>（发布产物）。服务代码把 25.6 的每个要素都串了起来：<code>loadConfig</code> 读环境变量、<code>log</code> 打结构化日志、<code>res.on("finish")</code> 计时、<code>/health</code> 健康检查、<code>shutdown</code> 优雅关闭。</p>
+<p><strong>如何验证</strong>：这个脚本自带一个 <code>--selftest</code> 模式——它会启动服务、自动打三个请求断言、再给自己发 <code>SIGTERM</code> 验证优雅退出，无需你手动 curl：</p>
+<pre><code class="language-bash">cd code
+npx tsx ch25/graceful-shutdown.ts --selftest
+</code></pre>
+<p>实测输出（节选）：</p>
+<pre><code class="language-text">{"ts":"...","level":"info","msg":"server_started","port":3999,"env":"development"}
+{"ts":"...","level":"info","msg":"request","method":"GET","url":"/health","status":200,"ms":1.35}
+--- 自测断言 ---
+OK: /health 返回 200 ok
+OK: /tasks 返回任务列表
+OK: 未知路径返回 404
+{"ts":"...","level":"info","msg":"selftest_send_SIGTERM"}
+{"ts":"...","level":"warn","msg":"shutdown_start","signal":"SIGTERM"}
+{"ts":"...","level":"info","msg":"shutdown_complete"}
+</code></pre>
+<p>进程以 exit code 0 正常退出——说明优雅关闭生效了。</p>
+<p>正常启动（不带 <code>--selftest</code>）后可以手动验证：</p>
+<pre><code class="language-bash">npx tsx ch25/graceful-shutdown.ts   # 另开终端
+curl localhost:3000/health          # {"status":"ok","uptime":...}
+curl localhost:3000/tasks           # {"tasks":[...]}
+# 回到服务终端按 Ctrl+C，观察 shutdown_start → shutdown_complete
+</code></pre>
+<p><strong>逐段讲解</strong>已在 25.6 逐一给出：配置、日志、计时中间件、健康检查、信号处理与优雅关闭，以及 Dockerfile 的多阶段构建和 CI 流水线。它把本章“性能观测 + 可部署“两条线合到了同一个服务里。</p>
+<p><strong>扩展练习</strong>：</p>
+<ol>
+<li>给服务加一个 <code>/metrics</code> 端点，累计返回总请求数、各状态码计数、平均响应耗时（复用计时中间件的数据）。</li>
+<li>把第 23/24 章的任务 API（Express + SQLite）也加上优雅关闭：<code>SIGTERM</code> 时先 <code>server.close</code>，再关闭数据库连接。</li>
+<li>本机装好 Docker 后，真的 <code>docker build</code> + <code>docker run</code> 一次，用 <code>curl</code> 打通容器里的 <code>/health</code>。</li>
+<li>在 CI 里再加一步 <code>npm run lint</code>（第 21 章），让风格问题也进不了主干。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p><strong>本章重点回顾：</strong></p>
+<ul>
+<li>性能第一纪律是<strong>先测量再优化</strong>；用 <code>performance.now()</code> / <code>console.time</code> 量，用 Big-O 直觉找 <code>O(n²)</code> 陷阱，用 <code>Set</code>/<code>Map</code>、循环不变量外提、memoize 消除浪费。</li>
+<li>Node 单线程，<strong>别用同步重活阻塞事件循环</strong>；I/O 异步、大数据用流、CPU 密集用 worker。</li>
+<li>调试用 VS Code 断点 / <code>--inspect</code>，靠 <strong>source map</strong> 直接调试 TS，会读调用栈。</li>
+<li>内存泄漏多来自<strong>未清理的定时器/监听器、无上限缓存、闭包意外持有大对象</strong>。</li>
+<li>部署产物是编译后的 <code>dist/</code>（带 <code>.d.ts</code> 与 source map），配置走环境变量。</li>
+<li>可上线服务要有<strong>健康检查、结构化日志、优雅关闭</strong>；用<strong>多阶段 Dockerfile</strong> 打小镜像，用 <strong>CI</strong> 守住质量底线。</li>
+</ul>
+<p><strong>自测题：</strong></p>
+<ol>
+<li>为什么优化前一定要先测量？举一个“凭感觉优化“可能适得其反的例子。</li>
+<li>一段循环里用了 <code>array.includes</code> 判断存在，整体是什么复杂度？怎么把它降下来？</li>
+<li>为什么说在请求处理函数里写一个巨大的同步 <code>for</code> 循环，会拖垮整个服务器而不只是当前请求？</li>
+<li>收到 <code>SIGTERM</code> 时直接 <code>process.exit(0)</code> 有什么问题？优雅关闭多做了哪两件事？</li>
+<li>多阶段 Docker 构建里，<code>runner</code> 阶段为什么要 <code>npm ci --omit=dev</code>，又为什么从 <code>builder</code> 拷 <code>dist/</code> 而不是重新编译？</li>
+<li><code>.env</code> 为什么必须同时出现在 <code>.gitignore</code> 和 <code>.dockerignore</code> 里？</li>
+</ol>
+<blockquote>
+<p>答案都在正文。答不上来就回到对应小节，最好把 <code>bench.ts</code> 和 <code>graceful-shutdown.ts --selftest</code> 亲手跑一遍。</p>
+</blockquote>
+<p>下一章是全书收官——第 26 章，我们把这一路学到的 JS、TS、Node、Express、SQLite、测试、工程化，全部整合进一个<strong>完整的全栈任务管理器</strong>：后端 REST API + 命令行客户端。是时候把所有拼图拼成一幅完整的画了。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch24.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch26.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch24.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch26.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

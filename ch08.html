@@ -1,0 +1,840 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 8 章 · 异步编程：事件循环、Promise 与 async/await - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch08.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-8-章--异步编程事件循环promise-与-asyncawait"><a class="header" href="#第-8-章--异步编程事件循环promise-与-asyncawait">第 8 章 · 异步编程：事件循环、Promise 与 async/await</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前七章我们写的代码几乎都是**同步（synchronous）**的：一行执行完，才轮到下一行。但真实世界里，程序常常要“等“——等网络请求返回、等文件读完、等定时器到点、等用户点击。如果“等“的时候整个程序卡死，那体验将糟糕透顶。</p>
+<p>**异步编程（asynchronous programming）**就是解决“如何优雅地等待“的技术，它也是 JavaScript 公认最烧脑、面试最爱问、初学者最容易踩坑的一块。这一章我们把它讲透。</p>
+<p>学完本章你会：</p>
+<ul>
+<li>分清<strong>同步/异步</strong>、<strong>阻塞/非阻塞</strong>，理解为什么“单线程“的 JS 还能“同时“处理很多事。</li>
+<li>彻底搞懂 <strong>事件循环（event loop）</strong>：调用栈、宏任务（macrotask）队列、微任务（microtask）队列到底谁先谁后。经典输出顺序题一次讲清。</li>
+<li>认识**回调（callback）**和它带来的“回调地狱（callback hell）“。</li>
+<li>掌握 <strong>Promise</strong>：三种状态、<code>then/catch/finally</code>、链式调用、错误传播，以及 <code>all / allSettled / race / any</code> 四大组合器。</li>
+<li>用 <strong>async/await</strong> 把异步代码写得像同步一样清爽，用 <code>try/catch</code> 处理异步错误，分清<strong>串行</strong>与<strong>并行</strong>。</li>
+<li>避开四大常见坑：忘记 <code>await</code>、未捕获的 rejection、把可并行的请求写成串行、在 <code>forEach</code> 里用 <code>async</code>。</li>
+<li>写出一个可复用的 <code>delay(ms)</code> 工具，并动手实现本章小项目——<strong>并发请求限流器 <code>asyncPool</code></strong>。</li>
+</ul>
+<p>我们从最基础的“同步和异步到底差在哪“讲起。</p>
+<hr>
+<h2 id="81-同步-vs-异步阻塞-vs-非阻塞"><a class="header" href="#81-同步-vs-异步阻塞-vs-非阻塞">8.1 同步 vs 异步、阻塞 vs 非阻塞</a></h2>
+<p>想象你去一家餐厅吃饭。</p>
+<ul>
+<li><strong>同步阻塞（synchronous &amp; blocking）</strong>：你在柜台点了一份现做的牛排，然后<strong>站在柜台前一动不动地等</strong>，直到牛排做好递给你，你才离开柜台去做别的事。这期间柜台被你霸占，后面的人干瞪眼。</li>
+<li><strong>异步非阻塞（asynchronous &amp; non-blocking）</strong>：你点完餐，服务员给你一个<strong>取餐号</strong>，你回座位刷手机、聊天，牛排好了会<strong>叫号</strong>通知你去取。这期间柜台没被占用，别人也能点餐。</li>
+</ul>
+<p>代码里也是同一回事：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/01-sync-vs-async.js
+// 1) 同步（阻塞）：下面这行会"卡住" 1 秒，期间程序什么也干不了
+function sleepSyncBlocking(ms) {
+  const end = Date.now() + ms;
+  while (Date.now() &lt; end) {
+    // 空转，霸占 CPU，谁也别想动
+  }
+}
+
+console.log("同步版本开始");
+console.log("A");
+sleepSyncBlocking(1000); // 阻塞 1 秒
+console.log("B（1 秒后才打印，期间程序完全卡死）");
+console.log("同步版本结束");
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>sleepSyncBlocking</code> 用一个 <code>while</code> 空循环硬生生地占着 CPU 一秒。这一秒里，JavaScript <strong>什么别的都做不了</strong>——它是“同步阻塞“的典型。</li>
+<li>所以 <code>A</code> 打印后，要苦等一秒，<code>B</code> 才出来。</li>
+</ul>
+<p>再看异步版本：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/01-sync-vs-async.js（续）
+console.log("异步版本开始");
+console.log("C");
+setTimeout(() =&gt; {
+  console.log("D（1 秒后打印，但没有卡住主线程）");
+}, 1000);
+console.log("E（立刻打印，不用等 D）");
+console.log("异步版本结束（注意 D 还没打印，它在未来）");
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>setTimeout(fn, 1000)</code> 的意思是“1 秒后再执行 <code>fn</code>“，但它<strong>不会卡住</strong>当前代码。它把 <code>fn</code> 登记给“计时器”，然后立刻返回，代码继续往下跑。</li>
+<li>所以打印顺序是 <code>C</code> → <code>E</code> → （一秒后）<code>D</code>。注意 <code>D</code> 排在“异步版本结束“<strong>后面</strong>——因为它属于“未来“。</li>
+</ul>
+<p>运行 <code>node 01-sync-vs-async.js</code>，实测输出正是：</p>
+<pre><code>C
+E（立刻打印，不用等 D）
+异步版本结束（注意 D 还没打印，它在未来）
+D（1 秒后打印，但没有卡住主线程）
+</code></pre>
+<p>📌 <strong>同步</strong>：代码按书写顺序一行行执行，前一件事没完成，后面等着。<strong>异步</strong>：把“耗时的事“交给别人（定时器、系统 I/O、网络），登记好“完成后做什么“，当前代码继续往下跑，不傻等。</p>
+<p>💡 术语区分：<strong>阻塞/非阻塞</strong>描述“发起调用的一方要不要停下来等“；<strong>同步/异步</strong>描述“结果是当场返回还是稍后通知“。日常里我们常把“同步阻塞“和“异步非阻塞“当成两套组合来记，够用了。</p>
+<hr>
+<h2 id="82-单线程为什么还能并发事件循环登场"><a class="header" href="#82-单线程为什么还能并发事件循环登场">8.2 单线程为什么还能并发？——事件循环登场</a></h2>
+<p>新手最大的困惑是：<strong>JavaScript 是单线程（single-threaded）的</strong>——同一时刻只有一条“执行线“在跑代码。那它凭什么能“同时“处理定时器、网络请求、用户点击？</p>
+<p>答案是：<strong>耗时的等待不是 JS 自己干的</strong>。</p>
+<ul>
+<li>你调 <code>setTimeout</code>，计时是<strong>由运行环境</strong>（浏览器/Node）在后台的计时器完成的，不占用 JS 线程。</li>
+<li>你发网络请求，实际的网络收发是<strong>操作系统 / 底层线程池</strong>在做的，不占用 JS 线程。</li>
+<li>等这些后台工作完成，环境会把你登记的“回调函数“<strong>放进一个队列</strong>，排队等 JS 线程有空了来执行。</li>
+</ul>
+<p>那“JS 线程有空了来取队列“这个循环，就叫 <strong>事件循环（event loop）</strong>。它是这样一个不知疲倦的循环：</p>
+<ol>
+<li><strong>调用栈（call stack）</strong>：执行当前的同步代码。函数调用进栈，返回出栈。</li>
+<li>栈空了（当前这批同步代码跑完了），就去<strong>任务队列</strong>里取一个排队的回调，压进栈里执行。</li>
+<li>执行完再看队列，如此往复——“循环“由此得名。</li>
+</ol>
+<p>用餐厅比喻：JS 线程是<strong>唯一的一个厨师</strong>。他不会站着等牛排烤熟（那样太浪费），而是把牛排丢进烤箱（交给环境），转身去处理下一张订单。烤箱“叮“一声（回调入队），厨师<strong>忙完手头的活</strong>（栈空）后，再回来处理这份烤好的牛排。一个厨师，靠“不傻等“，服务了一整个餐厅——这就是单线程并发的秘密。</p>
+<p>⚠️ 正因为只有一个厨师，<strong>你千万别让他站着空等</strong>（比如 8.1 里的 <code>while</code> 空转）。一旦某段同步代码跑很久，整个页面/服务就“卡死“，所有回调都得排队干瞪眼。这叫“阻塞事件循环“，是性能杀手。</p>
+<hr>
+<h2 id="83-宏任务与微任务谁先执行"><a class="header" href="#83-宏任务与微任务谁先执行">8.3 宏任务与微任务：谁先执行？</a></h2>
+<p>事件循环里其实有<strong>两种队列</strong>，优先级不同，这是那道经典面试题的核心。</p>
+<ul>
+<li><strong>宏任务队列（macrotask queue，也叫 task queue）</strong>：<code>setTimeout</code>、<code>setInterval</code>、I/O 回调、<code>setImmediate</code>（Node）等属于这里。</li>
+<li><strong>微任务队列（microtask queue）</strong>：<code>Promise.then/catch/finally</code> 的回调、<code>queueMicrotask</code>、Node 的 <code>process.nextTick</code> 属于这里。</li>
+</ul>
+<p>关键规则，<strong>背下来</strong>：</p>
+<p>📌 每执行完<strong>一个</strong>宏任务（包括最开始那段主脚本，它本身就是第一个宏任务），事件循环会<strong>立刻把微任务队列全部清空</strong>，然后才去取下一个宏任务。</p>
+<p>换句话说：<strong>微任务永远排在下一个宏任务之前</strong>。而且微任务清空过程中若又产生新微任务，也会在本轮一并清完，才轮到宏任务。</p>
+<p>看这段经典代码：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/02-event-loop.js
+console.log("1 —— 同步：脚本一开始就执行");
+
+setTimeout(() =&gt; {
+  console.log("5 —— 宏任务：setTimeout 回调（任务队列）");
+}, 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log("3 —— 微任务：第一个 Promise.then");
+});
+
+queueMicrotask(() =&gt; {
+  console.log("4 —— 微任务：queueMicrotask（和 then 同属微任务队列）");
+});
+
+console.log("2 —— 同步：脚本最后一行");
+</code></pre>
+<p>运行 <code>node 02-event-loop.js</code>，实测输出：</p>
+<pre><code>1 —— 同步：脚本一开始就执行
+2 —— 同步：脚本最后一行
+3 —— 微任务：第一个 Promise.then
+4 —— 微任务：queueMicrotask（和 then 同属微任务队列）
+5 —— 宏任务：setTimeout 回调（任务队列）
+</code></pre>
+<p><strong>逐段拆解，跟着事件循环走一遍：</strong></p>
+<ol>
+<li>主脚本作为第一个宏任务开始执行（同步部分）。</li>
+<li><code>console.log("1...")</code> → 立刻打印 <strong>1</strong>。</li>
+<li>遇到 <code>setTimeout(..., 0)</code>：把回调登记到<strong>宏任务</strong>队列（哪怕是 0 毫秒，也得排队）。</li>
+<li>遇到 <code>Promise.resolve().then(...)</code>：把回调登记到<strong>微任务</strong>队列。</li>
+<li>遇到 <code>queueMicrotask(...)</code>：同样登记到<strong>微任务</strong>队列（排在上面那个 <code>then</code> 后面）。</li>
+<li><code>console.log("2...")</code> → 立刻打印 <strong>2</strong>。主脚本这个宏任务执行完了，栈空。</li>
+<li>事件循环<strong>先清空微任务队列</strong>：依次执行，打印 <strong>3</strong>、<strong>4</strong>。</li>
+<li>微任务清空后，才去取宏任务队列：执行 <code>setTimeout</code> 回调，打印 <strong>5</strong>。</li>
+</ol>
+<p>💡 记忆口诀：<strong>同步 → 微任务 → 宏任务</strong>。同一批同步代码里，<code>Promise.then</code> 一定比 <code>setTimeout</code> 先执行，哪怕后者是 <code>0</code> 毫秒。</p>
+<h3 id="node-里的-processnexttick"><a class="header" href="#node-里的-processnexttick">Node 里的 process.nextTick</a></h3>
+<p>Node 还有一个 <code>process.nextTick</code>，它属于一个<strong>独立于 Promise 微任务的队列</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/03-microtask-order.js
+console.log("start"); // 同步
+
+setTimeout(() =&gt; console.log("setTimeout（宏任务）"), 0);
+
+Promise.resolve().then(() =&gt; {
+  console.log("promise 1（微任务）");
+  // 在一个微任务里再注册微任务，会插到微任务队列末尾，仍在宏任务之前被清空
+  Promise.resolve().then(() =&gt; console.log("promise 1.1（嵌套微任务）"));
+});
+
+process.nextTick(() =&gt; console.log("nextTick（Node 独有队列）"));
+
+Promise.resolve().then(() =&gt; console.log("promise 2（微任务）"));
+
+console.log("end"); // 同步
+</code></pre>
+<p>运行 <code>node 03-microtask-order.js</code>，本机（Node 24）实测输出：</p>
+<pre><code>start
+end
+promise 1（微任务）
+promise 2（微任务）
+promise 1.1（嵌套微任务）
+nextTick（Node 独有队列）
+setTimeout（宏任务）
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>start</code>、<code>end</code> 是同步代码，最先打印。</li>
+<li>然后清空微任务：<code>promise 1</code>、<code>promise 2</code>。注意 <code>promise 1</code> 内部又注册了 <code>promise 1.1</code>——这个新微任务会追加到本轮微任务队列末尾，所以在 <code>promise 2</code> 之后、但仍在<strong>宏任务之前</strong>执行。</li>
+<li><code>nextTick</code> 也在所有宏任务之前跑完。</li>
+<li>最后才是 <code>setTimeout</code> 这个宏任务。</li>
+</ul>
+<p>⚠️ <strong>陷阱</strong>：网上流传“<code>process.nextTick</code> 永远优先于 <code>Promise</code>“。这只在“从同一次回调内部同时排队“时严格成立；在顶层脚本里同时排队时，不同 Node 版本表现可能不同（本机实测就是 Promise 先、nextTick 后）。所以<strong>不要依赖 <code>nextTick</code> 和 <code>Promise</code> 之间的相对顺序</strong>。你能可靠依赖的只有一条：<strong>它们都是微任务，都在任何 <code>setTimeout</code> 宏任务之前执行</strong>。</p>
+<hr>
+<h2 id="84-回调与回调地狱"><a class="header" href="#84-回调与回调地狱">8.4 回调与回调地狱</a></h2>
+<p>在 Promise 出现之前，异步的“完成后做什么“全靠<strong>回调函数（callback）</strong>：你把一个函数传给异步操作，它做完了就调用你这个函数。</p>
+<p>Node 早期约定了一种“错误优先（error-first）“回调风格：回调的<strong>第一个参数是错误</strong>，成功时它为 <code>null</code>，第二个参数才是数据。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/04-callback-hell.js
+// 模拟一个"异步读取"：ms 毫秒后，用回调把结果交出去
+function fakeRead(name, ms, cb) {
+  setTimeout(() =&gt; {
+    if (!name) {
+      cb(new Error("名字不能为空")); // 出错时把 error 传回去
+      return;
+    }
+    cb(null, `【${name} 的内容】`); // 成功：error 为 null
+  }, ms);
+}
+</code></pre>
+<p>单个回调还好，可一旦多个异步步骤<strong>有先后依赖</strong>（第二步要用第一步的结果），就只能一层层往里嵌：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/04-callback-hell.js（续）
+fakeRead("a.txt", 100, (err1, data1) =&gt; {
+  if (err1) return console.error(err1);
+  console.log("读到：", data1);
+  fakeRead("b.txt", 100, (err2, data2) =&gt; {
+    if (err2) return console.error(err2);
+    console.log("读到：", data2);
+    fakeRead("c.txt", 100, (err3, data3) =&gt; {
+      if (err3) return console.error(err3);
+      console.log("读到：", data3);
+      console.log("三步都完成了——但代码已经缩进成金字塔（callback hell）");
+    });
+  });
+});
+</code></pre>
+<p><strong>逐段拆解，看看它烂在哪：</strong></p>
+<ul>
+<li><strong>层层缩进</strong>：每多一步就多一层嵌套，代码向右倾斜成“厄运金字塔（pyramid of doom）“，读起来痛苦。</li>
+<li><strong>错误处理重复</strong>：每一层都要写一遍 <code>if (err) return ...</code>，又啰嗦又容易漏。</li>
+<li><strong>无法用返回值</strong>：结果只能靠回调层层往里传，没法像同步代码那样 <code>const x = ...</code>。</li>
+<li><strong>组合困难</strong>：想“三个一起并行然后汇总“？用纯回调写会更乱。</li>
+</ul>
+<p>这就是 <strong>回调地狱（callback hell）</strong>。Promise 和 async/await 就是来拯救它的。接下来我们用它们把这段金字塔<strong>拉平</strong>。</p>
+<hr>
+<h2 id="85-promise异步的承诺"><a class="header" href="#85-promise异步的承诺">8.5 Promise：异步的“承诺“</a></h2>
+<p><strong>Promise（承诺）</strong> 是一个代表“未来某个值“的对象。可以把它想成餐厅那张<strong>取餐号</strong>：你现在拿到的不是牛排本身，而是一张“将来能换牛排“的凭证。这张凭证有三种状态：</p>
+<ul>
+<li><strong>pending（进行中）</strong>：还没出结果（牛排在做）。</li>
+<li><strong>fulfilled（已成功）</strong>：拿到了值（牛排做好了）。通过 <code>resolve(值)</code> 进入此状态。</li>
+<li><strong>rejected（已失败）</strong>：出错了（牛排烤糊了）。通过 <code>reject(错误)</code> 进入此状态。</li>
+</ul>
+<p>📌 Promise 的状态<strong>只能从 pending 变一次</strong>，要么变 fulfilled，要么变 rejected，之后<strong>永不再变</strong>。这个“一锤定音“的特性让它可预测。</p>
+<h3 id="创建与消费-promise"><a class="header" href="#创建与消费-promise">创建与消费 Promise</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch08/05-promise-basics.js
+function fakeRead(name, ms) {
+  return new Promise((resolve, reject) =&gt; {
+    // executor 会立即同步执行；把异步结果通过 resolve/reject 交出去
+    setTimeout(() =&gt; {
+      if (!name) reject(new Error("名字不能为空"));
+      else resolve(`【${name} 的内容】`);
+    }, ms);
+  });
+}
+
+fakeRead("a.txt", 100)
+  .then((data) =&gt; {
+    console.log("① then 拿到数据：", data);
+  })
+  .catch((err) =&gt; {
+    console.log("① catch：", err.message);
+  })
+  .finally(() =&gt; {
+    console.log("① finally：无论成败都会执行（收尾）");
+  });
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>new Promise((resolve, reject) =&gt; {...})</code>：传给它的函数叫 <strong>executor（执行器）</strong>，它会<strong>立即同步执行</strong>。你在里面启动异步操作，完成时调用 <code>resolve(值)</code>（成功）或 <code>reject(错误)</code>（失败）。</li>
+<li><code>.then(onFulfilled)</code>：注册“成功后做什么“，参数就是 <code>resolve</code> 传的值。</li>
+<li><code>.catch(onRejected)</code>：注册“失败后做什么“，参数就是 <code>reject</code> 传的错误。</li>
+<li><code>.finally(fn)</code>：无论成功失败都会执行，适合做收尾（关加载动画、清理资源）。它不接收结果值。</li>
+</ul>
+<h3 id="链式调用拉平金字塔"><a class="header" href="#链式调用拉平金字塔">链式调用：拉平金字塔</a></h3>
+<p><code>then</code> 的返回值大有讲究：<strong>你在 <code>then</code> 里 <code>return</code> 什么，就成为下一个 <code>then</code> 的输入</strong>。特别地，如果你 <code>return</code> 一个 Promise，链条会<strong>等它完成</strong>再往下走。这正是拉平回调地狱的关键：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/05-promise-basics.js（续）
+fakeRead("a.txt", 100)
+  .then((d1) =&gt; {
+    console.log("链 → 读到：", d1);
+    return fakeRead("b.txt", 100); // 返回新 Promise，链会等它
+  })
+  .then((d2) =&gt; {
+    console.log("链 → 读到：", d2);
+    return fakeRead("c.txt", 100);
+  })
+  .then((d3) =&gt; {
+    console.log("链 → 读到：", d3);
+    console.log("三步完成——注意这次是'平的'，不再是金字塔");
+  })
+  .catch((err) =&gt; {
+    // 链条上任何一环 reject 或 throw，都会"跳"到这里
+    console.log("链 → 出错：", err.message);
+  });
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>三个 <code>then</code> <strong>平级排列</strong>，不再层层嵌套——同样的三步依赖，代码从金字塔变成了一条直线。</li>
+<li>每个 <code>then</code> 里 <code>return</code> 下一个 <code>fakeRead(...)</code>，链条会自动等待，顺序执行。</li>
+</ul>
+<h3 id="错误传播一个-catch-兜底"><a class="header" href="#错误传播一个-catch-兜底">错误传播：一个 catch 兜底</a></h3>
+<p>Promise 链的错误处理比回调优雅得多：链条上<strong>任何一环</strong>出错（<code>reject</code> 或 <code>throw</code>），都会<strong>跳过后面所有 <code>then</code>，直接进入最近的 <code>catch</code></strong>：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/05-promise-basics.js（续）
+fakeRead("", 50) // 空名字 → reject
+  .then((d) =&gt; console.log("这行不会执行", d))
+  .then((d) =&gt; console.log("这行也不会执行", d))
+  .catch((err) =&gt; console.log("④ 错误一路传播到 catch：", err.message));
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>fakeRead("")</code> 因名字为空而 <code>reject</code>。于是中间两个 <code>then</code> 全被跳过，错误“冒泡“到末尾的 <code>catch</code>。<strong>一个 <code>catch</code> 就能兜住整条链的错误</strong>——回想 8.4 里每层都要写 <code>if (err)</code>，高下立判。</p>
+<p>⚠️ 运行 <code>node 05-promise-basics.js</code> 时，由于各条链的定时器时长不同，<strong>它们的输出是交错的</strong>（比如那条最先 reject 的 <code>④</code> 会较早出现）。这正好印证了：多条 Promise 链是“并发“推进的，谁的定时器先到谁先打印。别被交错的顺序搞晕——每条链<strong>内部</strong>的顺序始终是对的。</p>
+<p>📌 别忘了给每条 Promise 链都接上 <code>.catch</code>。没有 <code>.catch</code> 的 reject 会变成“未捕获的 rejection“（后面 8.8 会讲）。</p>
+<hr>
+<h2 id="86-promise-的四大组合器"><a class="header" href="#86-promise-的四大组合器">8.6 Promise 的四大组合器</a></h2>
+<p>当你有<strong>多个</strong> Promise 要一起处理时，<code>Promise</code> 提供了四个静态方法。假设有这么个任务生成器：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/06-promise-combinators.js
+function task(name, ms, ok = true) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (ok) resolve(`${name} 成功(${ms}ms)`);
+      else reject(new Error(`${name} 失败(${ms}ms)`));
+    }, ms);
+  });
+}
+</code></pre>
+<p><strong><code>Promise.all</code>：全部成功才成功，任一失败即整体失败。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch08/06-promise-combinators.js（续）
+const allResult = await Promise.all([task("A", 100), task("B", 200), task("C", 50)]);
+console.log("① all（全部成功）：", allResult);
+// → [ 'A 成功(100ms)', 'B 成功(200ms)', 'C 成功(50ms)' ]
+</code></pre>
+<ul>
+<li>返回一个结果数组，<strong>顺序对应输入</strong>（哪怕 C 最先完成，它仍排在结果第 3 位）。</li>
+<li>只要有一个 <code>reject</code>，<code>all</code> 会<strong>立即整体失败</strong>（短路），不等其他的。适合“缺一不可“的场景。</li>
+</ul>
+<p><strong><code>Promise.allSettled</code>：等所有都“落定“，永不失败，逐个报告状态。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch08/06-promise-combinators.js（续）
+const settled = await Promise.allSettled([task("F", 80), task("G", 40, false)]);
+for (const r of settled) {
+  if (r.status === "fulfilled") console.log("   ✅", r.value);
+  else console.log("   ❌", r.reason.message);
+}
+</code></pre>
+<ul>
+<li>它<strong>永远成功</strong>，返回每个任务的 <code>{ status, value }</code> 或 <code>{ status, reason }</code>。适合“我要知道每个的结果，成功失败都要“的场景（如批量上传，要汇报哪些成了哪些败了）。</li>
+</ul>
+<p><strong><code>Promise.race</code>：谁先“落定“（无论成败）就用谁。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch08/06-promise-combinators.js（续）
+const raced = await Promise.race([task("慢", 200), task("快", 30)]);
+console.log("④ race（最先落定者胜出）：", raced); // → 快 成功(30ms)
+</code></pre>
+<ul>
+<li>“赛跑”：第一个落定的结果（成功或失败）就是 <code>race</code> 的结果。常用于<strong>加超时</strong>（把真实任务和一个“超时就 reject 的 Promise“一起赛跑）。</li>
+</ul>
+<p><strong><code>Promise.any</code>：第一个“成功“者胜出；全失败才失败。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch08/06-promise-combinators.js（续）
+const anyResult = await Promise.any([
+  task("H", 100, false),
+  task("I", 60), // 第一个成功的
+  task("J", 30, false),
+]);
+console.log("⑤ any（第一个成功者胜出）：", anyResult); // → I 成功(60ms)
+</code></pre>
+<ul>
+<li>和 <code>race</code> 的区别：<code>any</code> 会<strong>忽略失败</strong>，只要有一个成功就返回它；只有<strong>全部失败</strong>时才失败（抛 <code>AggregateError</code>）。适合“多个备用源，谁先成功用谁“。</li>
+</ul>
+<p>运行 <code>node 06-promise-combinators.js</code> 可验证以上全部输出。</p>
+<p>📌 一句话记忆：<code>all</code>=全成才成、<code>allSettled</code>=全等到底、<code>race</code>=先到者（不论成败）、<code>any</code>=先成功者。</p>
+<hr>
+<h2 id="87-asyncawait像写同步一样写异步"><a class="header" href="#87-asyncawait像写同步一样写异步">8.7 async/await：像写同步一样写异步</a></h2>
+<p>Promise 已经很好，但链式 <code>then</code> 多了还是有点绕。<strong>async/await</strong> 是建立在 Promise 之上的语法糖，让异步代码<strong>读起来像同步代码</strong>。</p>
+<p>两条规则：</p>
+<ol>
+<li>在函数前加 <code>async</code>，它就变成 <strong>async 函数</strong>，<strong>一定返回 Promise</strong>（<code>return</code> 的值被自动包进 <code>resolve</code>，<code>throw</code> 的错误变成 <code>reject</code>）。</li>
+<li>在 async 函数内部，可以用 <code>await</code> 后跟一个 Promise，它会**“暂停“这个函数**，直到 Promise 落定，然后把结果值“解包“出来。失败则当场“抛错”。</li>
+</ol>
+<pre><code class="language-javascript">// 文件：code/ch08/07-async-await.js
+import { delay } from "./08-delay.js";
+
+async function readFile(name, ms) {
+  await delay(ms); // await 会"暂停"这个函数，直到 delay 的 Promise 落定
+  if (!name) throw new Error("名字不能为空"); // throw 让返回的 Promise 变成 reject
+  return `【${name} 的内容】`;
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>readFile</code> 是 async 函数，它返回的是 Promise。</li>
+<li><code>await delay(ms)</code>：暂停在这里等 <code>delay</code> 完成。注意这个“暂停“<strong>不阻塞事件循环</strong>——函数被挂起后，JS 线程会去处理别的任务，等 <code>delay</code> 好了再回来接着往下跑。</li>
+<li><code>return</code> 的字符串会成为这个 Promise 的成功值；<code>throw</code> 会成为失败原因。</li>
+</ul>
+<h3 id="用-trycatch-处理异步错误"><a class="header" href="#用-trycatch-处理异步错误">用 try/catch 处理异步错误</a></h3>
+<p>async/await 最爽的一点：可以用你早就熟悉的 <code>try/catch</code> 抓异步错误（回想第 6 章说过普通 <code>try/catch</code> 抓不住 <code>setTimeout</code> 里的错误，而 <code>await</code> 打通了这一层）。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/07-async-await.js（续）
+async function demoErrorHandling() {
+  try {
+    const data = await readFile("a.txt", 100);
+    console.log("① 拿到：", data);
+    await readFile("", 50); // 会抛错
+    console.log("这行不会执行");
+  } catch (e) {
+    console.log("① try/catch 抓到异步错误：", e.message);
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>await readFile("", 50)</code> 内部 <code>throw</code> 了。因为 <code>await</code> 会把 Promise 的 reject <strong>转成一次真正的抛错</strong>，所以外层的 <code>catch</code> 能抓到它，就像同步代码一样自然。抓到后，<code>try</code> 里剩下的“这行不会执行“被跳过。</p>
+<h3 id="串行-vs-并行最容易踩坑的地方"><a class="header" href="#串行-vs-并行最容易踩坑的地方">串行 vs 并行——最容易踩坑的地方</a></h3>
+<p>⚠️ <strong>重点中的重点</strong>：<code>await</code> 会<strong>暂停等待</strong>。如果你一个接一个地 <code>await</code> 多个<strong>互不依赖</strong>的任务，它们会被<strong>串行化</strong>，白白浪费时间。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/07-async-await.js（续）
+// 串行：一个 await 接一个，后一个必须等前一个完成
+async function demoSerial() {
+  const t0 = Date.now();
+  const a = await readFile("a.txt", 300);
+  const b = await readFile("b.txt", 300);
+  const c = await readFile("c.txt", 300);
+  console.log(`② 串行耗时：约 ${Date.now() - t0}ms（300+300+300≈900）`);
+}
+</code></pre>
+<p>三个任务各 300ms，但因为串行 <code>await</code>，总耗时约 <strong>900ms</strong>（实测约 904ms）。可它们明明互不依赖，本该同时进行！正确做法是<strong>先一起发起，再用 <code>Promise.all</code> 一起等</strong>：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/07-async-await.js（续）
+// 并行：三个任务同时发起，再用 Promise.all 一起等
+async function demoParallel() {
+  const t0 = Date.now();
+  const [a, b, c] = await Promise.all([
+    readFile("a.txt", 300),
+    readFile("b.txt", 300),
+    readFile("c.txt", 300),
+  ]);
+  console.log(`③ 并行耗时：约 ${Date.now() - t0}ms（三者同时跑≈300）`);
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> 关键在于——<code>Promise.all([...])</code> 里的三个 <code>readFile(...)</code> 是<strong>先被调用</strong>的，调用的那一刻它们的定时器就都启动了、三个任务已经<strong>在并行跑</strong>了。然后 <code>await Promise.all</code> 只是“一起等它们全好“。总耗时约 <strong>300ms</strong>（实测约 302ms），比串行快了三倍。</p>
+<p>📌 判断准则：<strong>任务之间有依赖（后一个要用前一个的结果）就串行 <code>await</code>；互不依赖就并行 <code>Promise.all</code>。</strong> 运行 <code>node 07-async-await.js</code> 亲眼看这 900ms vs 300ms 的差距。</p>
+<hr>
+<h2 id="88-常见坑与最佳实践"><a class="header" href="#88-常见坑与最佳实践">8.8 常见坑与最佳实践</a></h2>
+<p>这一节把初学者最常踩的四个坑集中演示。对应文件 <code>code/ch08/09-pitfalls.js</code>，运行可复现全部现象。</p>
+<p>前置一个模拟异步函数：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/09-pitfalls.js
+import { delay } from "./08-delay.js";
+
+async function getUser(id) {
+  await delay(50);
+  return { id, name: `用户${id}` };
+}
+</code></pre>
+<p><strong>坑 1：忘记 <code>await</code>。</strong> 拿到的会是一个 Promise 对象，而不是你要的数据。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/09-pitfalls.js（续）
+const user = getUser(1); // ⚠️ 忘了 await
+console.log("坑1 忘记 await：", user); // → Promise { &lt;pending&gt; }，不是用户！
+const userOk = await getUser(1); // ✅
+console.log("坑1 正确：", userOk); // → { id: 1, name: '用户1' }
+</code></pre>
+<p>💡 如果你发现变量打印出来是 <code>Promise { &lt;pending&gt; }</code>，八成是漏了 <code>await</code>。</p>
+<p><strong>坑 2：在 <code>forEach</code> 里用 <code>async</code>。</strong> <code>Array.prototype.forEach</code> <strong>不会等待</strong>里面的 async 回调，导致“后续代码“提前跑，且无法收集结果。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/09-pitfalls.js（续）
+const ids = [1, 2, 3];
+ids.forEach(async (id) =&gt; {
+  const u = await getUser(id);
+  console.log("坑2 forEach 里拿到（会在'完成'之后才打印）：", u.name);
+});
+console.log("坑2 forEach 之后：这行会立刻执行，根本没等上面三个！");
+</code></pre>
+<p>实测里“forEach 之后“这行会<strong>先</strong>于三个用户打印出来——因为 <code>forEach</code> 发起了三个 async 回调就立刻返回了，压根没等。正确写法有两种：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/09-pitfalls.js（续）
+// ✅ 正确 A：要串行、要按顺序等，用 for...of
+for (const id of ids) {
+  const u = await getUser(id);
+  console.log("   拿到：", u.name);
+}
+// ✅ 正确 B：要并行、要收集结果，用 map + Promise.all
+const users = await Promise.all(ids.map((id) =&gt; getUser(id)));
+console.log("坑2 正确（map+Promise.all 并行）：", users.map((u) =&gt; u.name));
+</code></pre>
+<p>📌 口诀：<strong>要顺序等，用 <code>for...of</code>；要并行拿结果，用 <code>map</code> + <code>Promise.all</code>。永远别用 <code>forEach</code> 配 <code>async</code>。</strong></p>
+<p><strong>坑 3：把可并行的请求写成了串行</strong>（就是 8.7 的问题，这里再强调）。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/09-pitfalls.js（续）
+const a = await getUser(1); // 串行：等 50ms
+const b = await getUser(2); // 再等 50ms → 一共约 100ms
+// 改成并行：一共约 50ms
+const [c, d] = await Promise.all([getUser(1), getUser(2)]);
+</code></pre>
+<p><strong>坑 4：未捕获的 rejection（unhandled rejection）。</strong> 一个 Promise 失败了却没有任何 <code>.catch</code> 或 <code>try/catch</code> 接住，Node 会报 <code>UnhandledPromiseRejection</code> 甚至让进程退出。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/09-pitfalls.js（续）
+getUser(1)
+  .then(() =&gt; {
+    throw new Error("链里抛了错但没人接");
+  })
+  .catch((e) =&gt; console.log("坑4 正确：用 .catch 兜住了：", e.message));
+</code></pre>
+<p>💡 <strong>最佳实践清单：</strong></p>
+<ul>
+<li>每条 Promise 链都要有 <code>.catch</code>；每个 <code>await</code> 要么在 <code>try/catch</code> 里，要么调用方负责兜错。</li>
+<li>互不依赖的任务用 <code>Promise.all</code> 并行，别串行。</li>
+<li>需要“成功失败都收集“用 <code>Promise.allSettled</code>。</li>
+<li>不要在 <code>forEach</code>/<code>map</code> 的回调里指望 <code>await</code> 能“等住“外层——<code>forEach</code> 不等，<code>map</code> 要配 <code>Promise.all</code>。</li>
+<li>别在主线程写 CPU 密集的同步长循环，那会阻塞事件循环。</li>
+</ul>
+<h3 id="一个可复用的-delay-工具"><a class="header" href="#一个可复用的-delay-工具">一个可复用的 delay 工具</a></h3>
+<p>前面示例反复用到的 <code>delay</code>，值得单独封装成工具：</p>
+<pre><code class="language-javascript">// 文件：code/ch08/08-delay.js
+// delay(ms)：返回一个"ms 毫秒后自动 resolve"的 Promise
+export function delay(ms, value) {
+  return new Promise((resolve) =&gt; {
+    setTimeout(() =&gt; resolve(value), ms);
+  });
+}
+
+export const sleep = delay; // 别名，很多人习惯叫 sleep
+
+// 可拒绝变体：ms 毫秒后 reject，常用来给别的 Promise 加超时
+export function delayReject(ms, reason = new Error("超时")) {
+  return new Promise((_, reject) =&gt; {
+    setTimeout(() =&gt; reject(reason), ms);
+  });
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>delay(ms)</code> 把 <code>setTimeout</code> 包成 Promise，于是能在 async 函数里写 <code>await delay(1000)</code> 优雅地“睡一觉“。第二个参数 <code>value</code> 让它还能顺便携带一个返回值。</li>
+<li><code>delayReject</code> 是“到点就失败“的版本，配合 <code>Promise.race</code> 就能给任意任务加超时（本章练习会用到）。</li>
+</ul>
+<hr>
+<h2 id="89-本章小项目并发请求限流器"><a class="header" href="#89-本章小项目并发请求限流器">8.9 本章小项目：并发请求限流器</a></h2>
+<p><strong>场景</strong>：你要请求 100 个接口，但如果一口气 100 个并发发出去，可能会把服务器打爆、或触发对方的限流。你希望<strong>同时最多只有 <code>limit</code> 个在跑</strong>，完成一个就补一个进来，像流水线一样，直到全部做完——并且最终结果<strong>顺序要对应输入</strong>。</p>
+<p>我们来实现 <code>asyncPool(limit, items, iteratorFn)</code>。</p>
+<h3 id="核心思路固定数量的工人抢任务"><a class="header" href="#核心思路固定数量的工人抢任务">核心思路：固定数量的“工人“抢任务</a></h3>
+<p>不要去想“怎么控制并发数“这种抽象问题，换个具体画面：雇 <code>limit</code> 个<strong>工人（worker）</strong>，面前放一排任务。每个工人的行为很简单——<strong>做完手头的，就回头认领队列里下一个还没人做的任务</strong>，直到没任务了才收工。任意时刻正在干活的工人不超过 <code>limit</code> 个，并发数自然就被限制住了。</p>
+<pre><code class="language-javascript">// 文件：code/ch08/async-pool.js
+export async function asyncPool(limit, items, iteratorFn) {
+  const results = new Array(items.length); // 预分配，保证结果顺序 = 输入顺序
+  let nextIndex = 0; // 下一个待认领的任务下标（共享游标）
+
+  // 一个 worker：不断从队列里"认领"下一个任务来做，直到没活了
+  async function worker() {
+    while (nextIndex &lt; items.length) {
+      const current = nextIndex++; // 认领当前任务，并把游标推进
+      results[current] = await iteratorFn(items[current], current);
+    }
+  }
+
+  // 启动 min(limit, 任务数) 个 worker，让它们并行地抢任务
+  const workerCount = Math.min(limit, items.length);
+  const workers = [];
+  for (let i = 0; i &lt; workerCount; i++) {
+    workers.push(worker());
+  }
+
+  await Promise.all(workers); // 等所有 worker 都干完
+  return results;
+}
+</code></pre>
+<p><strong>逐段拆解——并发控制的原理：</strong></p>
+<ul>
+<li><code>results = new Array(items.length)</code>：<strong>预先分配</strong>结果数组。每个任务把结果写回自己的下标 <code>results[current]</code>，所以无论完成顺序如何，<strong>最终结果顺序永远对应输入</strong>。这是“顺序对应“的关键。</li>
+<li><code>nextIndex</code> 是所有 worker <strong>共享</strong>的游标，指向“下一个还没被认领的任务“。</li>
+<li><code>worker</code> 里的 <code>while</code> 循环：只要还有任务（<code>nextIndex &lt; items.length</code>），就 <code>nextIndex++</code> <strong>认领</strong>一个任务并推进游标，然后 <code>await iteratorFn</code> 去做它。做完继续 <code>while</code>，认领下一个。没任务了，<code>while</code> 退出，这个 worker 收工。</li>
+<li>为什么这样就限流了？因为我们<strong>只启动了 <code>limit</code> 个 worker</strong>。同一时刻，正卡在 <code>await iteratorFn(...)</code> 上（即正在执行任务）的，最多就是这 <code>limit</code> 个 worker。完成一个，那个 worker 立刻回到 <code>while</code> 认领下一个——<strong>“完成一个补一个“自然发生</strong>。</li>
+<li><code>Math.min(limit, items.length)</code>：任务比 <code>limit</code> 少时，没必要启动多余的 worker。<code>limit = Infinity</code> 时就等于“任务数个 worker“，即全并发。</li>
+<li>最后 <code>await Promise.all(workers)</code> 等所有 worker 的 <code>while</code> 都跑完，返回 <code>results</code>。</li>
+</ul>
+<p>💡 <strong>关于“共享游标“为什么安全</strong>：<code>const current = nextIndex++</code> 是一段<strong>同步代码</strong>，中间不会有 <code>await</code>，所以不会被别的 worker “插队“打断。JS 单线程在这里反而成了优势——你不必担心多线程那种“两个 worker 抢到同一个下标“的竞态问题。</p>
+<h3 id="演示limit1--3--infinity-的耗时差异"><a class="header" href="#演示limit1--3--infinity-的耗时差异">演示：limit=1 / 3 / Infinity 的耗时差异</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch08/async-pool.js（演示部分）
+const items = [1, 2, 3, 4, 5, 6];
+const iteratorFn = async (n, i) =&gt; {
+  await delay(200); // 假装在发网络请求，每个耗时 200ms
+  console.log(`  任务#${i}（值=${n}）完成`);
+  return n * n; // 返回平方
+};
+// 分别用 limit = 1 / 3 / Infinity 跑同一批任务
+</code></pre>
+<p>运行 <code>node async-pool.js</code>，实测（6 个任务，每个 200ms）：</p>
+<pre><code>=== limit = 1 ===         总耗时：约 1210ms   （串行：6 × 200）
+=== limit = 3 ===         总耗时：约 404ms    （分 2 批：⌈6/3⌉ × 200）
+=== limit = Infinity ===  总耗时：约 202ms    （全并发：1 批）
+结果始终是 [1,4,9,16,25,36]，顺序对应输入
+</code></pre>
+<p><strong>逐段拆解这组数字：</strong></p>
+<ul>
+<li><code>limit = 1</code>：只有一个 worker，纯串行，6 个任务排队做，约 6 × 200 = 1200ms。</li>
+<li><code>limit = 3</code>：三个 worker 同时抢。第一批做 0/1/2，各 200ms；完成后立刻补 3/4/5，再 200ms。共 2 批 ≈ 400ms。</li>
+<li><code>limit = Infinity</code>：6 个 worker 全上，一批全部 200ms 内做完 ≈ 200ms。</li>
+<li>无论哪种并发度，<strong>结果都是 <code>[1,4,9,16,25,36]</code></strong>，顺序纹丝不乱——这正是 <code>results[current] = ...</code> 按下标回填的功劳。</li>
+</ul>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<p>这个 <code>asyncPool</code> 是生产级思路的雏形，你可以继续增强（提示在括号里）：</p>
+<ol>
+<li><strong>加超时</strong>：让每个任务最多跑 <code>timeout</code> 毫秒，超了就算失败。（提示：<code>Promise.race([iteratorFn(...), delayReject(timeout)])</code>，用上 8.8 的 <code>delayReject</code>。）</li>
+<li><strong>加重试</strong>：任务失败后自动重试最多 <code>n</code> 次，仍失败才真失败。（提示：在 worker 里包一个 <code>for</code> 循环，<code>try/catch</code> 到最后一次才 <code>throw</code>。）</li>
+<li><strong>不因一个失败而全崩</strong>：目前某个任务抛错会让 <code>Promise.all(workers)</code> 整体失败。改成像 <code>allSettled</code> 那样，<code>results[current]</code> 存 <code>{ status, value/reason }</code>。</li>
+<li><strong>进度回调</strong>：每完成一个任务就调用一次 <code>onProgress(done, total)</code>，方便显示进度条。</li>
+</ol>
+<p>试着动手实现其中一两个——它们几乎覆盖了真实项目里“批量请求“要考虑的所有问题。</p>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>这一章我们把 JavaScript 异步的三层地基一次打牢：</p>
+<ul>
+<li><strong>同步/异步、阻塞/非阻塞</strong>：异步的本质是“把耗时的等待交给环境，登记好回调，当前代码不傻等“。</li>
+<li><strong>事件循环</strong>：单线程靠“栈空了就取队列回调“来实现并发。<strong>微任务</strong>（Promise.then / queueMicrotask / nextTick）在<strong>每个宏任务之后被整队清空</strong>，永远早于下一个<strong>宏任务</strong>（setTimeout）。口诀：<strong>同步 → 微任务 → 宏任务</strong>。</li>
+<li><strong>回调地狱</strong>：多步依赖的回调会嵌成金字塔，错误处理啰嗦。</li>
+<li><strong>Promise</strong>：三态一锤定音，<code>then/catch/finally</code> + 链式 + 一个 <code>catch</code> 兜全链错误。组合器 <code>all</code>（全成才成）/ <code>allSettled</code>（全等到底）/ <code>race</code>（先到者）/ <code>any</code>（先成功者）。</li>
+<li><strong>async/await</strong>：async 函数返回 Promise，<code>await</code> 暂停等待、用 <code>try/catch</code> 抓错。<strong>互不依赖的任务要用 <code>Promise.all</code> 并行，别用连续 <code>await</code> 串行化。</strong></li>
+<li><strong>四大坑</strong>：忘 <code>await</code>、<code>forEach</code> 配 <code>async</code>、该并行却串行、未捕获 rejection。</li>
+<li>我们封装了 <code>delay/sleep</code> 工具，并实现了<strong>并发限流器 <code>asyncPool</code></strong>——用“固定数量 worker 抢共享游标“控制并发，用“按下标回填“保证结果顺序。</li>
+</ul>
+<p><strong>自测题（先自己答，再运行代码验证）：</strong></p>
+<ol>
+<li>为什么单线程的 JavaScript 还能“并发“处理定时器和网络请求？事件循环在其中扮演什么角色？</li>
+<li>下面代码的打印顺序是什么？为什么？
+<pre><code class="language-javascript">console.log("A");
+setTimeout(() =&gt; console.log("B"), 0);
+Promise.resolve().then(() =&gt; console.log("C"));
+console.log("D");
+</code></pre>
+</li>
+<li>Promise 的三种状态是什么？状态可以来回变吗？</li>
+<li><code>Promise.all</code> 和 <code>Promise.allSettled</code> 有什么本质区别？各适合什么场景？<code>race</code> 和 <code>any</code> 呢？</li>
+<li>下面两段代码，哪段更快，为什么？如何把慢的改快？
+<pre><code class="language-javascript">// 甲
+const a = await getA(); const b = await getB();
+// 乙
+const [a, b] = await Promise.all([getA(), getB()]);
+</code></pre>
+</li>
+<li>为什么不能在 <code>forEach</code> 里指望 <code>await</code> 生效？该用什么替代？</li>
+<li><code>asyncPool</code> 是如何做到“同时最多 <code>limit</code> 个任务在跑“又“结果顺序对应输入“的？</li>
+</ol>
+<p>（参考答案：1. 耗时等待由环境后台完成，完成后把回调放进队列，事件循环在栈空时取回调执行，所以单线程也能不傻等地并发。2. <code>A D C B</code>——同步先跑 A、D；微任务 C 早于宏任务 B。3. pending / fulfilled / rejected；只能从 pending 变一次，之后永不再变。4. <code>all</code> 任一失败即整体失败、适合“缺一不可“；<code>allSettled</code> 永不失败、逐个报告状态、适合“成败都要收集“；<code>race</code> 取最先落定者（不论成败）、常用于超时；<code>any</code> 取第一个成功者、全失败才失败。5. 乙更快，因为两个请求互不依赖，<code>Promise.all</code> 让它们并行；把甲改成乙即可。6. <code>forEach</code> 不等待回调里的 async，会立刻返回；用 <code>for...of</code>（串行）或 <code>map</code>+<code>Promise.all</code>（并行）。7. 只启动 <code>limit</code> 个 worker 共享一个游标抢任务、完成一个补一个，故并发被限制；每个任务把结果写回自己的输入下标，故顺序对应输入。）</p>
+<hr>
+<p>下一章，我们进入 <strong>第 9 章 · 模块化与包管理</strong>。前面所有示例我们都用 <code>import</code> / <code>export</code> 在文件间共享代码（比如本章的 <code>delay</code> 和 <code>asyncPool</code>），但一直没正式讲它的规则。第 9 章会把 <strong>ES Modules（ESM）</strong> 与 CommonJS 讲透，教你用 <strong>npm</strong> 安装和管理第三方包、理解 <code>package.json</code>，把散落的代码组织成真正工程化的项目。有了本章异步的功底，你已经具备了阅读绝大多数现代 JS 库源码的能力。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch07.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch09.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch07.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch09.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

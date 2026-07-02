@@ -1,0 +1,903 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 13 章 · TypeScript 起步与类型注解 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch13.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-13-章--typescript-起步与类型注解"><a class="header" href="#第-13-章--typescript-起步与类型注解">第 13 章 · TypeScript 起步与类型注解</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>恭喜你！走到这里，你已经学完了 JavaScript 的<strong>全部核心</strong>：变量与类型、函数、对象与数组、闭包、原型、异步、模块、Node……这十二章的分量，足以让你写出真正能用的程序。</p>
+<p>但你可能也隐隐感觉到一件事：JavaScript 写着写着，就容易“翻车“。一个函数本来该收数字，你不小心传了字符串，它不吭声，直到运行到某一行才突然出错——甚至根本不出错，只是默默算出一个荒谬的结果。程序越大，这种“暗雷“越多。</p>
+<p>还记得第 1 章结尾我们埋下的那句伏笔吗？</p>
+<blockquote>
+<p>初步体会 JavaScript “动态类型“的特点，<strong>为后面学 TypeScript 埋下伏笔</strong>。</p>
+</blockquote>
+<p>现在，伏笔要收了。从本章开始，我们进入本书的第二大板块：<strong>TypeScript（简称 TS）</strong>。它不是另一门语言，而是给 JavaScript “加了一层类型防护网”。学完本章，你将能够：</p>
+<ul>
+<li>说清楚<strong>为什么需要 TypeScript</strong>，理解动态类型的痛点和 TS 带来的价值。</li>
+<li>理解三个关键事实：TS 是 JS 的<strong>超集（superset）</strong>、TS 会被<strong>编译（compile）<strong>成 JS、类型在运行时会被</strong>擦除（type erasure）</strong>。</li>
+<li>会用两种方式运行 TS：<code>tsx</code> 直接跑、<code>tsc</code> 编译；并知道 <code>tsconfig.json</code> 是干嘛的。</li>
+<li>熟练写<strong>基础类型注解</strong>：<code>number</code>、<code>string</code>、<code>boolean</code>、<code>null</code>、<code>undefined</code>、数组、元组（tuple）。</li>
+<li>理解<strong>类型推断（type inference）</strong>，知道“能推断就别写“、以及何时必须显式注解。</li>
+<li>给<strong>函数</strong>加类型：参数、返回值、可选参数、默认参数、rest 参数、<code>void</code>、函数类型表达式。</li>
+<li>给<strong>对象</strong>加类型：内联对象类型、可选属性、<code>readonly</code>。</li>
+<li>分清几个特殊类型：<code>any</code>（危险）、<code>unknown</code>（安全的 any）、<code>never</code>、<code>object</code>。</li>
+<li>入门<strong>字面量类型（literal type）</strong>、<code>as const</code>、类型断言 <code>as</code>。</li>
+<li>理解<strong>严格模式（strict）</strong> 的意义，尤其是 <code>strictNullChecks</code>。</li>
+</ul>
+<p>本章所有示例都是 <code>.ts</code> 文件，用 <code>npx tsx 文件.ts</code> 运行。<code>code</code> 目录已经装好了 <code>typescript</code> 和 <code>tsx</code>，<code>tsconfig.json</code> 也已经开启了严格模式（strict）。开始吧。</p>
+<hr>
+<h2 id="131-为什么需要-typescript"><a class="header" href="#131-为什么需要-typescript">13.1 为什么需要 TypeScript</a></h2>
+<h3 id="javascript-的动态类型到底带来了什么麻烦"><a class="header" href="#javascript-的动态类型到底带来了什么麻烦">JavaScript 的“动态类型“到底带来了什么麻烦</a></h3>
+<p>JavaScript 是<strong>动态类型（dynamically typed）</strong> 语言：一个变量今天装数字、明天装字符串都行，类型在<strong>运行时</strong>才确定，写代码时没人拦着你。这在写小脚本时很爽，但项目一大就成了灾难。看一个具体例子：</p>
+<pre><code class="language-typescript">// 文件：code/ch13/02-pain.ts
+
+// 想象这个函数从某个"配置"里取端口号，本意是数字相加。
+function nextPort(port) {
+  return port + 1;
+}
+</code></pre>
+<p>假设 <code>port</code> 来自环境变量。在 Node 里，环境变量<strong>永远是字符串</strong>——哪怕你在 <code>.env</code> 里写的是 <code>3000</code>，读出来也是字符串 <code>"3000"</code>。于是：</p>
+<ul>
+<li>你以为 <code>nextPort(3000)</code> 会得到 <code>3001</code>。</li>
+<li>但如果传进来的是 <code>"3000"</code>，<code>"3000" + 1</code> 在 JS 里会走<strong>字符串拼接</strong>，结果是 <code>"30001"</code>——一个错得离谱的值。</li>
+<li>而且<strong>全程不报错</strong>。程序带着这个错误值继续跑，可能在几十行之后才以一种莫名其妙的方式崩溃，让你查半天。</li>
+</ul>
+<p>这就是动态类型的核心痛点：<strong>错误发生的地方，和你发现错误的地方，隔着十万八千里。</strong> 再叠加几个常见场景，你就更能体会了：</p>
+<ul>
+<li>调一个函数，忘了它到底要几个参数、什么顺序、哪个可选——只能翻文档或翻源码。</li>
+<li>一个对象，你以为它有 <code>user.name</code>，实际字段叫 <code>user.userName</code>，写错了 <code>undefined</code>，运行时才发现。</li>
+<li>重构时改了个函数签名，结果三十个调用点里有五个没改到，你根本不知道漏了哪几个。</li>
+</ul>
+<p>📌 <strong>核心痛点一句话</strong>：动态类型把“类型错误“从“写代码时“推迟到了“运行时“，而运行时的错误又晚又隐蔽，项目越大越难维护。</p>
+<h3 id="typescript-的价值"><a class="header" href="#typescript-的价值">TypeScript 的价值</a></h3>
+<p>TypeScript 由微软开发，它做的事情很简单：<strong>让你给代码标注类型，然后在你写代码时（编译期）就把类型错误找出来。</strong> 它带来三个实打实的好处：</p>
+<ol>
+<li><strong>编译期报错（compile-time errors）</strong>：上面那个 <code>nextPort</code>，如果你声明了 <code>port: number</code>，那么传字符串进去时，TS 会<strong>在你敲代码的那一刻</strong>就用红色波浪线告诉你“类型不对“，根本轮不到运行时出问题。</li>
+<li><strong>编辑器智能提示（IntelliSense）</strong>：因为编辑器知道每个变量的类型，它能自动补全属性、方法，能告诉你函数要什么参数。写代码像开了自动挡，还顺带当文档。</li>
+<li><strong>可维护性（maintainability）</strong>：类型就是一份“永远不会过时的文档“。重构时改了签名，所有对不上的调用点会立刻标红，一个都跑不掉。团队协作、大型项目，靠的就是这个。</li>
+</ol>
+<p>💡 一句话理解：<strong>TypeScript = JavaScript + 类型系统。</strong> 它不改变 JS 的运行逻辑，只是在旁边帮你“审稿“。</p>
+<h3 id="三个必须先记住的事实"><a class="header" href="#三个必须先记住的事实">三个必须先记住的事实</a></h3>
+<p>在写任何代码之前，先把 TS 的三条“世界观“刻进脑子，后面很多困惑都能提前化解：</p>
+<p><strong>事实一：TS 是 JS 的超集（superset）。</strong> 意思是——任何合法的 JavaScript 代码，都是合法的 TypeScript 代码。你前十二章写的所有 JS，直接改成 <code>.ts</code> 后缀就能用。TS 只是<strong>额外</strong>允许你写类型注解。所以学 TS 不是推翻重来，而是“在你已有的 JS 功力上加装备“。</p>
+<p><strong>事实二：TS 要被编译（compile）成 JS 才能运行。</strong> 浏览器和 Node <strong>不认识</strong> TypeScript，它们只认识 JavaScript。所以 TS 代码要先经过一个叫<strong>编译器（compiler）</strong> 的工具，把类型注解去掉、转成普通 JS，才能真正跑起来。这个编译器就是 <code>tsc</code>（TypeScript Compiler）。</p>
+<p><strong>事实三：类型在运行时被擦除（type erasure）。</strong> 这是最关键、也最容易搞错的一点。你写的所有类型注解——<code>: number</code>、<code>: string</code>、<code>interface</code>、<code>type</code>……在编译成 JS 之后<strong>全部消失了</strong>。它们只在“编译期“存在，用来给编译器检查用；一旦变成 JS，运行时<strong>完全不存在</strong>任何类型信息。</p>
+<p>举个例子，这段 TS：</p>
+<pre><code class="language-typescript">const age: number = 30;
+</code></pre>
+<p>编译成 JS 后，就是：</p>
+<pre><code class="language-javascript">const age = 30;
+</code></pre>
+<p>那个 <code>: number</code> 蒸发了。</p>
+<p>⚠️ <strong>类型擦除是新手最大的思维误区来源。</strong> 因为类型会被擦除，所以你<strong>不能</strong>在运行时用类型做判断。比如你不能写“如果 <code>x</code> 的类型是 <code>AppConfig</code> 就怎样“——运行时根本没有 <code>AppConfig</code> 这个东西。运行时想判断类型，还得靠老朋友 <code>typeof</code>、<code>Array.isArray</code>、<code>in</code> 这些<strong>JS 原生手段</strong>（第 1 章学过）。这一点本章后面会反复强调。</p>
+<hr>
+<h2 id="132-如何运行-typescript"><a class="header" href="#132-如何运行-typescript">13.2 如何运行 TypeScript</a></h2>
+<h3 id="方式一tsx--直接跑最省事本书主用"><a class="header" href="#方式一tsx--直接跑最省事本书主用">方式一：tsx —— 直接跑，最省事（本书主用）</a></h3>
+<p>开发时我们不想每改一次就手动编译。工具 <strong><code>tsx</code></strong>（TypeScript Execute）能“一步到位“：它在背后帮你即时编译再运行，你只管写、只管跑。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/01-hello.ts
+
+// message 的类型被显式注解为 string。
+const message: string = "你好，TypeScript！";
+
+console.log(message);
+
+// 下面这行如果取消注释，tsx / tsc 会在「编译期」直接报错：
+//   Type 'number' is not assignable to type 'string'.
+// const wrong: string = 123;
+
+export {};
+</code></pre>
+<p>在 <code>code</code> 目录下运行：</p>
+<pre><code class="language-bash">npx tsx ch13/01-hello.ts
+</code></pre>
+<p>输出：</p>
+<pre><code>你好，TypeScript！
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>const message: string = "..."</code>：这里的 <code>: string</code> 就是<strong>类型注解（type annotation）</strong>——冒号后面跟类型，写在变量名和等号之间。它告诉 TS：“<code>message</code> 只能是字符串。”</li>
+<li>被注释掉的 <code>const wrong: string = 123</code>：如果你把它放开，TS 会立刻报错，因为 <code>123</code> 是数字，不能赋给声明为 <code>string</code> 的变量。这就是“编译期报错“的第一次亲身体验。</li>
+<li>末尾的 <code>export {};</code>：这行看着奇怪，作用是<strong>把这个文件标记成一个“模块“</strong>（第 9 章的 ESM），让它拥有自己独立的作用域，避免和其他示例文件的顶层变量重名。本书每个独立示例文件都会加这一行，你照做即可，第 14 章后会更自然。</li>
+</ul>
+<p>💡 <code>npx</code> 是第 9 章学过的：它临时找到并运行本地装好的 <code>tsx</code>，不用全局安装。</p>
+<h3 id="方式二tsc--正式编译成-js"><a class="header" href="#方式二tsc--正式编译成-js">方式二：tsc —— 正式编译成 JS</a></h3>
+<p>真正上线部署时，我们要把 <code>.ts</code> 编译成 <code>.js</code>。这就用 <strong><code>tsc</code></strong>：</p>
+<pre><code class="language-bash"># 把 hello.ts 编译成 hello.js（生成在同目录）
+npx tsc ch13/01-hello.ts
+</code></pre>
+<p>（注意：本书的 <code>tsconfig.json</code> 开了 <code>noEmit</code>，不会真的生成文件；这里只是说明 <code>tsc</code> 的用途。）你会得到一个 <code>hello.js</code>，里面的 <code>: string</code> 已经被擦除——这正好印证了“类型擦除“。</p>
+<p><code>tsc</code> 还有一个开发中天天用的姿势：<strong>只检查类型、不生成文件</strong>：</p>
+<pre><code class="language-bash"># --noEmit：只做类型检查，不产出 .js
+npx tsc --noEmit
+</code></pre>
+<p>这会把整个项目按 <code>tsconfig.json</code> 的规则检查一遍，报告所有类型错误。它常被放进 CI 流程，作为“代码合格线“。</p>
+<h3 id="tsconfigjsontypescript-的项目配置"><a class="header" href="#tsconfigjsontypescript-的项目配置">tsconfig.json：TypeScript 的项目配置</a></h3>
+<p>一个 TS 项目通常有个 <code>tsconfig.json</code>，告诉编译器“用什么规则、检查哪些文件“。它可以用一条命令生成：</p>
+<pre><code class="language-bash">npx tsc --init
+</code></pre>
+<p><code>code</code> 目录里已经有一份配好的了，我们看它最关键的一项：</p>
+<pre><code class="language-json">{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+</code></pre>
+<p>📌 <code>"strict": true</code> 打开了 TypeScript 的<strong>严格模式</strong>——一整套更严的检查（本章 13.9 详解）。本书全程开启严格模式，因为<strong>这才是 TS 真正发挥威力的方式</strong>。<code>tsconfig.json</code> 还有很多选项（target、module、lib……），我们放到<strong>第 20 章</strong>深入，本章只需知道它的存在和 <code>strict</code> 这一项。</p>
+<hr>
+<h2 id="133-基础类型注解"><a class="header" href="#133-基础类型注解">13.3 基础类型注解</a></h2>
+<p>现在正式学怎么写类型。最基础的一批，直接对应第 1 章那七种 JS 类型。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/03-basic-types.ts
+
+// —— 原始类型 ——
+const age: number = 30;
+const name: string = "小明";
+const isAdmin: boolean = false;
+const nothing: null = null;
+const notAssigned: undefined = undefined;
+
+console.log(age, name, isAdmin, nothing, notAssigned);
+
+// —— 数组：两种等价写法 ——
+const scores: number[] = [90, 85, 100];
+const words: Array&lt;string&gt; = ["a", "b", "c"];
+
+console.log("scores 之和：", scores.reduce((a, b) =&gt; a + b, 0));
+console.log("words：", words.join(","));
+
+// —— 元组（tuple）：定长、每个位置类型固定 ——
+// 第 0 位必须是 string，第 1 位必须是 number。
+const person: [string, number] = ["小红", 25];
+console.log("姓名：", person[0], "年龄：", person[1]);
+
+// person[0] 被 TS 记住是 string，所以可以直接用字符串方法：
+console.log("名字长度：", person[0].length);
+
+// 下面几行如果取消注释都会报错，正是元组的价值：
+// const bad1: [string, number] = [25, "小红"]; // ❌ 顺序反了
+// const bad2: [string, number] = ["小红"];      // ❌ 少了一个
+
+export {};
+</code></pre>
+<p>运行 <code>npx tsx ch13/03-basic-types.ts</code>，输出：</p>
+<pre><code>30 小明 false null undefined
+scores 之和： 275
+words： a,b,c
+姓名： 小红 年龄： 25
+名字长度： 2
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>原始类型</strong>：<code>number</code>、<code>string</code>、<code>boolean</code>、<code>null</code>、<code>undefined</code> 这几个类型名，全是<strong>小写</strong>。注意区分：小写的 <code>number</code> 是 TS 的类型，别写成大写的 <code>Number</code>（那是 JS 的包装对象构造函数，几乎永远不该用作类型）。</li>
+<li><strong>数组的两种写法</strong>：<code>number[]</code>（“数字的数组”）和 <code>Array&lt;number&gt;</code>（用泛型语法，第 16 章讲泛型）<strong>完全等价</strong>。本书更常用 <code>number[]</code>，简洁。数组里每个元素都必须是声明的那个类型，往 <code>number[]</code> 里 <code>push("4")</code> 会报错。</li>
+<li><strong>元组（tuple）</strong>：<code>[string, number]</code> 表示一个<strong>长度固定、每个位置类型固定</strong>的数组。第 0 位必须是 <code>string</code>，第 1 位必须是 <code>number</code>。它和普通数组的区别是“位置有意义“——常用来表达“一对固定搭配的值“，比如坐标 <code>[x, y]</code>、键值对 <code>[key, value]</code>。</li>
+<li><code>person[0].length</code>：因为 TS 记得第 0 位是 <code>string</code>，所以你点出来的全是字符串的方法/属性（<code>.length</code>、<code>.toUpperCase()</code>……），编辑器自动提示。这就是类型的日常好处。</li>
+<li>被注释的 <code>bad1</code>、<code>bad2</code>：元组会严格检查<strong>顺序</strong>和<strong>个数</strong>，放开任意一行都会报错。这正是你想要的保护。</li>
+</ul>
+<hr>
+<h2 id="134-变量注解与类型推断"><a class="header" href="#134-变量注解与类型推断">13.4 变量注解与类型推断</a></h2>
+<p>写到这你可能会想：每个变量都要写 <code>: 类型</code>，也太啰嗦了吧？好消息是——<strong>大多数时候你根本不用写</strong>。TypeScript 有强大的<strong>类型推断（type inference）</strong>：它能根据你赋的值，自动推断出类型。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/04-inference.ts
+
+// 没写类型，但 TS 通过右边的值推断出 count 是 number。
+let count = 0;
+count = 10; // OK
+// count = "十"; // ❌ 报错：不能把 string 赋给 number
+
+// 推断出 title 是 string。
+const title = "TypeScript";
+console.log(title.toUpperCase());
+
+// 数组字面量也能推断：这是 number[]。
+const nums = [1, 2, 3];
+// nums.push("4"); // ❌ 报错：number[] 里不能放 string
+
+// 函数返回值也能推断：TS 知道 double 返回 number。
+function double(x: number) {
+  return x * 2;
+}
+const result = double(21); // result 被推断为 number
+console.log("result =", result);
+
+// —— 何时必须显式注解？——
+// 1) 函数参数：TS 无从推断调用者会传什么，必须自己写。
+// 2) 先声明、后赋值的变量：
+let later: string;
+later = "稍后赋值";
+console.log(later);
+
+// 3) 你希望类型比推断结果更宽或更窄时（后面章节会遇到）。
+
+export {};
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>let count = 0</code>：虽然没写 <code>: number</code>，但 TS 看到你赋了 <code>0</code>，就<strong>推断</strong> <code>count</code> 是 <code>number</code>。之后 <code>count = "十"</code> 会报错——推断出来的类型和显式写的一样有约束力。</li>
+<li><code>const title = "TypeScript"</code>：推断为字符串，<code>title.toUpperCase()</code> 有提示。（顺带一提：<code>const</code> 的推断比 <code>let</code> 更“窄“，这点 13.8 讲字面量类型时会揭晓。）</li>
+<li><code>const nums = [1, 2, 3]</code>：推断为 <code>number[]</code>，<code>push("4")</code> 会报错。</li>
+<li><strong>函数返回值也能推断</strong>：<code>double</code> 的参数写了 <code>x: number</code>，TS 就知道 <code>x * 2</code> 是 <code>number</code>，于是推断返回值也是 <code>number</code>，进而 <code>result</code> 也是 <code>number</code>。整条链自动打通。</li>
+</ul>
+<p>📌 <strong>黄金法则：能推断就别写。</strong> 变量、<code>const</code>、函数返回值，绝大多数交给推断即可，代码更干净。<strong>什么时候必须显式注解？</strong> 主要三种：</p>
+<ol>
+<li><strong>函数参数</strong>——这是重中之重。TS 无法知道未来的调用者会传什么，所以<strong>参数几乎总是要你自己写类型</strong>（下一节详谈）。</li>
+<li><strong>先声明、后赋值的变量</strong>：像 <code>let later: string;</code> 这样声明时没给值，TS 推断不出来（会当成 <code>any</code>，严格模式下更麻烦），得手动注解。</li>
+<li>当你<strong>故意</strong>想让类型比推断结果更宽或更窄时（后面章节会遇到具体场景）。</li>
+</ol>
+<p>💡 别走极端：不是“永远不写类型“，也不是“处处都写“。原则是——<strong>在类型无法被推断、或推断结果不是你想要的地方，才动手写</strong>。</p>
+<hr>
+<h2 id="135-函数类型"><a class="header" href="#135-函数类型">13.5 函数类型</a></h2>
+<p>函数是程序的主角，也是类型注解最能发挥价值的地方——因为函数是“接口契约“，说清楚它要什么、给什么，调用者才不会用错。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/05-functions.ts
+
+// 参数与返回值都注解。
+function add(a: number, b: number): number {
+  return a + b;
+}
+console.log(add(2, 3));
+
+// 可选参数用 ?，它的类型其实是 string | undefined。
+function greet(name: string, title?: string): string {
+  // 因为 title 可能是 undefined，这里要判断。
+  return title ? `${title} ${name}` : `你好，${name}`;
+}
+console.log(greet("小明"));
+console.log(greet("小明", "王老师"));
+
+// 默认参数：不用写 ?，TS 从默认值推断类型为 number。
+function power(base: number, exp = 2): number {
+  return base ** exp;
+}
+console.log(power(5)); // 25
+console.log(power(2, 10)); // 1024
+
+// rest 参数：类型是数组。
+function sum(...values: number[]): number {
+  return values.reduce((a, b) =&gt; a + b, 0);
+}
+console.log(sum(1, 2, 3, 4)); // 10
+
+// void：表示"不返回有意义的值"（只做副作用）。
+function log(msg: string): void {
+  console.log("[log]", msg);
+}
+log("这是一条日志");
+
+// 函数类型表达式：把"函数的形状"作为一种类型。
+// BinaryOp 表示"接受两个 number、返回 number"的函数。
+type BinaryOp = (a: number, b: number) =&gt; number;
+
+const multiply: BinaryOp = (a, b) =&gt; a * b; // 参数类型可省略，由 BinaryOp 推断出
+console.log(multiply(6, 7)); // 42
+
+export {};
+</code></pre>
+<p>运行输出：</p>
+<pre><code>5
+你好，小明
+王老师 小明
+25
+1024
+10
+[log] 这是一条日志
+42
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>参数与返回值注解</strong>：<code>function add(a: number, b: number): number</code>。参数在括号里各自注解，<strong>返回值类型写在参数括号后面、函数体前面</strong>（<code>): number {</code>）。虽然返回值常能被推断，但对外的重要函数<strong>显式写返回值</strong>是好习惯——能防止你不小心 <code>return</code> 了个错东西。</li>
+<li><strong>可选参数 <code>?</code></strong>：<code>title?: string</code> 表示这个参数可以不传。⚠️ 关键点：可选参数的真实类型是 <code>string | undefined</code>（第 14 章讲的联合类型），所以在函数体里用它之前，<strong>必须先判断它是否存在</strong>（这里用 <code>title ? ... : ...</code>）。严格模式下，直接用一个可能为 <code>undefined</code> 的值会报错——这是好事，逼你处理“没传“的情况。</li>
+<li><strong>默认参数</strong>：<code>exp = 2</code>。给了默认值就<strong>不用写 <code>?</code></strong>，而且 TS 会从默认值 <code>2</code> 推断出 <code>exp</code> 是 <code>number</code>。调用时不传，就用默认值。</li>
+<li><strong>rest 参数</strong>：<code>...values: number[]</code>。收集所有剩余实参成一个数组，所以类型是<strong>数组类型</strong> <code>number[]</code>。（第 2 章学过 rest 语法，这里加了类型。）</li>
+<li><strong><code>void</code></strong>：<code>log</code> 只负责打印、不返回有意义的值，它的返回类型是 <code>void</code>。<code>void</code> 专门表示“这个函数不返回东西（或返回值不该被使用）“。别和 <code>undefined</code> 搞混——<code>void</code> 是给“函数返回值“用的语义标签。</li>
+<li><strong>函数类型表达式</strong>：<code>type BinaryOp = (a: number, b: number) =&gt; number</code> 把“一个函数长什么样“本身定义成了一个<strong>类型</strong>。语法是 <code>(参数: 类型) =&gt; 返回类型</code>（注意这个 <code>=&gt;</code> 是<strong>类型层面</strong>的，不是箭头函数的 <code>=&gt;</code>）。然后 <code>const multiply: BinaryOp = (a, b) =&gt; ...</code> 时，因为类型已由 <code>BinaryOp</code> 给定，箭头函数的参数 <code>a</code>、<code>b</code> <strong>不用再写类型</strong>，TS 会反过来推断——这叫<strong>上下文类型（contextual typing）</strong>。</li>
+</ul>
+<hr>
+<h2 id="136-对象类型"><a class="header" href="#136-对象类型">13.6 对象类型</a></h2>
+<p>对象是 JS 里最常见的数据结构。给对象加类型，就是描述“它有哪些属性、每个属性什么类型“。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/06-objects.ts
+
+// 内联对象类型注解：直接在冒号后面描述对象的"形状"。
+const user: { id: number; name: string; email?: string } = {
+  id: 1,
+  name: "小明",
+  // email 是可选属性（?），可以不写。
+};
+console.log(user.name);
+
+// 因为 email 可能不存在，直接用会被 TS 提醒它是 string | undefined。
+if (user.email) {
+  console.log(user.email.toLowerCase());
+} else {
+  console.log("这个用户没有邮箱");
+}
+
+// readonly：只读属性，赋值后不能再改（编译期检查）。
+type Point = { readonly x: number; readonly y: number };
+const origin: Point = { x: 0, y: 0 };
+console.log(origin.x, origin.y);
+// origin.x = 10; // ❌ 报错：Cannot assign to 'x' because it is a read-only property.
+
+// 函数参数也能用内联对象类型，常用于"配置对象"。
+function describe(p: { x: number; y: number }): string {
+  return `(${p.x}, ${p.y})`;
+}
+console.log(describe({ x: 3, y: 4 }));
+
+export {};
+</code></pre>
+<p>运行输出：</p>
+<pre><code>小明
+这个用户没有邮箱
+0 0
+(3, 4)
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>内联对象类型注解</strong>：<code>{ id: number; name: string; email?: string }</code>——用花括号，里面列出每个属性名和它的类型，属性之间用<strong>分号</strong>（也可用逗号）分隔。这就描述了对象的<strong>形状（shape）</strong>。</li>
+<li><strong>可选属性 <code>email?</code></strong>：属性名后加 <code>?</code>，表示可有可无。上面的对象没给 <code>email</code> 也不报错。和可选参数一样，<code>email</code> 的类型实际是 <code>string | undefined</code>，用之前要判断——所以有了那段 <code>if (user.email)</code>。</li>
+<li><strong><code>readonly</code></strong>：<code>readonly x: number</code> 表示 <code>x</code> 一旦初始化就<strong>不能再被赋值</strong>。<code>origin.x = 10</code> 会在编译期报错。⚠️ 再次提醒<strong>类型擦除</strong>：<code>readonly</code> 只是编译期检查，运行时 <code>origin.x</code> 还是个普通属性，硬要用别的手段改它 JS 层面拦不住——<code>readonly</code> 是“给写代码的人看的护栏“，不是运行时的锁。</li>
+<li><strong>函数参数用对象类型</strong>：<code>describe(p: { x: number; y: number })</code>。这种“接一个配置对象“的写法在真实项目里极其常见。</li>
+</ul>
+<p>💡 内联对象类型写多了会又长又重复。第 14 章会教你用 <code>interface</code> 和 <code>type</code> 给对象形状<strong>起个名字</strong>、反复复用——那才是日常主流写法。本章先理解“对象类型“这个概念本身。</p>
+<hr>
+<h2 id="137-特殊类型anyunknownneverobject"><a class="header" href="#137-特殊类型anyunknownneverobject">13.7 特殊类型：any、unknown、never、object</a></h2>
+<p>TS 有几个“特殊“的类型，理解它们能帮你避开大坑，尤其是 <code>any</code> 和 <code>unknown</code> 的区别。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/07-any-unknown.ts
+
+// —— any：放弃类型检查，什么都能做，等于回到裸 JS ——
+let loose: any = "字符串";
+loose = 42; // 不报错
+// loose.foo.bar.baz; // TS 不报错，但运行时会炸！any 关掉了所有保护（故注释掉）
+console.log("any 会关闭检查，很危险，尽量别用。loose =", loose);
+
+// —— unknown：也能装任何值，但用之前必须先"缩小类型" ——
+let safe: unknown = "可能是任何东西";
+safe = 42;
+
+// safe.toFixed(2); // ❌ 报错：unknown 不允许直接操作
+// 必须先判断类型（type narrowing），TS 才放行：
+if (typeof safe === "number") {
+  console.log("是数字：", safe.toFixed(2)); // 这里 safe 已被收窄为 number
+}
+
+// —— never：表示"永远不会有值"，比如永远抛错或死循环的函数 ——
+function fail(msg: string): never {
+  throw new Error(msg);
+}
+try {
+  fail("演示 never");
+} catch (e) {
+  console.log("捕获到：", (e as Error).message);
+}
+
+// —— object：表示"非原始值"（数组、对象、函数都算），但很少直接用 ——
+const obj: object = { a: 1 };
+console.log(obj);
+
+export {};
+</code></pre>
+<p>运行输出：</p>
+<pre><code>any 会关闭检查，很危险，尽量别用。loose = 42
+是数字： 42.00
+捕获到： 演示 never
+{ a: 1 }
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>any</code>——核弹级的“关闭检查“</strong>：声明为 <code>any</code> 的值，TS 对它<strong>完全放弃检查</strong>：你可以给它赋任何值、在它上面点任何属性、当任何类型用，编译器一律放行。上面注释掉的 <code>loose.foo.bar.baz</code> 编译期不报错，但运行时因为 <code>loose</code> 是数字 <code>42</code>，访问 <code>.foo.bar</code> 会直接崩溃。⚠️ <strong><code>any</code> 是“传染“的、危险的</strong>：它会让类型防护网破一个大洞，你以为有 TS 保护，其实一路裸奔。<strong>尽量不要用 <code>any</code>。</strong></li>
+<li><strong><code>unknown</code>——“安全版的 any”</strong>：<code>unknown</code> 同样能装任何值（赋值这一步和 <code>any</code> 一样宽松），但<strong>关键区别在于“取用“</strong>：你<strong>不能</strong>直接在 <code>unknown</code> 值上做任何操作。<code>safe.toFixed(2)</code> 会直接报错。你必须先通过 <code>typeof</code>、<code>instanceof</code>、<code>in</code> 等手段<strong>收窄类型（type narrowing）</strong>——一旦 <code>if (typeof safe === "number")</code> 成立，在这个分支里 TS 就知道 <code>safe</code> 是 <code>number</code>，才允许你调 <code>.toFixed()</code>。
+<ul>
+<li>📌 <strong><code>any</code> vs <code>unknown</code> 一句话</strong>：两者都能“装任何东西“，但 <code>any</code> 让你<strong>随便用</strong>（危险），<code>unknown</code> <strong>逼你先检查再用</strong>（安全）。当你确实不知道一个值的类型时（比如 <code>JSON.parse</code> 的结果、来自外部的数据），<strong>首选 <code>unknown</code></strong>，别用 <code>any</code>。</li>
+</ul>
+</li>
+<li><strong><code>never</code>——“永远不会有值”</strong>：<code>fail</code> 函数永远抛异常，正常路径上它<strong>不会返回</strong>，所以返回类型是 <code>never</code>。<code>never</code> 表示“这里的代码走不到“或“这个值不可能存在“。你现在只需认识它；它在高级类型和穷尽检查里会更常出现（第 14 章讨论联合类型时会照面）。</li>
+<li><strong><code>object</code></strong>：表示“任何非原始值“（对象、数组、函数都算，但 <code>number</code>/<code>string</code> 这些原始值不算）。它太宽泛，实践中很少直接用——想描述对象通常会用具体的对象类型或 <code>interface</code>。这里认识即可。</li>
+<li>注意 <code>(e as Error).message</code>：<code>catch</code> 的 <code>e</code> 在 TS 里默认是 <code>unknown</code>（严格模式下），所以要用类型断言 <code>as</code> 告诉编译器“它是个 Error“——这正好引出下一节。</li>
+</ul>
+<hr>
+<h2 id="138-字面量类型与-as-const"><a class="header" href="#138-字面量类型与-as-const">13.8 字面量类型与 as const</a></h2>
+<p>前面 <code>number</code> 表示“所有数字“，<code>string</code> 表示“所有字符串“。但有时你想更精确：这个值<strong>只能是某几个特定的字符串/数字</strong>。这就是<strong>字面量类型（literal type）</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/08-literal-const.ts
+
+// 字面量类型：类型不是"所有 string"，而是"只能是这几个具体的字符串"。
+let direction: "left" | "right" | "up" | "down";
+direction = "left"; // OK
+// direction = "forward"; // ❌ 报错：不在允许的字面量集合里
+console.log("方向：", direction);
+
+// 为什么有用？它把"魔法字符串"变成编译器能检查的东西。
+function move(dir: "left" | "right"): string {
+  return `向${dir === "left" ? "左" : "右"}移动`;
+}
+console.log(move("left"));
+
+// —— 类型推断里的字面量 ——
+// const 声明的原始值，会被推断为"字面量类型"：
+const exact = "hello"; // 类型是 "hello"，不是 string
+// let 声明会被放宽为 string，因为 let 可以再赋值：
+let loose = "hello"; // 类型是 string
+console.log(exact, loose);
+
+// —— as const：把整个对象/数组"冻结"成最窄的只读字面量类型 ——
+const config = {
+  env: "production",
+  retries: 3,
+} as const;
+// 此时 config.env 的类型是 "production"（而不是 string），
+// 且所有属性变成 readonly，不能再改。
+console.log(config.env, config.retries);
+// config.retries = 5; // ❌ 报错：as const 后是只读的
+
+export {};
+</code></pre>
+<p>运行输出：</p>
+<pre><code>方向： left
+向左移动
+hello hello
+production 3
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>字面量类型</strong>：<code>"left" | "right" | "up" | "down"</code>（用 <code>|</code> 连接的是<strong>联合类型</strong>，第 14 章详讲）表示 <code>direction</code> 的值<strong>只能是这四个字符串之一</strong>，写 <code>"forward"</code> 会报错。字符串、数字、布尔都能当字面量类型。它的价值是把过去那种“靠约定的魔法字符串“变成<strong>编译器能强制检查</strong>的东西——写错一个字母立刻标红。</li>
+<li><strong>推断中的字面量</strong>：这里揭晓 13.4 留的悬念——<code>const exact = "hello"</code> 被推断为字面量类型 <code>"hello"</code>（因为 <code>const</code> 不可能再变），而 <code>let loose = "hello"</code> 被<strong>放宽</strong>为 <code>string</code>（因为 <code>let</code> 以后可能赋别的字符串）。这个“const 更窄、let 更宽“的规则，理解了会少很多困惑。</li>
+<li><strong><code>as const</code></strong>：给对象/数组加 <code>as const</code>，会把它<strong>整个冻结</strong>成“最窄的只读字面量类型“——<code>config.env</code> 的类型不再是 <code>string</code> 而是精确的 <code>"production"</code>，且所有属性变 <code>readonly</code>，改不了。它常用于定义“常量配置表“、枚举替代品等。本章先认识；深入用法后面会再见。</li>
+</ul>
+<hr>
+<h2 id="139-类型断言-as以及严格模式"><a class="header" href="#139-类型断言-as以及严格模式">13.9 类型断言 as，以及严格模式</a></h2>
+<h3 id="类型断言-as谨慎使用"><a class="header" href="#类型断言-as谨慎使用">类型断言 as：谨慎使用</a></h3>
+<p>有时<strong>你比 TS 更清楚</strong>一个值的真实类型。比如 <code>JSON.parse</code> 的返回类型是 <code>any</code>（更好的做法是当 <code>unknown</code>），但你知道解析出来是什么形状。这时可以用<strong>类型断言（type assertion）</strong> <code>as</code> 来“告诉“编译器。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/09-assertion.ts
+
+// 场景：你比 TS 更清楚某个值的类型。
+// 典型例子是 DOM / JSON 解析，返回值类型很宽（这里用模拟）。
+const raw: unknown = JSON.parse('{"port": 8080}');
+
+// 用 as 告诉编译器"我知道它是这个形状"。
+const parsed = raw as { port: number };
+console.log("端口：", parsed.port);
+
+// ⚠️ 断言不做任何运行时检查！它只是"你对编译器的承诺"。
+// 如果承诺错了，运行时照样出问题（下面这段故意注释掉，避免程序崩溃）：
+// const wrong = "not a number" as unknown as number;
+// console.log(wrong.toFixed(2)); // 运行时报错：wrong.toFixed is not a function
+console.log("断言只影响编译期，不改变运行时的值，用错了运行时照样炸。");
+
+export {};
+</code></pre>
+<p>运行输出：</p>
+<pre><code>端口： 8080
+断言只影响编译期，不改变运行时的值，用错了运行时照样炸。
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>raw as { port: number }</code>：<code>as 类型</code> 就是断言。它告诉编译器“把 <code>raw</code> 当作 <code>{ port: number }</code> 处理“，之后 <code>parsed.port</code> 就有类型了。</li>
+<li>⚠️ <strong>断言不是转换，更不是检查！</strong> 这是全章最重要的警告之一。<code>as</code> <strong>只影响编译期</strong>，它<strong>不会</strong>在运行时做任何验证或转换。你说它是什么，编译器就信什么——如果你说错了（比如把一个字符串断言成 <code>number</code>），编译期一片祥和，运行时照样炸（<code>"...".toFixed</code> 不存在）。</li>
+<li>那个 <code>"..." as unknown as number</code> 的双重断言，是“强行绕过检查“的写法，<strong>能不用就别用</strong>。</li>
+</ul>
+<p>📌 <strong>用 <code>as</code> 的心态</strong>：断言是“你替编译器背书“。用得越多，说明你越是在绕开类型系统的保护，风险越大。<strong>优先考虑用 <code>typeof</code>/<code>in</code> 等收窄，或（下一章的）类型守卫</strong>，把 <code>as</code> 留给“确实无法用其他方式表达、且你 100% 确定“的少数场景。</p>
+<h3 id="严格模式strict与-strictnullchecks"><a class="header" href="#严格模式strict与-strictnullchecks">严格模式（strict）与 strictNullChecks</a></h3>
+<p>本书 <code>tsconfig.json</code> 里那句 <code>"strict": true</code>，其实是一组严格检查的“总开关“。其中对新手影响最大、也最有价值的一项是 <strong><code>strictNullChecks</code></strong>。</p>
+<p>在<strong>没开</strong>严格空检查的世界里，<code>null</code> 和 <code>undefined</code> 可以偷偷赋给任何类型——这正是无数 “Cannot read properties of undefined” 报错的根源。开了 <code>strictNullChecks</code> 后：</p>
+<ul>
+<li><code>null</code> 和 <code>undefined</code> <strong>不再</strong>能随便赋给别的类型。一个 <code>string</code> 类型的变量，<strong>不能</strong>是 <code>null</code>。</li>
+<li>如果一个值<strong>可能</strong>是 <code>null</code>/<code>undefined</code>（比如可选属性、可选参数），你<strong>必须先判断、再使用</strong>，否则报错。</li>
+</ul>
+<p>这听起来更麻烦，但它把 JS 里最常见的一类运行时崩溃，<strong>提前挡在了编译期</strong>。回想 13.5、13.6 里那些“因为可能是 undefined，所以要先 <code>if</code> 判断“的地方——正是 <code>strictNullChecks</code> 在保护你。</p>
+<p>📌 <strong>本书全程开启 strict。</strong> 它一开始会让你多写几个判断，但养成的习惯会让你的代码健壮得多。请把“严格模式下的报错“当成朋友，而不是障碍——它每拦你一次，就是帮你省下一次线上事故。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>别忘了类型会被擦除。</strong> 运行时没有任何类型信息。想在运行时判断类型，用 <code>typeof</code>、<code>Array.isArray</code>、<code>instanceof</code>、<code>in</code>，<strong>不是</strong>用你定义的 <code>type</code>/<code>interface</code>。这是新手最容易犯的根本性错误。</li>
+<li>⚠️ <strong><code>any</code> 是防护网上的洞，尽量别用。</strong> 一个 <code>any</code> 会顺着数据流“传染“，让一大片代码失去检查。实在不知道类型时用 <strong><code>unknown</code></strong>，它逼你先检查再用，安全得多。</li>
+<li>⚠️ <strong><code>as</code> 断言不做运行时检查。</strong> 它只是你对编译器的口头承诺，说错了运行时照样崩。能用类型收窄就别用断言；断言用得多，说明你在和类型系统对着干。</li>
+<li>💡 <strong>能推断就别写。</strong> 别给每个变量都手动标类型，那既啰嗦又容易和推断打架。<strong>该写类型的核心位置是：函数参数、对外函数的返回值、以及推断不出来的先声明后赋值变量。</strong></li>
+<li>⚠️ <strong>类型名是小写：</strong> <code>number</code>/<code>string</code>/<code>boolean</code>，不是 <code>Number</code>/<code>String</code>/<code>Boolean</code>。大写的是包装对象，几乎永远不该用作类型。</li>
+<li>💡 <strong>可选属性/参数（<code>?</code>）用之前一定先判断。</strong> 严格模式下不判断直接用会报错——这是好事，说明它在提醒你处理“没有值“的情况。</li>
+<li>💡 <strong>开发用 <code>tsx</code> 跑得快，提交前用 <code>npx tsc --noEmit</code> 全量类型检查。</strong> 把后者当作代码的“合格线“。</li>
+<li>💡 <strong>一个独立示例文件如果没有任何 <code>import</code>/<code>export</code>，加一行 <code>export {};</code></strong> 让它成为模块、拥有独立作用域，避免顶层变量和别的文件重名。</li>
+</ul>
+<hr>
+<h2 id="本章小项目类型化配置读取器"><a class="header" href="#本章小项目类型化配置读取器">本章小项目：类型化配置读取器</a></h2>
+<p>真实项目里，配置常常来自“外部“——环境变量、JSON 文件、命令行参数。这些数据有两个共同特点让人头疼：<strong>（1）类型很宽松</strong>（环境变量全是字符串），<strong>（2）可能缺项</strong>（用户没配某项）。我们要做一个<strong>类型化配置读取器（typed config reader）</strong>：把这种“脏乱差“的原始输入，安全地转换成一个<strong>强类型</strong>的配置对象，带默认值和基本校验。</p>
+<pre><code class="language-typescript">// 文件：code/ch13/config.ts
+// 本章小项目：类型化配置读取器（typed config reader）。
+// 运行：npx tsx ch13/config.ts
+
+// ============================================================
+// 1) 定义"目标类型"：我们的应用最终想要的强类型配置形状。
+// ============================================================
+type AppConfig = {
+  port: number;
+  host: string;
+  debug: boolean;
+  tags: string[];
+};
+
+// 一份默认值。当原始输入缺某项时，就用它兜底。
+// readonly 保证默认值不会被手滑改掉。
+const DEFAULTS: Readonly&lt;AppConfig&gt; = {
+  port: 3000,
+  host: "localhost",
+  debug: false,
+  tags: [],
+};
+
+// ============================================================
+// 2) 描述"原始输入"：模拟从环境变量 / JSON 读来的数据。
+//    真实世界里这种数据的键值全是字符串，而且可能缺项。
+//    我们用 Record&lt;string, string&gt; 表达"键是字符串、值也是字符串"。
+// ============================================================
+type RawInput = Record&lt;string, string&gt;;
+
+// ============================================================
+// 3) 一组类型安全的"解析 + 兜底"小工具。
+//    每个都接收 "可能为 undefined 的字符串" 和一个默认值，
+//    返回强类型结果。
+// ============================================================
+
+function parseNumber(value: string | undefined, fallback: number): number {
+  if (value === undefined) return fallback;
+  const n = Number(value);
+  // NaN 检查：Number("abc") 会得到 NaN，这时回退到默认值。
+  return Number.isNaN(n) ? fallback : n;
+}
+
+function parseBoolean(value: string | undefined, fallback: boolean): boolean {
+  if (value === undefined) return fallback;
+  // 约定："true" / "1" 视为 true，其余视为 false。
+  return value === "true" || value === "1";
+}
+
+function parseTags(value: string | undefined, fallback: string[]): string[] {
+  if (value === undefined || value.trim() === "") return fallback;
+  // 逗号分隔，去掉首尾空白，过滤空串。
+  return value
+    .split(",")
+    .map((s) =&gt; s.trim())
+    .filter((s) =&gt; s.length &gt; 0);
+}
+
+// ============================================================
+// 4) 核心函数：把宽松的 RawInput 转换成强类型 AppConfig。
+//    返回类型标成 AppConfig，编译器会强制我们"每个字段都补齐"。
+// ============================================================
+function loadConfig(raw: RawInput): AppConfig {
+  return {
+    port: parseNumber(raw.port, DEFAULTS.port),
+    host: raw.host ?? DEFAULTS.host, // 字符串直接用 ?? 兜底
+    debug: parseBoolean(raw.debug, DEFAULTS.debug),
+    tags: parseTags(raw.tags, DEFAULTS.tags),
+  };
+  // 如果这里少写一个字段（比如忘了 tags），TS 会报错：
+  //   Property 'tags' is missing in type ... 这正是类型注解在帮你。
+}
+
+// ============================================================
+// 5) 演示：模拟两份不同的原始输入。
+// ============================================================
+
+// 一份"完整且部分带脏数据"的输入。
+const fromEnv: RawInput = {
+  port: "8080",
+  host: "0.0.0.0",
+  debug: "1",
+  tags: "web, api ,,cache",
+};
+
+// 一份"残缺"的输入：只给了 port，其余走默认值。
+const partial: RawInput = {
+  port: "not-a-number", // 脏数据，会被 NaN 检查挡下、回退默认
+};
+
+const configA = loadConfig(fromEnv);
+const configB = loadConfig(partial);
+
+console.log("configA =", configA);
+console.log("configB =", configB);
+
+// 因为返回值是强类型 AppConfig，下面这些用法都有编辑器提示和检查：
+console.log(`服务将监听 ${configA.host}:${configA.port}`);
+console.log("标签数量：", configA.tags.length);
+
+// 下面这行如果取消注释会报错，证明类型确实在保护我们：
+// configA.port.toUpperCase(); // ❌ number 上没有 toUpperCase
+
+export {};
+</code></pre>
+<p>运行 <code>npx tsx ch13/config.ts</code>，输出：</p>
+<pre><code>configA = {
+  port: 8080,
+  host: '0.0.0.0',
+  debug: true,
+  tags: [ 'web', 'api', 'cache' ]
+}
+configB = { port: 3000, host: 'localhost', debug: false, tags: [] }
+服务将监听 0.0.0.0:8080
+标签数量： 3
+</code></pre>
+<p>逐段拆解，重点看<strong>类型注解如何帮我们避免错误</strong>：</p>
+<ul>
+<li><strong>①定义目标类型 <code>AppConfig</code></strong>：这是我们的“契约“——应用最终想要的形状。<code>port: number</code>、<code>host: string</code>、<code>debug: boolean</code>、<code>tags: string[]</code>，每个字段的类型都是我们<strong>运行逻辑真正需要</strong>的类型（比如 <code>port</code> 要能做数学运算，就必须是 <code>number</code> 而不是 <code>"8080"</code> 这种字符串）。</li>
+<li><strong>默认值 <code>DEFAULTS</code></strong>：类型是 <code>Readonly&lt;AppConfig&gt;</code>——<code>Readonly&lt;T&gt;</code> 是 TS 内置的工具类型，把 <code>T</code> 的所有属性变成 <code>readonly</code>。这样谁都不能手滑改掉默认值。同时它必须<strong>完整满足 <code>AppConfig</code></strong>：少写一个字段，编译期就报错，保证默认值不残缺。</li>
+<li><strong>②原始输入类型 <code>RawInput = Record&lt;string, string&gt;</code></strong>：<code>Record&lt;K, V&gt;</code> 也是内置工具类型，表示“键是 <code>K</code>、值是 <code>V</code> 的对象“。这里精准刻画了“从 env/JSON 来的数据：键值都是字符串“。注意：从这种对象里取 <code>raw.port</code>，在严格模式下 TS 会认为它<strong>可能是 <code>undefined</code></strong>（因为你不能保证这个键一定存在）——这正好逼我们处理“缺项“。</li>
+<li><strong>③三个解析工具</strong>：注意每个的第一个参数类型都是 <code>string | undefined</code>，明确表达“这个值可能没有“。
+<ul>
+<li><code>parseNumber</code> 里先判 <code>undefined</code> 兜底，再做 <strong><code>Number.isNaN</code> 检查</strong>（第 1 章的坑！<code>Number("abc")</code> 得到 <code>NaN</code>），脏数据就回退默认值——<strong>永远返回一个真正的 <code>number</code></strong>。</li>
+<li><code>parseBoolean</code> 把字符串 <code>"true"</code>/<code>"1"</code> 映射成布尔值——因为环境变量里没有真正的布尔，只有字符串。</li>
+<li><code>parseTags</code> 把 <code>"web, api ,,cache"</code> 这种逗号串，切分、去空白、过滤空项，得到干净的 <code>string[]</code>。</li>
+</ul>
+</li>
+<li><strong>④核心 <code>loadConfig</code></strong>：返回类型标成 <code>AppConfig</code>，这是关键保护——<strong>编译器会强制这个返回对象把四个字段全部补齐、且类型正确</strong>。如果你漏写 <code>tags</code>，或者把 <code>port</code> 写成了字符串，<strong>编译期立刻报错</strong>。<code>host</code> 用了 <code>??</code>（第 1 章的空值合并）直接兜底，因为它本来就是字符串。</li>
+<li><strong>⑤演示</strong>：<code>fromEnv</code> 里 <code>port: "8080"</code>（字符串）被转成数字 <code>8080</code>，<code>debug: "1"</code> 被转成 <code>true</code>，脏乱的 <code>tags</code> 被清洗干净。<code>partial</code> 里 <code>port</code> 是脏数据 <code>"not-a-number"</code>，被 <code>NaN</code> 检查挡下、回退成默认 <code>3000</code>，其余字段全走默认值——<strong>程序没有崩，输出的是一份完整、干净、强类型的配置</strong>。</li>
+<li>最后那行注释 <code>configA.port.toUpperCase()</code>：因为 <code>configA</code> 是 <code>AppConfig</code>、<code>port</code> 是 <code>number</code>，在 <code>number</code> 上调字符串方法会被编译器拦下。这就是我们费这么大劲做类型化的<strong>回报</strong>：拿到手的配置，怎么用都有编辑器提示和检查，用错立刻知道。</li>
+</ul>
+<p>📌 体会这个小项目的精髓：<strong>在“边界“（读取外部数据）处做一次类型转换与校验，把宽松、可能出错的输入变成可信的强类型；此后整个程序内部都能安心地享受类型保护。</strong> 这是真实工程里处理外部数据的标准姿势。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>加一个字段</strong>：给 <code>AppConfig</code> 增加 <code>timeout: number</code>（毫秒），写对应的默认值和解析逻辑。感受“改了类型，编译器会提醒你哪些地方还没补齐“。</li>
+<li><strong>更严的校验</strong>：让 <code>parseNumber</code> 支持“最小值/最大值“参数，比如 <code>port</code> 必须在 <code>1~65535</code> 之间，越界就回退默认值。</li>
+<li><strong>真实环境变量</strong>：把 <code>fromEnv</code> 换成真正的 <code>process.env</code>（Node 提供，类型近似 <code>Record&lt;string, string | undefined&gt;</code>）。想想为什么它的值类型是 <code>string | undefined</code> 而不是 <code>string</code>，你的解析函数是否已经能应对。</li>
+<li><strong>用 unknown 做输入</strong>：把 <code>RawInput</code> 改成 <code>unknown</code>（模拟“完全不可信的 JSON“），在 <code>loadConfig</code> 开头先用 <code>typeof</code>/<code>in</code> 判断它是不是一个对象，再往下解析。体会 <code>unknown</code> 如何逼你把校验写扎实。</li>
+<li><strong>返回校验结果</strong>：让 <code>loadConfig</code> 不直接返回 <code>AppConfig</code>，而是返回 <code>{ ok: true; config: AppConfig } | { ok: false; errors: string[] }</code>（联合类型，下一章会正式学），把校验中发现的问题收集起来报告给调用者。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们正式从 JavaScript 跨入 TypeScript，核心要点：</p>
+<ul>
+<li><strong>为什么用 TS</strong>：动态类型让类型错误从“写代码时“推迟到“运行时“，又晚又隐蔽。TS 用类型注解在<strong>编译期</strong>发现错误，还带来智能提示和可维护性。</li>
+<li><strong>三个世界观</strong>：TS 是 JS 的<strong>超集</strong>；TS 要<strong>编译</strong>成 JS 才能运行；类型在运行时被<strong>擦除</strong>——运行时判断类型仍靠 <code>typeof</code>/<code>in</code>/<code>instanceof</code>。</li>
+<li><strong>运行方式</strong>：开发用 <code>tsx</code> 直接跑，<code>tsc</code> 负责正式编译，<code>tsc --noEmit</code> 只做类型检查；<code>tsconfig.json</code> 是项目配置，<code>strict</code> 是灵魂（第 20 章深入）。</li>
+<li><strong>基础类型</strong>：<code>number</code>/<code>string</code>/<code>boolean</code>/<code>null</code>/<code>undefined</code>（小写！）、数组 <code>T[]</code> 或 <code>Array&lt;T&gt;</code>、元组 <code>[T1, T2]</code>（定长定位）。</li>
+<li><strong>类型推断</strong>：能推断就别写；<strong>函数参数、对外返回值、先声明后赋值的变量</strong>才需要显式注解。</li>
+<li><strong>函数类型</strong>：参数与返回值注解、可选参数 <code>?</code>（实为 <code>T | undefined</code>）、默认参数、rest <code>...args: T[]</code>、<code>void</code>、函数类型表达式 <code>(a: T) =&gt; R</code>。</li>
+<li><strong>对象类型</strong>：内联对象类型、可选属性 <code>?</code>、<code>readonly</code>（仅编译期护栏）。</li>
+<li><strong>特殊类型</strong>：<code>any</code>（关闭检查，危险）vs <code>unknown</code>（安全，逼你先收窄）；<code>never</code>（不会有值）；<code>object</code>（非原始值，少用）。</li>
+<li><strong>字面量类型</strong>与 <code>as const</code>；类型断言 <code>as</code>（只影响编译期、不做运行时检查，谨慎用）。</li>
+<li><strong>严格模式</strong>尤其 <code>strictNullChecks</code>：<code>null</code>/<code>undefined</code> 不能乱赋，可能为空的值必须先判断——把最常见的运行时崩溃挡在编译期。</li>
+</ul>
+<p>自测题（能脱口而出就说明掌握了）：</p>
+<ol>
+<li>“TS 是 JS 的超集” 和 “类型在运行时被擦除” 分别是什么意思？后者对你写代码有什么实际约束？</li>
+<li>为什么说函数<strong>参数</strong>几乎总要显式写类型，而变量和返回值常常可以不写？</li>
+<li><code>any</code> 和 <code>unknown</code> 都能装任何值，它们最关键的区别是什么？你更应该用哪个？</li>
+<li>可选属性 <code>email?: string</code> 的真实类型是什么？为什么用它之前通常要先 <code>if</code> 判断？</li>
+<li><code>const x = "hi"</code> 和 <code>let x = "hi"</code>，<code>x</code> 被推断成的类型有什么不同？为什么？</li>
+<li>类型断言 <code>as</code> 会在运行时做检查或转换吗？滥用它有什么风险？</li>
+<li><code>strictNullChecks</code> 开启后，它主要帮你避免了哪一类常见的运行时错误？</li>
+</ol>
+<p>答完对照前文检查。全部答对，说明你已经建立起 TypeScript 的“类型思维“——这比记住任何语法都重要。</p>
+<hr>
+<p>本章我们用内联对象类型和函数类型表达式描述了简单的形状，但它们写多了又长又难复用。<strong>第 14 章《接口、类型别名、联合与交叉类型》</strong> 会教你给类型“起名字“并组合它们：用 <strong><code>interface</code></strong> 和 <strong><code>type</code></strong> 定义可复用的对象形状，用<strong>联合类型（<code>A | B</code>）</strong> 表达“要么这个要么那个“（本章的字面量类型和可选属性其实已经用到了它），用<strong>交叉类型（<code>A &amp; B</code>）</strong> 把多个类型合并。掌握了它们，你才算真正会用 TypeScript 的类型系统去“建模“你的数据。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch12.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch14.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch12.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch14.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

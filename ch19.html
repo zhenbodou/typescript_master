@@ -1,0 +1,890 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 19 章 · 装饰器与元编程 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch19.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-19-章--装饰器与元编程"><a class="header" href="#第-19-章--装饰器与元编程">第 19 章 · 装饰器与元编程</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>到这一章，你已经能熟练地写类、接口、泛型，也懂了类型收窄。现在我们要学一类“给代码本身加功能“的工具：<strong>装饰器（decorator）<strong>与</strong>元编程（metaprogramming）</strong>。</p>
+<p>先建立直觉。假设你有几十个方法，都需要在调用前后打日志、统计耗时、做权限校验。这些需求跟每个方法的<strong>业务逻辑无关</strong>，却又要<strong>散落在每个方法里</strong>——这类“横切各处的关注点“，叫<strong>横切关注点（cross-cutting concern）</strong>，处理它们的编程范式叫<strong>面向切面编程（AOP，Aspect-Oriented Programming）</strong>。装饰器就是 JS/TS 里实现 AOP 的主力工具：你把“打日志“这件事写成一个装饰器，然后往方法上一贴 <code>@log</code>，逻辑就自动织入了，业务代码一个字都不用改。</p>
+<p>元编程则更底层：它是“用代码去操作代码/对象的行为本身“。<code>Proxy</code> 能拦截“读属性、写属性、调用函数“这些最基本的操作；<code>Reflect</code> 把这些内部操作暴露成可调用的函数；<code>Object.defineProperty</code> 让你精细控制一个属性的读写规则。装饰器的底层实现，很多就是靠这些元编程原语。</p>
+<p>学完本章，你将能够：</p>
+<ul>
+<li>说清楚 <strong>TS5 标准装饰器（Stage 3 / TC39 decorators）</strong> 与旧的 <strong>实验装饰器（experimental decorators）</strong> 的区别，知道自己在用哪一套、为什么。</li>
+<li>写出类装饰器、方法装饰器、getter/setter、字段、accessor 装饰器，理解<strong>装饰器上下文对象（decorator context）</strong>。</li>
+<li>用**装饰器工厂（decorator factory）**写出带参数的装饰器。</li>
+<li>说清楚装饰器的<strong>执行顺序</strong>与组合规则。</li>
+<li>用 <code>Reflect</code>、<code>Proxy</code>、<code>Object.defineProperty</code> 做拦截、校验、响应式等元编程。</li>
+<li>理解**元数据（metadata）<strong>与</strong>依赖注入（DI，Dependency Injection）**的思想，并亲手实现一个迷你 DI 容器。</li>
+</ul>
+<p>📌 <strong>一句话记住装饰器</strong>：装饰器就是**“一个在定义类/成员时被自动调用、用来观察或改写它的函数”**。你在 <code>@</code> 后面写的名字，就是那个函数。</p>
+<hr>
+<h2 id="运行前提两套装饰器你在用哪一套"><a class="header" href="#运行前提两套装饰器你在用哪一套">运行前提：两套装饰器，你在用哪一套？</a></h2>
+<p>这是本章最容易踩坑、也最需要讲清楚的地方，请务必先读完。</p>
+<p>JavaScript 的装饰器提案走了很多年。历史上出现过<strong>两套语法/语义完全不同</strong>的装饰器：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th>旧：实验装饰器</th><th>新：标准装饰器（本章采用）</th></tr>
+</thead>
+<tbody>
+<tr><td>别名</td><td>experimental / legacy decorators</td><td>Stage 3 / TC39 decorators</td></tr>
+<tr><td>tsconfig 开关</td><td><code>"experimentalDecorators": true</code></td><td>不需要（是语言标准的一部分）</td></tr>
+<tr><td>方法装饰器签名</td><td><code>(target, propertyKey, descriptor)</code></td><td><code>(value, context)</code></td></tr>
+<tr><td>第二参数</td><td>属性名字符串 / 属性描述符</td><td><strong>上下文对象</strong> <code>context</code>（含 <code>kind</code>/<code>name</code>/<code>addInitializer</code> 等）</td></tr>
+<tr><td>参数装饰器</td><td>支持</td><td><strong>不支持</strong>（标准装饰器没有参数装饰器）</td></tr>
+<tr><td>配套元数据</td><td><code>emitDecoratorMetadata</code> + <code>reflect-metadata</code></td><td><code>Symbol.metadata</code> / <code>context.metadata</code>（需运行时支持）</td></tr>
+<tr><td>现状</td><td>Angular / NestJS / TypeORM 等老框架仍在用</td><td>TS 5.0+ 默认、ES 提案定稿方向</td></tr>
+</tbody>
+</table>
+</div>
+<p>⚠️ <strong>两套装饰器的函数签名不兼容，写法几乎完全不同</strong>。为一套写的装饰器，直接搬到另一套下会报错。这就是“迁移注意“的核心：迁移时装饰器函数几乎都要重写。</p>
+<p><strong>本书选择讲标准装饰器（Stage 3）</strong>，原因有三：它是 TS 5.0+ 的默认、是语言的未来方向、而且 <code>tsx</code>（底层是 esbuild）默认就支持它，无需任何额外依赖。</p>
+<p>但这里有个<strong>关键配置陷阱</strong>，你必须知道：</p>
+<blockquote>
+<p>本书的 <code>code/tsconfig.json</code> 为了兼容早期章节，开了 <code>"experimentalDecorators": true</code>。而 <code>tsx</code> 会读取它能找到的 <code>tsconfig.json</code> 来决定用哪套装饰器——一旦读到 <code>experimentalDecorators: true</code>，<code>tsx</code> 就会切回<strong>旧的实验装饰器</strong>编译，本章的标准装饰器代码就会报出 <code>context is undefined</code>、<code>__decorateClass</code> 之类的错误。</p>
+</blockquote>
+<p>为解决这个冲突，本章在 <code>code/ch19/</code> 目录下放了一份<strong>独立的 <code>tsconfig.json</code></strong>（<code>experimentalDecorators: false</code>），专门覆盖父级配置。因此本章的运行方式与前面章节略有不同，请二选一：</p>
+<pre><code class="language-bash"># 方式一（推荐）：先进入 ch19 目录，再运行。tsx 会就近读到本目录的 tsconfig。
+cd code/ch19
+npx tsx 01-decorator-basics.ts
+
+# 方式二：从 code/ 目录运行，用 --tsconfig 显式指定本章配置。
+npx tsx --tsconfig ch19/tsconfig.json ch19/01-decorator-basics.ts
+</code></pre>
+<p>💡 记住这个规律：<strong>装饰器出问题，九成是 tsconfig 的 <code>experimentalDecorators</code> 没对上</strong>。当代码“看起来没错但装饰器行为诡异“时，第一件事就是确认当前生效的到底是哪套装饰器。</p>
+<p><code>code/ch19/tsconfig.json</code> 的关键部分：</p>
+<pre><code class="language-jsonc">// 文件：code/ch19/tsconfig.json（节选）
+{
+  "compilerOptions": {
+    "experimentalDecorators": false, // 关掉实验装饰器 → 走标准（Stage 3）装饰器
+    "emitDecoratorMetadata": false
+  }
+}
+</code></pre>
+<p>关于 <code>reflect-metadata</code>：旧装饰器要“自动读取构造函数参数类型来做依赖注入“，得配合 <code>emitDecoratorMetadata</code> 和额外安装的 <code>reflect-metadata</code> 库。<strong>本章不需要、也不安装它</strong>——我们的 DI 容器改用“显式声明依赖“的方式，一样开箱即跑。标准装饰器有自己的元数据机制（<code>Symbol.metadata</code>），但目前 <code>tsx</code> 默认未内置 <code>Symbol.metadata</code> 的运行时 polyfill，所以本章也不依赖它。</p>
+<hr>
+<h2 id="你的第一个装饰器方法装饰器"><a class="header" href="#你的第一个装饰器方法装饰器">你的第一个装饰器：方法装饰器</a></h2>
+<p>我们从最常见的方法装饰器开始——给方法加“调用日志“。</p>
+<pre><code class="language-typescript">// 文件：code/ch19/01-decorator-basics.ts
+
+// 方法装饰器接收两个参数：
+//   1. target：被装饰的原始方法（一个函数）。
+//   2. context：装饰器上下文对象，描述"这是谁、装在哪、叫什么名字"。
+// 它可以返回一个"新函数"来替换原方法。
+function logged&lt;This, Args extends any[], Return&gt;(
+  target: (this: This, ...args: Args) =&gt; Return,
+  context: ClassMethodDecoratorContext&lt;This, (this: This, ...args: Args) =&gt; Return&gt;,
+) {
+  const name = String(context.name);
+
+  // 返回的这个新函数将取代原方法被挂到类上。
+  function replacement(this: This, ...args: Args): Return {
+    console.log(`→ 调用 ${name}(${args.join(", ")})`);
+    const result = target.call(this, ...args); // 用 call 保持正确的 this
+    console.log(`← ${name} 返回 ${result}`);
+    return result;
+  }
+  return replacement;
+}
+
+class Calculator {
+  @logged
+  add(a: number, b: number): number {
+    return a + b;
+  }
+
+  @logged
+  mul(a: number, b: number): number {
+    return a * b;
+  }
+}
+
+const calc = new Calculator();
+console.log("结果:", calc.add(2, 3));
+console.log("结果:", calc.mul(4, 5));
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>logged</code> 的两个参数</strong>。这是标准装饰器方法签名的核心：第一个参数 <code>target</code> 是<strong>被装饰的原始方法本身</strong>（一个函数），第二个参数 <code>context</code> 是<strong>上下文对象</strong>。请对比上一节表格——旧装饰器这里是 <code>(target, propertyKey, descriptor)</code>，完全不同。</li>
+<li><strong>泛型 <code>&lt;This, Args, Return&gt;</code></strong>。这三个类型参数让装饰器对“任意 this、任意参数、任意返回值“的方法都通用，同时保留类型。你不用死记，照抄这个模板即可。</li>
+<li><strong><code>context.name</code></strong>。上下文对象告诉你被装饰成员的名字（这里是 <code>"add"</code> / <code>"mul"</code>）。它可能是字符串或 <code>symbol</code>，所以用 <code>String(...)</code> 转一下。</li>
+<li><strong>返回一个新函数 <code>replacement</code></strong>。方法装饰器的返回值如果是函数，就会<strong>替换掉原方法</strong>。于是每次调用 <code>calc.add(...)</code>，实际跑的是 <code>replacement</code>——它先打印“调用“，再用 <code>target.call(this, ...args)</code> 转发给真正的 <code>add</code>，最后打印“返回“。</li>
+<li><strong><code>target.call(this, ...args)</code> 里的 <code>this</code></strong>。为什么不直接 <code>target(...args)</code>？因为方法里可能用到 <code>this</code>（虽然本例没用到）。用 <code>call</code> 把当前实例作为 <code>this</code> 传进去，才能保证被包裹的方法行为不变。这是写方法装饰器的<strong>必备习惯</strong>。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">cd code/ch19 &amp;&amp; npx tsx 01-decorator-basics.ts
+</code></pre>
+<p>输出会是：调用 <code>add(2, 3)</code> → 打印进入、返回、结果 5；<code>mul(4, 5)</code> 同理。<strong>注意：业务方法 <code>add</code>/<code>mul</code> 里我们一行日志都没写，日志能力完全是 <code>@logged</code> “织入“的。</strong> 这就是 AOP 的价值：横切关注点（日志）与业务逻辑彻底分离。</p>
+<hr>
+<h2 id="装饰器工厂给装饰器传参数"><a class="header" href="#装饰器工厂给装饰器传参数">装饰器工厂：给装饰器传参数</a></h2>
+<p>上面的 <code>@logged</code> 是“光杆装饰器“，不带括号。但很多时候我们希望装饰器<strong>可配置</strong>，比如 <code>@measure("求和")</code> 自定义标签、<code>@retry(3)</code> 指定重试次数。这就要用<strong>装饰器工厂（decorator factory）</strong>：它本身是个函数，你先调用它传参，它<strong>再返回真正的装饰器</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch19/02-decorator-factory.ts
+
+// @measure() 用于给方法计时；参数 label 用来自定义日志前缀。
+function measure(label?: string) {
+  // 外层函数接收"配置参数"，返回真正的装饰器。
+  return function &lt;This, Args extends any[], Return&gt;(
+    target: (this: This, ...args: Args) =&gt; Return,
+    context: ClassMethodDecoratorContext,
+  ) {
+    const name = label ?? String(context.name);
+    return function (this: This, ...args: Args): Return {
+      const start = performance.now();
+      const result = target.call(this, ...args);
+      const cost = (performance.now() - start).toFixed(3);
+      console.log(`⏱ ${name} 耗时 ${cost}ms`);
+      return result;
+    };
+  };
+}
+
+// @cached() 缓存"参数可序列化"的方法结果，避免重复计算。
+function cached() {
+  return function &lt;This, Args extends any[], Return&gt;(
+    target: (this: This, ...args: Args) =&gt; Return,
+    _context: ClassMethodDecoratorContext,
+  ) {
+    const store = new Map&lt;string, Return&gt;();
+    return function (this: This, ...args: Args): Return {
+      const key = JSON.stringify(args);
+      if (store.has(key)) {
+        console.log("✔ 命中缓存", key);
+        return store.get(key)!;
+      }
+      const result = target.call(this, ...args);
+      store.set(key, result);
+      return result;
+    };
+  };
+}
+
+class Report {
+  // @measure 计时；@cached 缓存结果。两个装饰器叠加，由内向外生效。
+  @measure("统计求和")
+  @cached()
+  sumTo(n: number): number {
+    let total = 0;
+    for (let i = 1; i &lt;= n; i++) total += i;
+    return total;
+  }
+}
+
+const r = new Report();
+console.log("sumTo(1000000) =", r.sumTo(1_000_000));
+console.log("sumTo(1000000) =", r.sumTo(1_000_000)); // 第二次直接命中缓存
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>两层函数结构</strong>。<code>measure</code> 本身<strong>不是</strong>装饰器，它是“生产装饰器的工厂“。你写 <code>@measure("统计求和")</code> 时，JS 先执行 <code>measure("统计求和")</code>，拿到里面 <code>return</code> 的那个内层函数，那个内层函数才是真正贴到方法上的装饰器。所以带参数的装饰器<strong>必须带括号</strong> <code>@measure(...)</code>；不带括号的 <code>@measure</code> 会把函数本身当装饰器用，报错。</li>
+<li><strong><code>cached</code> 的闭包缓存</strong>。注意 <code>const store = new Map(...)</code> 定义在装饰器函数体内、返回的包裹函数外面。这样每个被 <code>@cached()</code> 装饰的方法都拥有<strong>一个独立、长期存活的缓存 Map</strong>（靠闭包保住）。<code>JSON.stringify(args)</code> 把参数序列化成缓存键——⚠️ 这招只适用于参数能被 JSON 序列化的场景（数字、字符串、简单对象），遇到函数、循环引用会失效。</li>
+<li><strong>两个装饰器叠加</strong>。<code>sumTo</code> 上同时贴了 <code>@measure</code> 和 <code>@cached</code>。它们的组合顺序很重要，下一节专门讲。运行后你会看到：第一次调用真正跑了循环、耗时若干毫秒；第二次直接“命中缓存“，耗时几乎为 0。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx 02-decorator-factory.ts
+</code></pre>
+<p>📌 <strong>区分三个概念</strong>：<code>measure</code> 是<strong>装饰器工厂</strong>；<code>measure("统计求和")</code> 的返回值是<strong>装饰器</strong>；装饰器再返回的函数是<strong>替换后的方法</strong>。三层，别混。</p>
+<hr>
+<h2 id="五种位置类方法getter字段accessor-装饰器"><a class="header" href="#五种位置类方法getter字段accessor-装饰器">五种位置：类、方法、getter、字段、accessor 装饰器</a></h2>
+<p>标准装饰器能贴在五种位置上，每种位置对应一个不同的<strong>上下文类型</strong>，<code>target</code> 的含义也不同。下面一次性演示全部。</p>
+<pre><code class="language-typescript">// 文件：code/ch19/03-all-decorator-kinds.ts
+
+// 1) 类装饰器：接收类本身与 ClassDecoratorContext。
+//    这里返回一个"子类"来替换原类，给每个实例自动打上创建时间戳。
+function stamped&lt;T extends new (...args: any[]) =&gt; object&gt;(
+  value: T,
+  context: ClassDecoratorContext,
+) {
+  console.log("[类装饰器] 处理类:", context.name);
+  return class extends value {
+    createdAt = new Date().toISOString();
+  };
+}
+
+// 2) 字段装饰器：value 恒为 undefined，可返回一个"初始化器"函数，
+//    它接收字段的初始值，返回加工后的新值。
+function trimmed(_value: undefined, context: ClassFieldDecoratorContext&lt;unknown, string&gt;) {
+  return function (initial: string) {
+    console.log("[字段装饰器] 初始化", String(context.name));
+    return initial.trim();
+  };
+}
+
+// 3) accessor 装饰器：装饰用 accessor 关键字声明的"自动访问器"。
+//    value 是 { get, set }，可返回改写后的 { get, set, init }。
+function loggedAccessor&lt;This, V&gt;(
+  value: ClassAccessorDecoratorTarget&lt;This, V&gt;,
+  context: ClassAccessorDecoratorContext&lt;This, V&gt;,
+): ClassAccessorDecoratorResult&lt;This, V&gt; {
+  const name = String(context.name);
+  return {
+    get(this: This) {
+      return value.get.call(this);
+    },
+    set(this: This, newValue: V) {
+      console.log(`[accessor 装饰器] 写入 ${name} =`, newValue);
+      value.set.call(this, newValue);
+    },
+  };
+}
+
+// 4) getter 装饰器：装饰 get 访问器，target 是 getter 函数本身。
+function frozen&lt;This, Return&gt;(
+  target: (this: This) =&gt; Return,
+  context: ClassGetterDecoratorContext&lt;This, Return&gt;,
+) {
+  return function (this: This): Return {
+    const v = target.call(this);
+    console.log(`[getter 装饰器] 读取 ${String(context.name)} =`, v);
+    return v;
+  };
+}
+
+@stamped
+class Person {
+  // ⚠️ 字段装饰器加工的是"字段初始值"，所以这里给一个带空格的初始值。
+  //    如果 name 只在构造函数里赋值、没有初始值，@trimmed 的初始化器拿到的会是 undefined。
+  @trimmed
+  name = "  Alice  ";
+
+  @loggedAccessor
+  accessor score = 0;
+
+  @frozen
+  get summary(): string {
+    return `${this.name}(${this.score})`;
+  }
+}
+
+const p = new Person();
+console.log("name = [" + p.name + "]"); // 已被 trim → [Alice]
+p.score = 95; // 触发 accessor 的 set 日志
+console.log("summary =", p.summary); // 触发 getter 日志
+console.log("createdAt =", (p as any).createdAt); // 由 @stamped 子类注入
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>类装饰器 <code>@stamped</code></strong>。它的 <code>value</code> 是类本身，<code>context.kind</code> 为 <code>"class"</code>。这里我们返回了一个<strong>匿名子类</strong> <code>class extends value { createdAt = ... }</code>——于是被装饰后的 <code>Person</code> 实际上是这个子类，每个实例都自动多了 <code>createdAt</code> 字段。这就是类装饰器最强大的用法：<strong>替换/增强整个类</strong>。若你返回 <code>undefined</code>，则保持原类不变。</li>
+<li><strong>字段装饰器 <code>@trimmed</code></strong>。它的第一个参数 <code>value</code> <strong>永远是 <code>undefined</code></strong>（字段装饰器拿不到字段值本身）。它可以返回一个<strong>初始化器函数</strong>，该函数接收字段的<strong>初始值</strong>、返回加工后的值。这里把 <code>"  Alice  "</code> 的两端空格去掉。⚠️ 划重点：字段装饰器加工的是<strong>初始值</strong>（<code>= "..."</code> 那部分），不是构造函数里赋的值。所以示例里我们特意给 <code>name</code> 一个带空格的初始值——注释里也提醒了，如果字段没有初始值、只在构造函数里赋值，<code>@trimmed</code> 拿到的会是 <code>undefined</code>。</li>
+<li><strong>accessor 装饰器 <code>@loggedAccessor</code></strong>。注意字段前的 <code>accessor</code> 关键字——这是标准装饰器<strong>新引入</strong>的语法，声明一个“自动访问器“：<code>accessor score = 0</code> 背后其实是一对 getter/setter 加一个私有存储。装饰器的 <code>value</code> 是 <code>{ get, set }</code>，我们返回改写后的 <code>{ get, set }</code>，在 <code>set</code> 里插入日志。这是<strong>做响应式、校验属性写入的标准姿势</strong>。</li>
+<li><strong>getter 装饰器 <code>@frozen</code></strong>。装饰 <code>get summary()</code>，<code>target</code> 是 getter 函数本身。我们包裹它，在读取时打日志。setter 装饰器与之对称，用 <code>ClassSetterDecoratorContext</code>。</li>
+</ul>
+<p>运行后你会看到：<code>name</code> 被 trim 成 <code>[Alice]</code>；给 <code>score</code> 赋值触发写日志；读 <code>summary</code> 触发读日志；<code>createdAt</code> 由 <code>@stamped</code> 注入。</p>
+<pre><code class="language-bash">npx tsx 03-all-decorator-kinds.ts
+</code></pre>
+<p>💡 <strong>速查</strong>：类 → <code>ClassDecoratorContext</code>；方法 → <code>ClassMethodDecoratorContext</code>；getter/setter → <code>ClassGetter/SetterDecoratorContext</code>；字段 → <code>ClassFieldDecoratorContext</code>；accessor → <code>ClassAccessorDecoratorContext</code>。它们都有公共成员 <code>kind</code>、<code>name</code>、<code>static</code>、<code>private</code>、<code>addInitializer</code>。</p>
+<hr>
+<h2 id="执行顺序组合与-addinitializer"><a class="header" href="#执行顺序组合与-addinitializer">执行顺序、组合与 addInitializer</a></h2>
+<p>多个装饰器叠在一起时，顺序容易让人困惑。规则其实很清晰，我们用实验直接看。</p>
+<pre><code class="language-typescript">// 文件：code/ch19/04-order-and-initializer.ts
+
+function trace(tag: string) {
+  console.log(`① 求值工厂 ${tag}`); // 工厂本身：自上而下先被"调用"
+  return function (target: any, context: ClassMethodDecoratorContext | ClassDecoratorContext) {
+    console.log(`② 应用装饰器 ${tag}`); // 装饰器应用：由内向外（自下而上）
+    return target;
+  };
+}
+
+@trace("类@外层")
+@trace("类@内层")
+class Demo {
+  @trace("方法@上")
+  @trace("方法@下")
+  run() {}
+}
+</code></pre>
+<p>逐段拆解与运行结果：</p>
+<ul>
+<li><strong>第一阶段：工厂求值，自上而下</strong>。<code>@trace(...)</code> 是装饰器工厂调用，JS 从上到下依次执行这些“括号里的调用“来得到装饰器。所以先打印 <code>① 求值工厂 类@外层</code>、<code>类@内层</code>，再是方法的 <code>方法@上</code>、<code>方法@下</code>。</li>
+<li><strong>第二阶段：装饰器应用，由内向外</strong>。真正把装饰器“贴上去“时，顺序<strong>反过来</strong>——离被装饰目标最近的（最内层/最下面的）先应用。所以打印 <code>② 应用装饰器 方法@下</code> 在 <code>方法@上</code> 之前，<code>类@内层</code> 在 <code>类@外层</code> 之前。</li>
+<li><strong>为什么“由内向外“很重要</strong>？因为装饰器是层层包裹的。回看上一节的 <code>@measure</code> + <code>@cached</code>：<code>@cached</code>（下/内）先应用，先包住原方法；<code>@measure</code>（上/外）后应用，包在最外层。于是调用时先进 <code>measure</code> 计时、再进 <code>cached</code> 查缓存——<code>measure</code> 测到的耗时<strong>包含</strong>了缓存查找。顺序换一下，语义就变了。📌 <strong>记法：装饰器像“洋葱“，写在上面的包在外层，先执行到。</strong></li>
+</ul>
+<p>接着看 <code>addInitializer</code>——上下文对象提供的一个钩子，让你在<strong>实例构造时</strong>运行一段代码：</p>
+<pre><code class="language-typescript">// 文件：code/ch19/04-order-and-initializer.ts（续）
+
+// addInitializer：在"实例被构造时"运行一段代码，常用于把方法/字段注册到某处。
+function autoBind(target: (...args: any[]) =&gt; any, context: ClassMethodDecoratorContext) {
+  // 把方法绑定到实例，避免 this 丢失。
+  context.addInitializer(function (this: any) {
+    this[context.name] = target.bind(this);
+  });
+}
+
+class Button {
+  label = "OK";
+  @autoBind
+  click() {
+    console.log("点击了", this.label);
+  }
+}
+
+console.log("--- 顺序演示结束，开始构造实例 ---");
+const b = new Button();
+const handler = b.click; // 把方法"拆下来"单独调用
+handler(); // 因为 autoBind 已绑定 this，这里仍能拿到 label
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>context.addInitializer(fn)</code></strong>。它注册的 <code>fn</code> 会在<strong>每次 <code>new Button()</code> 构造实例时</strong>执行，且 <code>this</code> 指向新实例。这是标准装饰器替代旧写法的关键能力之一。</li>
+<li><strong><code>@autoBind</code> 解决的经典问题</strong>。JS 里把方法“拆下来“单独调用（<code>const handler = b.click; handler()</code>）会丢失 <code>this</code>，<code>this.label</code> 就变 <code>undefined</code> 甚至报错——React 类组件时代人人踩过。<code>@autoBind</code> 在实例初始化时用 <code>target.bind(this)</code> 把方法固定绑到实例，再挂回 <code>this[context.name]</code>，于是 <code>handler()</code> 依然能正确访问 <code>this.label</code>。</li>
+</ul>
+<pre><code class="language-bash">npx tsx 04-order-and-initializer.ts
+</code></pre>
+<hr>
+<h2 id="元编程基石之一objectdefineproperty-与-reflect"><a class="header" href="#元编程基石之一objectdefineproperty-与-reflect">元编程基石之一：Object.defineProperty 与 Reflect</a></h2>
+<p>装饰器的底层，本质是在操作对象和属性。要理解它们、也要能自己做元编程，得先认识两个原语。</p>
+<pre><code class="language-typescript">// 文件：code/ch19/05-reflect-and-defineproperty.ts
+
+// 1) Object.defineProperty：精细控制一个属性的"特性"（descriptor）。
+const config: Record&lt;string, unknown&gt; = {};
+Object.defineProperty(config, "version", {
+  value: "1.0.0",
+  writable: false, // 只读
+  enumerable: true, // 可被 for...in / Object.keys 枚举
+  configurable: false, // 不可删除、不可再次重定义
+});
+console.log("version =", config.version);
+try {
+  // 模块顶层代码在 ESM 里默认是严格模式，给只读属性赋值会抛错。
+  config.version = "9.9.9";
+} catch (e) {
+  console.log("修改只读属性被拒绝:", (e as Error).message);
+}
+console.log("尝试修改后 version =", config.version); // 仍是 1.0.0
+
+// 定义一个"计算属性"（访问器属性）
+const rect = { width: 3, height: 4 };
+Object.defineProperty(rect, "area", {
+  get() {
+    return (this as typeof rect).width * (this as typeof rect).height;
+  },
+  enumerable: true,
+});
+console.log("area =", (rect as any).area); // 12
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>属性描述符（property descriptor）</strong>。我们平时写 <code>obj.x = 1</code> 得到的属性，默认是可写、可枚举、可配置的。<code>Object.defineProperty</code> 让你逐项控制：<code>writable</code>（能不能改）、<code>enumerable</code>（会不会被 <code>Object.keys</code>/<code>for...in</code> 列出）、<code>configurable</code>（能不能删除或重定义）。这里把 <code>version</code> 设成只读，再改它就会（在严格模式下）抛错。</li>
+<li><strong>访问器属性（accessor property）</strong>。用 <code>get</code>/<code>set</code> 定义的属性不存实际值，而是“读的时候现算“。<code>area</code> 每次读取都用当前的 <code>width * height</code> 算出来。这正是很多“响应式/计算属性“的底层机制。</li>
+</ul>
+<p>第二部分是 <code>Reflect</code>——它把“语言内部操作“变成一组普通函数：</p>
+<pre><code class="language-typescript">// 文件：code/ch19/05-reflect-and-defineproperty.ts（续）
+
+// 2) Reflect：把"语言内部操作"变成可调用的函数，与 Proxy 天生一对。
+const user = { name: "Alice", age: 30 };
+
+console.log("Reflect.get:", Reflect.get(user, "name")); // 等价于 user.name
+Reflect.set(user, "age", 31); // 等价于 user.age = 31
+console.log("修改后 age:", user.age);
+console.log("Reflect.has:", Reflect.has(user, "name")); // 等价于 "name" in user
+console.log("Reflect.ownKeys:", Reflect.ownKeys(user)); // 拿到自有键（含 Symbol）
+Reflect.deleteProperty(user, "age"); // 等价于 delete user.age
+console.log("删除后:", user);
+
+// Reflect.get / set 支持第三个参数 receiver，用于在继承链上正确传递 this。
+const base = {
+  _x: 1,
+  get x() {
+    return this._x;
+  },
+};
+const child = { _x: 42 };
+console.log("带 receiver 的 get:", Reflect.get(base, "x", child)); // 42，用 child 当 this
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>Reflect</code> 是干什么的</strong>？它把 <code>obj.name</code>、<code>obj.x = 1</code>、<code>"k" in obj</code>、<code>delete obj.k</code>、<code>Object.keys</code> 这些“语法操作“改写成<strong>函数调用</strong>：<code>Reflect.get</code>、<code>Reflect.set</code>、<code>Reflect.has</code>、<code>Reflect.deleteProperty</code>、<code>Reflect.ownKeys</code>。乍看没意义——<code>Reflect.get(user, "name")</code> 不就是 <code>user.name</code> 吗？关键在于：<strong>函数可以被转发、被组合、被作为默认行为调用</strong>，而语法不行。这在写 <code>Proxy</code> 时至关重要（下一节马上用到）。</li>
+<li><strong><code>receiver</code> 参数</strong>。<code>Reflect.get(base, "x", child)</code> 的第三个参数指定 getter 里 <code>this</code> 是谁。这里读 <code>base.x</code> 但让 <code>this</code> 指向 <code>child</code>，于是返回 <code>child._x = 42</code>。在代理继承链时，正确传 <code>receiver</code> 才能保证 getter/setter 里的 <code>this</code> 指向对的对象。</li>
+</ul>
+<pre><code class="language-bash">npx tsx 05-reflect-and-defineproperty.ts
+</code></pre>
+<hr>
+<h2 id="元编程基石之二proxy"><a class="header" href="#元编程基石之二proxy">元编程基石之二：Proxy</a></h2>
+<p><code>Proxy</code> 是元编程的重头戏：它包裹一个对象，<strong>拦截</strong>对该对象的各种操作（读、写、删、<code>in</code>、函数调用……），让你在中间插入自己的逻辑。Vue 3 的响应式系统、各种 ORM、Mock 库，底层都是它。</p>
+<pre><code class="language-typescript">// 文件：code/ch19/06-proxy.ts
+
+// 1) 日志代理：任何读写都打印出来。
+const target = { a: 1, b: 2 };
+const logged = new Proxy(target, {
+  get(obj, key, receiver) {
+    console.log("读取", String(key));
+    return Reflect.get(obj, key, receiver); // 用 Reflect 转发默认行为
+  },
+  set(obj, key, value, receiver) {
+    console.log("写入", String(key), "=", value);
+    return Reflect.set(obj, key, value, receiver);
+  },
+});
+logged.a; // 触发 get
+logged.b = 20; // 触发 set
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>new Proxy(target, handler)</code></strong>。第一个参数是被代理的原对象；第二个是<strong>处理器对象（handler）</strong>，里面每个方法叫一个<strong>陷阱（trap）</strong>。<code>get</code> trap 拦截读属性，<code>set</code> trap 拦截写属性。此外还有 <code>has</code>（拦截 <code>in</code>）、<code>deleteProperty</code>（拦截 <code>delete</code>）、<code>apply</code>（拦截函数调用）、<code>construct</code>（拦截 <code>new</code>）等十几种。</li>
+<li><strong>为什么 trap 里用 <code>Reflect</code></strong>？看 <code>get</code> trap：我们打印日志后，得<strong>执行默认的读取行为</strong>返回真实值——<code>Reflect.get(obj, key, receiver)</code> 正是“默认读取“的函数形式，还能把 <code>receiver</code> 正确传下去。这就是上一节说的“Reflect 与 Proxy 天生一对“：<strong>trap 负责插入自定义逻辑，<code>Reflect</code> 负责补上默认行为。</strong></li>
+</ul>
+<p>接下来两个更实用的例子——校验与响应式：</p>
+<pre><code class="language-typescript">// 文件：code/ch19/06-proxy.ts（续）
+
+// 2) 校验代理：拦截 set，拒绝非法值。
+interface Account {
+  balance: number;
+}
+function createAccount(): Account {
+  return new Proxy({ balance: 0 } as Account, {
+    set(obj, key, value) {
+      if (key === "balance" &amp;&amp; (typeof value !== "number" || value &lt; 0)) {
+        throw new RangeError("余额必须是非负数");
+      }
+      return Reflect.set(obj, key, value);
+    },
+  });
+}
+const acc = createAccount();
+acc.balance = 100;
+console.log("余额:", acc.balance);
+try {
+  acc.balance = -5;
+} catch (e) {
+  console.log("被拦截:", (e as Error).message);
+}
+
+// 3) 迷你响应式：属性变化时自动触发回调（Vue 响应式的雏形）。
+function reactive&lt;T extends object&gt;(obj: T, onChange: (key: string) =&gt; void): T {
+  return new Proxy(obj, {
+    set(o, key, value, receiver) {
+      const ok = Reflect.set(o, key, value, receiver);
+      onChange(String(key));
+      return ok;
+    },
+  });
+}
+const state = reactive({ count: 0 }, (key) =&gt; {
+  console.log(`state.${key} 变了，重新渲染！当前 count =`, state.count);
+});
+state.count++;
+state.count++;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>校验代理</strong>。<code>set</code> trap 在写入前检查值：<code>balance</code> 必须是非负数，否则抛 <code>RangeError</code>。这样非法状态<strong>根本写不进对象</strong>——比在每个赋值点手写 <code>if</code> 检查优雅得多，且无法绕过。</li>
+<li><strong>迷你响应式</strong>。<code>reactive</code> 包一层 Proxy，每次 <code>set</code> 成功后调用 <code>onChange</code> 回调。于是 <code>state.count++</code>（读一次、写一次）触发回调，你可以在回调里“重新渲染 UI“。这正是 Vue 3 响应式的雏形——真实实现更复杂（依赖收集、嵌套代理等），但内核就是这个 <code>set</code> trap。</li>
+</ul>
+<pre><code class="language-bash">npx tsx 06-proxy.ts
+</code></pre>
+<p>📌 <strong>Proxy vs 装饰器</strong>：装饰器在“定义时“一次性改写类/成员；Proxy 在“运行时“逐次拦截每个操作。前者静态、后者动态，常常搭配使用。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>最大的坑：搞错了装饰器套别。</strong> 本章代码在 <code>experimentalDecorators: true</code> 的配置下会用旧装饰器编译，导致 <code>context</code> 为 <code>undefined</code>。务必按本章“运行前提“里的方式运行（进 <code>ch19</code> 目录或加 <code>--tsconfig</code>）。反过来，用旧装饰器的老项目（Angular/NestJS）也不能直接套本章写法。</li>
+<li>⚠️ <strong>方法装饰器返回的包裹函数一定要用 <code>target.call(this, ...args)</code></strong>，不能 <code>target(...args)</code>——否则被装饰方法里的 <code>this</code> 会丢。</li>
+<li>⚠️ <strong>字段装饰器加工的是“初始值“</strong>，且第一个参数恒为 <code>undefined</code>。想响应“每次写入“，用 <code>accessor</code> 装饰器而不是字段装饰器。</li>
+<li>⚠️ <strong>标准装饰器没有参数装饰器</strong>。如果你在教程里看到装饰方法参数的写法（<code>method(@Inject() dep)</code>），那是旧实验装饰器，本章语义下不可用。</li>
+<li>💡 <strong>带参数用工厂、不带参数用光杆</strong>，但要注意：<code>@foo</code> 和 <code>@foo()</code> 是两回事。工厂一定要带括号调用。</li>
+<li>💡 <strong>组合装饰器记住“洋葱模型“</strong>：写在上面的包在外层、先执行。顺序影响语义时要想清楚。</li>
+<li>💡 <strong>Proxy 的 trap 里坚持用 <code>Reflect</code> 转发默认行为</strong>，尤其别忘了传 <code>receiver</code>，否则继承链上的 getter/setter 的 <code>this</code> 会错。</li>
+<li>💡 <strong>元数据别急着上 <code>reflect-metadata</code></strong>。标准装饰器时代它已不是必需；很多需求（如本章 DI）用“显式声明“就能干净解决，依赖更少、更好懂。</li>
+</ul>
+<hr>
+<h2 id="本章小项目简易依赖注入容器"><a class="header" href="#本章小项目简易依赖注入容器">本章小项目：简易依赖注入容器</a></h2>
+<p>**依赖注入（DI）<strong>的思想：一个类不自己 <code>new</code> 它需要的依赖，而是“声明我需要什么“，由一个</strong>容器（container）**负责创建并“注入“进来。好处是解耦、易测试（测试时可注入假的依赖）、单例复用。Angular、NestJS 的核心就是 DI 容器。</p>
+<p>我们用<strong>类装饰器 <code>@Injectable()</code></strong> 标记可注入的类、声明它的依赖，再实现一个 <code>Container</code> 负责 <code>resolve</code>（递归实例化 + 缓存单例）。</p>
+<blockquote>
+<p>为什么显式声明依赖，而不是自动读构造函数参数类型？自动读取要靠旧装饰器 + <code>reflect-metadata</code>。为了在标准装饰器 + <code>tsx</code> 下开箱即跑、零额外依赖，我们让 <code>@Injectable({ deps: [...] })</code> 显式列出依赖——这也是很多真实框架支持的写法，且更直观。</p>
+</blockquote>
+<pre><code class="language-typescript">// 文件：code/ch19/di-container.ts（核心部分）
+
+type Ctor&lt;T = unknown&gt; = new (...args: any[]) =&gt; T;
+
+interface InjectableOptions {
+  deps?: Ctor[]; // 该类构造函数需要的依赖（按顺序）
+}
+
+// 全局注册表：记录"哪些类可注入"以及"各自的依赖列表"。
+const INJECTABLE = new Set&lt;Ctor&gt;();
+const DEPS = new WeakMap&lt;Ctor, Ctor[]&gt;();
+
+// 类装饰器工厂：接收配置，返回真正的类装饰器。
+// 用泛型 C 让"接收的类"和"返回的类"是同一个具体类型，
+// 满足标准装饰器"返回值类型必须与被装饰类兼容"的要求。
+export function Injectable(options: InjectableOptions = {}) {
+  return function &lt;C extends Ctor&gt;(value: C, context: ClassDecoratorContext): C {
+    if (context.kind !== "class") {
+      throw new Error("@Injectable 只能用在类上");
+    }
+    INJECTABLE.add(value);
+    DEPS.set(value, options.deps ?? []);
+    return value; // 不改写类本身，原样返回
+  };
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>Ctor</code> 类型</strong>。<code>new (...args: any[]) =&gt; T</code> 表示“任何可 <code>new</code> 的类“，我们用它作为容器里的“令牌（token）“——用类本身当键去查它对应的实例。</li>
+<li><strong><code>@Injectable</code> 做的事</strong>。它是个装饰器工厂：接收 <code>{ deps }</code> 配置，返回真正的类装饰器。装饰器里把类登记进 <code>INJECTABLE</code> 集合，把依赖列表存进 <code>DEPS</code>（用 <code>WeakMap</code>，类被回收时元数据自动释放，防内存泄漏）。它<strong>不改写类</strong>，只是“打标签 + 记账“，所以原样 <code>return value</code>。这是类装饰器的另一种常见用法——<strong>注册（registration）</strong>，不改行为、只登记信息。</li>
+</ul>
+<p>接着是容器本身：</p>
+<pre><code class="language-typescript">// 文件：code/ch19/di-container.ts（Container 部分）
+
+export class Container {
+  private singletons = new Map&lt;Ctor, unknown&gt;(); // 类 → 实例（单例缓存）
+  private resolving = new Set&lt;Ctor&gt;(); // 正在解析中的类，用来检测循环依赖
+
+  register&lt;T&gt;(token: Ctor&lt;T&gt;): void {
+    INJECTABLE.add(token);
+    if (!DEPS.has(token)) DEPS.set(token, []);
+  }
+
+  resolve&lt;T&gt;(token: Ctor&lt;T&gt;): T {
+    // 1) 命中缓存 → 直接返回同一个实例（单例语义）。
+    if (this.singletons.has(token)) {
+      return this.singletons.get(token) as T;
+    }
+    // 2) 没标记也没注册 → 报错，避免"凭空造对象"。
+    if (!INJECTABLE.has(token)) {
+      throw new Error(`无法解析 ${token.name}：它没有被 @Injectable 标记或 register`);
+    }
+    // 3) 循环依赖检测。
+    if (this.resolving.has(token)) {
+      throw new Error(`检测到循环依赖：${token.name}`);
+    }
+    this.resolving.add(token);
+
+    // 4) 递归解析每个依赖，再把它们按顺序传给构造函数。
+    const deps = DEPS.get(token) ?? [];
+    const args = deps.map((dep) =&gt; this.resolve(dep));
+    const instance = new token(...args);
+
+    this.resolving.delete(token);
+    this.singletons.set(token, instance); // 缓存为单例
+    return instance as T;
+  }
+}
+</code></pre>
+<p>逐段拆解 <code>resolve</code> 的四步（这是整个容器的灵魂）：</p>
+<ol>
+<li><strong>查缓存</strong>。如果这个类已经造过实例，直接返回同一个——这就是“单例“：整个应用里 <code>Logger</code> 只有一个。</li>
+<li><strong>校验</strong>。没登记过的类不给造，抛出清晰的错误，避免误用。</li>
+<li><strong>循环依赖检测</strong>。用 <code>resolving</code> 集合记录“正在解析途中“的类。如果解析 A 时又要解析 A，说明 A→B→A 形成了环，直接报错——否则会无限递归爆栈。</li>
+<li><strong>递归 + 注入</strong>。取出依赖列表，对每个依赖<strong>递归调用 <code>resolve</code></strong>（依赖自己可能还有依赖，层层往下），拿到所有依赖实例后 <code>new token(...args)</code>。这就是“注入“：构造函数需要的东西，全由容器备齐塞进去。造好后存进缓存。</li>
+</ol>
+<p>演示（三层依赖 <code>UserService → Database → Logger</code>）：</p>
+<pre><code class="language-typescript">// 文件：code/ch19/di-container.ts（演示部分）
+
+@Injectable()
+class Logger {
+  log(message: string): void {
+    console.log(`[LOG] ${message}`);
+  }
+}
+
+@Injectable({ deps: [Logger] })
+class Database {
+  constructor(private logger: Logger) {
+    this.logger.log("数据库连接已建立");
+  }
+  query(sql: string): string[] {
+    this.logger.log(`执行查询: ${sql}`);
+    return ["row1", "row2"];
+  }
+}
+
+@Injectable({ deps: [Logger, Database] })
+class UserService {
+  constructor(
+    private logger: Logger,
+    private db: Database,
+  ) {}
+  findAll(): string[] {
+    this.logger.log("UserService.findAll 被调用");
+    return this.db.query("SELECT * FROM users");
+  }
+}
+
+const container = new Container();
+const svc = container.resolve(UserService);
+console.log("查询结果:", svc.findAll());
+
+const svc2 = container.resolve(UserService);
+console.log("UserService 是单例吗?", svc === svc2); // true
+
+const logger = container.resolve(Logger);
+const db = container.resolve(Database);
+console.log("Logger 被复用吗?", logger === (db as any)["logger"]); // true
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>依赖声明与构造函数一一对应</strong>。<code>UserService</code> 声明 <code>deps: [Logger, Database]</code>，构造函数就按这个顺序接收 <code>(logger, db)</code>。⚠️ 顺序必须对齐——<code>deps</code> 数组的顺序就是注入实参的顺序。</li>
+<li><strong>一行 <code>resolve(UserService)</code> 触发整条链</strong>。容器发现 <code>UserService</code> 依赖 <code>Logger</code> 和 <code>Database</code>；<code>Database</code> 又依赖 <code>Logger</code>。容器递归把它们全造好、按序注入。你只写了一行，三个对象自动就位。</li>
+<li><strong>单例被验证</strong>。<code>svc === svc2</code> 为 <code>true</code>，说明二次解析拿到同一实例。而 <code>UserService</code> 里的 <code>logger</code> 与容器直接 <code>resolve(Logger)</code> 得到的<strong>是同一个对象</strong>（<code>Logger 被复用吗? true</code>）——因为 <code>Logger</code> 在缓存里只造一次，被所有依赖它的类共享。这正是 DI 容器“共享单例“的价值。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">cd code/ch19 &amp;&amp; npx tsx di-container.ts
+# 或从 code/ 下：npx tsx --tsconfig ch19/tsconfig.json ch19/di-container.ts
+</code></pre>
+<p>你会看到日志按依赖顺序打印，最后三行确认了单例与复用、以及对未注册类的报错。</p>
+<p><strong>扩展练习</strong>（自己动手，加深理解）：</p>
+<ol>
+<li><strong>瞬态（transient）作用域</strong>：给 <code>@Injectable({ scope: "transient" })</code> 加一个选项，让这类每次 <code>resolve</code> 都返回<strong>新实例</strong>（不缓存）。提示：在 <code>resolve</code> 里根据 scope 决定是否走 <code>singletons</code>。</li>
+<li><strong>接口令牌</strong>：目前用具体类当 token。试着支持 <code>container.register(LoggerToken, ConsoleLogger)</code>，让“依赖抽象、绑定实现“成为可能。提示：token 不再是被实例化的类本身，需要额外的 token→实现映射表。</li>
+<li><strong>循环依赖测试</strong>：手动写两个互相依赖的类 A、B，确认容器抛出“检测到循环依赖“而不是栈溢出。</li>
+<li><strong>改造成方法拦截</strong>：结合本章的 <code>@measure</code>，给容器解析出的实例的每个方法自动加上计时（提示：用 <code>Proxy</code> 包裹返回的实例，在 <code>get</code> trap 里把方法换成计时版本）。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们从“横切关注点“这个痛点出发，学完了装饰器与元编程的核心：</p>
+<ul>
+<li>明确了 <strong>TS5 标准装饰器（Stage 3）与旧实验装饰器的区别</strong>：签名不同（<code>(value, context)</code> vs <code>(target, key, descriptor)</code>）、配置不同（无需 <code>experimentalDecorators</code>）、能力不同（标准装饰器无参数装饰器、有 <code>accessor</code> 与 <code>addInitializer</code>）。也知道了本书为何在 <code>ch19</code> 放独立 tsconfig、怎么运行。</li>
+<li>掌握了<strong>五种位置</strong>的装饰器：类、方法、getter/setter、字段、accessor，以及它们各自的<strong>上下文对象</strong>。</li>
+<li>学会了<strong>装饰器工厂</strong>（带参数）与<strong>组合顺序</strong>（工厂自上而下求值、装饰器由内向外应用，洋葱模型）。</li>
+<li>认识了元编程三件套：<strong><code>Object.defineProperty</code></strong>（属性描述符）、<strong><code>Reflect</code></strong>（把内部操作函数化）、<strong><code>Proxy</code></strong>（拦截操作，做日志/校验/响应式）。</li>
+<li>理解了<strong>元数据与依赖注入</strong>思想，并亲手实现了能递归解析、缓存单例、检测循环依赖的<strong>迷你 DI 容器</strong>。</li>
+</ul>
+<p><strong>自测题</strong>（不看答案先想）：</p>
+<ol>
+<li>标准装饰器的方法装饰器有几个参数？分别是什么？与旧装饰器有何不同？</li>
+<li><code>@foo</code> 和 <code>@foo()</code> 有什么区别？什么时候必须带括号？</li>
+<li>两个装饰器叠在一个方法上，哪个先“应用“、哪个包在外层？调用时先进哪个？</li>
+<li>字段装饰器的第一个参数是什么？它加工的是字段的“初始值“还是“构造函数里赋的值“？</li>
+<li>为什么 <code>Proxy</code> 的 trap 里推荐用 <code>Reflect</code> 来实现默认行为？<code>receiver</code> 参数有什么用？</li>
+<li>DI 容器的 <code>resolve</code> 如何保证“单例“？又如何检测“循环依赖“？</li>
+</ol>
+<p>如果这几题都能答上来，说明你已经掌握了本章。装饰器与元编程是理解现代框架（Angular、NestJS、Vue、TypeORM）源码的钥匙——它们看起来“魔法“，拆开来全是本章这些原理。</p>
+<hr>
+<p>下一章预告：<strong>第 20 章 · tsconfig、声明文件与 JS 互操作</strong>。我们这一章反复被 <code>tsconfig.json</code> 的一个选项（<code>experimentalDecorators</code>）“折腾”，恰好说明了配置的重要性。下一章就系统地讲清楚 <code>tsconfig.json</code> 的每个关键选项、<code>.d.ts</code> 声明文件是怎么回事、以及如何让 TypeScript 与现有的纯 JavaScript 代码/第三方库顺畅协作。把配置吃透，你才能真正掌控一个 TS 项目。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch18.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch20.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch18.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch20.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

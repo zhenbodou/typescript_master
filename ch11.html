@@ -1,0 +1,907 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 11 章 · Node.js 运行时基础 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch11.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-11-章--nodejs-运行时基础"><a class="header" href="#第-11-章--nodejs-运行时基础">第 11 章 · Node.js 运行时基础</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前面十章，我们的代码要么在浏览器控制台里跑，要么用 <code>node</code> 命令直接执行一个小脚本。但我们一直没认真讲过：<strong>Node.js 到底是什么？它能干什么？</strong> 这一章就来补上这块。</p>
+<p>学完前面的模块化（第 9 章）和异步（第 8 章），你已经具备了理解 Node 的全部前置知识。Node.js（简称 Node）让 JavaScript 走出浏览器，能直接读写文件、访问网络、操作系统、写命令行工具、跑后端服务器。它是你从“写页面脚本“迈向“写真正的程序“的第一步。</p>
+<p>本章你将学会：</p>
+<ul>
+<li>说清楚 <strong>Node.js</strong> 是什么，以及它和浏览器在<strong>全局对象</strong>上的差异（有 <code>global</code>、<code>globalThis</code>，但没有 <code>window</code>、<code>document</code>）。</li>
+<li>用 <code>node:</code> 前缀导入 Node 的<strong>内置模块（built-in module）</strong>。</li>
+<li>用 <strong>fs</strong> 模块读写文件，并搞清楚<strong>同步、回调异步、Promise 版</strong>三种风格的区别，知道该优先用哪种。</li>
+<li>用 <strong>path</strong> 模块处理跨平台的路径，并在 ESM 下正确拿到“当前文件目录“（因为 ESM 里<strong>没有</strong> <code>__dirname</code>）。</li>
+<li>用 <strong>process</strong> 访问命令行参数、环境变量、当前目录、标准输入输出。</li>
+<li>用 <strong>os</strong> 模块了解运行环境。</li>
+<li>用 <strong>EventEmitter</strong> 实现事件驱动编程。</li>
+<li>理解**流（Stream）**为什么重要，用它和 <strong>readline</strong> 处理大文件而不撑爆内存。</li>
+<li>认识 <strong>Buffer</strong>。</li>
+<li>亲手做一个<strong>日志分析命令行工具</strong>。</li>
+</ul>
+<p>本章所有示例用 Node.js 运行（本书用 Node 20+，示例在 Node 24 上验证过）。请确认终端里 <code>node -v</code> 能看到版本号。</p>
+<hr>
+<h2 id="nodejs-是什么复习一下"><a class="header" href="#nodejs-是什么复习一下">Node.js 是什么（复习一下）</a></h2>
+<p><strong>Node.js</strong> 是一个 <strong>JavaScript 运行时（runtime）</strong>。所谓“运行时“，就是“能把 JavaScript 代码跑起来的环境“。浏览器是一种运行时，Node 是另一种。</p>
+<p>它们的心脏是同一个东西——Google 的 <strong>V8 引擎</strong>（就是 Chrome 浏览器里那个 JS 引擎）。V8 负责把 JavaScript 翻译成机器能执行的指令。但光有引擎还不够：引擎只懂“语言本身“（变量、函数、循环这些），它并不知道怎么读文件、怎么开网络端口。</p>
+<p>📌 <strong>关键区分</strong>：</p>
+<ul>
+<li><strong>语言本身</strong>（ECMAScript 标准）：<code>let</code>、<code>for</code>、<code>Array</code>、<code>Promise</code>……这些无论在浏览器还是 Node 里都一样。</li>
+<li><strong>运行时提供的能力（API）</strong>：浏览器给你 <code>document</code>、<code>fetch</code>、<code>localStorage</code>；Node 给你 <code>fs</code>（文件系统）、<code>http</code>（网络服务器）、<code>process</code>（进程）。这些<strong>不是</strong>语言的一部分，是各自运行时“额外附赠“的工具箱。</li>
+</ul>
+<p>Node 在 V8 之外，用 C++ 补上了操作系统级别的能力（文件、网络、进程），再用一个叫 <strong>libuv</strong> 的库提供了我们在第 8 章讲过的<strong>事件循环（event loop）</strong>。这就是为什么 Node 天生擅长处理大量并发的 I/O（输入输出）——它不会傻等一个文件读完，而是先去干别的，读完了再回来。</p>
+<hr>
+<h2 id="node-与浏览器的全局对象差异"><a class="header" href="#node-与浏览器的全局对象差异">Node 与浏览器的全局对象差异</a></h2>
+<p>在浏览器里，最顶层的全局对象叫 <code>window</code>。你在第 10 章见过它：<code>window.document</code>、<code>window.location</code>……</p>
+<p>在 Node 里，<strong>没有 <code>window</code>，也没有 <code>document</code></strong>——因为 Node 根本没有网页、没有 DOM。Node 的全局对象叫 <code>global</code>。</p>
+<pre><code class="language-javascript">// 在 Node 里跑这段
+console.log(typeof global);      // 'object'
+console.log(typeof globalThis);  // 'object'
+console.log(global === globalThis); // true
+
+console.log(typeof window);      // 'undefined' —— Node 里没有 window
+console.log(typeof document);    // 'undefined' —— Node 里也没有 document
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>global</code> 是 Node 的全局对象，相当于浏览器里的 <code>window</code>。</li>
+<li><code>globalThis</code> 是 ES2020 引入的<strong>统一名字</strong>：无论在浏览器还是 Node，<code>globalThis</code> 都指向当前环境的全局对象。💡 <strong>写跨环境代码时，永远用 <code>globalThis</code></strong>，别用 <code>window</code> 或 <code>global</code>，这样代码搬到哪儿都能跑。</li>
+<li><code>window</code> 和 <code>document</code> 在 Node 里是 <code>undefined</code>。如果你把一段依赖 DOM 的浏览器代码直接丢进 Node 跑，就会报“<code>document is not defined</code>“——现在你知道原因了。</li>
+</ul>
+<p>⚠️ <strong>常见误区</strong>：初学者从网上抄一段操作页面的代码放进 Node 里跑，结果报 <code>window is not defined</code>，然后一脸懵。记住：<strong>DOM 是浏览器的东西，Node 里没有。</strong> 反过来，<code>fs</code>、<code>process</code> 这些是 Node 的东西，浏览器里也没有。</p>
+<p>Node 里还有几个“两边都有“的东西，比如 <code>console</code>、<code>setTimeout</code>；而 <code>process</code>（下面会讲）是 Node 独有的。</p>
+<hr>
+<h2 id="导入内置模块node-前缀"><a class="header" href="#导入内置模块node-前缀">导入内置模块：<code>node:</code> 前缀</a></h2>
+<p>Node 自带一大堆现成的模块，不用安装就能用，叫<strong>内置模块（built-in module）<strong>或</strong>核心模块（core module）</strong>：<code>fs</code>（文件）、<code>path</code>（路径）、<code>os</code>（系统）、<code>http</code>（网络）、<code>events</code>（事件）……</p>
+<p>导入它们时，<strong>推荐加 <code>node:</code> 前缀</strong>：</p>
+<pre><code class="language-javascript">import fs from "node:fs";
+import path from "node:path";
+import os from "node:os";
+</code></pre>
+<p>你可能在老代码里见过不带前缀的写法 <code>import fs from "fs"</code>，它现在仍然能用。但 <code>node:</code> 前缀有两个好处：</p>
+<p>📌 <strong>为什么推荐 <code>node:</code> 前缀</strong>：</p>
+<ol>
+<li><strong>一眼就能看出这是 Node 内置模块</strong>，而不是你 <code>npm install</code> 装的第三方包。</li>
+<li><strong>避免歧义</strong>：万一 npm 上有个包也叫 <code>fs</code>，<code>node:fs</code> 明确告诉 Node“我要的是内置那个“，杜绝被冒名顶替（这其实是一种安全防护）。</li>
+</ol>
+<p>本章一律使用 <code>node:</code> 前缀。</p>
+<hr>
+<h2 id="fs读写文件"><a class="header" href="#fs读写文件">fs：读写文件</a></h2>
+<p><strong>fs（file system，文件系统）</strong> 是最常用的 Node 模块，负责所有和文件、目录打交道的事：读、写、追加、删除、列目录……</p>
+<p>fs 的一个特点是：<strong>同一个功能它提供了三种风格的 API</strong>。搞懂这三种风格的区别，是本章最重要的知识点之一。</p>
+<h3 id="三种风格同步回调异步promise"><a class="header" href="#三种风格同步回调异步promise">三种风格：同步、回调异步、Promise</a></h3>
+<p>我们先看一个完整例子，同一件事（读写文件）用三种方式各做一遍：</p>
+<pre><code class="language-javascript">// 文件：code/ch11/01-fs.js
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import fs from "node:fs";                 // 回调风格也在这个默认导出上
+import fsp from "node:fs/promises";       // Promise 版
+import os from "node:os";
+import path from "node:path";
+
+// 在系统临时目录里造一个本例专用的文件路径
+const tmpFile = path.join(os.tmpdir(), "ch11-fs-demo.txt");
+
+// ---------- 1) 同步（sync）：会阻塞，直到读写完成 ----------
+writeFileSync(tmpFile, "第一行\n", "utf8");
+const text1 = readFileSync(tmpFile, "utf8");
+console.log("[sync] 读到：", JSON.stringify(text1));
+console.log("[sync] 文件存在吗？", existsSync(tmpFile));
+
+// ---------- 2) 回调异步（callback）：不阻塞，结果通过回调返回 ----------
+fs.appendFile(tmpFile, "第二行\n", "utf8", (err) =&gt; {
+  if (err) {
+    console.error("追加失败：", err);
+    return;
+  }
+  fs.readFile(tmpFile, "utf8", (err2, data) =&gt; {
+    if (err2) {
+      console.error("读取失败：", err2);
+      return;
+    }
+    console.log("[callback] 追加后内容：", JSON.stringify(data));
+    runPromiseDemo();
+  });
+});
+
+async function runPromiseDemo() {
+  // ---------- 3) Promise 版（推荐）：配合 async/await 最清爽 ----------
+  await fsp.appendFile(tmpFile, "第三行\n", "utf8");
+  const text3 = await fsp.readFile(tmpFile, "utf8");
+  console.log("[promises] 最终内容：\n" + text3);
+
+  await fsp.rm(tmpFile); // 清理临时文件
+  console.log("[promises] 已清理临时文件");
+}
+</code></pre>
+<p>运行 <code>node 01-fs.js</code>，输出：</p>
+<pre><code>[sync] 读到： "第一行\n"
+[sync] 文件存在吗？ true
+[callback] 追加后内容： "第一行\n第二行\n"
+[promises] 最终内容：
+第一行
+第二行
+第三行
+
+[promises] 已清理临时文件
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<p><strong>导入部分。</strong> 注意三种风格从不同地方来：</p>
+<ul>
+<li>同步和回调风格都在 <code>node:fs</code> 上。同步函数名字都带 <code>Sync</code> 后缀（<code>readFileSync</code>、<code>writeFileSync</code>）；不带 <code>Sync</code> 的（<code>fs.readFile</code>、<code>fs.appendFile</code>）是回调风格。</li>
+<li>Promise 版单独在 <code>node:fs/promises</code> 里，我们把它命名为 <code>fsp</code>。</li>
+</ul>
+<p><strong>临时文件路径。</strong> 我们用 <code>os.tmpdir()</code> 拿到系统临时目录，再用 <code>path.join</code> 拼出一个文件名。💡 <strong>为什么写到临时目录？</strong> 这样示例跑完清理掉，不会在项目里留下垃圾文件。<code>path</code> 和 <code>os</code> 下面会细讲。</p>
+<p><strong>① 同步风格。</strong> <code>writeFileSync</code>、<code>readFileSync</code> 会<strong>阻塞（block）</strong>——代码执行到这一行就停下来死等，直到磁盘操作彻底完成才往下走。所以 <code>text1</code> 拿到的一定是刚写进去的内容，非常直观。<code>existsSync</code> 判断文件是否存在，返回 <code>true</code>/<code>false</code>。</p>
+<p><strong>② 回调异步风格。</strong> <code>fs.appendFile(...)</code> <strong>不阻塞</strong>：它把“追加文件“这件事交给底层，然后立刻返回，代码继续跑。等操作真正完成，Node 才回来调用你给的<strong>回调函数（callback）</strong>。回调的第一个参数<strong>永远是错误对象</strong> <code>err</code>（没出错时是 <code>null</code>），这是 Node 回调的铁律，叫 “error-first callback”。你看到我们嵌套了两层回调（追加完再读），这就是臭名昭著的**回调地狱（callback hell）**的雏形——层层缩进，越写越右。</p>
+<p><strong>③ Promise 风格。</strong> <code>fsp</code> 里的每个函数都返回 Promise，可以直接 <code>await</code>。对比一下就知道它有多清爽：没有嵌套、没有 <code>err</code> 参数（出错会抛异常，用 <code>try/catch</code> 接），读到的结果直接是返回值。</p>
+<p>📌 <strong>该用哪一种？</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>风格</th><th>特点</th><th>何时用</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Promise（<code>fs/promises</code>）</strong></td><td>不阻塞，<code>async/await</code> 写法清爽</td><td>✅ <strong>默认首选</strong>，绝大多数情况</td></tr>
+<tr><td>回调异步</td><td>不阻塞，但容易回调地狱</td><td>对接老 API 时不得已才用</td></tr>
+<tr><td>同步（<code>Sync</code>）</td><td>会阻塞整个进程</td><td>⚠️ 仅限脚本启动时读配置等一次性场景</td></tr>
+</tbody>
+</table>
+</div>
+<p>⚠️ <strong>同步 API 的陷阱</strong>：Node 处理你的 JS 代码是<strong>单线程</strong>的。一个同步的 <code>readFileSync</code> 读大文件时，<strong>整个程序都卡住</strong>——如果这是个服务器，所有用户的请求都得排队干等。所以在服务器等长期运行的程序里，<strong>几乎永远不要用 <code>Sync</code> 版本</strong>。同步版只适合命令行工具启动时读一下配置文件这种“就这么一次、卡一下无所谓“的场合。</p>
+<h3 id="常用-fs-操作速查"><a class="header" href="#常用-fs-操作速查">常用 fs 操作速查</a></h3>
+<p>Promise 版（<code>fsp</code>）的常用方法：</p>
+<ul>
+<li><code>fsp.readFile(path, "utf8")</code> —— 读文件（带编码返回字符串，不带编码返回 Buffer）。</li>
+<li><code>fsp.writeFile(path, data)</code> —— 写文件（<strong>会覆盖</strong>已有内容）。</li>
+<li><code>fsp.appendFile(path, data)</code> —— 追加到文件末尾。</li>
+<li><code>fsp.rm(path)</code> —— 删除文件；加 <code>{ recursive: true }</code> 可删目录。</li>
+<li><code>fsp.mkdir(path)</code> —— 创建目录；加 <code>{ recursive: true }</code> 可创建多级。</li>
+<li><code>fsp.readdir(path)</code> —— 读目录，返回文件名数组。</li>
+<li><code>fsp.access(path)</code> —— 检查能否访问（存在/有权限），不能则抛错。</li>
+</ul>
+<h3 id="目录操作示例"><a class="header" href="#目录操作示例">目录操作示例</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch11/01b-fs-dir.js
+import fsp from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+
+async function main() {
+  // mkdtemp 会创建一个带随机后缀的临时目录，避免冲突
+  const dir = await fsp.mkdtemp(path.join(os.tmpdir(), "ch11-dir-"));
+  console.log("创建目录：", dir);
+
+  // 往目录里写三个文件
+  await fsp.writeFile(path.join(dir, "a.txt"), "AAA");
+  await fsp.writeFile(path.join(dir, "b.txt"), "BBB");
+  await fsp.writeFile(path.join(dir, "c.log"), "CCC");
+
+  // 读目录：默认返回文件名字符串数组
+  const names = await fsp.readdir(dir);
+  console.log("目录内容：", names); // [ 'a.txt', 'b.txt', 'c.log' ]
+
+  // withFileTypes 让我们能区分文件和子目录
+  const entries = await fsp.readdir(dir, { withFileTypes: true });
+  for (const e of entries) {
+    console.log(`  ${e.name} —— 是文件吗？ ${e.isFile()}`);
+  }
+
+  // 递归删除整个目录（recursive: true 相当于 rm -rf）
+  await fsp.rm(dir, { recursive: true, force: true });
+  console.log("已删除目录");
+}
+
+main();
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>fsp.mkdtemp(前缀)</code> 创建一个<strong>独一无二</strong>的临时目录，Node 会在你给的前缀后面自动加随机字符。这比自己写死一个目录名安全——不会和别的程序或别的运行撞车。</li>
+<li>我们往里写了三个文件，然后用 <code>readdir</code> 读回来。默认它只给你<strong>文件名字符串</strong>。</li>
+<li>加上 <code>{ withFileTypes: true }</code>，返回的就是 <strong>Dirent 对象</strong>，每个对象能用 <code>.isFile()</code>、<code>.isDirectory()</code> 判断类型。处理真实目录时这个很有用（你常需要区分文件和子文件夹）。</li>
+<li>最后 <code>fsp.rm(dir, { recursive: true, force: true })</code> 递归删掉整个目录。<code>recursive</code> 表示连里面的东西一起删，<code>force</code> 表示“就算不存在也别报错“。</li>
+</ul>
+<p>⚠️ <strong><code>writeFile</code> 会覆盖！</strong> 很多人以为 <code>writeFile</code> 是“往里加内容“，其实它会把文件<strong>整个重写</strong>。想追加请用 <code>appendFile</code>。</p>
+<hr>
+<h2 id="path跨平台处理路径"><a class="header" href="#path跨平台处理路径">path：跨平台处理路径</a></h2>
+<p><strong>path</strong> 模块专门处理文件路径字符串。你可能会想：“路径不就是字符串拼一拼吗，用 <code>+</code> 不行？” 不行——因为不同操作系统的路径分隔符不一样：Linux/macOS 用 <code>/</code>，Windows 用 <code>\</code>。手动拼接容易在换系统时出 bug。<code>path</code> 帮你屏蔽这些差异。</p>
+<h3 id="常用方法"><a class="header" href="#常用方法">常用方法</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch11/02-path.js
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+// ESM 里没有 __dirname / __filename，需要自己算（下一节详解）：
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// join：把片段拼成路径，自动处理分隔符和多余的斜杠
+console.log("join：", path.join(__dirname, "data", "sample.log"));
+
+// resolve：从右往左拼，直到拼出一个绝对路径（以 cwd 为基准）
+console.log("resolve：", path.resolve("data", "sample.log"));
+
+// 拆解路径
+const p = "/var/log/app/error.log";
+console.log("basename：", path.basename(p));         // error.log
+console.log("basename(去后缀)：", path.basename(p, ".log")); // error
+console.log("dirname：", path.dirname(p));           // /var/log/app
+console.log("extname：", path.extname(p));           // .log
+console.log("parse：", path.parse(p));
+
+console.log("path.sep：", JSON.stringify(path.sep)); // 当前系统的分隔符
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong><code>path.join(...片段)</code></strong>：把若干片段用当前系统的分隔符拼起来，还会自动清理多余的斜杠。这是<strong>日常拼路径最常用</strong>的方法。</li>
+<li><strong><code>path.resolve(...片段)</code></strong>：也拼路径，但保证结果是<strong>绝对路径</strong>。它从右往左处理，遇到绝对路径就停；如果拼到头还是相对的，就以**当前工作目录（cwd）**为基准补成绝对路径。💡 <strong><code>join</code> vs <code>resolve</code></strong>：想要“相对于某个已知目录“就用 <code>join</code>；想要“变成绝对路径“就用 <code>resolve</code>。</li>
+<li><strong><code>basename(p)</code></strong>：取路径最后一段（文件名）。传第二参数 <code>".log"</code> 可以顺便去掉后缀。</li>
+<li><strong><code>dirname(p)</code></strong>：取所在目录（去掉最后一段）。</li>
+<li><strong><code>extname(p)</code></strong>：取扩展名（含点，如 <code>.log</code>）。</li>
+<li><strong><code>parse(p)</code></strong>：一次性把路径拆成 <code>{ root, dir, base, ext, name }</code> 五部分。</li>
+<li><strong><code>path.sep</code></strong>：当前系统的路径分隔符（macOS/Linux 是 <code>"/"</code>，Windows 是 <code>"\\"</code>）。</li>
+</ul>
+<h3 id="esm-下没有-__dirname重点"><a class="header" href="#esm-下没有-__dirname重点">ESM 下没有 <code>__dirname</code>（重点！）</a></h3>
+<p>这是从 CommonJS 转到 ESM 的人<strong>最容易踩的坑</strong>。</p>
+<p>在旧的 CommonJS 模块里，Node 自动给你两个变量：<code>__filename</code>（当前文件的绝对路径）和 <code>__dirname</code>（当前文件所在目录）。很多老教程、老代码都直接用它们。</p>
+<p>📌 <strong>但在 ES Modules（也就是本书用的 <code>import</code>/<code>export</code>）里，<code>__filename</code> 和 <code>__dirname</code> 根本不存在。</strong> 你写 <code>console.log(__dirname)</code> 会直接报错 <code>__dirname is not defined</code>。</p>
+<p>ESM 提供的替代品是 <code>import.meta.url</code>——它是当前模块的 <strong>URL</strong>（形如 <code>file:///Users/.../02-path.js</code>）。要把这个 URL 转成普通文件路径，用 <code>node:url</code> 里的 <code>fileURLToPath</code>：</p>
+<pre><code class="language-javascript">import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url); // 当前文件绝对路径
+const __dirname = path.dirname(__filename);        // 当前文件所在目录
+</code></pre>
+<p>这两行几乎是每个需要读取“和脚本放在一起的文件“的 ESM 脚本的<strong>标准开头</strong>，记熟它。本章的日志分析工具就要用它来找默认的 <code>sample.log</code>。</p>
+<p>⚠️ <strong>别把 <code>cwd</code> 和 <code>__dirname</code> 搞混</strong>：<code>process.cwd()</code>（当前工作目录）是<strong>你运行 <code>node</code> 命令时所在的目录</strong>，可能和脚本文件本身的位置完全不同。而 <code>__dirname</code>（用上面方法算出的）永远指向<strong>脚本文件所在的目录</strong>。想读“跟脚本放一起的资源文件“，用 <code>__dirname</code>；想解析“用户在命令行里给的相对路径“，用 <code>cwd</code>。</p>
+<hr>
+<h2 id="process与进程打交道"><a class="header" href="#process与进程打交道">process：与进程打交道</a></h2>
+<p><strong>process</strong> 是一个全局对象（不用 import 就能用），代表<strong>当前这个 Node 进程</strong>。它是你的程序和外部世界沟通的重要通道。</p>
+<pre><code class="language-javascript">// 文件：code/ch11/02b-process-os.js
+import os from "node:os";
+
+// argv：命令行参数数组
+console.log("argv：", process.argv);
+const userArgs = process.argv.slice(2);
+console.log("用户参数：", userArgs);
+
+// env：环境变量（一个对象）
+console.log("自定义变量 MY_NAME：", process.env.MY_NAME ?? "(未设置)");
+
+// cwd：当前工作目录
+console.log("cwd：", process.cwd());
+
+// 平台与版本
+console.log("platform：", process.platform); // 'darwin' | 'win32' | 'linux'
+console.log("Node 版本：", process.version);
+
+// stdout：process.stdout.write 不会自动换行
+process.stdout.write("这是标准输出，没有换行");
+process.stdout.write("——接着上一句\n");
+
+// exit：主动结束进程，0 表示成功，非 0 表示出错
+process.exit(0);
+</code></pre>
+<p>运行 <code>MY_NAME=Claude node 02b-process-os.js foo bar</code>，关键输出：</p>
+<pre><code>argv： [
+  '/usr/.../node',
+  '/Users/.../02b-process-os.js',
+  'foo',
+  'bar'
+]
+用户参数： [ 'foo', 'bar' ]
+自定义变量 MY_NAME： Claude
+platform： darwin
+...
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong><code>process.argv</code></strong>：命令行参数<strong>数组</strong>。📌 <strong>注意前两个是固定的</strong>：<code>argv[0]</code> 是 node 可执行文件的路径，<code>argv[1]</code> 是你的脚本路径，<strong>从 <code>argv[2]</code> 开始才是用户真正传的参数</strong>。所以取用户参数几乎总是写 <code>process.argv.slice(2)</code>。上面命令传了 <code>foo bar</code>，<code>slice(2)</code> 就拿到 <code>['foo', 'bar']</code>。</li>
+<li><strong><code>process.env</code></strong>：<strong>环境变量（environment variable）<strong>对象。命令 <code>MY_NAME=Claude node ...</code> 在运行前设置了 <code>MY_NAME</code>，脚本里就能通过 <code>process.env.MY_NAME</code> 读到。💡 环境变量是配置程序的标准方式——数据库密码、API 密钥这类</strong>不该写死在代码里</strong>的东西，通常都通过环境变量传入。用 <code>??</code>（第 8 章的空值合并）给个“未设置“的默认值是好习惯。</li>
+<li><strong><code>process.cwd()</code></strong>：当前工作目录（见上一节的对比说明）。</li>
+<li><strong><code>process.platform</code></strong>：操作系统标识，<code>'darwin'</code> 是 macOS，<code>'win32'</code> 是 Windows，<code>'linux'</code> 是 Linux。写跨平台代码时用它判断。</li>
+<li><strong><code>process.stdout</code> / <code>process.stderr</code> / <code>process.stdin</code></strong>：标准输出、标准错误、标准输入这三个<strong>流（Stream）</strong>。<code>console.log</code> 其实底层就是往 <code>process.stdout</code> 写。直接用 <code>process.stdout.write()</code> 的区别是<strong>它不会自动加换行</strong>，适合需要精细控制输出的场景。<code>process.stderr</code> 用来输出错误信息（<code>console.error</code> 走的就是它）。</li>
+<li><strong><code>process.exit(code)</code></strong>：立刻结束进程。<code>0</code> 表示成功，任何<strong>非 0</strong>表示失败。命令行工具出错时，规范做法是打印错误后 <code>process.exit(1)</code>，这样调用它的脚本能通过退出码知道“出问题了“。</li>
+</ul>
+<hr>
+<h2 id="os了解运行环境"><a class="header" href="#os了解运行环境">os：了解运行环境</a></h2>
+<p><strong>os（operating system）</strong> 模块提供关于操作系统的信息。用得没 fs/path 那么频繁，但偶尔很有用。</p>
+<pre><code class="language-javascript">// 文件：code/ch11/02b-process-os.js（节选）
+import os from "node:os";
+
+console.log("CPU 核心数：", os.cpus().length);
+console.log("总内存(GB)：", (os.totalmem() / 1024 ** 3).toFixed(1));
+console.log("空闲内存(GB)：", (os.freemem() / 1024 ** 3).toFixed(1));
+console.log("os.platform()：", os.platform());
+console.log("临时目录：", os.tmpdir());
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong><code>os.cpus()</code></strong>：返回一个数组，每个元素描述一个 CPU 逻辑核心。<code>.length</code> 就是核心数——需要“开几个并行任务合适“时常参考它。</li>
+<li><strong><code>os.totalmem()</code> / <code>os.freemem()</code></strong>：总内存 / 空闲内存，单位是<strong>字节</strong>。<code>1024 ** 3</code> 就是 1 GB（<code>**</code> 是第 1 章的幂运算），所以除以它换算成 GB。</li>
+<li><strong><code>os.platform()</code></strong>：和 <code>process.platform</code> 一样返回平台标识。</li>
+<li><strong><code>os.tmpdir()</code></strong>：系统临时目录路径。前面我们写临时文件就靠它。</li>
+</ul>
+<hr>
+<h2 id="事件eventemitter"><a class="header" href="#事件eventemitter">事件：EventEmitter</a></h2>
+<p>Node 的很多东西是**事件驱动（event-driven）**的：不主动去“问结果好了没“，而是“注册一个监听器，等事情发生时被通知“。这套机制的核心就是 <code>node:events</code> 里的 <strong>EventEmitter（事件发射器）</strong>。</p>
+<p>其实你在第 10 章的浏览器 <code>addEventListener</code> 里已经见过类似思想。<code>EventEmitter</code> 是 Node 版的通用事件系统。</p>
+<pre><code class="language-javascript">// 文件：code/ch11/03-events.js
+import { EventEmitter } from "node:events";
+
+// 1) 直接使用一个 EventEmitter 实例
+const bus = new EventEmitter();
+
+// on：注册监听器，同一个事件可以注册多个
+bus.on("greet", (name) =&gt; {
+  console.log(`你好，${name}！`);
+});
+bus.on("greet", (name) =&gt; {
+  console.log(`（第二个监听器也收到了：${name}）`);
+});
+
+// once：只触发一次，之后自动移除
+bus.once("boot", () =&gt; {
+  console.log("系统启动，这句只会打印一次");
+});
+
+// emit：触发事件，后面的参数会传给监听器
+bus.emit("greet", "小明");
+bus.emit("boot");
+bus.emit("boot"); // 第二次不会有反应
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong><code>emitter.on(事件名, 回调)</code></strong>：注册一个监听器。同一个事件可以 <code>on</code> 很多次，触发时按注册顺序<strong>依次全部</strong>调用——所以 <code>greet</code> 触发一次，两个监听器都打印。</li>
+<li><strong><code>emitter.once(事件名, 回调)</code></strong>：只监听<strong>一次</strong>，触发后自动移除。所以 <code>boot</code> 我们 <code>emit</code> 了两次，只打印了一次。</li>
+<li><strong><code>emitter.emit(事件名, ...参数)</code></strong>：**触发（发射）**事件。后面跟的参数会原样传给每个监听器。<code>emit("greet", "小明")</code> 里的 <code>"小明"</code> 就成了监听器的 <code>name</code>。</li>
+</ul>
+<p>再看更实际的用法——<strong>自定义一个继承 EventEmitter 的类</strong>，让你自己的对象也能发事件：</p>
+<pre><code class="language-javascript">// 文件：code/ch11/03-events.js（续）
+class Downloader extends EventEmitter {
+  start(url) {
+    this.emit("start", url);
+    for (let percent = 25; percent &lt;= 100; percent += 25) {
+      this.emit("progress", percent); // 模拟分块进度
+    }
+    this.emit("done", url);
+  }
+}
+
+const d = new Downloader();
+d.on("start", (url) =&gt; console.log(`开始下载：${url}`));
+d.on("progress", (p) =&gt; console.log(`进度：${p}%`));
+d.on("done", (url) =&gt; console.log(`下载完成：${url}`));
+d.start("https://example.com/file.zip");
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>Downloader extends EventEmitter</code>（第 5 章的继承）让 <code>Downloader</code> 实例天生具备 <code>on</code>/<code>emit</code>/<code>once</code> 能力。</li>
+<li><code>start()</code> 方法里，我们在不同阶段 <code>this.emit(...)</code> 发出 <code>start</code>、<code>progress</code>、<code>done</code> 三种事件。</li>
+<li>外部代码只需 <code>on</code> 自己关心的事件。这就实现了<strong>解耦</strong>：<code>Downloader</code> 不需要知道谁在听、听了要干嘛，它只管在合适的时机“喊一嗓子“。这正是 Node 生态大量 API（比如流、HTTP 服务器）的设计范式。</li>
+</ul>
+<p>📌 输出会依次是：开始下载 → 进度 25/50/75/100% → 下载完成。</p>
+<hr>
+<h2 id="流stream处理大文件的正确姿势"><a class="header" href="#流stream处理大文件的正确姿势">流（Stream）：处理大文件的正确姿势</a></h2>
+<h3 id="为什么需要流"><a class="header" href="#为什么需要流">为什么需要流</a></h3>
+<p>假设你要处理一个 <strong>5 GB</strong> 的日志文件。如果用 <code>fsp.readFile</code> 一次性读进来，会发生什么？Node 会试图把整整 5 GB 塞进内存的一个字符串里——你的机器很可能直接内存爆掉、程序崩溃。</p>
+<p><strong>流（Stream）</strong> 就是为解决这个问题而生的。流不是一次性搬运整个文件，而是把数据切成一小块一小块（<strong>chunk</strong>），<strong>像水管里的水一样一段段流过</strong>。你处理完一块，它再给你下一块，内存里任何时刻只有一小块数据。</p>
+<p>📌 <strong>一句话记住流</strong>：<strong>用固定的、很小的内存，处理任意大的数据。</strong></p>
+<p>流分几种，最常打交道的两种：</p>
+<ul>
+<li><strong>可读流（Readable Stream）</strong>：数据从这里“流出来“，比如从文件读、从网络请求读。</li>
+<li><strong>可写流（Writable Stream）</strong>：数据“流进去“，比如写文件、发网络响应。</li>
+</ul>
+<h3 id="用-pipeline-复制文件"><a class="header" href="#用-pipeline-复制文件">用 pipeline 复制文件</a></h3>
+<p>把一个可读流“接“到一个可写流上，就能实现边读边写。这个操作叫 <strong>pipe（管道）</strong>，形象得很——就是拿根管子把两头接上让水流过去。</p>
+<pre><code class="language-javascript">// 文件：code/ch11/04-stream.js
+import fsp from "node:fs/promises";
+import { createReadStream, createWriteStream } from "node:fs";
+import { createInterface } from "node:readline";
+import os from "node:os";
+import path from "node:path";
+import { pipeline } from "node:stream/promises";
+
+const bigFile = path.join(os.tmpdir(), "ch11-big.txt");
+const copyFile = path.join(os.tmpdir(), "ch11-big-copy.txt");
+
+async function main() {
+  // 先造一个"大"文件：1000 行
+  let content = "";
+  for (let i = 1; i &lt;= 1000; i++) content += `第 ${i} 行\n`;
+  await fsp.writeFile(bigFile, content, "utf8");
+
+  // 1) 用 pipeline 把可读流接到可写流，实现"边读边写"的复制
+  const readable = createReadStream(bigFile);
+  const writable = createWriteStream(copyFile);
+  await pipeline(readable, writable); // 自动处理错误和收尾
+  console.log("已用流复制文件");
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>createReadStream(路径)</code> 创建一个<strong>可读流</strong>；<code>createWriteStream(路径)</code> 创建一个<strong>可写流</strong>。注意它们来自 <code>node:fs</code>（不是 <code>fs/promises</code>）。</li>
+<li><code>pipeline(可读流, 可写流)</code> 把两者接起来，让数据从读流一块块流进写流。💡 我们用的是 <code>node:stream/promises</code> 里的 <code>pipeline</code>（返回 Promise，能 <code>await</code>），它比老式的 <code>readable.pipe(writable)</code> <strong>更安全</strong>——会自动处理出错和关闭流的收尾工作，避免资源泄漏。整个过程内存里从不会同时装下 1000 行的全部内容。</li>
+</ul>
+<h3 id="用-readline-按行读取"><a class="header" href="#用-readline-按行读取">用 readline 按行读取</a></h3>
+<p>处理日志、CSV 这类“一行一条记录“的文件时，最舒服的是<strong>按行读</strong>。<code>node:readline</code> 模块把一个可读流包装成“逐行产出“的接口：</p>
+<pre><code class="language-javascript">// 文件：code/ch11/04-stream.js（续）
+  // 2) 用 readline 按行读取（大文件按行处理的标准做法）
+  const rl = createInterface({
+    input: createReadStream(copyFile, "utf8"),
+    crlfDelay: Infinity, // 正确处理 Windows 的 \r\n 换行
+  });
+
+  let lineCount = 0;
+  for await (const line of rl) {
+    lineCount++;
+    if (lineCount &lt;= 3) console.log(`readline 拿到：${line}`);
+  }
+  console.log(`一共读到 ${lineCount} 行`); // 1000
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>createInterface({ input: 可读流 })</code> 创建一个 readline 接口。<code>input</code> 我们给它一个文件的可读流。</li>
+<li><code>crlfDelay: Infinity</code> 是个很实用的选项：它让 readline 正确地把 Windows 的 <code>\r\n</code> 当成一个换行处理，不会多出空行。⚠️ 处理可能来自 Windows 的文本文件时，加上它能省掉一类恼人的 bug。</li>
+<li><strong><code>for await (const line of rl)</code></strong> 是关键：这是第 7 章的<strong>异步迭代</strong>。它一行一行地把内容交给你，处理完这一行才读下一行——所以哪怕文件有几个 GB，内存占用也稳定在很小的水平。这正是我们下面日志分析工具的核心技术。</li>
+</ul>
+<h3 id="buffer-简介"><a class="header" href="#buffer-简介">Buffer 简介</a></h3>
+<p>前面读文件时我们都带了 <code>"utf8"</code> 编码，拿到的是<strong>字符串</strong>。如果<strong>不带编码</strong>，fs 给你的是一个 <strong>Buffer</strong>：</p>
+<pre><code class="language-javascript">// 文件：code/ch11/04-stream.js（续）
+  // 3) 不带编码读，拿到的是二进制 Buffer
+  const buf = await fsp.readFile(copyFile);
+  console.log("Buffer 长度(字节)：", buf.length);       // 11893
+  console.log("前 10 个字节：", buf.subarray(0, 10));
+  // &lt;Buffer e7 ac ac 20 31 20 e8 a1 8c 0a&gt;
+
+  await fsp.rm(bigFile);
+  await fsp.rm(copyFile);
+}
+main();
+</code></pre>
+<p><strong>Buffer</strong> 是 Node 用来表示<strong>二进制原始数据</strong>的类型——本质是一段固定长度的字节序列。文本文件读成字符串很方便，但图片、音频、压缩包这些<strong>二进制数据</strong>没法用字符串正确表示，就得用 Buffer。</p>
+<ul>
+<li><code>buf.length</code> 是<strong>字节数</strong>（注意：一个中文字符在 UTF-8 里占 3 个字节，所以字节数和字符数不相等）。</li>
+<li>打印出来的 <code>&lt;Buffer e7 ac ac ...&gt;</code> 是每个字节的<strong>十六进制</strong>值。头三个字节 <code>e7 ac ac</code> 正是“第“这个汉字的 UTF-8 编码。</li>
+</ul>
+<p>📌 <strong>初学阶段你只需知道</strong>：读写文本用字符串（带 <code>"utf8"</code>），处理二进制才碰 Buffer。它是流在底层传递数据块时用的载体。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<p>⚠️ <strong>坑 1：在 ESM 里用 <code>__dirname</code>。</strong> ES Modules 里 <code>__dirname</code>/<code>__filename</code> 不存在。用 <code>fileURLToPath(import.meta.url)</code> + <code>path.dirname</code> 自己算。这是从 CJS 转过来的头号坑。</p>
+<p>⚠️ <strong>坑 2：滥用同步 API。</strong> 在服务器或任何需要响应的程序里用 <code>readFileSync</code> 会阻塞整个进程，卡住所有并发任务。默认用 <code>node:fs/promises</code> + <code>await</code>，同步版只留给“启动时读配置“这类一次性场合。</p>
+<p>⚠️ <strong>坑 3：<code>writeFile</code> 覆盖了原有内容。</strong> <code>writeFile</code> 是整体重写，不是追加。要追加请用 <code>appendFile</code>。</p>
+<p>⚠️ <strong>坑 4：<code>process.argv</code> 前两项当成了用户参数。</strong> 记住 <code>argv[0]</code>、<code>argv[1]</code> 是 node 和脚本路径，用 <code>process.argv.slice(2)</code> 取真正的参数。</p>
+<p>⚠️ <strong>坑 5：一次性读大文件。</strong> 几百 MB 以上的文件别用 <code>readFile</code>，用流或 readline 逐块/逐行处理，否则内存会爆。</p>
+<p>⚠️ <strong>坑 6：混淆 <code>cwd</code> 和脚本目录。</strong> <code>process.cwd()</code> 是运行命令时所在的目录；脚本自己的目录要用 <code>__dirname</code>（算出来的那个）。读“和脚本放一起的资源“用后者。</p>
+<p>💡 <strong>最佳实践 1：内置模块一律加 <code>node:</code> 前缀</strong>，一眼区分内置和第三方，还更安全。</p>
+<p>💡 <strong>最佳实践 2：路径拼接永远用 <code>path.join</code> / <code>path.resolve</code></strong>，不要用字符串 <code>+</code> 或手写斜杠，保证跨平台。</p>
+<p>💡 <strong>最佳实践 3：CLI 工具出错时打印到 <code>stderr</code> 并 <code>process.exit(1)</code></strong>，让调用方能通过退出码判断成败。</p>
+<hr>
+<h2 id="本章小项目日志分析-cli"><a class="header" href="#本章小项目日志分析-cli">本章小项目：日志分析 CLI</a></h2>
+<p>现在把本章学的东西串起来，做一个真正能用的命令行工具。它读取一个日志文件，<strong>用 readline 流式逐行处理</strong>（所以哪怕日志几个 GB 也不怕），统计各日志级别的数量、按小时统计请求数、提取所有 ERROR 行，最后打印一份报告。</p>
+<p>先看示例日志文件（每行格式为 <code>日期 时间 级别 消息</code>）：</p>
+<pre><code>2026-07-01 08:01:12 INFO  GET /api/users 200 12ms
+2026-07-01 09:05:51 ERROR failed to connect to database: timeout
+2026-07-01 09:12:44 WARN  high memory usage 87%
+...
+</code></pre>
+<p>完整代码（示例日志放在 <code>code/ch11/sample.log</code>，共 20 行，含 INFO/WARN/ERROR 三种级别）：</p>
+<pre><code class="language-javascript">// 文件：code/ch11/log-analyzer.js
+// 用法：node log-analyzer.js [日志文件路径]
+// 不传参数时，默认分析同目录下的 sample.log。
+import { createReadStream } from "node:fs";
+import { access } from "node:fs/promises";
+import { createInterface } from "node:readline";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+// ESM 下没有 __dirname，需要自己算出脚本所在目录
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// 1) 解析命令行参数：process.argv 从下标 2 开始才是用户传的参数
+const inputArg = process.argv[2];
+const logPath = inputArg
+  ? path.resolve(process.cwd(), inputArg) // 相对用户当前目录解析
+  : path.join(__dirname, "sample.log");   // 默认值
+
+// 解析一行日志：2026-07-01 09:05:51 ERROR failed to connect ...
+function parseLine(line) {
+  const trimmed = line.trim();
+  if (!trimmed) return null;               // 跳过空行
+
+  const parts = trimmed.split(/\s+/);
+  if (parts.length &lt; 3) return null;
+
+  const time = parts[1];                   // HH:MM:SS
+  const level = parts[2].toUpperCase();    // INFO / WARN / ERROR
+  const hour = time.slice(0, 2);           // 取前两位当小时
+  const message = parts.slice(3).join(" ");
+  return { level, hour, message, raw: trimmed };
+}
+
+async function analyze(filePath) {
+  // 先确认文件存在，给出友好错误而不是崩溃
+  try {
+    await access(filePath);
+  } catch {
+    console.error(`❌ 找不到日志文件：${filePath}`);
+    process.exit(1);                        // 非 0 退出码表示失败
+  }
+
+  const stats = {
+    total: 0,
+    byLevel: { INFO: 0, WARN: 0, ERROR: 0, OTHER: 0 },
+    byHour: {},                             // { "09": 5, ... }
+    errors: [],                             // 所有 ERROR 行原文
+  };
+
+  const rl = createInterface({
+    input: createReadStream(filePath, "utf8"),
+    crlfDelay: Infinity,
+  });
+
+  // 逐行处理，一行处理完才拿下一行 —— 这就是流式处理
+  for await (const line of rl) {
+    const parsed = parseLine(line);
+    if (!parsed) continue;
+
+    stats.total++;
+
+    if (parsed.level in stats.byLevel) {
+      stats.byLevel[parsed.level]++;
+    } else {
+      stats.byLevel.OTHER++;
+    }
+
+    stats.byHour[parsed.hour] = (stats.byHour[parsed.hour] || 0) + 1;
+
+    if (parsed.level === "ERROR") {
+      stats.errors.push(parsed.raw);
+    }
+  }
+
+  return stats;
+}
+
+function printReport(filePath, stats) {
+  console.log("========================================");
+  console.log(" 日志分析报告");
+  console.log("========================================");
+  console.log(`文件：${filePath}`);
+  console.log(`总行数：${stats.total}\n`);
+
+  console.log("按级别统计：");
+  for (const [level, count] of Object.entries(stats.byLevel)) {
+    if (count === 0) continue;
+    console.log(`  ${level.padEnd(6)} ${count}`);
+  }
+  console.log("");
+
+  console.log("按小时统计（请求数）：");
+  for (const h of Object.keys(stats.byHour).sort()) {
+    const count = stats.byHour[h];
+    const bar = "█".repeat(count);          // 简易柱状图
+    console.log(`  ${h}:00  ${String(count).padStart(3)} ${bar}`);
+  }
+  console.log("");
+
+  console.log(`ERROR 明细（共 ${stats.errors.length} 条）：`);
+  if (stats.errors.length === 0) {
+    console.log("  （无）");
+  } else {
+    for (const e of stats.errors) console.log(`  - ${e}`);
+  }
+  console.log("========================================");
+}
+
+const stats = await analyze(logPath);
+printReport(logPath, stats);
+</code></pre>
+<p>运行 <code>node log-analyzer.js</code>（不传参数，用默认的 <code>sample.log</code>），输出：</p>
+<pre><code>========================================
+ 日志分析报告
+========================================
+文件：/Users/.../code/ch11/sample.log
+总行数：20
+
+按级别统计：
+  INFO   13
+  WARN   3
+  ERROR  4
+
+按小时统计（请求数）：
+  08:00    4 ████
+  09:00    6 ██████
+  10:00    5 █████
+  11:00    5 █████
+
+ERROR 明细（共 4 条）：
+  - 2026-07-01 09:05:51 ERROR failed to connect to database: timeout
+  - 2026-07-01 09:06:00 ERROR retry 1 to database failed
+  - 2026-07-01 10:04:27 ERROR unhandled exception in /api/checkout: null pointer
+  - 2026-07-01 11:23:14 ERROR payment gateway returned 502
+========================================
+</code></pre>
+<p>也可以显式指定文件：<code>node log-analyzer.js sample.log</code>，或换成任意别的日志路径。</p>
+<p><strong>逐段拆解：</strong></p>
+<p><strong>开头三段（导入 + 参数解析）</strong> 集中体现了本章的核心技能：</p>
+<ul>
+<li>用 <code>fileURLToPath(import.meta.url)</code> + <code>path.dirname</code> 算出<strong>脚本目录</strong>（ESM 里没有 <code>__dirname</code>）。</li>
+<li>用 <code>process.argv[2]</code> 读用户参数。<strong>带默认值</strong>的逻辑很重要：传了就用 <code>path.resolve(process.cwd(), inputArg)</code>——注意这里用 <strong><code>cwd</code></strong> 解析，因为用户是站在自己当前目录敲的命令，给的相对路径应相对于他所在的位置；没传就 <code>path.join(__dirname, "sample.log")</code> 用<strong>脚本目录</strong>里的示例文件。这正是前面“cwd vs 脚本目录“那个坑的实战应用。</li>
+</ul>
+<p><strong><code>parseLine</code></strong> 把一行文本拆成结构化对象。<code>split(/\s+/)</code> 按空白切分（<code>\s+</code> 是正则，下一章会细讲），取出时间、级别、消息。<code>time.slice(0, 2)</code> 取小时。返回 <code>null</code> 表示“这行跳过“（空行或格式不对），调用处用 <code>continue</code> 忽略。</p>
+<p><strong><code>analyze</code></strong> 是核心：</p>
+<ul>
+<li>先用 <code>access</code> 检查文件是否存在。存不到就打印错误到 <strong><code>stderr</code></strong>（<code>console.error</code>）并 <code>process.exit(1)</code>——这是 CLI 工具处理“文件找不到“的规范做法，而不是让程序抛一堆栈崩溃。</li>
+<li><code>stats</code> 对象收集所有统计结果。</li>
+<li>核心的 <code>for await (const line of rl)</code> <strong>逐行处理</strong>：读一行、解析、累加计数。因为是流式的，这个工具处理 20 行和处理两千万行，内存占用几乎一样。</li>
+<li>三类统计同时进行：按级别（<code>byLevel</code>）、按小时（<code>byHour</code>，用“存在就 +1、不存在就设 1“的经典写法）、收集 ERROR 原文（<code>errors</code> 数组）。</li>
+</ul>
+<p><strong><code>printReport</code></strong> 负责漂亮地打印。<code>padEnd</code>/<code>padStart</code>（第 3 章的字符串方法）对齐列；<code>"█".repeat(count)</code> 用重复字符画一个简易<strong>柱状图</strong>，让按小时的分布一眼可见。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>Top N 错误消息</strong>：统计每种 ERROR 消息出现的次数（用 <code>parseLine</code> 返回的 <code>message</code>），打印出现最多的前 3 条。（提示：用一个对象当计数器，最后 <code>Object.entries</code> + <code>sort</code>。）</li>
+<li><strong>支持第二个参数过滤级别</strong>：<code>node log-analyzer.js sample.log ERROR</code> 只统计/打印 ERROR 行。用 <code>process.argv[3]</code> 读第二个参数。</li>
+<li><strong>输出到文件</strong>：加一个选项，把报告用 <code>fsp.writeFile</code> 写到 <code>report.txt</code>，而不是打印到屏幕。</li>
+<li><strong>响应时间统计</strong>：日志里的 <code>12ms</code>、<code>30ms</code> 是响应耗时。提取这些数字，算出平均响应时间和最慢的一条请求。（下一章的正则会让提取数字更轻松。）</li>
+<li><strong>健壮性</strong>：故意传一个不存在的路径，确认工具打印友好错误并以退出码 1 结束（在终端里 <code>echo $?</code> 可以看上一条命令的退出码）。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们走进了浏览器之外的 JavaScript 世界：</p>
+<ul>
+<li><strong>Node.js</strong> 是基于 V8 的 JS 运行时，在语言之外提供了文件、网络、进程等操作系统能力。</li>
+<li>Node 的全局对象是 <strong><code>global</code> / <code>globalThis</code></strong>，<strong>没有</strong> <code>window</code>、<code>document</code>；跨环境代码用 <code>globalThis</code>。</li>
+<li>内置模块导入加 <strong><code>node:</code> 前缀</strong>。</li>
+<li><strong>fs</strong> 有同步、回调、Promise 三种风格，<strong>默认用 <code>node:fs/promises</code> + <code>await</code></strong>，同步版只用于一次性场景。</li>
+<li><strong>path</strong> 跨平台拼路径；ESM 下用 <code>fileURLToPath(import.meta.url)</code> 代替不存在的 <code>__dirname</code>。</li>
+<li><strong>process</strong> 提供 <code>argv</code>（<code>slice(2)</code> 取用户参数）、<code>env</code>、<code>cwd</code>、<code>stdout/stderr</code>、<code>exit</code>。</li>
+<li><strong>os</strong> 给出 CPU、内存、平台、临时目录等信息。</li>
+<li><strong>EventEmitter</strong> 用 <code>on</code>/<code>once</code>/<code>emit</code> 实现事件驱动。</li>
+<li><strong>流</strong> 用固定小内存处理任意大数据；<code>pipeline</code> 复制、<code>readline</code> + <code>for await</code> 逐行处理大文件；二进制数据用 <strong>Buffer</strong> 表示。</li>
+</ul>
+<p><strong>自测题</strong>（先自己答，再回看对照）：</p>
+<ol>
+<li>在 Node 里 <code>typeof window</code> 是什么？为什么？</li>
+<li><code>import fs from "fs"</code> 和 <code>import fs from "node:fs"</code> 有何区别？推荐哪种？</li>
+<li><code>readFileSync</code> 和 <code>fsp.readFile</code> 的本质区别是什么？服务器里为什么应避免前者？</li>
+<li>ESM 里为什么不能用 <code>__dirname</code>？正确的替代写法是什么？</li>
+<li><code>process.argv</code> 里，用户真正传的参数从下标几开始？为什么？</li>
+<li><code>process.cwd()</code> 和脚本所在目录一定相同吗？举一个不同的场景。</li>
+<li>要处理一个 10 GB 的日志文件统计行数，为什么不能用 <code>fsp.readFile</code>？应该怎么做？</li>
+<li><code>on</code> 和 <code>once</code> 有什么区别？</li>
+<li>不带编码调用 <code>fsp.readFile</code> 时返回的是什么类型？它适合表示什么数据？</li>
+</ol>
+<p>下一章预告 → <strong>第 12 章 · 正则表达式与文本处理</strong>。这一章我们用 <code>split(/\s+/)</code> 和 <code>slice</code> 勉强解析了日志行，其实还挺笨拙的。真正强大的文本解析武器是<strong>正则表达式（regular expression）</strong>——它能用一行模式精准地从文本里揪出日期、数字、邮箱、URL。下一章我们就系统学习它，然后回头把这个日志分析工具的解析逻辑升级得又准又优雅。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch10.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch10.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

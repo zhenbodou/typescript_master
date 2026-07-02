@@ -1,0 +1,828 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 9 章 · 模块化与包管理 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch09.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-9-章--模块化与包管理"><a class="header" href="#第-9-章--模块化与包管理">第 9 章 · 模块化与包管理</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>到目前为止，我们写的代码基本都挤在一个文件里。文件小的时候没问题，可一旦程序变大——几百行、几千行——所有函数、变量堆在一起，就会变成一团乱麻：改一个地方牵动全身，两个功能不小心用了同名变量互相覆盖，别人也读不懂你的代码从哪儿开始看。</p>
+<p><strong>模块化（modularity）<strong>就是解决这个问题的。它让我们把代码拆成一个个独立的</strong>模块（module）</strong>，每个模块只关心自己的事，通过明确的“出口“和“入口“互相协作。学完本章，你将能够：</p>
+<ul>
+<li>说清楚“为什么需要模块化“，理解全局污染和依赖管理的历史。</li>
+<li>熟练使用 <strong>ES Modules（ESM）</strong>：命名导出、默认导出、各种 <code>import</code> 写法、再导出、动态 <code>import()</code>。</li>
+<li>理解 <strong>CommonJS（CJS）</strong>，知道它和 ESM 的区别，以及在 Node.js 里怎么选。</li>
+<li>读懂并写出规范的 <strong>package.json</strong>，理解<strong>语义化版本（semantic versioning，简称 semver）</strong>。</li>
+<li>使用 <strong>npm</strong> 安装、运行、管理第三方包。</li>
+<li>了解把自己的包<strong>发布到 npm</strong> 的完整流程。</li>
+<li>亲手做一个可发布的 npm 工具包 <code>str-kit</code>。</li>
+</ul>
+<p>本章所有示例用 Node.js 运行。请确认你已经安装了 Node.js（终端里 <code>node -v</code> 能看到版本号，本书用 Node 20+）。</p>
+<hr>
+<h2 id="为什么需要模块化"><a class="header" href="#为什么需要模块化">为什么需要模块化</a></h2>
+<h3 id="一切从全局变量说起"><a class="header" href="#一切从全局变量说起">一切从“全局变量“说起</a></h3>
+<p>早期的 JavaScript 只跑在浏览器里，加载代码的唯一方式是一个个 <code>&lt;script&gt;</code> 标签：</p>
+<pre><code class="language-javascript">// a.js
+var count = 0;
+function increase() { count++; }
+
+// b.js
+var count = 100; // 糟糕！和 a.js 用了同一个名字
+</code></pre>
+<p>浏览器把所有 <code>&lt;script&gt;</code> 里的顶层 <code>var</code> 和函数都塞进<strong>同一个全局作用域（global scope）</strong>。上面 <code>b.js</code> 的 <code>count</code> 会直接覆盖 <code>a.js</code> 的 <code>count</code>，两个文件的作者可能根本不认识彼此。这种“大家共用一个命名空间、互相踩脚“的现象，叫做<strong>全局污染（global pollution）</strong>。</p>
+<p>📌 <strong>模块化要解决的第一个核心问题</strong>：让每个文件有自己独立的作用域，变量默认不外泄，只有主动“导出“的东西才对外可见。</p>
+<h3 id="依赖管理的历史了解即可"><a class="header" href="#依赖管理的历史了解即可">依赖管理的历史（了解即可）</a></h3>
+<p>在标准的模块系统出现之前，社区想了很多办法：</p>
+<ul>
+<li><strong>IIFE + 命名空间</strong>：用立即执行函数把变量包起来，只往一个全局对象上挂东西。</li>
+<li><strong>CommonJS</strong>：Node.js 采用的方案，用 <code>require()</code> 和 <code>module.exports</code>，让服务器端 JS 有了真正的模块。</li>
+<li><strong>AMD / UMD</strong>：浏览器端的异步模块方案（如 RequireJS），现在基本被淘汰。</li>
+<li><strong>ES Modules（ESM）</strong>：2015 年随 ES6 进入语言标准，是<strong>官方的、跨浏览器和 Node 通用的</strong>模块系统。</li>
+</ul>
+<p>💡 今天写新代码，<strong>首选 ESM</strong>。CJS 你仍然需要认识，因为海量的老包和 Node 内部还在用它。本章两者都讲，但以 ESM 为主。</p>
+<hr>
+<h2 id="es-modulesesm基础"><a class="header" href="#es-modulesesm基础">ES Modules（ESM）基础</a></h2>
+<p>ESM 的核心就两个关键字：<code>export</code>（导出，把东西对外提供）和 <code>import</code>（导入，把别的模块的东西拿进来）。</p>
+<p>我们先做一个能跑的例子。目录结构：</p>
+<pre><code>code/ch09/esm-demo/
+├── math.js   （被导入的模块）
+└── main.js   （入口，导入并使用 math.js）
+</code></pre>
+<h3 id="导出命名导出与默认导出"><a class="header" href="#导出命名导出与默认导出">导出：命名导出与默认导出</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch09/esm-demo/math.js
+
+// 命名导出（named export）：可以有很多个。
+export const PI = 3.14159;
+
+export function add(a, b) {
+  return a + b;
+}
+
+export function multiply(a, b) {
+  return a * b;
+}
+
+// 也可以先声明、最后统一导出（效果相同）。
+function subtract(a, b) {
+  return a - b;
+}
+export { subtract };
+
+// 默认导出（default export）：每个模块最多一个。
+export default {
+  name: "mini-calculator",
+  version: "1.0.0",
+};
+
+// 模块顶层的代码只会在「第一次被导入」时执行一次。
+console.log("[math.js] 模块被加载了（只会看到一次这行）");
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>export const PI = ...</code> 和 <code>export function add(...)</code>：直接在声明前面加 <code>export</code>，这就是<strong>命名导出</strong>。它的特点是<strong>导出时有名字</strong>，别人导入时要用同样的名字。一个模块可以有任意多个命名导出。</li>
+<li><code>export { subtract }</code>：如果你想先写完函数、最后统一列出要导出哪些，可以用这种花括号写法。效果和写在声明前一样。</li>
+<li><code>export default { ... }</code>：<strong>默认导出</strong>。一个模块<strong>最多只能有一个</strong> default。它常用来表达“这个模块最主要的那个东西“。注意 default 导出的东西<strong>没有名字</strong>，导入方可以随便给它起名。</li>
+<li>最后那行 <code>console.log</code>：模块顶层的普通语句在第一次被加载时会执行。这一点我们待会儿在 <code>main.js</code> 里验证。</li>
+</ul>
+<h3 id="导入各种-import-写法"><a class="header" href="#导入各种-import-写法">导入：各种 import 写法</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch09/esm-demo/main.js
+
+// 1) 按名字导入命名导出（大括号里的名字必须和导出的一致）。
+import { add, multiply, PI } from "./math.js";
+
+// 2) 默认导出用任意名字接收，不加大括号。
+import calculator from "./math.js";
+
+// 3) 导入时重命名，避免和本地变量冲突。
+import { subtract as minus } from "./math.js";
+
+// 4) 用命名空间对象一次性拿到所有命名导出。
+import * as mathNS from "./math.js";
+
+console.log("add(2, 3) =", add(2, 3));
+console.log("multiply(4, 5) =", multiply(4, 5));
+console.log("PI =", PI);
+console.log("minus(10, 4) =", minus(10, 4));
+console.log("默认导出：", calculator.name, calculator.version);
+console.log("命名空间 mathNS.PI =", mathNS.PI);
+console.log("命名空间里的默认导出 mathNS.default.name =", mathNS.default.name);
+
+// 5) 再次导入同一个模块，不会重新执行 math.js 的顶层代码（单例缓存）。
+const again = await import("./math.js"); // 动态 import()，返回一个 Promise
+console.log("动态导入拿到 add：", again.add(1, 1));
+console.log("（注意：上面没有再次打印 [math.js] 模块被加载了）");
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>①命名导入</strong>：<code>import { add, multiply, PI } from "./math.js"</code>。花括号里的名字必须和 <code>math.js</code> 里导出的名字<strong>一模一样</strong>。⚠️ 注意 <code>from</code> 后面的路径是<strong>相对路径</strong>，而且 <strong>ESM 里必须写完整的扩展名 <code>.js</code></strong>（这和 CJS 不同，CJS 可以省略）。</li>
+<li><strong>②默认导入</strong>：<code>import calculator from "./math.js"</code>，不加花括号。这里 <code>calculator</code> 是我们自己起的名字——它接收的是 <code>math.js</code> 的 <code>export default</code>。你想叫它 <code>calc</code>、<code>abc</code> 都行。</li>
+<li><strong>③重命名导入</strong>：<code>import { subtract as minus }</code>。用 <code>as</code> 把导入进来的名字改掉，常用于避免和本地变量重名。</li>
+<li><strong>④命名空间导入</strong>：<code>import * as mathNS from "./math.js"</code>。把该模块<strong>所有命名导出</strong>打包成一个对象 <code>mathNS</code>，通过 <code>mathNS.PI</code>、<code>mathNS.add</code> 访问。默认导出会被放在 <code>mathNS.default</code> 上。</li>
+<li><strong>⑤动态 import()</strong>：前面四种是<strong>静态导入</strong>，必须写在文件顶层。而 <code>import("./math.js")</code> 是<strong>函数调用形式</strong>，返回一个 Promise，可以写在任何地方（比如 <code>if</code> 里、按需加载）。这行还顺带用到了<strong>顶层 await</strong>（稍后讲）。</li>
+</ul>
+<p>运行它：</p>
+<pre><code class="language-bash">cd code/ch09/esm-demo
+node main.js
+</code></pre>
+<p>输出：</p>
+<pre><code>[math.js] 模块被加载了（只会看到一次这行）
+add(2, 3) = 5
+multiply(4, 5) = 20
+PI = 3.14159
+minus(10, 4) = 6
+默认导出： mini-calculator 1.0.0
+命名空间 mathNS.PI = 3.14159
+命名空间里的默认导出 mathNS.default.name = mini-calculator
+动态导入拿到 add： 2
+（注意：上面没有再次打印 [math.js] 模块被加载了）
+</code></pre>
+<p>📌 请特别注意两点：</p>
+<ol>
+<li><code>[math.js] 模块被加载了</code> <strong>只打印了一次</strong>，尽管我们多次导入它（静态导入 + 动态导入）。这就是 ESM 的<strong>单例缓存（module caching / singleton）</strong>：一个模块无论被导入多少次、被多少个文件依赖，它的代码<strong>只执行一次</strong>，结果被缓存，后续都拿缓存。</li>
+<li>它是<strong>第一行</strong>打印的。因为 ESM 的静态导入会在当前模块的其他代码执行<strong>之前</strong>，先把依赖全部加载好。</li>
+</ol>
+<h3 id="模块的两个隐藏特性"><a class="header" href="#模块的两个隐藏特性">模块的两个隐藏特性</a></h3>
+<p>📌 <strong>ESM 自动是严格模式（strict mode）</strong>。你不用写 <code>"use strict"</code>，模块里就已经是严格模式了。所以像“给未声明的变量赋值“这种在普通脚本里会悄悄创建全局变量的操作，在模块里会直接报错——这正好帮你避免全局污染。</p>
+<p>📌 <strong>每个模块有独立作用域</strong>。模块顶层用 <code>const</code>/<code>let</code>/<code>function</code> 声明的东西<strong>默认是私有的</strong>，外界看不到，除非你 <code>export</code>。这从根本上杜绝了本章开头那种“两个文件抢同一个全局 <code>count</code>“的问题。</p>
+<h3 id="再导出export-from"><a class="header" href="#再导出export-from">再导出（export from）</a></h3>
+<p>有时你想把好几个小模块“打包“成一个统一入口，让使用者只需从一个地方导入。这时用<strong>再导出（re-export）</strong>：</p>
+<pre><code class="language-javascript">// 假设有一个 index.js 想把 strings.js 的东西原样转发出去
+export * from "./src/strings.js";             // 转发所有命名导出
+export { capitalize } from "./src/strings.js"; // 只转发指定的
+export { slugify as toSlug } from "./src/strings.js"; // 转发并改名
+</code></pre>
+<p>这就是“入口文件（entry point）“或“桶文件（barrel file）“的常见做法，稍后的 <code>str-kit</code> 项目会用到。</p>
+<h3 id="动态-import-与顶层-await"><a class="header" href="#动态-import-与顶层-await">动态 import() 与顶层 await</a></h3>
+<p><strong>动态 <code>import()</code></strong> 长得像函数调用，返回 Promise，用于<strong>按需、在运行时</strong>加载模块：</p>
+<pre><code class="language-javascript">// 只有真的需要时才加载某个较重的模块
+async function loadWhenNeeded() {
+  const { add } = await import("./math.js");
+  return add(1, 2);
+}
+</code></pre>
+<p>它的价值在于：静态 <code>import</code> 必须写在顶层、总是会被加载；而动态 <code>import()</code> 可以放在条件分支里，实现“用到才加载“（在浏览器里这能显著减小首屏体积）。</p>
+<p><strong>顶层 await（top-level await）</strong>：在 ESM 模块里，你可以<strong>直接在模块最外层写 <code>await</code></strong>，不必包在 <code>async</code> 函数里。前面 <code>main.js</code> 里的 <code>await import("./math.js")</code> 就是这么用的。</p>
+<pre><code class="language-javascript">// 在 ESM 模块顶层直接 await（普通脚本里不行）
+const data = await fetch("https://example.com/data.json").then(r =&gt; r.json());
+console.log(data);
+</code></pre>
+<p>⚠️ 顶层 await 只在 ESM 里可用，且会让“依赖这个模块的其他模块“也等它完成。别拿它做很慢的操作，否则会拖慢整个加载。</p>
+<hr>
+<h2 id="commonjscjs"><a class="header" href="#commonjscjs">CommonJS（CJS）</a></h2>
+<p>CommonJS 是 Node.js 诞生时自带的模块系统，你会在无数老项目和 npm 包里见到它。它的两个关键字是 <code>require</code>（导入）和 <code>module.exports</code>（导出）。</p>
+<pre><code class="language-javascript">// CJS 导出（注意：这是 CommonJS 写法，不是 ESM）
+function add(a, b) { return a + b; }
+const PI = 3.14159;
+
+module.exports = { add, PI };
+// 或者一个个挂：
+// exports.add = add;
+</code></pre>
+<pre><code class="language-javascript">// CJS 导入
+const { add, PI } = require("./math"); // 注意：可以省略 .js 扩展名
+console.log(add(1, 2), PI);
+</code></pre>
+<h3 id="cjs-和-esm-的关键区别"><a class="header" href="#cjs-和-esm-的关键区别">CJS 和 ESM 的关键区别</a></h3>
+<p>这几点是面试和实战里最常问的，我们一条条讲清楚：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>对比点</th><th>CommonJS (CJS)</th><th>ES Modules (ESM)</th></tr>
+</thead>
+<tbody>
+<tr><td>关键字</td><td><code>require</code> / <code>module.exports</code></td><td><code>import</code> / <code>export</code></td></tr>
+<tr><td>加载时机</td><td><strong>运行时同步</strong>加载（执行到 <code>require</code> 那一刻才去读文件）</td><td><strong>静态</strong>分析（导入关系在代码运行前就确定）</td></tr>
+<tr><td>导入的是</td><td>导出对象的<strong>值拷贝（copy）</strong></td><td>到原变量的<strong>引用绑定（live binding）</strong></td></tr>
+<tr><td>路径扩展名</td><td>可省略（<code>./math</code>）</td><td>必须写全（<code>./math.js</code>）</td></tr>
+<tr><td>严格模式</td><td>默认非严格</td><td>默认严格</td></tr>
+<tr><td>顶层 await</td><td>不支持</td><td>支持</td></tr>
+</tbody>
+</table>
+</div>
+<p>其中两点最容易踩坑，重点解释：</p>
+<p>📌 <strong>静态 vs 动态</strong>。ESM 的 <code>import</code> 必须写在顶层、路径必须是字符串常量，因为工具需要在<strong>运行前</strong>就分析出“谁依赖谁“（这样才能做打包、Tree Shaking 等优化）。CJS 的 <code>require</code> 是普通函数，可以写在任何地方、路径可以是变量，是<strong>运行时</strong>才解析的。</p>
+<p>📌 <strong>值拷贝 vs 引用绑定</strong>。看这个对比：</p>
+<pre><code class="language-javascript">// counter.cjs（CommonJS）
+let count = 0;
+setInterval(() =&gt; count++, 1000);
+module.exports = { count };
+// 导入方拿到的是导出那一刻 count 的「拷贝」，之后 count 变了它也不知道。
+</code></pre>
+<pre><code class="language-javascript">// counter.mjs（ESM）
+export let count = 0;
+setInterval(() =&gt; count++, 1000);
+// 导入方拿到的是「实时绑定」，count 变化能被看到（但导入方不能给它赋值）。
+</code></pre>
+<p>在 CJS 里，<code>module.exports = { count }</code> 导出的是那一瞬间 <code>count</code> 的值（0），之后内部再改 <code>count</code>，外面拿到的还是 0。在 ESM 里，导入的命名绑定是“活的“，内部改了，外面读到的也是新值。这个差异偶尔会导致费解的 bug。</p>
+<h3 id="nodejs-里怎么选mjs--cjs--type"><a class="header" href="#nodejs-里怎么选mjs--cjs--type">Node.js 里怎么选：<code>.mjs</code> / <code>.cjs</code> / <code>"type"</code></a></h3>
+<p>Node.js 同时支持两套系统，它靠<strong>文件扩展名</strong>和 <strong>package.json 的 <code>"type"</code> 字段</strong>来判断某个 <code>.js</code> 文件到底是 ESM 还是 CJS：</p>
+<ul>
+<li>扩展名 <code>.mjs</code> → <strong>永远当作 ESM</strong>。</li>
+<li>扩展名 <code>.cjs</code> → <strong>永远当作 CJS</strong>。</li>
+<li>扩展名 <code>.js</code> → 看<strong>最近的 package.json 的 <code>"type"</code></strong>：
+<ul>
+<li><code>"type": "module"</code> → 当作 ESM。</li>
+<li><code>"type": "commonjs"</code> 或没写 <code>"type"</code> → 当作 CJS（默认）。</li>
+</ul>
+</li>
+</ul>
+<p>💡 <strong>本书的示例目录 <code>code/</code> 里有一个 <code>"type": "module"</code> 的 package.json</strong>，所以我们所有 <code>.js</code> 文件都被当作 ESM，这也是为什么前面 <code>math.js</code>/<code>main.js</code> 用 <code>import</code> 能直接跑。如果你在一个没有 <code>"type": "module"</code> 的目录里想用 ESM，把文件名改成 <code>.mjs</code> 即可。</p>
+<h3 id="esm-与-cjs-互操作的注意点"><a class="header" href="#esm-与-cjs-互操作的注意点">ESM 与 CJS 互操作的注意点</a></h3>
+<p>现实中你经常需要在 ESM 里用一个 CJS 老包，或反过来。规则：</p>
+<ul>
+<li>✅ <strong>ESM 里 <code>import</code> 一个 CJS 模块</strong>：可以。<code>module.exports</code> 会被当作那个模块的<strong>默认导出</strong>。所以通常写 <code>import pkg from "some-cjs-pkg"</code>，然后 <code>pkg.foo()</code>。有些包 Node 能“猜“出命名导出，但不保证。</li>
+<li>⚠️ <strong>CJS 里 <code>require</code> 一个 ESM 模块</strong>：传统上<strong>不行</strong>（会报错），因为 <code>require</code> 是同步的、ESM 加载可能是异步的。老代码里要用 ESM 得改成动态 <code>import()</code>：<code>const mod = await import("esm-only-pkg")</code>。（较新的 Node 版本对这点有所放宽，但不是所有版本都支持，写库时不要依赖它。）</li>
+</ul>
+<p>⚠️ 最常见的报错之一：<strong>“require() of ES Module … not supported”</strong>——这就是在 CJS 里 <code>require</code> 了一个纯 ESM 包。解决办法通常是把你的代码也改成 ESM，或用动态 <code>import()</code>。</p>
+<hr>
+<h2 id="packagejson-详解"><a class="header" href="#packagejson-详解">package.json 详解</a></h2>
+<p>每一个 Node 项目（以及每一个 npm 包）的根目录都有一个 <code>package.json</code>。它是项目的“身份证 + 说明书 + 配置表“。用 <code>npm init -y</code> 可以生成一个默认的。下面是一个较完整的例子，逐字段讲：</p>
+<pre><code class="language-json">{
+  "name": "str-kit",
+  "version": "1.2.3",
+  "description": "几个常用的字符串小工具。",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "react": "&gt;=18"
+  }
+}
+</code></pre>
+<h3 id="name-与-version"><a class="header" href="#name-与-version">name 与 version</a></h3>
+<ul>
+<li><strong><code>name</code></strong>：包名。发布到 npm 时它必须<strong>全网唯一</strong>。只能小写，可含连字符。也可以带<strong>作用域（scope）</strong>，如 <code>@yourname/str-kit</code>。</li>
+<li><strong><code>version</code></strong>：版本号，遵循<strong>语义化版本（semver）</strong>。这是重点，单独讲。</li>
+</ul>
+<h3 id="语义化版本-semver重点别讲错"><a class="header" href="#语义化版本-semver重点别讲错">语义化版本 semver（重点，别讲错）</a></h3>
+<p>版本号是三段 <code>主版本.次版本.修订号</code>，即 <code>MAJOR.MINOR.PATCH</code>，例如 <code>1.2.3</code>：</p>
+<ul>
+<li><strong>MAJOR（主版本，1）</strong>：做了<strong>不兼容</strong>的改动（breaking change），升级它意味着“老代码可能跑不了了“。</li>
+<li><strong>MINOR（次版本，2）</strong>：<strong>向后兼容</strong>地新增了功能，老代码照样能跑。</li>
+<li><strong>PATCH（修订号，3）</strong>：<strong>向后兼容</strong>的问题修复（bug fix），没加新功能。</li>
+</ul>
+<p>在 <code>dependencies</code> 里写依赖时，版本号前面常有 <code>^</code> 或 <code>~</code>，它们表示“允许自动升级到哪个范围“：</p>
+<p>📌 <strong><code>^</code>（脱字符，caret）</strong>：允许升级到<strong>不改变最左边非零数字</strong>的最新版本。对最常见的 <code>1.x.x</code>，通俗说就是“MAJOR 不变“。</p>
+<ul>
+<li><code>^1.2.3</code> → 允许 <code>&gt;=1.2.3</code> 且 <code>&lt;2.0.0</code>（可升到 <code>1.9.9</code>，但不会到 <code>2.0.0</code>）。</li>
+<li><code>^0.2.3</code> → 因为最左非零是 <code>2</code>（在 MINOR 位），允许 <code>&gt;=0.2.3</code> 且 <code>&lt;0.3.0</code>。（⚠️ 0.x 版本被认为不稳定，<code>^</code> 对它更保守，只升 PATCH。）</li>
+<li><code>^0.0.3</code> → 允许 <code>&gt;=0.0.3</code> 且 <code>&lt;0.0.4</code>，几乎锁死。</li>
+</ul>
+<p>📌 <strong><code>~</code>（波浪号，tilde）</strong>：一般允许<strong>只升 PATCH</strong>（MINOR 锁定）。</p>
+<ul>
+<li><code>~1.2.3</code> → 允许 <code>&gt;=1.2.3</code> 且 <code>&lt;1.3.0</code>（只升修订号）。</li>
+<li><code>~1.2</code> → 允许 <code>&gt;=1.2.0</code> 且 <code>&lt;1.3.0</code>。</li>
+</ul>
+<p>对比记忆：<strong><code>^</code> 允许升 MINOR 和 PATCH，<code>~</code> 通常只允许升 PATCH</strong>。所以 <code>^</code> 更宽松，<code>~</code> 更保守。此外还有 <code>1.2.3</code>（精确锁定）、<code>*</code>（任意版本，危险）、<code>&gt;=18</code>（范围）等写法。</p>
+<p>💡 npm 默认给你装的依赖用 <code>^</code>，这是社区约定：相信别人会遵守 semver，MINOR/PATCH 升级不会弄坏你的代码。</p>
+<h3 id="typemainmoduleexports"><a class="header" href="#typemainmoduleexports">type、main、module、exports</a></h3>
+<ul>
+<li><strong><code>type</code></strong>：前面讲过，<code>"module"</code> 让本包的 <code>.js</code> 按 ESM 解析，<code>"commonjs"</code>（或不写）按 CJS。</li>
+<li><strong><code>main</code></strong>：包的<strong>入口文件</strong>。别人 <code>import "str-kit"</code> 时，Node 默认找的就是 <code>main</code> 指向的文件。这是最老、最通用的字段。</li>
+<li><strong><code>module</code></strong>：一个<strong>非官方</strong>约定字段，用来单独指明“ESM 版本的入口“，主要给打包工具看。Node 本身不认它，能不用就不用。</li>
+<li><strong><code>exports</code></strong>：<strong>现代、官方推荐</strong>的入口声明方式，比 <code>main</code> 强大得多。它能精确控制“外部能导入哪些路径“（相当于给包设了一道门），还能针对 ESM/CJS 提供不同文件：</li>
+</ul>
+<pre><code class="language-json">{
+  "exports": {
+    ".": "./index.js",
+    "./utils": "./src/utils.js"
+  }
+}
+</code></pre>
+<p>上面表示：<code>import "str-kit"</code> 走 <code>index.js</code>，<code>import "str-kit/utils"</code> 走 <code>src/utils.js</code>。⚠️ 一旦写了 <code>exports</code>，<strong>没在里面列出的文件就无法从外部导入</strong>（哪怕它在包目录里），这是它比 <code>main</code> 更“严格“的地方。</p>
+<h3 id="scripts"><a class="header" href="#scripts">scripts</a></h3>
+<p><code>scripts</code> 里定义可以用 <code>npm run &lt;名字&gt;</code> 运行的命令：</p>
+<pre><code class="language-json">"scripts": {
+  "dev": "node server.js",
+  "test": "vitest run",
+  "build": "tsc"
+}
+</code></pre>
+<ul>
+<li><code>npm run dev</code> 就等于执行 <code>node server.js</code>。</li>
+<li><code>test</code>、<code>start</code> 等少数几个“特殊名字“可以省略 <code>run</code>（<code>npm test</code>、<code>npm start</code>）。其余的都得写 <code>npm run xxx</code>。</li>
+<li>💡 script 里可以直接调用装在 <code>node_modules/.bin</code> 里的工具（如 <code>vitest</code>、<code>tsc</code>），不用写完整路径——npm 会自动把它加进 PATH。</li>
+</ul>
+<h3 id="dependencies--devdependencies--peerdependencies"><a class="header" href="#dependencies--devdependencies--peerdependencies">dependencies / devDependencies / peerDependencies</a></h3>
+<p>这三种依赖的区别很重要：</p>
+<ul>
+<li><strong><code>dependencies</code>（运行时依赖）</strong>：你的代码<strong>运行时真正需要</strong>的包。别人安装你的包时，这些会被<strong>一起装上</strong>。例：你的库内部用了 <code>lodash</code>。</li>
+<li><strong><code>devDependencies</code>（开发依赖）</strong>：只在<strong>开发/构建/测试阶段</strong>需要，运行时用不到。别人<strong>安装你的包时不会装</strong>它们。例：测试框架 <code>vitest</code>、编译器 <code>typescript</code>。安装时加 <code>-D</code> 就进这里。</li>
+<li><strong><code>peerDependencies</code>（同伴依赖）</strong>：表示“我需要<strong>宿主项目</strong>里存在某个包，但由宿主自己安装，我不重复装“。最典型的是插件类库：一个 React 组件库会把 <code>react</code> 写成 peerDependency，意思是“用我的人自己已经装了 React，我用你那份就行，别装两份导致冲突“。</li>
+</ul>
+<p>⚠️ 一个常见误区：把只在测试里用的东西写进 <code>dependencies</code>。这会让所有使用者被迫下载它们，拖慢安装、增大体积。判断标准很简单：<strong>运行你发布的代码时用不到的，就放 devDependencies。</strong></p>
+<hr>
+<h2 id="npm-基础"><a class="header" href="#npm-基础">npm 基础</a></h2>
+<p>**npm（Node Package Manager）**是随 Node.js 一起安装的包管理器。它做两件事：管理项目依赖、运行脚本。</p>
+<h3 id="npm-init创建-packagejson"><a class="header" href="#npm-init创建-packagejson">npm init：创建 package.json</a></h3>
+<pre><code class="language-bash">npm init          # 交互式问答，一步步生成
+npm init -y       # 全部用默认值，直接生成（-y = yes）
+</code></pre>
+<h3 id="npm-install安装依赖"><a class="header" href="#npm-install安装依赖">npm install：安装依赖</a></h3>
+<pre><code class="language-bash">npm install                 # 按 package.json 装齐所有依赖
+npm install lodash          # 装 lodash，并写入 dependencies
+npm install -D vitest       # 装 vitest 到 devDependencies（-D = --save-dev）
+npm install -g http-server  # 全局安装（-g），装到系统里，供命令行随处调用
+npm uninstall lodash        # 卸载
+</code></pre>
+<p>（<code>npm i</code> 是 <code>npm install</code> 的简写。）</p>
+<h3 id="node_modules-与-package-lockjson"><a class="header" href="#node_modules-与-package-lockjson">node_modules 与 package-lock.json</a></h3>
+<p>装完之后，你会看到两样东西：</p>
+<ul>
+<li><strong><code>node_modules/</code> 目录</strong>：所有依赖（以及依赖的依赖）的实际代码都放这里。它可能非常大、文件极多。📌 <strong>永远不要把它提交到 Git</strong>，在 <code>.gitignore</code> 里忽略它。别人克隆你的项目后 <code>npm install</code> 就能重新生成。</li>
+<li><strong><code>package-lock.json</code> 文件</strong>：记录了这次安装<strong>每个包被解析成的确切版本</strong>和依赖树。它保证团队里每个人、以及服务器上，装出来的依赖<strong>完全一致</strong>。📌 <strong>这个文件要提交到 Git。</strong> package.json 写的是“我想要的范围“（如 <code>^1.2.3</code>），lock 文件记的是“实际锁定的版本“（如 <code>1.9.0</code>）。</li>
+</ul>
+<h3 id="npm-run运行脚本"><a class="header" href="#npm-run运行脚本">npm run：运行脚本</a></h3>
+<pre><code class="language-bash">npm run build       # 运行 scripts.build
+npm test            # 特殊名字，等于 npm run test
+npm start           # 特殊名字，等于 npm run start
+</code></pre>
+<h3 id="npx临时执行包里的命令"><a class="header" href="#npx临时执行包里的命令">npx：临时执行包里的命令</a></h3>
+<p><strong><code>npx</code></strong> 能执行一个命令行工具，而<strong>不需要先全局安装</strong>它：</p>
+<pre><code class="language-bash">npx create-vite my-app   # 临时下载并运行 create-vite，用完不留在全局
+npx cowsay "hello"
+</code></pre>
+<p>它会优先用项目 <code>node_modules</code> 里已有的版本，没有就临时下载。特别适合那种“一次性脚手架工具“，避免污染全局环境。</p>
+<h3 id="pnpm--yarn了解即可"><a class="header" href="#pnpm--yarn了解即可">pnpm / yarn（了解即可）</a></h3>
+<p>除了 npm，社区还有两个流行的包管理器，命令大同小异：</p>
+<ul>
+<li><strong>yarn</strong>：早期以速度快著称，命令如 <code>yarn add lodash</code>。</li>
+<li><strong>pnpm</strong>：用硬链接共享依赖，<strong>省磁盘、装得快</strong>，现在很受欢迎，命令如 <code>pnpm add lodash</code>。</li>
+</ul>
+<p>💡 三者用的都是同一个 npm 仓库（registry），装的是同一批包，区别主要在安装策略和速度。初学阶段用自带的 <strong>npm</strong> 就够了。</p>
+<h3 id="从-npm-安装并使用第三方包完整流程"><a class="header" href="#从-npm-安装并使用第三方包完整流程">从 npm 安装并使用第三方包（完整流程）</a></h3>
+<p>以给项目加一个 UUID 生成库为例，完整走一遍：</p>
+<pre><code class="language-bash"># 1. 进入你的项目目录，确保有 package.json（没有就 npm init -y）
+cd my-project
+
+# 2. 安装第三方包（会写进 dependencies，生成/更新 lock 文件）
+npm install uuid
+
+# 3. 在代码里导入使用（见下），然后运行
+node index.js
+</code></pre>
+<pre><code class="language-javascript">// 文件：my-project/index.js（假设本项目是 "type": "module"）
+import { v4 as uuidv4 } from "uuid";
+
+console.log("新生成的 ID：", uuidv4());
+</code></pre>
+<p>背后发生了什么：<code>npm install uuid</code> 从 npm 仓库下载 <code>uuid</code> 及它的依赖到 <code>node_modules/</code>，在 <code>package.json</code> 的 <code>dependencies</code> 里记一行 <code>"uuid": "^…"</code>，并把确切版本写进 <code>package-lock.json</code>。之后 <code>import ... from "uuid"</code> 时，Node 发现这不是相对路径（不以 <code>./</code> <code>../</code> <code>/</code> 开头），就去 <code>node_modules/</code> 里按名字找这个包，读它 package.json 的 <code>exports</code>/<code>main</code> 找到入口。</p>
+<p>📌 <strong>裸模块名 vs 相对路径</strong>：<code>import x from "uuid"</code>（裸名，bare specifier）→ 去 <code>node_modules</code> 找包；<code>import x from "./math.js"</code>（相对路径）→ 找你自己的文件。</p>
+<hr>
+<h2 id="发布到-npm-的流程简介"><a class="header" href="#发布到-npm-的流程简介">发布到 npm 的流程简介</a></h2>
+<p>⚠️ <strong>本节只讲流程，不要求你真的发布</strong>（发布会占用全网唯一的包名，请勿用练习包污染 npm 仓库）。了解流程即可。</p>
+<p>假设你的包已经准备好（有规范的 package.json、代码、README），发布大致是：</p>
+<pre><code class="language-bash"># 1. 注册并登录 npm 账号（需要先在 npmjs.com 注册）
+npm login
+
+# 2. 检查将要发布的内容（不会真的发布，只是预览打包了哪些文件）
+npm publish --dry-run
+
+# 3. 正式发布
+npm publish
+# 带作用域的包若想公开发布，要加 --access public：
+# npm publish --access public
+</code></pre>
+<p>发布前要控制“哪些文件会被打进包里“，有两种方式：</p>
+<ul>
+<li><strong><code>files</code> 字段（推荐，白名单）</strong>：在 package.json 里列出要发布的文件/目录，<strong>只有列出的会被发布</strong>（外加 package.json、README、LICENSE 这些总会被带上）。</li>
+</ul>
+<pre><code class="language-json">"files": ["index.js", "src/", "README.md"]
+</code></pre>
+<ul>
+<li><strong><code>.npmignore</code>（黑名单）</strong>：像 <code>.gitignore</code> 一样列出<strong>不发布</strong>的东西。如果没有 <code>.npmignore</code>，npm 会退而使用 <code>.gitignore</code>。</li>
+</ul>
+<p>💡 用 <code>files</code> 白名单通常更安全——你明确知道发布了什么，不会不小心把测试文件、密钥、<code>node_modules</code> 打进去。</p>
+<p>发布新版本前，记得按 semver 升级版本号（不能重复发布同一个版本）。npm 提供了便捷命令：</p>
+<pre><code class="language-bash">npm version patch   # 1.2.3 -&gt; 1.2.4（修 bug）
+npm version minor   # 1.2.3 -&gt; 1.3.0（加功能）
+npm version major   # 1.2.3 -&gt; 2.0.0（不兼容改动）
+</code></pre>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>ESM 里忘写扩展名</strong>。<code>import x from "./math"</code> 在 Node 的 ESM 下会报 <code>ERR_MODULE_NOT_FOUND</code>，必须写 <code>"./math.js"</code>。CJS 才能省略。</li>
+<li>⚠️ <strong>搞混 <code>export default</code> 和命名导出</strong>。默认导出用 <code>import x from "..."</code>（无花括号）；命名导出用 <code>import { x } from "..."</code>（有花括号）。名字对不上就是 <code>undefined</code>。</li>
+<li>⚠️ <strong><code>"require() of ES Module not supported"</code></strong>。在 CJS 里 <code>require</code> 了纯 ESM 包。把代码改成 ESM，或用动态 <code>import()</code>。</li>
+<li>⚠️ <strong>把 node_modules 提交进 Git，却忘了提交 package-lock.json</strong>。恰好反了：node_modules 要忽略，lock 文件要提交。</li>
+<li>⚠️ <strong>把开发工具写进 <code>dependencies</code></strong>。测试框架、编译器等只在开发时用的，应放 <code>devDependencies</code>（<code>npm i -D</code>）。</li>
+<li>⚠️ <strong>误解 semver</strong>。再强调：<code>^</code> 锁 MAJOR（可升 MINOR/PATCH），<code>~</code> 通常只升 PATCH。0.x 版本下 <code>^</code> 会更保守。</li>
+<li>💡 <strong>一个模块一件事</strong>。每个模块聚焦单一职责，导出清晰。用“桶文件“（index.js 再导出）给使用者一个统一入口。</li>
+<li>💡 <strong>优先命名导出</strong>。命名导出对自动补全、重构、Tree Shaking 更友好；默认导出留给“这个模块最核心的那一个东西“。</li>
+<li>💡 <strong>能用 npx 就别全局装</strong>。脚手架类工具用 <code>npx</code>，保持全局环境干净。</li>
+</ul>
+<hr>
+<h2 id="本章小项目可发布的-npm-工具包-str-kit"><a class="header" href="#本章小项目可发布的-npm-工具包-str-kit">本章小项目：可发布的 npm 工具包 <code>str-kit</code></a></h2>
+<p>我们来做一个“看起来就能发布到 npm“的字符串工具包，把本章所有知识串起来：规范的 package.json、ESM 导出、桶文件再导出、使用示例。</p>
+<h3 id="目录结构"><a class="header" href="#目录结构">目录结构</a></h3>
+<pre><code>code/ch09/str-kit/
+├── package.json      （包的身份证与配置）
+├── README.md         （说明文档）
+├── index.js          （入口/桶文件，再导出 src 的实现）
+├── src/
+│   └── strings.js    （三个工具函数的实现）
+└── usage.js          （像使用者一样导入并演示）
+</code></pre>
+<h3 id="第一步写工具函数"><a class="header" href="#第一步写工具函数">第一步：写工具函数</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch09/str-kit/src/strings.js
+
+/**
+ * 把字符串首字母大写，其余保持不变。
+ * capitalize("hello") -&gt; "Hello"
+ */
+export function capitalize(str) {
+  if (typeof str !== "string") throw new TypeError("capitalize 需要一个字符串");
+  if (str.length === 0) return str;
+  return str[0].toUpperCase() + str.slice(1);
+}
+
+/**
+ * 把一段文字转成 URL 友好的 slug。
+ * slugify("Hello World! 你好") -&gt; "hello-world-你好"
+ */
+export function slugify(str) {
+  if (typeof str !== "string") throw new TypeError("slugify 需要一个字符串");
+  return str
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")               // 连续空白 -&gt; 一个连字符
+    .replace(/[^\p{L}\p{N}-]/gu, "")    // 去掉字母/数字/连字符以外的字符
+    .replace(/-+/g, "-")                // 合并多余连字符
+    .replace(/^-|-$/g, "");             // 去掉首尾连字符
+}
+
+/**
+ * 把过长的字符串截断，并在末尾加上省略号。
+ * truncate("这是一段很长的文字", 6) -&gt; "这是一段很…"
+ */
+export function truncate(str, maxLength = 20, ellipsis = "…") {
+  if (typeof str !== "string") throw new TypeError("truncate 需要一个字符串");
+  if (str.length &lt;= maxLength) return str;
+  const keep = Math.max(0, maxLength - ellipsis.length);
+  return str.slice(0, keep) + ellipsis;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>三个函数都用<strong>命名导出</strong>，因为它们地位平等，命名导出对使用者的自动补全也更友好。</li>
+<li>每个函数开头都做<strong>类型校验</strong>：不是字符串就抛 <code>TypeError</code>。健壮的库应该对错误输入给出清晰报错，而不是默默返回怪结果。</li>
+<li><code>slugify</code> 里用了正则。<code>\p{L}</code> 匹配任意语言的<strong>字母</strong>（Letter），<code>\p{N}</code> 匹配<strong>数字</strong>（Number），后面的 <code>u</code> 标志开启 Unicode 模式——这样中文、日文等都能保留，而标点、感叹号会被去掉。（正则在第 6 章讲过，这里是它的实战。）</li>
+<li><code>truncate</code> 的 <code>maxLength</code> 和 <code>ellipsis</code> 都有默认值（第 5 章的默认参数）。<code>keep</code> 用 <code>Math.max(0, ...)</code> 保证不会出现负的切片长度。</li>
+</ul>
+<h3 id="第二步写入口桶文件--再导出"><a class="header" href="#第二步写入口桶文件--再导出">第二步：写入口（桶文件 + 再导出）</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch09/str-kit/index.js
+
+// 再导出（re-export）：把 strings.js 的所有命名导出原样转发出去。
+export * from "./src/strings.js";
+
+// 也提供一个「聚合默认导出」，方便一次性拿到所有函数。
+import { capitalize, slugify, truncate } from "./src/strings.js";
+export default { capitalize, slugify, truncate };
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>export * from "./src/strings.js"</code>：这就是<strong>再导出</strong>。它把 <code>strings.js</code> 的 <code>capitalize</code>/<code>slugify</code>/<code>truncate</code> 原封不动转发出去。好处是：<strong>实现文件可以随便重构、拆分</strong>，只要入口 <code>index.js</code> 的对外接口不变，使用者就完全无感。这就是“桶文件“模式。</li>
+<li>下面再额外提供一个默认导出（一个聚合对象），照顾“想一次性拿全部“的用法。这样使用者既能 <code>import { capitalize }</code>，也能 <code>import strKit</code>。</li>
+</ul>
+<h3 id="第三步写-packagejson"><a class="header" href="#第三步写-packagejson">第三步：写 package.json</a></h3>
+<pre><code class="language-json">{
+  "name": "str-kit",
+  "version": "1.0.0",
+  "description": "几个常用的字符串小工具：capitalize / slugify / truncate。",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": ["index.js", "src/", "README.md"],
+  "scripts": {
+    "demo": "node usage.js"
+  },
+  "keywords": ["string", "slugify", "capitalize", "truncate", "utils"],
+  "author": "你的名字 &lt;you@example.com&gt;",
+  "license": "MIT"
+}
+</code></pre>
+<p>逐字段回顾（都在前面详解过，这里看它们如何组合）：</p>
+<ul>
+<li><code>"type": "module"</code>：本包用 ESM。⚠️ 因为我们用 <code>export</code>/<code>import</code>，这个字段<strong>必须有</strong>（否则 Node 会按 CJS 解析 <code>.js</code>，<code>export</code> 语法会报错）。</li>
+<li><code>"main": "index.js"</code> 和 <code>"exports": { ".": "./index.js" }</code>：两个都指向入口。<code>main</code> 是老字段做兼容，<code>exports</code> 是现代写法、更严格。二者一致最稳妥。</li>
+<li><code>"files"</code>：发布白名单——只有 <code>index.js</code>、<code>src/</code>、<code>README.md</code> 会被打进包（<code>usage.js</code> 是演示用的，故意不发布）。</li>
+<li><code>"scripts": { "demo": "node usage.js" }</code>：<code>npm run demo</code> 就能跑演示。</li>
+</ul>
+<h3 id="第四步写使用示例"><a class="header" href="#第四步写使用示例">第四步：写使用示例</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch09/str-kit/usage.js
+
+// 因为 usage.js 就在包内部，这里用相对路径 "./index.js" 指向入口。
+import strKit, { capitalize, slugify, truncate } from "./index.js";
+
+console.log("capitalize('hello world') =&gt;", capitalize("hello world"));
+console.log("slugify('Hello World! 你好') =&gt;", slugify("Hello World! 你好"));
+console.log("truncate('这是一段很长很长的文字', 6) =&gt;", truncate("这是一段很长很长的文字", 6));
+
+console.log("默认导出对象包含：", Object.keys(strKit));
+
+// 如果这个包被别人 npm install 安装后使用，代码会长这样：
+//   import { capitalize } from "str-kit";
+//   console.log(capitalize("hi"));
+</code></pre>
+<p>📌 注意这里的<strong>关键区别</strong>：因为 <code>usage.js</code> 在包<strong>内部</strong>，它用相对路径 <code>"./index.js"</code> 导入。而<strong>别人安装了你的包之后</strong>，写的是<strong>裸模块名</strong> <code>import { capitalize } from "str-kit"</code>——Node 会去他项目的 <code>node_modules/str-kit/</code> 里，按 <code>exports</code>/<code>main</code> 找到 <code>index.js</code>。这正是本章反复强调的“相对路径 vs 裸名“的分野。</p>
+<h3 id="运行"><a class="header" href="#运行">运行</a></h3>
+<pre><code class="language-bash">cd code/ch09/str-kit
+node usage.js       # 或者：npm run demo
+</code></pre>
+<p>输出：</p>
+<pre><code>capitalize('hello world') =&gt; Hello world
+slugify('Hello World! 你好') =&gt; hello-world-你好
+truncate('这是一段很长很长的文字', 6) =&gt; 这是一段很…
+默认导出对象包含： [ 'capitalize', 'slugify', 'truncate' ]
+</code></pre>
+<h3 id="如果要真的发布还需要做什么"><a class="header" href="#如果要真的发布还需要做什么">如果要真的发布，还需要做什么</a></h3>
+<p>这个包已经具备发布条件了。真要发布的话（记住：<strong>练习别真发</strong>）：</p>
+<ol>
+<li>确认 <code>name</code>（<code>str-kit</code>）在 npm 上没被占用，被占了就换名或用作用域名 <code>@你的用户名/str-kit</code>。</li>
+<li>写好 <code>README.md</code>（我们已经写了）和 <code>LICENSE</code>。</li>
+<li><code>npm login</code> 登录账号。</li>
+<li><code>npm publish --dry-run</code> 预览会打包哪些文件，确认 <code>files</code> 白名单正确。</li>
+<li><code>npm publish</code> 发布（作用域包公开发布要加 <code>--access public</code>）。</li>
+<li>之后每次改动，用 <code>npm version patch|minor|major</code> 按 semver 升级版本，再 <code>npm publish</code>。</li>
+</ol>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>加一个 <code>camelCase</code> 函数</strong>：把 <code>"hello world-foo"</code> 转成 <code>"helloWorldFoo"</code>，加到 <code>src/strings.js</code> 并从 <code>index.js</code> 导出。</li>
+<li><strong>给 <code>truncate</code> 加一个选项</strong>：支持“按单词边界截断“，避免把一个英文单词砍成两半。</li>
+<li><strong>拆分子入口</strong>：把 <code>slugify</code> 单独放到 <code>src/slug.js</code>，并在 package.json 的 <code>exports</code> 里加 <code>"./slug": "./src/slug.js"</code>，让别人能 <code>import { slugify } from "str-kit/slug"</code>。</li>
+<li><strong>写测试</strong>：为三个函数写单元测试，覆盖空字符串、非字符串输入等边界。</li>
+<li><strong>对比 CJS</strong>：把 <code>strings.js</code> 复制一份改成 CJS（<code>module.exports</code>），文件名用 <code>.cjs</code>，写一个 <code>require</code> 它的脚本，亲手体会两套系统的差异。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们从“为什么需要模块“讲到“如何发布一个包“，核心要点：</p>
+<ul>
+<li><strong>模块化</strong>解决全局污染和依赖管理问题，让每个文件有独立作用域。</li>
+<li><strong>ESM</strong> 是官方标准：<code>export</code>（命名/默认）、<code>import</code>（命名/默认/命名空间/重命名）、<code>export from</code> 再导出、动态 <code>import()</code>、顶层 await。模块<strong>自动严格模式</strong>，且<strong>只执行一次</strong>（单例缓存）。</li>
+<li><strong>CJS</strong>（<code>require</code>/<code>module.exports</code>）是 Node 老系统：运行时同步、值拷贝、可省扩展名。ESM 是静态、引用绑定、必须写扩展名。</li>
+<li>Node 靠<strong>扩展名</strong>（<code>.mjs</code>/<code>.cjs</code>）和 <strong>package.json 的 <code>"type"</code></strong> 判断用哪套。</li>
+<li><strong>package.json</strong>：<code>name</code>、<code>version</code>（semver：<code>^</code> 锁 MAJOR、<code>~</code> 通常只升 PATCH）、<code>type</code>、<code>main</code>/<code>exports</code>、<code>scripts</code>、三类 <code>dependencies</code>。</li>
+<li><strong>npm</strong>：<code>init</code> / <code>install</code>（<code>-D</code>/<code>-g</code>）/ <code>run</code> / <code>npx</code>；<code>node_modules</code> 要忽略、<code>package-lock.json</code> 要提交。</li>
+<li><strong>发布</strong>：<code>npm login</code> → <code>npm publish</code>，用 <code>files</code> 白名单控制打包内容。</li>
+</ul>
+<p>自测题（能脱口而出就说明掌握了）：</p>
+<ol>
+<li>ESM 里 <code>import { a } from "./m.js"</code> 和 <code>import a from "./m.js"</code> 有什么本质区别？</li>
+<li>为什么 <code>math.js</code> 里的 <code>console.log</code> 无论被导入多少次都只打印一次？</li>
+<li><code>^1.2.3</code> 和 <code>~1.2.3</code> 各自允许升级到哪个范围？<code>^0.2.3</code> 呢？</li>
+<li><code>dependencies</code>、<code>devDependencies</code>、<code>peerDependencies</code> 分别在什么场景用？</li>
+<li><code>node_modules</code> 和 <code>package-lock.json</code>，哪个该提交进 Git，哪个不该？为什么？</li>
+<li>在 ESM 文件里 <code>import "./util"</code>（不写扩展名）会怎样？CJS 呢？</li>
+<li>别人 <code>import { capitalize } from "str-kit"</code> 时，Node 是怎么找到我们的 <code>index.js</code> 的？</li>
+</ol>
+<p>答完对照前文检查。全部答对，你就真正掌握了模块化与包管理——这是从“写脚本“迈向“做工程“的分水岭。</p>
+<hr>
+<p>下一章我们离开命令行，回到 JavaScript 的老家——<strong>浏览器</strong>。第 10 章《浏览器、DOM 与事件》会讲页面是怎么被 JS 操纵的：如何用脚本查找和修改页面元素（DOM）、如何响应用户的点击和输入（事件）。你在本章学到的模块化能力，会让浏览器端的代码同样组织得井井有条。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch08.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch10.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch08.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch10.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

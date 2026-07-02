@@ -1,0 +1,703 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>附录 B · JS/TS 速查表 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/appendix-b.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="附录-b--jsts-速查表"><a class="header" href="#附录-b--jsts-速查表">附录 B · JS/TS 速查表</a></h1>
+<p>速查性质，以表格与精简代码为主。术语给英文原词，随查随用。</p>
+<hr>
+<h2 id="一javascript-语法速查"><a class="header" href="#一javascript-语法速查">一、JavaScript 语法速查</a></h2>
+<h3 id="变量声明"><a class="header" href="#变量声明">变量声明</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>关键字</th><th>作用域</th><th>可重新赋值</th><th>提升行为</th></tr>
+</thead>
+<tbody>
+<tr><td><code>const</code></td><td>块级</td><td>❌</td><td>有 TDZ</td></tr>
+<tr><td><code>let</code></td><td>块级</td><td>✅</td><td>有 TDZ</td></tr>
+<tr><td><code>var</code></td><td>函数级</td><td>✅</td><td>提升为 <code>undefined</code>（避免使用）</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="数据类型"><a class="header" href="#数据类型">数据类型</a></h3>
+<p>原始类型（primitive）：<code>string</code>、<code>number</code>、<code>bigint</code>、<code>boolean</code>、<code>undefined</code>、<code>symbol</code>、<code>null</code>。
+引用类型：<code>object</code>（含 <code>Array</code>、<code>Function</code>、<code>Date</code>、<code>RegExp</code>、<code>Map</code>、<code>Set</code> 等）。</p>
+<pre><code class="language-javascript">typeof 42;         // 'number'
+typeof 42n;        // 'bigint'
+typeof 'a';        // 'string'
+typeof true;       // 'boolean'
+typeof undefined;  // 'undefined'
+typeof Symbol();   // 'symbol'
+typeof null;       // 'object'（历史 bug）
+typeof [];         // 'object' —— 用 Array.isArray 判数组
+typeof (() =&gt; {}); // 'function'
+</code></pre>
+<h3 id="运算符"><a class="header" href="#运算符">运算符</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>运算符</th><th>含义</th><th>示例</th></tr>
+</thead>
+<tbody>
+<tr><td><code>===</code> / <code>!==</code></td><td>严格相等（不转型，首选）</td><td><code>1 === '1'</code> → false</td></tr>
+<tr><td><code>??</code></td><td>空值合并（仅 <code>null</code>/<code>undefined</code> 才取右值）</td><td><code>0 ?? 9</code> → <code>0</code></td></tr>
+<tr><td><code>||</code></td><td>逻辑或（假值即取右值）</td><td><code>0 || 9</code> → <code>9</code></td></tr>
+<tr><td><code>?.</code></td><td>可选链（前值为空则短路返回 undefined）</td><td><code>a?.b?.c</code></td></tr>
+<tr><td><code>??=</code></td><td>空值时赋值</td><td><code>x ??= 1</code></td></tr>
+<tr><td><code>||=</code> <code>&amp;&amp;=</code></td><td>逻辑赋值</td><td><code>x ||= 1</code></td></tr>
+<tr><td><code>**</code></td><td>幂</td><td><code>2 ** 10</code> → 1024</td></tr>
+<tr><td><code>...</code></td><td>展开 / 剩余</td><td><code>[...a]</code></td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-javascript">const name = user.name ?? '匿名';       // null/undefined 才用默认
+const city = user?.address?.city;        // 任一环节为空则 undefined
+const port = process.env.PORT ?? 3000;
+</code></pre>
+<blockquote>
+<p>📌 <code>??</code> 与 <code>||</code> 的关键区别：<code>0</code>、<code>''</code>、<code>false</code> 对 <code>??</code> 是有效值，对 <code>||</code> 是假值。</p>
+</blockquote>
+<h3 id="模板字符串"><a class="header" href="#模板字符串">模板字符串</a></h3>
+<pre><code class="language-javascript">const s = `Hi ${name}, ${1 + 2} items`;
+const multi = `第一行
+第二行`;
+const tag = String.raw`C:\path\n`; // 不转义
+</code></pre>
+<h3 id="解构destructuring"><a class="header" href="#解构destructuring">解构（destructuring）</a></h3>
+<pre><code class="language-javascript">const [a, b, ...rest] = [1, 2, 3, 4];      // a=1 b=2 rest=[3,4]
+const { x, y = 10, z: zz } = obj;          // 默认值 + 重命名
+const { a: { deep } } = nested;            // 嵌套
+function f({ id, name = 'N/A' }) {}         // 参数解构
+[a, b] = [b, a];                            // 交换
+</code></pre>
+<h3 id="展开spread"><a class="header" href="#展开spread">展开（spread）</a></h3>
+<pre><code class="language-javascript">const arr = [...a, ...b];              // 合并数组
+const obj = { ...base, override: 1 };  // 合并对象（后覆盖前）
+fn(...args);                            // 展开为实参
+Math.max(...[1, 2, 3]);
+</code></pre>
+<h3 id="常用字符串方法"><a class="header" href="#常用字符串方法">常用字符串方法</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方法</th><th>签名 / 说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>length</code></td><td>字符数（属性）</td></tr>
+<tr><td><code>slice(start, end?)</code></td><td>截取子串，支持负索引</td></tr>
+<tr><td><code>substring(start, end?)</code></td><td>截取（不支持负索引）</td></tr>
+<tr><td><code>at(i)</code></td><td>取字符，支持负索引 <code>s.at(-1)</code></td></tr>
+<tr><td><code>includes(sub)</code></td><td>是否包含</td></tr>
+<tr><td><code>startsWith</code> / <code>endsWith</code></td><td>前缀 / 后缀判断</td></tr>
+<tr><td><code>indexOf(sub)</code></td><td>首次位置，无则 -1</td></tr>
+<tr><td><code>replace(a, b)</code></td><td>替换首个（正则加 <code>g</code> 替换全部）</td></tr>
+<tr><td><code>replaceAll(a, b)</code></td><td>替换全部</td></tr>
+<tr><td><code>split(sep)</code></td><td>分割为数组</td></tr>
+<tr><td><code>trim()</code> / <code>trimStart</code> / <code>trimEnd</code></td><td>去空白</td></tr>
+<tr><td><code>toUpperCase</code> / <code>toLowerCase</code></td><td>大小写</td></tr>
+<tr><td><code>padStart(n, c)</code> / <code>padEnd</code></td><td>补齐到长度 n</td></tr>
+<tr><td><code>repeat(n)</code></td><td>重复 n 次</td></tr>
+<tr><td><code>match</code> / <code>matchAll</code></td><td>正则匹配</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="常用数组方法"><a class="header" href="#常用数组方法">常用数组方法</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方法</th><th>签名</th><th>一句话</th></tr>
+</thead>
+<tbody>
+<tr><td><code>map</code></td><td><code>(fn) =&gt; 新数组</code></td><td>每项变换，返回等长新数组</td></tr>
+<tr><td><code>filter</code></td><td><code>(fn) =&gt; 新数组</code></td><td>保留 fn 返回真值的项</td></tr>
+<tr><td><code>reduce</code></td><td><code>(fn, init) =&gt; 累积值</code></td><td>折叠为单个值</td></tr>
+<tr><td><code>forEach</code></td><td><code>(fn) =&gt; undefined</code></td><td>遍历副作用，无返回</td></tr>
+<tr><td><code>find</code></td><td><code>(fn) =&gt; 元素|undefined</code></td><td>首个满足条件的元素</td></tr>
+<tr><td><code>findIndex</code></td><td><code>(fn) =&gt; number</code></td><td>首个满足条件的索引</td></tr>
+<tr><td><code>some</code></td><td><code>(fn) =&gt; boolean</code></td><td>是否<strong>至少一个</strong>满足</td></tr>
+<tr><td><code>every</code></td><td><code>(fn) =&gt; boolean</code></td><td>是否<strong>全部</strong>满足</td></tr>
+<tr><td><code>includes</code></td><td><code>(val) =&gt; boolean</code></td><td>是否含某值（识别 NaN）</td></tr>
+<tr><td><code>indexOf</code></td><td><code>(val) =&gt; number</code></td><td>值的位置（用 ===）</td></tr>
+<tr><td><code>sort</code></td><td><code>((a,b)=&gt;number)?</code></td><td>原地排序，默认字典序</td></tr>
+<tr><td><code>reverse</code></td><td><code>() =&gt; 数组</code></td><td>原地反转</td></tr>
+<tr><td><code>flat</code></td><td><code>(depth=1)</code></td><td>拉平嵌套数组</td></tr>
+<tr><td><code>flatMap</code></td><td><code>(fn)</code></td><td>map 后拉平一层</td></tr>
+<tr><td><code>slice</code></td><td><code>(start?, end?)</code></td><td>截取副本（不改原数组）</td></tr>
+<tr><td><code>splice</code></td><td><code>(start, delCount, ...items)</code></td><td>原地增删改</td></tr>
+<tr><td><code>concat</code></td><td><code>(...arrs)</code></td><td>拼接返回新数组</td></tr>
+<tr><td><code>join</code></td><td><code>(sep=',')</code></td><td>连接为字符串</td></tr>
+<tr><td><code>fill</code></td><td><code>(val, start?, end?)</code></td><td>原地填充</td></tr>
+<tr><td><code>at</code></td><td><code>(i)</code></td><td>支持负索引取值</td></tr>
+<tr><td><code>toSorted</code> / <code>toReversed</code> / <code>with</code></td><td>—</td><td>返回副本的不可变版本（ES2023）</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-javascript">[1, 2, 3, 4].filter(n =&gt; n % 2 === 0);        // [2, 4]
+[1, 2, 3].map(n =&gt; n * 2);                     // [2, 4, 6]
+[1, 2, 3].reduce((sum, n) =&gt; sum + n, 0);      // 6
+[[1], [2, [3]]].flat(Infinity);               // [1, 2, 3]
+</code></pre>
+<h3 id="对象与-object"><a class="header" href="#对象与-object">对象与 <code>Object.*</code></a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方法</th><th>说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Object.keys(o)</code></td><td>自身可枚举键数组</td></tr>
+<tr><td><code>Object.values(o)</code></td><td>值数组</td></tr>
+<tr><td><code>Object.entries(o)</code></td><td><code>[key, value]</code> 对数组</td></tr>
+<tr><td><code>Object.fromEntries(pairs)</code></td><td>entries 反向构造对象</td></tr>
+<tr><td><code>Object.assign(t, ...s)</code></td><td>浅合并到 t</td></tr>
+<tr><td><code>Object.freeze(o)</code></td><td>冻结（浅，不可增删改）</td></tr>
+<tr><td><code>Object.create(proto)</code></td><td>以指定原型创建对象</td></tr>
+<tr><td><code>Object.getPrototypeOf(o)</code></td><td>取原型</td></tr>
+<tr><td><code>structuredClone(o)</code></td><td>深拷贝</td></tr>
+<tr><td><code>'k' in o</code></td><td>键是否存在（含原型链）</td></tr>
+<tr><td><code>o.hasOwnProperty('k')</code></td><td>自身键判断</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-javascript">for (const [k, v] of Object.entries({ a: 1, b: 2 })) {}
+const clone = structuredClone(deepObj);
+</code></pre>
+<h3 id="map--set"><a class="header" href="#map--set">Map / Set</a></h3>
+<pre><code class="language-javascript">const m = new Map([['a', 1]]);
+m.set('b', 2); m.get('a'); m.has('a'); m.delete('a'); m.size;
+for (const [k, v] of m) {}
+
+const s = new Set([1, 2, 2, 3]); // {1, 2, 3}
+s.add(4); s.has(2); s.delete(1); s.size;
+const unique = [...new Set(arr)]; // 数组去重
+</code></pre>
+<blockquote>
+<p>💡 <code>Map</code> 的键可以是任意类型且保持插入顺序；对象键只能是字符串/Symbol。</p>
+</blockquote>
+<h3 id="promise--async"><a class="header" href="#promise--async">Promise / async</a></h3>
+<pre><code class="language-javascript">Promise.all([p1, p2]);         // 全部成功→结果数组；任一失败→reject
+Promise.allSettled([p1, p2]);  // 全部结算，每项 {status, value|reason}
+Promise.race([p1, p2]);        // 最先结算（成功或失败）者
+Promise.any([p1, p2]);         // 最先成功者；全失败→AggregateError
+Promise.resolve(v);            // 立即成功
+Promise.reject(e);             // 立即失败
+
+async function f() {
+  try {
+    const r = await fetchData();
+    return r;
+  } catch (e) { /* 处理错误 */ }
+}
+</code></pre>
+<hr>
+<h2 id="二正则速查regexp"><a class="header" href="#二正则速查regexp">二、正则速查（RegExp）</a></h2>
+<h3 id="元字符"><a class="header" href="#元字符">元字符</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>符号</th><th>含义</th></tr>
+</thead>
+<tbody>
+<tr><td><code>.</code></td><td>除换行外任意字符</td></tr>
+<tr><td><code>\d</code> <code>\D</code></td><td>数字 / 非数字</td></tr>
+<tr><td><code>\w</code> <code>\W</code></td><td>单词字符 <code>[A-Za-z0-9_]</code> / 非单词</td></tr>
+<tr><td><code>\s</code> <code>\S</code></td><td>空白 / 非空白</td></tr>
+<tr><td><code>\b</code> <code>\B</code></td><td>单词边界 / 非边界</td></tr>
+<tr><td><code>[abc]</code></td><td>字符集合任一</td></tr>
+<tr><td><code>[^abc]</code></td><td>排除集合</td></tr>
+<tr><td><code>[a-z]</code></td><td>范围</td></tr>
+<tr><td><code>\</code></td><td>转义</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="量词quantifier"><a class="header" href="#量词quantifier">量词（quantifier）</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>符号</th><th>含义</th></tr>
+</thead>
+<tbody>
+<tr><td><code>*</code></td><td>0 次或多次</td></tr>
+<tr><td><code>+</code></td><td>1 次或多次</td></tr>
+<tr><td><code>?</code></td><td>0 次或 1 次</td></tr>
+<tr><td><code>{n}</code></td><td>恰好 n 次</td></tr>
+<tr><td><code>{n,}</code></td><td>至少 n 次</td></tr>
+<tr><td><code>{n,m}</code></td><td>n 到 m 次</td></tr>
+<tr><td><code>*?</code> <code>+?</code> <code>??</code></td><td>惰性（非贪婪）匹配</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="锚点与分组"><a class="header" href="#锚点与分组">锚点与分组</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>符号</th><th>含义</th></tr>
+</thead>
+<tbody>
+<tr><td><code>^</code></td><td>行/串开头</td></tr>
+<tr><td><code>$</code></td><td>行/串结尾</td></tr>
+<tr><td><code>(...)</code></td><td>捕获分组</td></tr>
+<tr><td><code>(?:...)</code></td><td>非捕获分组</td></tr>
+<tr><td><code>(?&lt;name&gt;...)</code></td><td>命名捕获组</td></tr>
+<tr><td><code>\1</code> / <code>\k&lt;name&gt;</code></td><td>反向引用</td></tr>
+<tr><td><code>(?=...)</code></td><td>正向先行断言</td></tr>
+<tr><td><code>(?!...)</code></td><td>负向先行断言</td></tr>
+<tr><td><code>(?&lt;=...)</code></td><td>正向后行断言</td></tr>
+<tr><td><code>(?&lt;!...)</code></td><td>负向后行断言</td></tr>
+<tr><td><code>a|b</code></td><td>或</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="常用-flag"><a class="header" href="#常用-flag">常用 flag</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>flag</th><th>含义</th></tr>
+</thead>
+<tbody>
+<tr><td><code>g</code></td><td>全局匹配</td></tr>
+<tr><td><code>i</code></td><td>忽略大小写</td></tr>
+<tr><td><code>m</code></td><td>多行（<code>^</code>/<code>$</code> 匹配每行）</td></tr>
+<tr><td><code>s</code></td><td><code>.</code> 匹配换行（dotAll）</td></tr>
+<tr><td><code>u</code></td><td>Unicode 模式</td></tr>
+<tr><td><code>y</code></td><td>粘连（从 lastIndex 开始）</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="常用方法"><a class="header" href="#常用方法">常用方法</a></h3>
+<pre><code class="language-javascript">/\d+/.test('a1');                 // true —— 是否匹配
+'a1b2'.match(/\d/g);              // ['1', '2'] —— 全部匹配（需 g）
+[...'a1b2'.matchAll(/(\w)(\d)/g)]; // 带分组的全部匹配（迭代）
+'2024-01'.replace(/(\d+)-(\d+)/, '$2/$1'); // '01/2024' —— $n 引用分组
+'a,b;c'.split(/[,;]/);            // ['a', 'b', 'c']
+const m = /(?&lt;y&gt;\d{4})/.exec('2024'); m.groups.y; // '2024' 命名组
+</code></pre>
+<hr>
+<h2 id="三typescript-类型速查"><a class="header" href="#三typescript-类型速查">三、TypeScript 类型速查</a></h2>
+<h3 id="基础类型"><a class="header" href="#基础类型">基础类型</a></h3>
+<pre><code class="language-typescript">let s: string; let n: number; let b: boolean;
+let big: bigint; let sym: symbol;
+let u: undefined; let nl: null;
+let anyV: any; let unknownV: unknown; let never: never;
+let voidFn: () =&gt; void;
+let lit: 'on' | 'off';          // 字面量联合
+let tup: readonly [number, string]; // 只读元组
+</code></pre>
+<h3 id="数组与元组"><a class="header" href="#数组与元组">数组与元组</a></h3>
+<pre><code class="language-typescript">let a: number[];             // 或 Array&lt;number&gt;
+let t: [string, number];     // 元组（定长定序）
+let named: [x: number, y: number];   // 具名元组
+let rest: [first: string, ...nums: number[]]; // 可变元组
+</code></pre>
+<h3 id="联合与交叉"><a class="header" href="#联合与交叉">联合与交叉</a></h3>
+<pre><code class="language-typescript">type Union = string | number;         // 联合：其一
+type Cross = A &amp; B;                    // 交叉：兼具（合并成员）
+type Result = { ok: true; data: T } | { ok: false; error: string }; // 可辨识联合
+</code></pre>
+<h3 id="interface-vs-type"><a class="header" href="#interface-vs-type">interface vs type</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th><code>interface</code></th><th><code>type</code></th></tr>
+</thead>
+<tbody>
+<tr><td>声明合并</td><td>✅ 支持</td><td>❌</td></tr>
+<tr><td>扩展</td><td><code>extends</code></td><td><code>&amp;</code> 交叉</td></tr>
+<tr><td>联合/元组/映射</td><td>❌</td><td>✅</td></tr>
+<tr><td>基本类型别名</td><td>❌</td><td>✅ <code>type ID = string</code></td></tr>
+<tr><td>性能（大型对象）</td><td>略优</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 经验：对象/类的公共 API 用 <code>interface</code>，联合/工具/复杂类型用 <code>type</code>。</p>
+</blockquote>
+<h3 id="泛型generics"><a class="header" href="#泛型generics">泛型（generics）</a></h3>
+<pre><code class="language-typescript">function identity&lt;T&gt;(x: T): T { return x; }
+interface Box&lt;T&gt; { value: T; }
+type Pair&lt;K, V&gt; = { key: K; value: V };
+function first&lt;T&gt;(arr: T[]): T | undefined { return arr[0]; }
+function pick&lt;T, K extends keyof T&gt;(o: T, k: K): T[K] { return o[k]; } // 约束
+class Store&lt;T = string&gt; { items: T[] = []; } // 默认类型参数
+</code></pre>
+<h3 id="keyof--typeof--索引访问"><a class="header" href="#keyof--typeof--索引访问">keyof / typeof / 索引访问</a></h3>
+<pre><code class="language-typescript">type Keys = keyof { a: 1; b: 2 };   // 'a' | 'b'
+const cfg = { port: 3000 };
+type Cfg = typeof cfg;               // { port: number }
+type Port = Cfg['port'];             // number（索引访问）
+type Values = Cfg[keyof Cfg];        // number
+</code></pre>
+<h3 id="条件类型与-infer"><a class="header" href="#条件类型与-infer">条件类型与 infer</a></h3>
+<pre><code class="language-typescript">type IsString&lt;T&gt; = T extends string ? true : false;
+type ElementType&lt;T&gt; = T extends (infer U)[] ? U : T; // 提取数组元素类型
+type Unwrap&lt;T&gt; = T extends Promise&lt;infer V&gt; ? V : T;
+type Flatten&lt;T&gt; = T extends Array&lt;infer Item&gt; ? Item : T;
+</code></pre>
+<h3 id="映射类型mapped-type"><a class="header" href="#映射类型mapped-type">映射类型（mapped type）</a></h3>
+<pre><code class="language-typescript">type MyPartial&lt;T&gt; = { [K in keyof T]?: T[K] };
+type MyReadonly&lt;T&gt; = { readonly [K in keyof T]: T[K] };
+type Nullable&lt;T&gt; = { [K in keyof T]: T[K] | null };
+type Renamed&lt;T&gt; = { [K in keyof T as `get${Capitalize&lt;string &amp; K&gt;}`]: () =&gt; T[K] }; // key remapping
+</code></pre>
+<h3 id="模板字面量类型"><a class="header" href="#模板字面量类型">模板字面量类型</a></h3>
+<pre><code class="language-typescript">type Event = `on${'Click' | 'Hover'}`;    // 'onClick' | 'onHover'
+type Route = `/api/${string}`;
+type CSSUnit = `${number}px` | `${number}%`;
+</code></pre>
+<h3 id="内置工具类型"><a class="header" href="#内置工具类型">内置工具类型</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>工具类型</th><th>一句话</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Partial&lt;T&gt;</code></td><td>所有属性变可选</td></tr>
+<tr><td><code>Required&lt;T&gt;</code></td><td>所有属性变必填</td></tr>
+<tr><td><code>Readonly&lt;T&gt;</code></td><td>所有属性变只读</td></tr>
+<tr><td><code>Pick&lt;T, K&gt;</code></td><td>从 T 挑选 K 键组成新类型</td></tr>
+<tr><td><code>Omit&lt;T, K&gt;</code></td><td>从 T 剔除 K 键</td></tr>
+<tr><td><code>Record&lt;K, V&gt;</code></td><td>键为 K、值为 V 的对象类型</td></tr>
+<tr><td><code>Exclude&lt;U, E&gt;</code></td><td>从联合 U 中排除可赋给 E 的成员</td></tr>
+<tr><td><code>Extract&lt;U, E&gt;</code></td><td>从联合 U 中提取可赋给 E 的成员</td></tr>
+<tr><td><code>NonNullable&lt;T&gt;</code></td><td>从 T 去除 <code>null</code> 和 <code>undefined</code></td></tr>
+<tr><td><code>ReturnType&lt;F&gt;</code></td><td>提取函数返回值类型</td></tr>
+<tr><td><code>Parameters&lt;F&gt;</code></td><td>提取函数参数为元组类型</td></tr>
+<tr><td><code>Awaited&lt;T&gt;</code></td><td>递归解包 Promise 的结果类型</td></tr>
+<tr><td><code>InstanceType&lt;C&gt;</code></td><td>构造函数的实例类型</td></tr>
+<tr><td><code>ConstructorParameters&lt;C&gt;</code></td><td>构造函数参数元组</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-typescript">type UserPreview = Pick&lt;User, 'id' | 'name'&gt;;
+type Dict = Record&lt;string, number&gt;;
+type R = ReturnType&lt;typeof fetchUser&gt;; // Promise&lt;User&gt;
+type U = Awaited&lt;R&gt;;                    // User
+type NoNull = NonNullable&lt;string | null | undefined&gt;; // string
+</code></pre>
+<h3 id="类型守卫与断言"><a class="header" href="#类型守卫与断言">类型守卫与断言</a></h3>
+<pre><code class="language-typescript">// typeof / instanceof / in 内置守卫
+if (typeof x === 'string') { /* x: string */ }
+if (x instanceof Date) {}
+if ('id' in obj) {}
+
+// 自定义类型谓词（type predicate）
+function isUser(x: unknown): x is User {
+  return typeof x === 'object' &amp;&amp; x !== null &amp;&amp; 'id' in x;
+}
+
+// 断言函数
+function assert(cond: unknown, msg?: string): asserts cond {
+  if (!cond) throw new Error(msg);
+}
+
+const v = x as User;         // 类型断言（编译期，不校验，慎用）
+const s = x!;                // 非空断言（慎用）
+const c = 'on' as const;     // const 断言 → 字面量类型
+</code></pre>
+<h3 id="常用-tsconfig-选项"><a class="header" href="#常用-tsconfig-选项">常用 tsconfig 选项</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>选项</th><th>说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>target</code></td><td>编译输出的 ES 版本（如 <code>ES2022</code>）</td></tr>
+<tr><td><code>module</code></td><td>模块系统（<code>ESNext</code> / <code>NodeNext</code> / <code>CommonJS</code>）</td></tr>
+<tr><td><code>moduleResolution</code></td><td>模块解析策略（<code>bundler</code> / <code>NodeNext</code>）</td></tr>
+<tr><td><code>strict</code></td><td>开启全部严格检查（<strong>强烈建议 true</strong>）</td></tr>
+<tr><td><code>noImplicitAny</code></td><td>禁止隐式 any（含于 strict）</td></tr>
+<tr><td><code>strictNullChecks</code></td><td>区分 null/undefined（含于 strict）</td></tr>
+<tr><td><code>esModuleInterop</code></td><td>兼容 CJS 默认导入</td></tr>
+<tr><td><code>outDir</code> / <code>rootDir</code></td><td>输出目录 / 源根目录</td></tr>
+<tr><td><code>declaration</code></td><td>生成 <code>.d.ts</code> 声明文件</td></tr>
+<tr><td><code>sourceMap</code></td><td>生成 source map</td></tr>
+<tr><td><code>skipLibCheck</code></td><td>跳过 <code>.d.ts</code> 检查（提速）</td></tr>
+<tr><td><code>noUnusedLocals</code> / <code>noUnusedParameters</code></td><td>报告未用变量/参数</td></tr>
+<tr><td><code>noUncheckedIndexedAccess</code></td><td>索引访问结果带 undefined（更安全）</td></tr>
+<tr><td><code>lib</code></td><td>引入的内置类型库（如 <code>["ES2022", "DOM"]</code>）</td></tr>
+<tr><td><code>paths</code> / <code>baseUrl</code></td><td>路径别名</td></tr>
+<tr><td><code>allowJs</code> / <code>checkJs</code></td><td>允许 / 检查 JS 文件</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist"
+  }
+}
+</code></pre>
+<hr>
+<h2 id="四常用-cli-命令速查"><a class="header" href="#四常用-cli-命令速查">四、常用 CLI 命令速查</a></h2>
+<h3 id="node--npm--npx"><a class="header" href="#node--npm--npx">node / npm / npx</a></h3>
+<pre><code class="language-bash">node app.js                 # 运行脚本
+node --watch app.js         # 文件变化自动重启
+npm init -y                 # 初始化 package.json
+npm install &lt;pkg&gt;           # 安装依赖（-D 开发依赖，-g 全局）
+npm ci                      # 按 lockfile 干净安装（CI 用）
+npm run &lt;script&gt;            # 运行 package.json scripts
+npm update / npm outdated   # 更新 / 查看过期依赖
+npx &lt;pkg&gt;                   # 不安装直接执行包
+</code></pre>
+<h3 id="tsc--tsx"><a class="header" href="#tsc--tsx">tsc / tsx</a></h3>
+<pre><code class="language-bash">tsc                         # 按 tsconfig 编译
+tsc --noEmit                # 只类型检查不产出（CI 门禁常用）
+tsc --watch                 # 监听编译
+tsc --init                  # 生成 tsconfig.json
+tsx script.ts               # 直接运行 TS（无需先编译）
+tsx watch script.ts         # 监听运行
+</code></pre>
+<h3 id="vitest--eslint--prettier"><a class="header" href="#vitest--eslint--prettier">vitest / eslint / prettier</a></h3>
+<pre><code class="language-bash">vitest                      # 监听模式跑测试
+vitest run                  # 单次运行（CI）
+vitest run --coverage       # 覆盖率报告
+vitest --ui                 # 图形界面
+
+eslint .                    # 检查
+eslint . --fix              # 自动修复
+eslint . --max-warnings=0   # 有警告即失败
+
+prettier --write .          # 格式化并写回
+prettier --check .          # 只检查是否已格式化（CI）
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="appendix-a.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="appendix-c.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="appendix-a.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="appendix-c.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

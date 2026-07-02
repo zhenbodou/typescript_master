@@ -1,0 +1,1021 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 6 章 · 错误处理与调试 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch06.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-6-章--错误处理与调试"><a class="header" href="#第-6-章--错误处理与调试">第 6 章 · 错误处理与调试</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前五章你已经能写出有模有样的程序了：变量、控制流、函数、对象、闭包、class……但真实世界的程序不是活在理想国里。用户会输入乱七八糟的数据、文件可能不存在、网络会断、接口返回的 JSON 可能是残缺的。<strong>一段没有错误处理的代码，就像一辆没有安全带和气囊的车——平时看不出问题，一出事就是灾难。</strong></p>
+<p>这一章我们专门学“程序出错时该怎么办”，以及“出了 bug 怎么快速找到它”。学完之后你会：</p>
+<ul>
+<li>理解<strong>错误（error）到底是什么</strong>，会用 <code>throw</code> 主动抛错，看懂 Error 对象的 <code>message</code> / <code>name</code> / <code>stack</code>。</li>
+<li>熟练使用 <strong><code>try</code> / <code>catch</code> / <code>finally</code></strong>，知道什么时候该捕获、什么时候该<strong>重新抛出（rethrow）</strong>。</li>
+<li>认识 JavaScript 的<strong>内置错误类型</strong>：TypeError、RangeError、SyntaxError、ReferenceError……看到报错能立刻判断“哪类问题”。</li>
+<li>会写<strong>自定义错误类</strong>（<code>class MyError extends Error</code>），并用 <strong><code>Error.cause</code></strong> 串起错误链。</li>
+<li>分清<strong>同步错误</strong>和<strong>异步错误</strong>处理的区别（异步细节留到第 8 章，这里先建立意识）。</li>
+<li>掌握<strong>防御性编程（defensive programming）</strong>：参数校验、早返回、断言。</li>
+<li>学会一套实用<strong>调试技巧</strong>：<code>console</code> 家族、<code>console.assert</code>、读懂调用栈、<code>debugger</code> 语句、Node <code>--inspect</code> 断点。</li>
+<li>建立**优雅降级（graceful degradation）**与错误恢复的思维。</li>
+<li>本章小项目：亲手封装一个<strong>健壮的 JSON 解析器</strong> <code>safeParseJSON</code>。</li>
+</ul>
+<p>我们从最根本的问题问起：错误，到底是什么？</p>
+<hr>
+<h2 id="61-错误是什么throw-与-error-对象"><a class="header" href="#61-错误是什么throw-与-error-对象">6.1 错误是什么？throw 与 Error 对象</a></h2>
+<p>在 JavaScript 里，<strong>“错误”本质上就是一个被“抛（throw）”出来的值</strong>。当程序执行到某个地方发现“干不下去了”，它会 <code>throw</code> 一个值，然后<strong>当前的正常执行流会立刻中断</strong>，这个值像坐电梯一样一路“向上”传播，直到被某个 <code>catch</code> 接住；如果一路没人接，程序就崩溃退出。</p>
+<p>你可以类比成公司里的“逐级上报”：基层员工遇到搞不定的事，把问题上报给主管；主管处理不了，再上报给经理……一直报到 CEO，CEO 也搞不定，公司就“崩”了。</p>
+<p>先看最原始的抛错：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/01-throw-error.js
+function withdraw(balance, amount) {
+  if (amount &gt; balance) {
+    // 不推荐：抛一个普通字符串，信息太少
+    throw "余额不足";
+  }
+  return balance - amount;
+}
+
+try {
+  withdraw(100, 200);
+} catch (e) {
+  console.log("捕获到（字符串）：", e); // "余额不足"
+  console.log("它有 stack 吗？", e.stack); // undefined，字符串没有 stack
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>throw</code> 后面<strong>可以跟任何值</strong>——字符串、数字、对象都行。这里我们抛了个字符串 <code>"余额不足"</code>。</li>
+<li><code>try { ... } catch (e) { ... }</code> 是捕获机制：<code>try</code> 块里一旦有东西被抛出，控制权立刻跳到 <code>catch</code>，被抛出的值绑定到 <code>e</code> 上。</li>
+<li>⚠️ <strong>但抛字符串是坏习惯</strong>：字符串没有 <code>stack</code>（调用栈），你根本不知道错误“从哪儿冒出来的”。调试时这会要了你的命。</li>
+</ul>
+<p>📌 <strong>正确姿势是抛一个 <code>Error</code> 对象。</strong> <code>Error</code> 是 JavaScript 内置的错误类型，它自带三个关键属性：</p>
+<ul>
+<li><code>message</code>：人类可读的错误描述（你写的那句话）。</li>
+<li><code>name</code>：错误的类别名，默认 <code>"Error"</code>。</li>
+<li><code>stack</code>：<strong>调用栈快照</strong>——记录了“错误是在哪个函数、哪一行产生的，以及是被谁一层层调用到这里的”。</li>
+</ul>
+<pre><code class="language-javascript">// 文件：code/ch06/01-throw-error.js（续）
+function withdraw2(balance, amount) {
+  if (amount &gt; balance) {
+    throw new Error(`余额不足：想取 ${amount}，但只有 ${balance}`);
+  }
+  return balance - amount;
+}
+
+try {
+  withdraw2(100, 200);
+} catch (e) {
+  console.log("  name    =", e.name); // "Error"
+  console.log("  message =", e.message); // 我们写的那句话
+  console.log("  是 Error 实例吗？", e instanceof Error); // true
+  console.log(e.stack.split("\n").slice(0, 2).join("\n")); // stack 前两行
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>new Error(...)</code> 创建一个错误对象，括号里的字符串就是 <code>message</code>。</li>
+<li><code>e.name</code> 是 <code>"Error"</code>，<code>e.message</code> 是我们写的内容，<code>e instanceof Error</code> 为 <code>true</code>。</li>
+<li><code>e.stack</code> 是一段多行文本，第一行是 <code>Error: 你的 message</code>，接下来每行是 <code>at 函数名 (文件:行:列)</code>。<strong>这就是排错的黄金线索</strong>，本章后面会专门教怎么读它。</li>
+</ul>
+<p>💡 <strong>技巧</strong>：<code>message</code> 里尽量写清“出了什么错、相关的值是多少”。<code>余额不足：想取 200，但只有 100</code> 远比干巴巴的 <code>余额不足</code> 有用。</p>
+<p>再看关键的一点：<strong>抛错会“中断”后续代码</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch06/01-throw-error.js（续）
+function a() {
+  b();
+  console.log("a 的这行永远不会执行"); // 被跳过
+}
+function b() {
+  throw new Error("b 出问题了");
+}
+
+try {
+  a();
+} catch (e) {
+  console.log("在最外层 catch 到了：", e.message);
+}
+console.log("程序继续正常往下走。");
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>a()</code> 调用 <code>b()</code>，<code>b</code> 抛错后，<code>a</code> 里 <code>b()</code> 之后的那行<strong>直接被跳过</strong>——错误“穿过” <code>a</code> 一路上升，最终被最外层的 <code>try/catch</code> 接住。接住之后，程序不会崩，会继续执行 <code>catch</code> 之后的代码。这就是错误“逐级上报、被接住就恢复正常”的完整过程。</p>
+<blockquote>
+<p>📌 记住三句话：<strong><code>throw</code> 抛出一个值 → 正常流程立刻中断 → 值向上传播直到被 <code>catch</code> 接住（否则程序崩溃）。永远抛 <code>Error</code> 对象，不要抛字符串。</strong></p>
+</blockquote>
+<hr>
+<h2 id="62-try--catch--finally"><a class="header" href="#62-try--catch--finally">6.2 try / catch / finally</a></h2>
+<p>上一节我们已经用到了 <code>try/catch</code>。这一节把它讲透，再补上第三块 <code>finally</code>。</p>
+<p>完整结构是三段：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/02-try-catch-finally.js
+function parseAge(input) {
+  try {
+    const n = Number(input);
+    if (Number.isNaN(n)) {
+      throw new Error(`"${input}" 不是有效数字`);
+    }
+    console.log("try：解析成功，年龄 =", n);
+    return n;
+  } catch (e) {
+    console.log("catch：出错了 -&gt;", e.message);
+    return -1; // 出错时返回一个兜底值
+  } finally {
+    console.log("finally：无论成功失败都会执行（比如关闭资源）");
+  }
+}
+
+parseAge("30"); // 走 try + finally
+parseAge("abc"); // 走 catch + finally
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong><code>try</code> 块</strong>：放“可能出错”的代码。一旦里面任何一处抛错，剩下的部分立刻跳过，转到 <code>catch</code>。</li>
+<li><strong><code>catch</code> 块</strong>：处理错误。<code>e</code> 是被抛出的错误对象。这里我们打印信息并返回兜底值 <code>-1</code>。</li>
+<li><strong><code>finally</code> 块</strong>：<strong>不管是否出错，最后一定执行</strong>。它的经典用途是“清理”——关闭文件、断开数据库连接、隐藏加载动画。因为无论成功还是失败你都得清理，写在 <code>finally</code> 里最保险。</li>
+</ul>
+<p>📌 执行流：合法输入 <code>"30"</code> 走 <code>try</code> → <code>finally</code>；非法输入 <code>"abc"</code> 走 <code>catch</code> → <code>finally</code>。<strong><code>finally</code> 两种情况都会执行</strong>。</p>
+<h3 id="catch-的绑定可以省略"><a class="header" href="#catch-的绑定可以省略">catch 的绑定可以省略</a></h3>
+<p>如果你<strong>不关心错误对象本身</strong>，只想知道“成没成”，可以省略 <code>catch</code> 后面的 <code>(e)</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/02-try-catch-finally.js（续）
+function tryRun(fn) {
+  try {
+    fn();
+    return true;
+  } catch {
+    // 注意：没有写 catch (e)
+    return false;
+  }
+}
+console.log(tryRun(() =&gt; JSON.parse("{}"))); // true
+console.log(tryRun(() =&gt; JSON.parse("{坏}"))); // false
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>catch {}</code>（无参数）是 ES2019 引入的语法，叫<strong>可选 catch 绑定（optional catch binding）</strong>。这里我们只想知道 <code>fn</code> 会不会抛错，不需要错误详情，省掉 <code>(e)</code> 更干净。</p>
+<h3 id="-finally-的陷阱它的-return-会赢"><a class="header" href="#-finally-的陷阱它的-return-会赢">⚠️ finally 的陷阱：它的 return 会“赢”</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch06/02-try-catch-finally.js（续）
+function trap() {
+  try {
+    return "来自 try";
+  } finally {
+    return "来自 finally"; // ⚠️ 这个会赢
+  }
+}
+console.log(trap()); // "来自 finally"
+</code></pre>
+<p><strong>逐段拆解：</strong> 直觉上 <code>try</code> 里已经 <code>return "来自 try"</code> 了，应该返回它才对。但 <code>finally</code> <strong>一定会执行</strong>，如果 <code>finally</code> 里也有 <code>return</code>，它会<strong>覆盖</strong> <code>try</code> 的返回值。这是个著名的坑。</p>
+<p>💡 <strong>技巧</strong>：<strong>不要在 <code>finally</code> 里写 <code>return</code>（也别在里面 <code>throw</code>）</strong>。<code>finally</code> 应该只做清理，不参与“返回什么值”这件事。</p>
+<h3 id="重新抛出rethrow处理不了就往上传"><a class="header" href="#重新抛出rethrow处理不了就往上传">重新抛出（rethrow）：处理不了就往上传</a></h3>
+<p>有时候你在 <code>catch</code> 里发现“这个错我处理不了，或者不该我处理”。这时<strong>不要吞掉它</strong>，应该记录一下、必要时包装一层，然后重新抛出去，让更上层决定怎么办。</p>
+<pre><code class="language-javascript">// 文件：code/ch06/02-try-catch-finally.js（续）
+function readConfig(raw) {
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    console.log("readConfig：解析失败，记录日志后重新抛出");
+    // 包装成更有业务含义的错误，并用 cause 保留原始错误
+    throw new Error("配置文件损坏", { cause: e });
+  }
+}
+
+try {
+  readConfig("这不是 JSON");
+} catch (e) {
+  console.log("上层收到：", e.message); // 配置文件损坏
+  console.log("原始错误（cause）：", e.cause.message);
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>catch</code> 里我们没有“假装没事发生”，而是记了日志，然后 <code>throw</code> 一个新错误，把底层的 <code>SyntaxError</code> 塞进 <code>{ cause: e }</code>。</li>
+<li><code>cause</code> 是错误链的关键（下一节详讲）：上层拿到“配置文件损坏”这个业务级错误，同时还能顺着 <code>e.cause</code> 追到“到底是 JSON 语法哪儿错了”。</li>
+</ul>
+<p>⚠️ <strong>最该避免的反模式是“吞错误”</strong>：</p>
+<pre><code class="language-javascript">try {
+  doSomething();
+} catch (e) {
+  // 什么都不做 —— 错误被彻底吞掉，程序带病继续运行，问题被藏起来
+}
+</code></pre>
+<p>这叫“空 catch”，是新手最容易犯的错。它让 bug 无声无息地消失，等你发现数据不对时早已无从查起。<strong>要么真正处理，要么重新抛出，绝不能默默吞掉。</strong></p>
+<hr>
+<h2 id="63-内置错误类型"><a class="header" href="#63-内置错误类型">6.3 内置错误类型</a></h2>
+<p><code>Error</code> 是所有错误的“祖先”，但 JavaScript 还内置了几个更具体的子类型。<strong>看到不同的错误名，就能快速判断是哪一类问题。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch06/03-builtin-errors.js
+function show(label, fn) {
+  try {
+    fn();
+    console.log(`${label}：没有抛错`);
+  } catch (e) {
+    console.log(`${label}：${e.name} -&gt; ${e.message}`);
+  }
+}
+
+// TypeError：对某个值做了它不支持的操作
+show("TypeError-1", () =&gt; {
+  const n = null;
+  n.toString(); // 读 null 的属性
+});
+show("TypeError-2", () =&gt; {
+  const notAFn = 42;
+  notAFn(); // 把数字当函数调用
+});
+
+// RangeError：数值/长度超出允许范围
+show("RangeError-1", () =&gt; new Array(-1)); // 数组长度不能为负
+show("RangeError-2", () =&gt; {
+  (function recurse() {
+    return recurse(); // 无限递归 -&gt; 栈溢出
+  })();
+});
+
+// ReferenceError：使用了根本不存在的变量
+show("ReferenceError", () =&gt; console.log(thisVariableDoesNotExist));
+
+// SyntaxError：语法错误（这里用 JSON.parse 触发）
+show("SyntaxError", () =&gt; JSON.parse("{ bad json }"));
+</code></pre>
+<p>运行后你会看到每类错误的名字与描述。逐个认识一下：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>错误类型</th><th>什么时候出现</th><th>典型例子</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>TypeError</strong></td><td>值的类型不对，或对它做了不支持的操作</td><td>读 <code>null</code>/<code>undefined</code> 的属性；把非函数当函数调用</td></tr>
+<tr><td><strong>RangeError</strong></td><td>数值或长度超出合法范围</td><td><code>new Array(-1)</code>；递归太深导致“栈溢出（stack overflow）”</td></tr>
+<tr><td><strong>ReferenceError</strong></td><td>引用了一个不存在的变量</td><td>变量名拼错；使用了未声明的变量</td></tr>
+<tr><td><strong>SyntaxError</strong></td><td>代码/数据的语法不合法</td><td><code>JSON.parse</code> 收到非法 JSON；代码本身写错语法</td></tr>
+<tr><td><strong>URIError</strong></td><td>URI 编解码函数用错</td><td><code>decodeURIComponent("%")</code></td></tr>
+<tr><td><strong>EvalError</strong></td><td>与 <code>eval</code> 相关（历史遗留，几乎不用）</td><td>——</td></tr>
+</tbody>
+</table>
+</div>
+<p>⚠️ <strong>关于 SyntaxError 的特殊性</strong>：如果是你<strong>自己写的代码</strong>语法错了（比如少个括号），SyntaxError 会在“解析阶段”就抛出，整个文件根本没机会运行，<code>try/catch</code> 也抓不住。上面例子里能抓到 SyntaxError，是因为它来自 <code>JSON.parse</code> 在<strong>运行时</strong>解析一段字符串。</p>
+<p>📌 这些内置类型<strong>全都继承自 <code>Error</code></strong>：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/03-builtin-errors.js（续）
+try {
+  null.x;
+} catch (e) {
+  console.log(e instanceof Error); // true
+  console.log(e instanceof TypeError); // true
+  console.log(e instanceof RangeError); // false
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> 一个 <code>TypeError</code> 既是 <code>TypeError</code> 也是 <code>Error</code>（因为继承关系，回顾第 5 章的 <code>instanceof</code> 与原型链）。所以 <code>catch (e)</code> 里可以用 <code>e instanceof TypeError</code> 精确判断“是不是这一类错误”，从而做不同处理——这在实际项目里非常常用。</p>
+<hr>
+<h2 id="64-自定义错误类与-errorcause"><a class="header" href="#64-自定义错误类与-errorcause">6.4 自定义错误类与 Error.cause</a></h2>
+<p>内置类型够用于语言层面的错误，但<strong>业务错误需要你自己定义</strong>。比如“用户名不能为空”“订单已过期”“余额不足”——这些不属于 TypeError 也不属于 RangeError，你应该造一个<strong>专属的错误类型</strong>。</p>
+<p>做法很简单：写一个类 <code>extends Error</code>。</p>
+<pre><code class="language-javascript">// 文件：code/ch06/04-custom-error.js
+export class ValidationError extends Error {
+  constructor(message, field) {
+    super(message); // 一定要调用 super，把 message 传给 Error
+    this.name = "ValidationError"; // 覆盖默认的 "Error"
+    this.field = field; // 自定义字段：出错的字段名
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>extends Error</code> 让 <code>ValidationError</code> 继承 <code>Error</code> 的全部能力（<code>message</code>、<code>stack</code> 等）。</li>
+<li>构造函数里<strong>第一件事必须是 <code>super(message)</code></strong>——把 message 交给父类 <code>Error</code> 去处理，<code>stack</code> 才会正确生成。（回顾第 5 章：子类构造函数用 <code>this</code> 之前必须先 <code>super</code>。）</li>
+<li><code>this.name = "ValidationError"</code>：⚠️ <strong>这一步很关键</strong>。如果不写，<code>name</code> 会继承为 <code>"Error"</code>，日志里就分不清是哪种错误。手动设成类名。</li>
+<li><code>this.field</code>：这就是自定义错误的价值——你可以携带<strong>任意结构化信息</strong>，这里记录了“到底哪个字段校验失败”。</li>
+</ul>
+<p>来抛出并捕获它：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/04-custom-error.js（续）
+function checkUser(user) {
+  if (!user.name) throw new ValidationError("用户名不能为空", "name");
+  if (typeof user.age !== "number") throw new ValidationError("年龄必须是数字", "age");
+  return true;
+}
+
+try {
+  checkUser({ name: "" });
+} catch (e) {
+  console.log(e.name); // ValidationError
+  console.log(e instanceof Error); // true
+  console.log(e instanceof ValidationError); // true
+  console.log("出错字段:", e.field); // name
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> 抛出的 <code>ValidationError</code> 既是 <code>Error</code> 又是 <code>ValidationError</code>，所以上层可以用 <code>if (e instanceof ValidationError)</code> 单独处理“校验类错误”（比如提示用户改输入），而对其它错误做别的处理。<code>e.field</code> 直接告诉你是哪个字段的锅。</p>
+<h3 id="errorcause把错误串成链"><a class="header" href="#errorcause把错误串成链">Error.cause：把错误串成链</a></h3>
+<p>真实系统是分层的：底层是网络/数据库，上面是业务逻辑。<strong>底层错误往往“看不懂”，业务层需要把它翻译成“听得懂”的错误，但又不能丢掉原始信息。</strong> ES2022 给 <code>Error</code> 加了标准的 <code>cause</code>（原因）字段来解决这个问题。</p>
+<pre><code class="language-javascript">// 文件：code/ch06/04-custom-error.js（续）
+export class HttpError extends Error {
+  constructor(status, message, options) {
+    super(message, options); // options 可含 { cause }
+    this.name = "HttpError";
+    this.status = status;
+  }
+}
+
+function loadUserFromApi() {
+  try {
+    throw new Error("ECONNREFUSED 127.0.0.1:5432"); // 假装底层连接失败
+  } catch (lowLevel) {
+    // 包装成业务能懂的错误，但用 cause 保留原因
+    throw new HttpError(503, "服务暂时不可用", { cause: lowLevel });
+  }
+}
+
+try {
+  loadUserFromApi();
+} catch (e) {
+  console.log(e.name, e.status, "-&gt;", e.message); // HttpError 503 -&gt; 服务暂时不可用
+  console.log("底层原因:", e.cause.message); // ECONNREFUSED ...
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>new Error(message, { cause })</code> 或自定义类里把 <code>options</code> 透传给 <code>super(message, options)</code>，就能设置 <code>cause</code>。</li>
+<li>上层拿到的是清晰的业务错误 <code>HttpError 503 服务暂时不可用</code>，同时通过 <code>e.cause</code> 一路追到底层真凶 <code>ECONNREFUSED</code>。</li>
+<li>这形成一条<strong>错误链（error chain）</strong>：你可以顺着 <code>e.cause.cause.cause...</code> 一层层往下挖，定位问题根源，而每一层都保留了它那一层的语义。</li>
+</ul>
+<p>💡 <strong>技巧</strong>：凡是“捕获底层错误 → 重新抛出业务错误”的场景，都用 <code>{ cause: 原错误 }</code> 保留现场。这是现代 JavaScript 的标准实践，别自己发明 <code>originalError</code> 之类的字段。</p>
+<p>📌 <strong>导出细节</strong>：<code>04-custom-error.js</code> 用 <code>export class</code> 把两个错误类导出（本项目 <code>package.json</code> 里 <code>"type": "module"</code>，即 ESM）。文件末尾用 <code>if (import.meta.url === ...)</code> 判断“是否被直接运行”，只有直接运行时才跑演示——被 <code>import</code> 时不会执行演示代码。这是编写“既能独立运行、又能被复用”的模块的常用技巧。</p>
+<hr>
+<h2 id="65-同步-vs-异步错误处理"><a class="header" href="#65-同步-vs-异步错误处理">6.5 同步 vs 异步错误处理</a></h2>
+<p>这里有个新手一定会踩的大坑：<strong><code>try/catch</code> 只能抓住“同步”错误，抓不住“异步回调”里的错误。</strong></p>
+<p>先看正常情况——同步错误 <code>try/catch</code> 抓得住：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/05-async-errors.js
+try {
+  throw new Error("同步错误");
+} catch (e) {
+  console.log("同步错误被 catch 到：", e.message); // ✅
+}
+</code></pre>
+<p>再看异步回调，这里就“漏”了：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/05-async-errors.js（续）
+function asyncBoomCallback() {
+  try {
+    setTimeout(() =&gt; {
+      throw new Error("定时器里的错误"); // 未来才抛出
+    }, 10);
+  } catch (e) {
+    console.log("这行不会执行"); // ⚠️ 永远进不来
+  }
+}
+asyncBoomCallback();
+</code></pre>
+<p><strong>逐段拆解——这是全章最重要的坑之一：</strong></p>
+<ul>
+<li><code>setTimeout</code> 会“<strong>在未来</strong>（10 毫秒后）”才执行回调里的代码。</li>
+<li>但 <code>try/catch</code> 是<strong>同步</strong>的：<code>try</code> 块执行到 <code>setTimeout(...)</code> 这一行时，只是“登记了一个定时任务”就立刻结束了，<code>try</code> 块随即退出。</li>
+<li>10 毫秒后回调真正执行、抛出错误时，<strong>那个 <code>try</code> 早就执行完、不在“现场”了</strong>——所以 <code>catch</code> 根本接不到。</li>
+<li>结果：这个错误变成“<strong>未捕获异常（uncaught exception）</strong>”。（在示例文件里我们特意用 <code>process.on("uncaughtException", ...)</code> 把它兜住并打印，好让文件能跑完；真实项目里不要依赖这个来吞错误。）</li>
+</ul>
+<p>那异步错误怎么处理？答案是 <strong>Promise</strong>（第 8 章会系统讲，这里先建立印象）：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/05-async-errors.js（续）
+function mayFail(ok) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (ok) resolve("成功数据");
+      else reject(new Error("Promise 失败"));
+    }, 10);
+  });
+}
+
+// 方式一：用 .catch()
+mayFail(false)
+  .then((data) =&gt; console.log("then:", data))
+  .catch((e) =&gt; console.log("Promise 用 .catch 抓到：", e.message));
+
+// 方式二：在 async 函数里，就能用熟悉的 try/catch！
+async function main() {
+  try {
+    const data = await mayFail(false); // await 把 reject 变成“抛错”
+    console.log("拿到数据：", data);
+  } catch (e) {
+    console.log("async 里用 try/catch 抓到：", e.message); // ✅
+  }
+}
+main();
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>Promise 表示“一个未来才有结果的操作”，成功走 <code>resolve</code>，失败走 <code>reject</code>。</li>
+<li>处理它的错误，要么链式 <code>.catch(e =&gt; ...)</code>，要么——<strong>这是 <code>async/await</code> 最大的好处</strong>——在 <code>async</code> 函数里对 <code>await</code> 表达式用 <code>try/catch</code>。<code>await</code> 会把 Promise 的 <code>reject</code> <strong>重新变成一次“抛错”</strong>，于是你熟悉的 <code>try/catch</code> 又能用了。</li>
+</ul>
+<blockquote>
+<p>📌 现在只需记住一条铁律：<strong>普通 <code>try/catch</code> 抓不住异步回调（如 <code>setTimeout</code>）里的错误；异步错误要靠 Promise 的 <code>.catch()</code>，或在 <code>async</code> 函数里对 <code>await</code> 用 <code>try/catch</code>。</strong> 完整的异步世界，第 8 章见。</p>
+</blockquote>
+<hr>
+<h2 id="66-防御性编程校验早返回断言"><a class="header" href="#66-防御性编程校验早返回断言">6.6 防御性编程：校验、早返回、断言</a></h2>
+<p>前面讲的是“出错后怎么办”。这一节反过来——<strong>怎么尽量别出错、或者让错误尽早、清晰地暴露</strong>。这套思维叫<strong>防御性编程（defensive programming）</strong>：假设外部输入都是不可信的，主动设防。</p>
+<h3 id="参数校验--早返回guard-clause"><a class="header" href="#参数校验--早返回guard-clause">参数校验 + 早返回（guard clause）</a></h3>
+<p>新手常把校验写成层层嵌套的 <code>if</code>，代码缩进成“金字塔”，很难读：</p>
+<pre><code class="language-javascript">// 反例（金字塔）
+function createUserBad(user) {
+  if (user) {
+    if (user.name) {
+      if (typeof user.age === "number") {
+        return `创建成功：${user.name}, ${user.age} 岁`;
+      } else {
+        throw new TypeError("age 必须是数字");
+      }
+    } else {
+      throw new TypeError("缺少 name");
+    }
+  } else {
+    throw new TypeError("user 不能为空");
+  }
+}
+</code></pre>
+<p><strong>早返回（guard clause，也叫“卫语句”）</strong> 把它拍平：<strong>先把所有“不合格”的情况尽早挡掉并返回/抛错，主流程留在最后、缩进最浅。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch06/06-defensive.js
+function createUser(user) {
+  if (!user) throw new TypeError("user 不能为空");
+  if (!user.name) throw new TypeError("缺少 name");
+  if (typeof user.age !== "number") throw new TypeError("age 必须是数字");
+
+  // 走到这里，说明前置条件全满足，逻辑清爽
+  return `创建成功：${user.name}, ${user.age} 岁`;
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> 两个版本行为完全一样，但 <code>createUser</code> 一眼就能读懂：“不满足这几条就出局，否则执行主逻辑”。校验用<strong>内置错误类型</strong>（<code>TypeError</code> 表示类型不对）语义清晰。这种“把异常路径提前处理掉、主干代码保持在最左侧”的写法，是专业代码的标志。</p>
+<p>💡 <strong>技巧</strong>：函数开头几行做参数校验、用早返回挡掉非法输入，是提升代码可读性最划算的习惯之一。</p>
+<h3 id="断言assert"><a class="header" href="#断言assert">断言（assert）</a></h3>
+<p><strong>断言（assertion）</strong> 用来表达一个“我确信此处必然成立”的前提，如果不成立就立刻抛错。Node 内置了 <code>node:assert</code> 模块：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/06-defensive.js（续）
+import assert from "node:assert/strict";
+
+function divide(a, b) {
+  assert(typeof a === "number", "a 必须是数字");
+  assert(b !== 0, "除数不能为 0");
+  return a / b;
+}
+divide(10, 2); // 5
+divide(10, 0); // 抛错：除数不能为 0
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>assert(条件, 消息)</code> 在条件为假时抛出 <code>AssertionError</code>。它和“参数校验”的区别更多是<strong>语气</strong>：校验面向“外部可能给错的输入”，断言面向“程序内部本不该发生、一旦发生就是 bug”的情形。断言让 bug <strong>在离案发现场最近的地方</strong>炸出来，而不是让错误数据流到很远的地方才出问题。</p>
+<p>不想引入模块时，自己写个轻量断言也很常见：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/06-defensive.js（续）
+function invariant(condition, message) {
+  if (!condition) throw new Error("Invariant 违反：" + message);
+}
+invariant(list.length &gt; 0, "列表不应为空");
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>invariant</code>（不变量）是很多知名库（如 React 早期）里的经典小工具，就是“条件为假就抛错”这么简单，却能极大提升代码的健壮性和可读性。</p>
+<hr>
+<h2 id="67-调试技巧"><a class="header" href="#67-调试技巧">6.7 调试技巧</a></h2>
+<p>写代码有一半时间在<strong>调试（debugging）</strong>——找出“程序为什么没按预期工作”。这一节给你一套趁手的工具。</p>
+<h3 id="console-家族"><a class="header" href="#console-家族">console 家族</a></h3>
+<p><code>console.log</code> 你已经很熟了，但 <code>console</code> 上还有一堆更专业的方法：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/07-debugging.js
+console.log("最常用的打印");
+console.error("输出到 stderr（错误流），常用红色");
+console.warn("警告");
+
+// console.table：数组/对象以表格展示，一眼看清结构
+console.table([
+  { id: 1, name: "小明", age: 20 },
+  { id: 2, name: "小红", age: 22 },
+]);
+
+// console.dir：查看对象“属性结构”，可控制深度
+console.dir({ a: { b: { c: { d: 1 } } } }, { depth: 2 });
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>console.error</code> / <code>console.warn</code>：输出到**错误流（stderr）**而非标准流（stdout），语义上表示“这是错误/警告”，在终端里通常有颜色区分，也便于日志系统分流。</li>
+<li><code>console.table</code>：把“对象数组”渲染成漂亮的表格，调试列表数据时神器。</li>
+<li><code>console.dir(obj, { depth })</code>：专门查看<strong>对象的嵌套结构</strong>，<code>depth</code> 控制展开几层，避免深层对象刷屏。</li>
+</ul>
+<h3 id="consoleassert只在出问题时出声"><a class="header" href="#consoleassert只在出问题时出声">console.assert：只在“出问题时”出声</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch06/07-debugging.js（续）
+console.assert(2 + 2 === 4, "数学坏了"); // 条件为真，静默
+console.assert(2 + 2 === 5, "这条会打印"); // 条件为假，打印
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>console.assert(条件, 消息)</code> 只有在<strong>条件为假</strong>时才打印消息（且不中断程序）。它适合撒在代码里做“健康检查”——一切正常时完全安静，出问题时才冒出来提醒你。</p>
+<h3 id="读懂调用栈stack-trace"><a class="header" href="#读懂调用栈stack-trace">读懂调用栈（stack trace）</a></h3>
+<p>调用栈是排错第一线索。你甚至不用等报错，随时可以打印当前栈：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/07-debugging.js（续）
+function level3() {
+  console.log(new Error("仅用于查看栈").stack);
+}
+function level2() { level3(); }
+function level1() { level2(); }
+level1();
+</code></pre>
+<p>输出大致是：</p>
+<pre><code>Error: 仅用于查看栈
+    at level3 (.../07-debugging.js:32:15)
+    at level2 (.../07-debugging.js:35:3)
+    at level1 (.../07-debugging.js:38:3)
+    at ...
+</code></pre>
+<p><strong>怎么读：</strong></p>
+<ul>
+<li>📌 <strong>栈是“从上往下、由近及远”读的</strong>：最上面一行是“<strong>错误发生的确切位置</strong>”（<code>level3</code>），往下每一行是“<strong>是谁调用了它</strong>”——<code>level3</code> 被 <code>level2</code> 调用，<code>level2</code> 被 <code>level1</code> 调用。</li>
+<li>每行的 <code>文件:行:列</code> 让你直接跳到源码。看到真实报错时，<strong>第一眼看最上面那行属于你自己代码的位置</strong>，通常问题就在那儿（很多顶部行是库/Node 内部的，可以先跳过）。</li>
+</ul>
+<h3 id="consoletime找性能瓶颈"><a class="header" href="#consoletime找性能瓶颈">console.time：找性能瓶颈</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch06/07-debugging.js（续）
+console.time("耗时统计");
+let total = 0;
+for (let i = 0; i &lt; 1_000_000; i++) total += i;
+console.timeEnd("耗时统计"); // 打印这段跑了多久
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>console.time(标签)</code> / <code>console.timeEnd(标签)</code> 成对使用，测量之间代码的耗时。标签要一致。这是最轻量的性能测量手段。</p>
+<h3 id="debugger-语句与-node-inspect"><a class="header" href="#debugger-语句与-node-inspect">debugger 语句与 Node –inspect</a></h3>
+<p><code>console.log</code> 是“撒点”式调试；真正强大的是<strong>断点调试</strong>——让程序停在某一行，逐行执行、随时查看每个变量。</p>
+<pre><code class="language-javascript">// 文件：code/ch06/07-debugging.js（续）
+function buggy(x) {
+  debugger; // 打开调试器时会停在这一行
+  return x * 2;
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>debugger;</code> 语句是一个“断点”。普通 <code>node 07-debugging.js</code> 运行时它<strong>被忽略</strong>，不影响程序。</li>
+<li>但当你用调试器启动时，程序会<strong>停在 <code>debugger</code> 这一行</strong>，让你检查此刻 <code>x</code> 是多少、逐行往下走（step over / step into）、观察变量变化。</li>
+</ul>
+<p>怎么开启调试器？两种常见方式：</p>
+<ol>
+<li><strong>命令行 + 浏览器</strong>：运行 <code>node --inspect-brk 07-debugging.js</code>（<code>--inspect-brk</code> 表示“在第一行就暂停等你”），然后在 Chrome 地址栏打开 <code>chrome://inspect</code>，点击 “inspect” 就进入了熟悉的 DevTools 调试界面。</li>
+<li><strong>VS Code</strong>：直接在编辑器行号左侧点一下打红点（图形化断点），按 F5 启动调试。这是最省事的方式，不需要写 <code>debugger</code> 语句。</li>
+</ol>
+<p>💡 <strong>技巧</strong>：<code>console.log</code> 适合快速看一两个值；一旦要追踪“变量在循环里怎么一步步变错的”，断点调试的效率是 <code>console.log</code> 的好几倍。两者都要会。</p>
+<hr>
+<h2 id="68-优雅降级与错误恢复"><a class="header" href="#68-优雅降级与错误恢复">6.8 优雅降级与错误恢复</a></h2>
+<p>好的程序不只是“出错时报错”，而是<strong>出错时依然尽量提供可用的服务</strong>——这叫<strong>优雅降级（graceful degradation）</strong>。核心思路是：区分“致命错误”和“可以兜底的错误”，对后者提供一个安全的替代方案。</p>
+<h3 id="兜底默认值"><a class="header" href="#兜底默认值">兜底默认值</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch06/08-graceful.js
+function getAvatar(user) {
+  try {
+    return user.profile.avatarUrl.trim();
+  } catch {
+    return "/images/default-avatar.png"; // 优雅降级
+  }
+}
+getAvatar({ profile: { avatarUrl: "  /a.png " } }); // "/a.png"
+getAvatar({}); // "/images/default-avatar.png"，缺字段也不崩
+</code></pre>
+<p><strong>逐段拆解：</strong> 取头像时，如果 <code>user</code> 结构不完整（比如没有 <code>profile</code>），读属性会抛 <code>TypeError</code>。我们不让它崩，而是返回一张默认头像——用户看到的是“默认头像”而不是“白屏 + 报错”。这就是降级。</p>
+<h3 id="重试retry"><a class="header" href="#重试retry">重试（retry）</a></h3>
+<p>有些错误是<strong>临时性</strong>的（网络抖动、服务瞬时繁忙），重试几次很可能就成功了：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/08-graceful.js（续）
+function withRetry(fn, maxAttempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt &lt;= maxAttempts; attempt++) {
+    try {
+      return fn(); // 成功就直接返回，不再重试
+    } catch (e) {
+      lastError = e;
+      console.log(`第 ${attempt} 次失败（${e.message}）`);
+    }
+  }
+  throw new Error(`重试 ${maxAttempts} 次仍失败`, { cause: lastError });
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>循环最多试 <code>maxAttempts</code> 次。一旦 <code>fn()</code> 成功，<code>return</code> 立刻结束，不再重试。</li>
+<li>每次失败记下 <code>lastError</code> 继续下一轮。</li>
+<li>全部试完仍失败，就抛出一个汇总错误，并用 <code>cause</code> 带上最后一次的真凶——错误链再次派上用场。</li>
+</ul>
+<p>⚠️ <strong>陷阱</strong>：不是所有错误都该重试。像“参数校验失败”“余额不足”这种<strong>确定性错误</strong>，重试一百次也一样失败，只会浪费资源。重试只适合<strong>临时性故障</strong>。</p>
+<h3 id="部分失败不拖垮整体"><a class="header" href="#部分失败不拖垮整体">部分失败不拖垮整体</a></h3>
+<p>批量处理时，一条数据坏了不该让整批都失败。给每一项单独 <code>try/catch</code>，最后汇总成功与失败：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/08-graceful.js（续）
+function processAll(items, handler) {
+  const results = { ok: [], failed: [] };
+  for (const item of items) {
+    try {
+      results.ok.push(handler(item));
+    } catch (e) {
+      results.failed.push({ item, reason: e.message });
+    }
+  }
+  return results;
+}
+
+const out = processAll([2, 0, 5, -1], (n) =&gt; {
+  if (n &lt;= 0) throw new Error("必须为正数");
+  return 100 / n;
+});
+// out.ok = [50, 20]；out.failed = [{item:0,...}, {item:-1,...}]
+</code></pre>
+<p><strong>逐段拆解：</strong> 每个 <code>item</code> 独立处理，坏的那条被记进 <code>failed</code>，好的照常进 <code>ok</code>。最终你得到一份“完整的成败报告”，而不是“因为第二条坏了，全部没处理”。这在导入数据、批量任务里极其实用。</p>
+<p>📌 优雅降级的思维核心：<strong>先问“这个错误是不是致命的？有没有可接受的替代方案？”</strong> 能兜底就兜底，不能兜底再让它向上抛。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>永远抛 <code>Error</code> 对象，别抛字符串/数字</strong>。只有 <code>Error</code> 才带 <code>stack</code>，才好排查。</li>
+<li>⚠️ <strong>绝不写空 <code>catch</code>（吞错误）</strong>。要么真正处理，要么用 <code>throw ...; { cause }</code> 重新抛出。悄悄吞掉的错误会变成最难查的 bug。</li>
+<li>⚠️ <strong>别在 <code>finally</code> 里 <code>return</code> 或 <code>throw</code></strong>——它会覆盖 <code>try</code> 的结果，制造诡异行为。<code>finally</code> 只做清理。</li>
+<li>⚠️ <strong><code>try/catch</code> 抓不住异步回调里的错误</strong>。<code>setTimeout</code>、事件回调里的错误要用 Promise / <code>async+await+try/catch</code>（第 8 章详解）。</li>
+<li>⚠️ <strong>自定义错误类别忘了 <code>this.name = "类名"</code></strong>，否则日志里全显示成 <code>Error</code>，分不清类型。</li>
+<li>📌 <strong>用 <code>instanceof</code> 区分错误类型</strong>，对不同错误做不同处理（校验错误提示用户、系统错误重试或上报）。</li>
+<li>📌 <strong>底层错误往上包装时用 <code>{ cause }</code></strong> 保留原始信息，形成可追溯的错误链。</li>
+<li>📌 <strong>函数开头用早返回做参数校验</strong>，主逻辑保持在最浅缩进，可读性最佳。</li>
+<li>💡 <strong>调试先看调用栈最上面属于你代码的那一行</strong>；追踪变量变化用断点调试而非满屏 <code>console.log</code>。</li>
+<li>💡 <strong>区分“可兜底错误”和“致命错误”</strong>：前者优雅降级（默认值/重试/部分失败），后者向上抛并妥善上报。</li>
+</ul>
+<hr>
+<h2 id="本章小项目健壮的-json-解析器"><a class="header" href="#本章小项目健壮的-json-解析器">本章小项目：健壮的 JSON 解析器</a></h2>
+<p><code>JSON.parse</code> 是日常最常用的函数之一，但它有个“暴脾气”：<strong>输入稍有不合法就抛 <code>SyntaxError</code></strong>，如果你没包 <code>try/catch</code>，整个程序就崩了。我们来封装一个<strong>永不崩溃、结果统一、还能校验字段</strong>的 <code>safeParseJSON</code>。</p>
+<p>需求：</p>
+<ol>
+<li>内部用 <code>JSON.parse</code>，但捕获异常，<strong>永远不抛错</strong>。</li>
+<li>返回<strong>统一结构</strong>：成功 <code>{ ok: true, value }</code>，失败 <code>{ ok: false, error }</code>。</li>
+<li>支持 <code>defaultValue</code>：失败时把兜底值也放进结果，方便直接用。</li>
+<li>支持简单 <strong>schema 校验</strong>：可要求解析结果必须包含某些字段（<code>requiredFields</code>），缺字段就返回自定义的 <code>ValidationError</code>。</li>
+</ol>
+<p>先看自定义错误类和核心函数：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/safe-json.js
+export class ValidationError extends Error {
+  constructor(message, missingFields = []) {
+    super(message);
+    this.name = "ValidationError";
+    this.missingFields = missingFields; // 到底缺了哪些字段
+  }
+}
+
+export function safeParseJSON(text, options = {}) {
+  const { defaultValue, requiredFields } = options;
+
+  // 防御性校验：连字符串都不是，直接判失败
+  if (typeof text !== "string") {
+    const error = new TypeError(`期望字符串，收到 ${typeof text}`);
+    return finalizeError(error, defaultValue);
+  }
+
+  let value;
+  try {
+    value = JSON.parse(text); // 可能抛 SyntaxError
+  } catch (e) {
+    // 把底层 SyntaxError 包进 cause，方便追踪
+    const error = new SyntaxError(`JSON 解析失败：${e.message}`, { cause: e });
+    return finalizeError(error, defaultValue);
+  }
+
+  // schema 校验：要求是对象且包含全部必需字段
+  if (requiredFields &amp;&amp; requiredFields.length &gt; 0) {
+    const missing = validateFields(value, requiredFields);
+    if (missing.length &gt; 0) {
+      const error = new ValidationError(`缺少必需字段：${missing.join(", ")}`, missing);
+      return finalizeError(error, defaultValue);
+    }
+  }
+
+  return { ok: true, value };
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong><code>ValidationError</code></strong>：继承 <code>Error</code>，设置 <code>name</code>，并携带 <code>missingFields</code>——调用方能直接知道缺了哪几个字段。</li>
+<li><strong>入口防御</strong>：先判断 <code>text</code> 是不是字符串。不是就返回 <code>TypeError</code> 结果，连 <code>JSON.parse</code> 都不用碰。这是早返回思想。</li>
+<li><strong>核心解析</strong>：<code>JSON.parse</code> 包在 <code>try/catch</code> 里。捕获到的 <code>SyntaxError</code> 被<strong>重新包装</strong>成一条更友好的信息，并用 <code>{ cause: e }</code> 保留原始错误——错误链。</li>
+<li><strong>schema 校验</strong>：如果调用方要求了 <code>requiredFields</code>，检查解析结果缺哪些字段，缺了就返回 <code>ValidationError</code>。</li>
+<li><strong>统一返回</strong>：一路上出任何错都走 <code>finalizeError</code>（返回 <code>{ ok:false, error, value? }</code>），全部通过才返回 <code>{ ok:true, value }</code>。<strong>调用方永远只需检查 <code>result.ok</code></strong>，不用写 <code>try/catch</code>。</li>
+</ul>
+<p>再看两个辅助函数：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/safe-json.js（续）
+function finalizeError(error, defaultValue) {
+  const result = { ok: false, error };
+  if (defaultValue !== undefined) {
+    result.value = defaultValue; // 有兜底值就带上
+  }
+  return result;
+}
+
+function validateFields(value, requiredFields) {
+  const isPlainObject =
+    value !== null &amp;&amp; typeof value === "object" &amp;&amp; !Array.isArray(value);
+  if (!isPlainObject) {
+    return [...requiredFields]; // 根本不是对象，全部算缺
+  }
+  return requiredFields.filter((field) =&gt; !(field in value));
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>finalizeError</code> 统一构造失败结果；如果调用方给了 <code>defaultValue</code>，就把它放进 <code>result.value</code>，这样即便失败也能 <code>const { value } = safeParseJSON(...)</code> 直接拿兜底值用。</li>
+<li><code>validateFields</code> 返回“缺失字段”数组：如果解析结果压根不是普通对象（是数组、<code>null</code>、或基本类型），视为“所有必需字段都缺”；否则用 <code>filter</code> + <code>in</code> 运算符挑出不存在的字段。（回顾第 3 章：<code>"key" in obj</code> 判断对象是否有某属性。）</li>
+</ul>
+<p>来看它处理各种输入的表现（运行 <code>node safe-json.js</code>）：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/safe-json.js（演示片段）
+safeParseJSON('{"name":"小明","age":20}');
+// { ok: true, value: { name: '小明', age: 20 } }
+
+safeParseJSON("{ 这不是 JSON }");
+// { ok: false, error: SyntaxError: JSON 解析失败：... }  (error.cause 是原始 SyntaxError)
+
+safeParseJSON("坏数据", { defaultValue: { name: "游客" } });
+// { ok: false, error: ..., value: { name: '游客' } }   ← 失败也有兜底值
+
+safeParseJSON('{"name":"小红"}', { requiredFields: ["name", "email"] });
+// { ok: false, error: ValidationError, ... }  error.missingFields = ['email']
+
+safeParseJSON('{"name":"小刚","email":"a@b.com"}', { requiredFields: ["name", "email"] });
+// { ok: true, value: { name: '小刚', email: 'a@b.com' } }
+
+safeParseJSON(null);
+// { ok: false, error: TypeError: 期望字符串，收到 object }
+</code></pre>
+<p><strong>逐段拆解：</strong> 无论你喂给它合法 JSON、非法 JSON、缺字段的对象，还是干脆不是字符串，<code>safeParseJSON</code> <strong>从不抛错，永远返回统一结构</strong>。调用方的代码因此极其干净——这正是“把易错的操作封装成安全接口”的价值。</p>
+<p>最典型的实战用法（一行搞定“解析 + 兜底”）：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/safe-json.js（续）
+const { ok, value, error } = safeParseJSON(process.env.CONFIG ?? "{}", {
+  defaultValue: {},
+});
+if (ok) console.log("配置读取成功：", value);
+else console.log("配置读取失败，已用默认值：", value, "/", error.message);
+</code></pre>
+<p><strong>逐段拆解：</strong> 读取环境变量里的配置——即使 <code>CONFIG</code> 是坏的 JSON，程序也不会崩，而是退回默认配置 <code>{}</code> 继续运行。这就是把前面所有知识点（<code>try/catch</code>、自定义错误、<code>cause</code>、防御性校验、优雅降级）揉进一个真实可用的小工具。</p>
+<h3 id="作为模块复用"><a class="header" href="#作为模块复用">作为模块复用</a></h3>
+<p>因为用了 <code>export</code>，<code>safeParseJSON</code> 可以被别的文件 <code>import</code> 进来用：</p>
+<pre><code class="language-javascript">// 文件：code/ch06/demo.js
+import { safeParseJSON, ValidationError } from "./safe-json.js";
+
+const result = safeParseJSON('{"name":"小红"}', {
+  requiredFields: ["name", "email"],
+  defaultValue: { name: "游客", email: "guest@x.com" },
+});
+
+if (result.ok) {
+  console.log("✅ 解析成功：", result.value);
+} else if (result.error instanceof ValidationError) {
+  console.log("⚠️ 校验失败，缺字段：", result.error.missingFields, "→ 用默认值：", result.value);
+} else {
+  console.log("❌ 解析失败：", result.error.message, "→ 用默认值：", result.value);
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> 调用方用 <code>result.error instanceof ValidationError</code> 区分“校验错误”和“解析错误”，分别给不同提示——这正是 6.4 节自定义错误 + <code>instanceof</code> 的实战价值。运行 <code>node demo.js</code> 看效果。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>更强的 schema</strong>：让 <code>requiredFields</code> 支持“字段 + 类型”，比如 <code>{ name: "string", age: "number" }</code>，类型不匹配也算校验失败（提示：<code>typeof</code>）。</li>
+<li><strong>嵌套字段校验</strong>：支持 <code>"profile.email"</code> 这样的路径，校验嵌套对象里的字段是否存在。</li>
+<li><strong>safeStringify</strong>：反过来写一个安全的 <code>JSON.stringify</code> 封装——处理循环引用（<code>JSON.stringify</code> 遇到循环引用会抛 <code>TypeError</code>），捕获后返回统一结构。</li>
+<li><strong>收集所有错误</strong>：目前 schema 校验只报“缺失字段”。改造成同时校验类型，把“所有问题”一次性收集进一个 <code>errors</code> 数组返回，而不是遇到第一个就停。</li>
+<li><strong>加一个 <code>transform</code> 选项</strong>：解析成功后允许调用方传入一个函数对 <code>value</code> 做后处理（如把字符串日期转成 <code>Date</code>），并在 transform 抛错时也纳入统一的错误处理。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>这一章我们给程序装上了“安全带和气囊”：</p>
+<ul>
+<li><strong>错误的本质</strong>是被 <code>throw</code> 的值；抛错会中断正常流程、向上传播，被 <code>catch</code> 接住则恢复。<strong>永远抛 <code>Error</code> 对象</strong>，因为它带 <code>message</code> / <code>name</code> / <code>stack</code>。</li>
+<li><strong><code>try / catch / finally</code></strong>：<code>try</code> 放危险代码，<code>catch</code> 处理错误，<code>finally</code> 一定执行、只做清理。不关心错误可省略 catch 绑定；处理不了就用 <code>{ cause }</code> <strong>重新抛出</strong>，绝不空 <code>catch</code> 吞错。</li>
+<li><strong>内置错误类型</strong>（TypeError / RangeError / ReferenceError / SyntaxError）各有语义，全部继承自 <code>Error</code>，可用 <code>instanceof</code> 区分。</li>
+<li><strong>自定义错误类</strong> <code>extends Error</code> + 设置 <code>name</code> + 携带结构化字段；<strong><code>Error.cause</code></strong> 把底层错误串成可追溯的错误链。</li>
+<li><strong>同步 vs 异步</strong>：<code>try/catch</code> 只抓同步错误；异步错误靠 Promise 的 <code>.catch()</code> 或 <code>async</code> 里的 <code>try/catch</code>（第 8 章深入）。</li>
+<li><strong>防御性编程</strong>：参数校验 + 早返回（guard clause）让主逻辑清爽；断言让 bug 在最近处炸出。</li>
+<li><strong>调试</strong>：<code>console.log/error/table/dir</code>、<code>console.assert</code>、<code>console.time</code>、读懂调用栈（从上往下、由近及远）、<code>debugger</code> 语句 + <code>node --inspect-brk</code> / VS Code 断点。</li>
+<li><strong>优雅降级</strong>：默认值兜底、重试临时性故障、部分失败不拖垮整体。</li>
+<li>小项目 <strong><code>safeParseJSON</code></strong> 把这些全串了起来：一个永不崩溃、结果统一、可校验字段的健壮解析器。</li>
+</ul>
+<p><strong>自测题（先自己答，再运行代码验证）：</strong></p>
+<ol>
+<li>为什么应该 <code>throw new Error(...)</code> 而不是 <code>throw "出错了"</code>？</li>
+<li>下面函数返回什么？为什么？
+<pre><code class="language-javascript">function f() {
+  try { return "A"; } finally { return "B"; }
+}
+</code></pre>
+</li>
+<li>为什么这段代码里的 <code>catch</code> 抓不到错误？该怎么改？
+<pre><code class="language-javascript">try {
+  setTimeout(() =&gt; { throw new Error("boom"); }, 0);
+} catch (e) { console.log("caught", e.message); }
+</code></pre>
+</li>
+<li>写一个自定义错误类 <code>NotFoundError</code>，要求 <code>name</code> 正确、能携带一个 <code>resource</code> 字段，并说明为什么必须调用 <code>super(message)</code>。</li>
+<li><code>Error.cause</code> 有什么用？举一个“底层错误 → 业务错误”的包装场景。</li>
+<li>早返回（guard clause）相比嵌套 <code>if</code>，好在哪里？</li>
+<li>看到一段报错的 stack trace，你应该先看哪一行？为什么？</li>
+<li>在 <code>safeParseJSON</code> 里，为什么解析失败时也要（在有 <code>defaultValue</code> 的情况下）返回 <code>value</code>？</li>
+</ol>
+<p>（参考答案：1. 只有 <code>Error</code> 带 <code>stack</code> 等信息，字符串无法追踪来源。2. 返回 <code>"B"</code>——<code>finally</code> 的 <code>return</code> 覆盖 <code>try</code> 的，这是要避免的写法。3. <code>setTimeout</code> 回调是异步的、未来才执行，那时 <code>try</code> 已退出；改用 Promise 或把逻辑放进 <code>async</code> 函数用 <code>await</code>+<code>try/catch</code>。4. 见 6.4，<code>super(message)</code> 让父类正确初始化 message 与 stack。5. <code>cause</code> 保留原始错误形成错误链，便于追根溯源；如“数据库连接失败”被包装成“服务不可用”并保留前者。6. 主逻辑缩进浅、可读性高，异常路径集中在前面。7. 先看最上面属于自己代码的那一行，那通常是出错点。8. 让调用方即使失败也能直接 <code>const { value } = ...</code> 拿到兜底值，简化调用方代码。）</p>
+<hr>
+<p>下一章，我们进入 <strong>第 7 章 · 迭代器、生成器、Symbol 与集合类型</strong>。你会看到 <code>for...of</code> 背后的<strong>迭代器（iterator）协议</strong>、能“暂停/恢复”的**生成器（generator）**函数、独一无二的 <strong>Symbol</strong>，以及 <code>Map</code> / <code>Set</code> 这两种比对象和数组更专业的集合类型。有了本章对错误处理的掌握，你写出的迭代逻辑将既优雅又健壮。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch05.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch07.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch05.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch07.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

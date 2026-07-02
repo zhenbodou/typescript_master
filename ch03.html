@@ -1,0 +1,1080 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 3 章 · 字符串、数组与对象 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch03.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-3-章--字符串数组与对象"><a class="header" href="#第-3-章--字符串数组与对象">第 3 章 · 字符串、数组与对象</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前两章我们学了变量、类型、运算符、控制流和函数基础，手里有了“零件“。但真实程序处理的数据很少是单个数字或单个字符——而是<strong>一段文字</strong>、<strong>一批数据</strong>、<strong>一个结构化的实体</strong>。本章就来认识 JavaScript 里三种最重要的数据载体：</p>
+<ul>
+<li><strong>字符串（string）</strong>：处理文本。掌握常用方法，理解“字符串不可变（immutable）“。</li>
+<li><strong>数组（array）</strong>：处理一批有序数据。重点是 <code>map</code>/<code>filter</code>/<code>reduce</code> 等<strong>函数式方法</strong>——这是本章的重中之重，也是现代 JS 的核心表达方式。</li>
+<li><strong>对象（object）</strong>：处理带命名字段的结构化数据。掌握读写、遍历、合并。</li>
+<li><strong>解构赋值（destructuring）</strong>：一种优雅地从数组/对象里“取值“的语法。</li>
+<li><strong>引用类型 vs 值类型</strong>：搞懂 <code>=</code> 到底赋了什么，避开浅拷贝、对象比较的坑。</li>
+<li><strong>JSON</strong>：对象与文本之间的桥梁（本章先简介，第 6 章深入）。</li>
+</ul>
+<p>学完本章，你就能写出处理真实数据的程序了。章末的小项目——<strong>待办清单数据模型</strong>——会把这些知识拧成一股绳。</p>
+<hr>
+<h2 id="31-字符串常用方法"><a class="header" href="#31-字符串常用方法">3.1 字符串常用方法</a></h2>
+<p>字符串是一串字符。虽然它看起来“简单“，但 JavaScript 给它配了一整套方法。我们先看一个集中演示，再逐一拆解。</p>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+const s = "Hello, JavaScript";
+
+// 1) length：字符个数（不是方法，没有括号）
+console.log("长度：", s.length); // 17
+
+// 2) 索引：像数组一样用方括号取单个字符，从 0 开始
+console.log("第 0 个字符：", s[0]); // "H"
+console.log("最后一个字符：", s[s.length - 1]); // "t"
+</code></pre>
+<ul>
+<li><strong><code>length</code></strong> 是<strong>属性</strong>不是方法，所以没有括号。它数的是“字符个数“。</li>
+<li><strong>索引访问</strong> <code>s[0]</code> 取第一个字符。⚠️ 记住 JS 里下标从 <strong>0</strong> 开始，所以最后一个字符的下标是 <code>length - 1</code>，不是 <code>length</code>。<code>s[17]</code> 会得到 <code>undefined</code>。</li>
+</ul>
+<h3 id="截取子串slice-与-substring"><a class="header" href="#截取子串slice-与-substring">截取子串：slice 与 substring</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+console.log("slice(0, 5)：", s.slice(0, 5)); // "Hello"
+console.log("slice(7)：", s.slice(7)); // "JavaScript"
+console.log("slice(-6)：", s.slice(-6)); // "Script"
+
+console.log("substring(0, 5)：", s.substring(0, 5)); // "Hello"
+console.log("substring(-6)：", s.substring(-6)); // 负数当 0，等于整串
+</code></pre>
+<ul>
+<li><strong><code>slice(start, end)</code></strong> 截取从 <code>start</code> 到 <code>end</code> 的部分，但<strong>不包含 <code>end</code></strong>——这是一个“左闭右开“区间 <code>[start, end)</code>。整个标准库到处是这种约定，务必记牢。</li>
+<li>只给一个参数 <code>slice(7)</code> 表示“从 7 一直到末尾“。</li>
+<li><code>slice</code> 支持<strong>负数</strong>：<code>-6</code> 表示“倒数第 6 个字符开始“，<code>slice(-6)</code> 就取到了 <code>"Script"</code>。</li>
+<li><strong><code>substring</code></strong> 和 <code>slice</code> 很像，但它<strong>不支持负数</strong>（把负数当 0 处理）。💡 记不住就统一用 <code>slice</code>，功能更全。</li>
+</ul>
+<h3 id="查找indexof-与-includes"><a class="header" href="#查找indexof-与-includes">查找：indexOf 与 includes</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+console.log("indexOf('Java')：", s.indexOf("Java")); // 7
+console.log("indexOf('Python')：", s.indexOf("Python")); // -1（找不到）
+console.log("includes('Script')：", s.includes("Script")); // true
+</code></pre>
+<ul>
+<li><strong><code>indexOf(子串)</code></strong> 返回子串第一次出现的<strong>下标</strong>；⚠️ 找不到时返回 <strong><code>-1</code></strong>（不是 <code>undefined</code>，也不是报错）。所以判断“是否包含“的老写法是 <code>s.indexOf("x") !== -1</code>。</li>
+<li><strong><code>includes(子串)</code></strong> 更直白，直接返回 <code>true</code>/<code>false</code>，可读性更好，现在优先用它。</li>
+</ul>
+<h3 id="拆分与拼接split-与-join"><a class="header" href="#拆分与拼接split-与-join">拆分与拼接：split 与 join</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+const csv = "苹果,香蕉,橙子";
+const fruits = csv.split(","); // ["苹果","香蕉","橙子"]
+console.log("split：", fruits);
+console.log("join：", fruits.join(" | ")); // "苹果 | 香蕉 | 橙子"
+</code></pre>
+<ul>
+<li><strong><code>split(分隔符)</code></strong> 把字符串按分隔符切成一个<strong>数组</strong>。这是把文本变成可处理数据的常用第一步（比如解析 CSV）。</li>
+<li><strong><code>join(连接符)</code></strong> 是数组的方法，作用相反：把数组每一项用连接符粘成一个字符串。<code>split</code> 和 <code>join</code> 是一对好搭档。</li>
+</ul>
+<h3 id="替换replace-与-replaceall"><a class="header" href="#替换replace-与-replaceall">替换：replace 与 replaceAll</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+console.log("replace：", "a-b-c".replace("-", "+")); // 只替换第一个："a+b-c"
+console.log("replaceAll：", "a-b-c".replaceAll("-", "+")); // 全部："a+b+c"
+</code></pre>
+<p>⚠️ 新手最容易踩的坑：<strong><code>replace</code> 默认只替换第一个匹配</strong>！想全部替换，用 <strong><code>replaceAll</code></strong>（或配合正则表达式，见第 12 章）。</p>
+<h3 id="大小写去空白补齐重复"><a class="header" href="#大小写去空白补齐重复">大小写、去空白、补齐、重复</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+console.log("toUpperCase：", s.toUpperCase()); // "HELLO, JAVASCRIPT"
+console.log("toLowerCase：", s.toLowerCase()); // "hello, javascript"
+
+console.log("trim：", "   有空格   ".trim() + "&lt;--"); // "有空格&lt;--"
+
+console.log("padStart：", "5".padStart(3, "0")); // "005"
+console.log("padEnd：", "5".padEnd(3, "0")); // "500"
+
+console.log("repeat：", "=".repeat(10)); // "=========="
+</code></pre>
+<ul>
+<li><strong><code>toUpperCase</code> / <code>toLowerCase</code></strong>：统一大小写，常用于“忽略大小写的比较“（先都转小写再比）。</li>
+<li><strong><code>trim</code></strong>：去掉<strong>首尾</strong>空白（中间的不动）。处理用户输入时几乎必用——谁知道用户会不会手滑多打空格。</li>
+<li><strong><code>padStart(目标长度, 填充字符)</code></strong>：把字符串补到指定长度，不够就在<strong>前面</strong>填。<code>"5".padStart(3, "0")</code> → <code>"005"</code>，常用于对齐数字、补零。<code>padEnd</code> 则填在后面。</li>
+<li><strong><code>repeat(n)</code></strong>：重复 n 次，常用来画分隔线。</li>
+</ul>
+<h3 id="模板字符串复习"><a class="header" href="#模板字符串复习">模板字符串复习</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+const name = "小明";
+const age = 18;
+console.log(`我叫 ${name}，今年 ${age} 岁，明年 ${age + 1} 岁。`);
+</code></pre>
+<p>第 1 章讲过：用反引号 <code>`</code> 包起来、内部用 <code>${表达式}</code> 嵌入变量或表达式，就是<strong>模板字符串（template literal）</strong>。<code>${}</code> 里可以放任何表达式（如 <code>age + 1</code>）。它比用 <code>+</code> 拼接清爽太多，本书后面会大量使用。</p>
+<h3 id="-字符串不可变immutable"><a class="header" href="#-字符串不可变immutable">📌 字符串不可变（immutable）</a></h3>
+<p>这是一个<strong>极其重要</strong>的概念：字符串一旦创建，<strong>内容就不能改变</strong>。所有“看起来在改字符串“的方法，其实都是<strong>返回一个新字符串</strong>，原字符串纹丝不动。</p>
+<pre><code class="language-javascript">// 文件：code/ch03/01-string.js
+const original = "hello";
+const upper = original.toUpperCase();
+console.log("原串没变：", original); // "hello"
+console.log("新串：", upper); // "HELLO"
+
+// 试图用索引修改字符是无效的：普通模式下静默失败，严格模式/模块里会报错。
+// 想"改字符"，本质是用方法生成一个新字符串，再赋回去。
+const fixed = "H" + original.slice(1);
+console.log("要改就生成新串：", fixed, "原串仍是：", original); // "Hello" "hello"
+</code></pre>
+<p>拆解：</p>
+<ol>
+<li><code>original.toUpperCase()</code> 没有改 <code>original</code>，而是<strong>返回了新串</strong> <code>"HELLO"</code>，赋给了 <code>upper</code>。<code>original</code> 依然是 <code>"hello"</code>。</li>
+<li>你可能想 <code>original[0] = "H"</code> 直接改第一个字符——<strong>这行不通</strong>。在普通脚本里它静默失败（假装没发生），在严格模式或 ES 模块里干脆报错。字符串的字符是只读的。</li>
+<li>想要一个“改过的字符串“，正确姿势是<strong>用方法拼出一个新串</strong>再赋值。</li>
+</ol>
+<blockquote>
+<p>📌 记住这句话：<strong>字符串方法从不修改原串，只返回新串。</strong> 想保留结果，一定要用变量接住返回值。这个特性和下面要讲的数组形成鲜明对比——数组的很多方法会“就地修改“。</p>
+</blockquote>
+<hr>
+<h2 id="32-数组基础"><a class="header" href="#32-数组基础">3.2 数组基础</a></h2>
+<p>数组（array）是一批<strong>有序</strong>数据的容器。它用方括号 <code>[]</code> 创建，元素之间用逗号隔开，可以放任何类型（甚至混着放，但实践中通常放同类数据）。</p>
+<pre><code class="language-javascript">// 文件：code/ch03/02-array-basics.js
+const nums = [10, 20, 30];
+console.log("第 0 个：", nums[0]); // 10
+console.log("长度：", nums.length); // 3
+console.log("越界访问：", nums[99]); // undefined（不报错）
+
+nums[0] = 100;
+nums[3] = 40; // 直接给新索引赋值也能扩展
+console.log("修改后：", nums); // [100, 20, 30, 40]
+</code></pre>
+<ul>
+<li>数组也用<strong>下标</strong>访问，从 0 开始，<code>nums.length</code> 是元素个数。</li>
+<li>越界访问 <code>nums[99]</code> 返回 <code>undefined</code>，不会报错——这点要小心，越界不报错反而容易埋 bug。</li>
+<li>⚠️ 注意：虽然数组用 <code>const</code> 声明，我们却能改它的元素、给它加元素！<code>const</code> 只保证“变量不能重新指向另一个数组“，但<strong>数组内容是可变（mutable）的</strong>。这和字符串完全不同。</li>
+</ul>
+<h3 id="末尾开头增删push--pop--shift--unshift"><a class="header" href="#末尾开头增删push--pop--shift--unshift">末尾/开头增删：push / pop / shift / unshift</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/02-array-basics.js
+const stack = [1, 2];
+const newLen = stack.push(3); // 末尾加 3，返回新长度 3
+console.log("push 后：", stack, "新长度：", newLen); // [1,2,3] 3
+const popped = stack.pop(); // 弹出末尾元素 3
+console.log("pop 后：", stack, "弹出：", popped); // [1,2] 3
+
+const queue = [1, 2];
+queue.unshift(0); // 开头加 0
+console.log("unshift 后：", queue); // [0,1,2]
+const first = queue.shift(); // 移除开头
+console.log("shift 后：", queue, "移除：", first); // [1,2] 0
+</code></pre>
+<p>记忆口诀（都是<strong>就地修改原数组</strong>）：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方法</th><th>位置</th><th>动作</th><th>返回值</th></tr>
+</thead>
+<tbody>
+<tr><td><code>push</code></td><td>末尾</td><td>加</td><td>新长度</td></tr>
+<tr><td><code>pop</code></td><td>末尾</td><td>删</td><td>被删的元素</td></tr>
+<tr><td><code>unshift</code></td><td>开头</td><td>加</td><td>新长度</td></tr>
+<tr><td><code>shift</code></td><td>开头</td><td>删</td><td>被删的元素</td></tr>
+</tbody>
+</table>
+</div>
+<p>💡 push/pop 操作末尾很快；unshift/shift 操作开头需要移动所有后续元素，数据量大时较慢。</p>
+<h3 id="万能增删改splice"><a class="header" href="#万能增删改splice">万能增删改：splice</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/02-array-basics.js
+const letters = ["a", "b", "c", "d"];
+const removed = letters.splice(1, 2, "X", "Y", "Z"); // 从索引1删2个，插入3个
+console.log("splice 后：", letters); // ["a","X","Y","Z","d"]
+console.log("被删除的：", removed); // ["b","c"]
+</code></pre>
+<p><strong><code>splice(start, deleteCount, ...要插入的元素)</code></strong> 是数组增删改的“瑞士军刀“：从 <code>start</code> 位置删掉 <code>deleteCount</code> 个，再把后面的元素插进去。它<strong>就地修改原数组</strong>，返回被删掉的元素组成的数组。</p>
+<p>⚠️ 别把 <code>splice</code>（改原数组）和下面的 <code>slice</code>（不改原数组）搞混，名字太像了。</p>
+<h3 id="截取与拼接slice--concat"><a class="header" href="#截取与拼接slice--concat">截取与拼接：slice / concat</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/02-array-basics.js
+const arr = [0, 1, 2, 3, 4];
+console.log("slice(1, 3)：", arr.slice(1, 3)); // [1,2]
+console.log("slice(-2)：", arr.slice(-2)); // [3,4]
+console.log("原数组没变：", arr); // [0,1,2,3,4]
+
+const a = [1, 2];
+const b = [3, 4];
+console.log("concat：", a.concat(b, [5])); // [1,2,3,4,5]
+console.log("a 没变：", a); // [1,2]
+</code></pre>
+<ul>
+<li>数组的 <strong><code>slice(start, end)</code></strong> 和字符串的一样：左闭右开、支持负数、<strong>返回新数组、不改原数组</strong>。</li>
+<li><strong><code>concat</code></strong> 把多个数组拼成一个新数组，也不改原数组。</li>
+</ul>
+<h3 id="扩展运算符-重要"><a class="header" href="#扩展运算符-重要">扩展运算符 <code>...</code>（重要）</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/02-array-basics.js
+console.log("展开合并：", [...a, ...b, 5]); // [1,2,3,4,5]
+const copy = [...a]; // 快速浅拷贝一个数组
+copy.push(99);
+console.log("拷贝改动不影响原数组：", a, copy); // [1,2] [1,2,99]
+</code></pre>
+<p><strong>扩展运算符（spread）<code>...</code></strong> 把一个数组“摊开“，倒进另一个方括号里。它有两个超高频用法：</p>
+<ol>
+<li><strong>合并数组</strong>：<code>[...a, ...b, 5]</code> 比 <code>concat</code> 更直观。</li>
+<li><strong>浅拷贝数组</strong>：<code>[...a]</code> 得到一个新数组，内容相同但是独立的。后面讲“引用类型“你就懂这为什么重要了。</li>
+</ol>
+<p>💡 现代 JS 里，<code>...</code> 几乎取代了 <code>concat</code> 和很多手写循环，非常值得用熟。</p>
+<hr>
+<h2 id="33-数组的函数式方法本章核心"><a class="header" href="#33-数组的函数式方法本章核心">3.3 数组的函数式方法（本章核心）</a></h2>
+<p>这一节是全书前几章里最重要的内容之一。现代 JavaScript 处理数组，很少再写 <code>for</code> 循环一个个搬，而是用一组“传入一个函数、自动帮你遍历“的方法。这种风格叫<strong>函数式（functional）</strong>，代码更短、更清晰、更少出错。</p>
+<p>所有这些方法都接收一个<strong>回调函数（callback）</strong>——你告诉它“对每个元素做什么“，它负责循环。回调常见签名是 <code>(元素, 索引, 整个数组) =&gt; ...</code>，大多数时候我们只用前一两个参数。</p>
+<p>我们用一个示例文件贯穿讲解：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const nums = [1, 2, 3, 4, 5, 6];
+</code></pre>
+<h3 id="foreach只遍历不返回"><a class="header" href="#foreach只遍历不返回">forEach：只遍历，不返回</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+nums.forEach((n, i) =&gt; {
+  console.log(`索引 ${i} 的值是 ${n}`);
+});
+</code></pre>
+<p><strong><code>forEach</code></strong> 相当于“漂亮版 for 循环“：对每个元素执行回调。它<strong>没有返回值</strong>（返回 <code>undefined</code>），所以它只适合“做点副作用“（比如打印、累加到外部变量），不适合“生成新数据“。要生成新数据，用下面的 <code>map</code>。</p>
+<h3 id="map一对一映射"><a class="header" href="#map一对一映射">map：一对一映射</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const doubled = nums.map((n) =&gt; n * 2);
+console.log("翻倍：", doubled); // [2,4,6,8,10,12]
+console.log("原数组没变：", nums); // [1,2,3,4,5,6]
+</code></pre>
+<p><strong><code>map</code></strong> 是最常用的方法之一：它对每个元素调用回调，把<strong>回调的返回值</strong>收集成一个<strong>等长的新数组</strong>。上面“每个数翻倍“，得到长度相同的新数组，原数组不变。</p>
+<p>📌 记住 <code>map</code> 的本质：<strong>输入 n 个 → 输出 n 个，一对一变形</strong>。想从 <code>[{name:"小明"}, ...]</code> 里“抽出所有 name“，就是 <code>.map(u =&gt; u.name)</code>——这是日常最常见的用途。</p>
+<h3 id="filter按条件筛选"><a class="header" href="#filter按条件筛选">filter：按条件筛选</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const evens = nums.filter((n) =&gt; n % 2 === 0);
+console.log("偶数：", evens); // [2,4,6]
+</code></pre>
+<p><strong><code>filter</code></strong> 的回调返回一个“要不要保留“的布尔值：返回 <code>true</code> 就保留，<code>false</code> 就丢弃。结果是一个<strong>可能更短</strong>的新数组。上面留下了所有偶数。</p>
+<p>📌 <code>map</code> 改变每个元素的“值“，<code>filter</code> 改变数组的“长度“（筛掉一些）。这两个是黄金搭档。</p>
+<h3 id="reduce归并成一个值"><a class="header" href="#reduce归并成一个值">reduce：归并成一个值</a></h3>
+<p><code>reduce</code> 是这几个方法里最抽象、也最强大的一个。它把整个数组“归并（reduce）“成<strong>一个</strong>结果——可能是一个数字、一个字符串，甚至一个新对象。</p>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const sum = nums.reduce((acc, n) =&gt; acc + n, 0);
+console.log("求和：", sum); // 21
+</code></pre>
+<p><code>reduce(回调, 初始值)</code> 的回调签名是 <code>(累加器 acc, 当前元素 n) =&gt; 新的累加器</code>。它的工作过程是：</p>
+<ol>
+<li><code>acc</code> 一开始等于<strong>初始值</strong> <code>0</code>。</li>
+<li>遍历到第一个元素 <code>1</code>：<code>acc = 0 + 1 = 1</code>。</li>
+<li>遍历到 <code>2</code>：<code>acc = 1 + 2 = 3</code>。</li>
+<li>…一路累加到 <code>21</code>，作为最终结果返回。</li>
+</ol>
+<p>把 <code>acc</code> 想象成一个“随身携带、不断更新的账本“，每遍历一个元素就更新一次。理解了求和，其他用法就好懂了：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const max = nums.reduce((acc, n) =&gt; (n &gt; acc ? n : acc), nums[0]);
+console.log("最大值：", max); // 6
+
+const words = ["a", "b", "a", "c", "b", "a"];
+const count = words.reduce((acc, w) =&gt; {
+  acc[w] = (acc[w] || 0) + 1;
+  return acc;
+}, {});
+console.log("词频统计：", count); // { a: 3, b: 2, c: 1 }
+</code></pre>
+<ul>
+<li><strong>求最大值</strong>：账本 <code>acc</code> 存“目前见过的最大值“，每次和当前元素比较，留大的。初始值用第一个元素。</li>
+<li><strong>词频统计</strong>：这次账本是一个<strong>对象</strong> <code>{}</code>！每见到一个词，就把它对应的计数 <code>+1</code>（<code>acc[w] || 0</code> 是“没有就当 0“的常用技巧）。⚠️ 注意回调里一定要 <code>return acc</code>，否则下一轮账本就变成 <code>undefined</code> 了——这是新手用 reduce 最常见的错误。</li>
+</ul>
+<blockquote>
+<p>💡 什么时候用 reduce？当你想把一个数组“塌缩“成单个值（求和、求最值、拼字符串、按某字段分组统计成一个对象……）时。如果只是“一对一变形“用 <code>map</code>，“筛选“用 <code>filter</code>，别硬套 reduce。</p>
+</blockquote>
+<h3 id="find--findindex找第一个"><a class="header" href="#find--findindex找第一个">find / findIndex：找第一个</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+console.log("第一个 &gt; 3 的：", nums.find((n) =&gt; n &gt; 3)); // 4
+console.log("它的索引：", nums.findIndex((n) =&gt; n &gt; 3)); // 3
+console.log("找不到时 find：", nums.find((n) =&gt; n &gt; 99)); // undefined
+console.log("找不到时 findIndex：", nums.findIndex((n) =&gt; n &gt; 99)); // -1
+</code></pre>
+<ul>
+<li><strong><code>find</code></strong> 返回<strong>第一个</strong>满足条件的<strong>元素</strong>；找不到返回 <code>undefined</code>。</li>
+<li><strong><code>findIndex</code></strong> 返回第一个满足条件的元素的<strong>下标</strong>；找不到返回 <code>-1</code>。</li>
+</ul>
+<p>它们和 <code>filter</code> 的区别：<code>filter</code> 找<strong>所有</strong>符合的（返回数组），<code>find</code> 只要<strong>第一个</strong>（返回单个）。按 id 找一条记录时，<code>find</code> 正是你要的。</p>
+<h3 id="some--every整体判断"><a class="header" href="#some--every整体判断">some / every：整体判断</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+console.log("有没有偶数：", nums.some((n) =&gt; n % 2 === 0)); // true
+console.log("是不是都 &gt; 0：", nums.every((n) =&gt; n &gt; 0)); // true
+</code></pre>
+<ul>
+<li><strong><code>some</code></strong>：只要<strong>有一个</strong>元素满足条件就返回 <code>true</code>（“存在”）。</li>
+<li><strong><code>every</code></strong>：<strong>所有</strong>元素都满足才返回 <code>true</code>（“全部”）。</li>
+</ul>
+<p>它们返回布尔值，常用于校验，比如“表单里是否有一项没填“用 <code>some</code>，“是否所有项都合法“用 <code>every</code>。</p>
+<h3 id="sort排序含著名陷阱"><a class="header" href="#sort排序含著名陷阱">sort：排序（含著名陷阱）</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const bad = [10, 2, 1, 20, 3].sort(); // 默认按字符串，结果反直觉
+console.log("默认 sort（陷阱）：", bad); // [1, 10, 2, 20, 3]
+
+const good = [10, 2, 1, 20, 3].sort((a, b) =&gt; a - b); // 传比较函数才对
+console.log("升序：", good); // [1, 2, 3, 10, 20]
+
+const desc = [10, 2, 1, 20, 3].sort((a, b) =&gt; b - a);
+console.log("降序：", desc); // [20, 10, 3, 2, 1]
+</code></pre>
+<p>⚠️ <strong>这是 JS 最有名的坑之一</strong>：<code>sort()</code> 不传参数时，会把每个元素<strong>转成字符串再按字典序比较</strong>！所以 <code>10</code> 排在了 <code>2</code> 前面（因为字符 <code>"1"</code> &lt; <code>"2"</code>）。这几乎肯定不是你想要的。</p>
+<p>正确做法是<strong>传一个比较函数</strong> <code>(a, b) =&gt; ...</code>，规则是：</p>
+<ul>
+<li>返回<strong>负数</strong> → <code>a</code> 排在 <code>b</code> 前面；</li>
+<li>返回<strong>正数</strong> → <code>a</code> 排在 <code>b</code> 后面；</li>
+<li>返回 <code>0</code> → 两者顺序不变。</li>
+</ul>
+<p>所以数字升序用 <code>a - b</code>（小的在前），降序用 <code>b - a</code>。</p>
+<p>还有一个陷阱：<strong><code>sort</code> 会就地修改原数组</strong>！如果你不想破坏原数组，先拷贝再排：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const src = [3, 1, 2];
+const sorted = [...src].sort((a, b) =&gt; a - b);
+console.log("原数组保护：", src, "排序结果：", sorted); // [3,1,2] [1,2,3]
+</code></pre>
+<h3 id="flat--flatmap展平嵌套"><a class="header" href="#flat--flatmap展平嵌套">flat / flatMap：展平嵌套</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+console.log("flat：", [1, [2, 3], [4, [5]]].flat()); // [1,2,3,4,[5]]
+console.log("flat(2)：", [1, [2, [3, [4]]]].flat(2)); // [1,2,3,[4]]
+
+const sentences = ["hello world", "foo bar"];
+console.log("flatMap：", sentences.flatMap((s) =&gt; s.split(" ")));
+// ["hello","world","foo","bar"]
+</code></pre>
+<ul>
+<li><strong><code>flat</code></strong> 把嵌套数组“压平“一层；传个数字 <code>flat(2)</code> 压平两层。</li>
+<li><strong><code>flatMap</code></strong> = 先 <code>map</code> 再 <code>flat</code> 一层，专治“一个元素变成多个“的场景。上面把每个句子拆成词，再合并成一个大词表。</li>
+</ul>
+<h3 id="链式调用函数式的威力"><a class="header" href="#链式调用函数式的威力">链式调用：函数式的威力</a></h3>
+<p>这些方法大多返回新数组，于是可以<strong>串起来</strong>，像流水线一样一步步加工数据：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/03-array-methods.js
+const result = nums
+  .filter((n) =&gt; n % 2 === 0) // 先筛偶数 [2,4,6]
+  .map((n) =&gt; n * 10) // 再各乘 10 [20,40,60]
+  .reduce((acc, n) =&gt; acc + n, 0); // 再求和 120
+console.log("偶数各乘10再求和：", result); // 120
+</code></pre>
+<p>读这段代码几乎像读一句话：“筛出偶数，各乘 10，然后求和。” 这种<strong>声明式</strong>的表达，正是函数式方法最迷人的地方。本章的小项目会大量用到这种链式写法。</p>
+<hr>
+<h2 id="34-对象基础"><a class="header" href="#34-对象基础">3.4 对象基础</a></h2>
+<p>数组用<strong>下标</strong>（位置）访问数据；而对象（object）用<strong>名字</strong>（键 key）访问数据。当一个东西有多个“带名字的字段“时——比如一个用户有 name、age、city——就用对象来表示。</p>
+<pre><code class="language-javascript">// 文件：code/ch03/04-object.js
+const user = {
+  name: "小明",
+  age: 18,
+  isStudent: true,
+};
+
+console.log("点语法：", user.name); // "小明"
+console.log("方括号：", user["age"]); // 18
+const key = "isStudent";
+console.log("动态 key 只能用方括号：", user[key]); // true
+</code></pre>
+<ul>
+<li>对象用<strong>花括号 <code>{}</code></strong> 创建，里面是一组 <code>键: 值</code> 对，这叫<strong>对象字面量（object literal）</strong>。键（也叫<strong>属性 property</strong>）是名字，值可以是任何类型。</li>
+<li>读属性有两种语法：<strong>点语法</strong> <code>user.name</code>（最常用）和<strong>方括号语法</strong> <code>user["name"]</code>。</li>
+<li>什么时候必须用方括号？当<strong>属性名存在变量里</strong>（<code>user[key]</code>）、或属性名含特殊字符/空格时。点语法要求你把属性名“写死“在代码里。</li>
+</ul>
+<h3 id="增删改属性"><a class="header" href="#增删改属性">增、删、改属性</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/04-object.js
+user.age = 19; // 修改
+user.city = "北京"; // 新增（对象是可变的）
+delete user.isStudent; // 删除
+console.log("改动后：", user); // { name: "小明", age: 19, city: "北京" }
+</code></pre>
+<ul>
+<li>给已有属性赋值就是<strong>改</strong>；给不存在的属性赋值就是<strong>新增</strong>。</li>
+<li>用 <strong><code>delete</code></strong> 关键字删除属性。</li>
+<li>和数组一样，<code>const</code> 声明的对象<strong>内容照样可改</strong>——<code>const</code> 只是不让你把 <code>user</code> 指向另一个对象。</li>
+</ul>
+<h3 id="嵌套与方法"><a class="header" href="#嵌套与方法">嵌套与方法</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/04-object.js
+const order = {
+  id: 1001,
+  customer: { name: "小红", vip: true },
+  items: ["书", "笔"],
+};
+console.log("嵌套读取：", order.customer.name); // "小红"
+console.log("对象里的数组：", order.items[0]); // "书"
+
+const counter = {
+  count: 0,
+  increment() {
+    this.count += 1; // this 指向 counter
+    return this.count;
+  },
+};
+console.log("方法调用：", counter.increment()); // 1
+console.log("再调用：", counter.increment()); // 2
+</code></pre>
+<ul>
+<li>对象的值可以是另一个对象或数组，层层嵌套，用点/方括号一路取下去。真实数据几乎都是这种嵌套结构。</li>
+<li>值是函数的属性叫<strong>方法（method）</strong>。<code>increment()</code> 里的 <strong><code>this</code></strong> 指向“调用这个方法时点前面的那个对象“，这里是 <code>counter</code>。<code>this</code> 是个大话题，第 4 章会专门讲，现在只需知道“方法里的 <code>this</code> 通常指向自己所属的对象“。</li>
+</ul>
+<h3 id="简写属性与计算属性名"><a class="header" href="#简写属性与计算属性名">简写属性与计算属性名</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/04-object.js
+const title = "待办";
+const done = false;
+const todo = { title, done }; // 等价于 { title: title, done: done }
+console.log("简写属性：", todo); // { title: "待办", done: false }
+
+const field = "score";
+const record = {
+  name: "小明",
+  [field]: 95, // 属性名是 field 的值 "score"
+  [`${field}_max`]: 100,
+};
+console.log("计算属性名：", record); // { name:"小明", score:95, score_max:100 }
+</code></pre>
+<ul>
+<li><strong>简写属性（shorthand）</strong>：当变量名和想要的属性名相同时，<code>{ title }</code> 就是 <code>{ title: title }</code> 的简写。这个语法在实际代码里随处可见。</li>
+<li><strong>计算属性名（computed property name）</strong>：把属性名用<strong>方括号</strong>括起来，里面放表达式，用它的<strong>值</strong>当属性名。<code>[field]: 95</code> 生成的属性名是 <code>"score"</code>。当属性名要动态决定时非常有用。</li>
+</ul>
+<h3 id="遍历对象objectkeys--values--entries"><a class="header" href="#遍历对象objectkeys--values--entries">遍历对象：Object.keys / values / entries</a></h3>
+<p>对象不能直接用数组那套 <code>map</code>/<code>filter</code>。要遍历对象，先用这三个方法把它“摊成数组“：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/04-object.js
+const p = { a: 1, b: 2, c: 3 };
+console.log("keys：", Object.keys(p)); // ["a","b","c"]
+console.log("values：", Object.values(p)); // [1,2,3]
+console.log("entries：", Object.entries(p)); // [["a",1],["b",2],["c",3]]
+
+for (const [k, v] of Object.entries(p)) {
+  console.log(`  ${k} = ${v}`);
+}
+</code></pre>
+<ul>
+<li><strong><code>Object.keys(obj)</code></strong>：所有键组成的数组。</li>
+<li><strong><code>Object.values(obj)</code></strong>：所有值组成的数组。</li>
+<li><strong><code>Object.entries(obj)</code></strong>：所有 <code>[键, 值]</code> 对组成的数组。</li>
+</ul>
+<p><code>Object.entries</code> 配合 <code>for...of</code> 和<strong>数组解构</strong> <code>[k, v]</code>（下一节讲）来遍历键值对，是极常用的组合。拿到 keys/values 数组后，你就能对它们用 <code>map</code>/<code>filter</code>/<code>reduce</code> 了——对象和数组由此打通。</p>
+<h3 id="合并对象objectassign-与展开"><a class="header" href="#合并对象objectassign-与展开">合并对象：Object.assign 与展开</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/04-object.js
+const defaults = { theme: "light", fontSize: 14 };
+const custom = { fontSize: 16 };
+const merged1 = Object.assign({}, defaults, custom); // 后面覆盖前面
+const merged2 = { ...defaults, ...custom }; // 更常用的写法
+console.log("assign 合并：", merged1); // { theme:"light", fontSize:16 }
+console.log("展开合并：", merged2); // { theme:"light", fontSize:16 }
+
+const updated = { ...defaults, theme: "dark" };
+console.log("生成新对象：", updated, "原对象没变：", defaults);
+</code></pre>
+<ul>
+<li><strong><code>Object.assign(目标, ...来源)</code></strong> 把后面对象的属性拷进目标对象；<strong>后面的覆盖前面的</strong>（所以 <code>fontSize</code> 变 16）。传空对象 <code>{}</code> 当目标，可以避免改到 <code>defaults</code>。</li>
+<li><strong>对象展开 <code>{ ...obj }</code></strong> 是更现代、更常用的写法，语义等价：把 <code>obj</code> 的属性“摊“进新对象。</li>
+<li>一个高频模式：<code>{ ...defaults, theme: "dark" }</code> 表示“基于旧对象，只改一个字段，生成一个新对象“，原对象保持不变。⚠️ 这在后面的小项目和第 26 章的状态管理里会反复出现——记住它。</li>
+</ul>
+<hr>
+<h2 id="35-解构赋值"><a class="header" href="#35-解构赋值">3.5 解构赋值</a></h2>
+<p>解构赋值（destructuring）是一种“从数组/对象里批量取值“的简洁语法。它不引入新能力，但能让代码短很多、清晰很多，现代 JS 代码里到处都是。</p>
+<h3 id="数组解构"><a class="header" href="#数组解构">数组解构</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/05-destructuring.js
+const point = [10, 20, 30];
+const [x, y, z] = point;
+console.log("数组解构：", x, y, z); // 10 20 30
+
+const [first, , third] = point; // 逗号占位跳过中间
+console.log("跳过中间：", first, third); // 10 30
+
+const [head, ...tail] = [1, 2, 3, 4]; // ...rest 收集剩余
+console.log("head：", head, "tail：", tail); // 1 [2,3,4]
+
+let a = 1;
+let b = 2;
+[a, b] = [b, a]; // 一行交换两个变量
+console.log("交换后：", a, b); // 2 1
+</code></pre>
+<ul>
+<li><strong>数组解构</strong>按<strong>位置</strong>取值：<code>[x, y, z] = [10, 20, 30]</code> 一次性把三个值分别赋给三个变量。</li>
+<li>用<strong>逗号占位</strong>可以跳过不想要的元素。</li>
+<li><code>...tail</code> 是<strong>剩余（rest）语法</strong>，把“剩下的元素“收成一个数组。⚠️ 注意区分：出现在“取值/参数“这边是 rest（收集），出现在“赋值/展开“那边是 spread（摊开），符号都是 <code>...</code>。</li>
+<li><code>[a, b] = [b, a]</code> 是不用临时变量交换两个值的经典技巧。</li>
+</ul>
+<h3 id="对象解构"><a class="header" href="#对象解构">对象解构</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/05-destructuring.js
+const user = { name: "小明", age: 18, city: "北京" };
+const { name, age } = user;
+console.log("对象解构：", name, age); // 小明 18
+
+const { name: userName } = user; // 重命名
+console.log("重命名：", userName); // 小明
+
+const { gender = "未知" } = user; // 默认值（属性不存在时）
+console.log("默认值：", gender); // 未知
+
+const { role: userRole = "普通用户" } = user; // 重命名 + 默认值
+console.log("重命名+默认值：", userRole); // 普通用户
+</code></pre>
+<ul>
+<li><strong>对象解构</strong>按<strong>名字</strong>取值：<code>{ name, age } = user</code> 从 <code>user</code> 里取出同名属性。注意这里不看位置，只看键名。</li>
+<li><strong>重命名</strong> <code>{ name: userName }</code>：取出 <code>name</code>，但用 <code>userName</code> 这个变量名接住。（别和“设置属性“搞混，解构里冒号左边是源属性名，右边是新变量名。）</li>
+<li><strong>默认值</strong> <code>{ gender = "未知" }</code>：当属性不存在（<code>undefined</code>）时用默认值。</li>
+<li>两者可以叠加：<code>{ role: userRole = "普通用户" }</code>。</li>
+</ul>
+<h3 id="嵌套解构与函数参数解构"><a class="header" href="#嵌套解构与函数参数解构">嵌套解构与函数参数解构</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/05-destructuring.js
+const order = {
+  id: 1001,
+  customer: { name: "小红", address: { city: "上海" } },
+};
+const {
+  customer: {
+    name: customerName,
+    address: { city },
+  },
+} = order;
+console.log("嵌套解构：", customerName, city); // 小红 上海
+</code></pre>
+<p>嵌套结构可以照着“形状“一层层解构下去，直接取到深层的值。</p>
+<p>解构最实用的场景是<strong>函数参数</strong>。传一个“配置对象“、在参数位置直接解构出需要的字段并给默认值，是现代 JS 库最常见的 API 风格：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/05-destructuring.js
+function createUser({ name, age = 0, vip = false } = {}) {
+  return `${name}, ${age}岁, ${vip ? "VIP" : "普通"}`;
+}
+console.log(createUser({ name: "小李", age: 25, vip: true }));
+console.log(createUser({ name: "小王" })); // age、vip 用默认值
+console.log(createUser()); // 连参数都没传，靠末尾的 = {} 兜底
+</code></pre>
+<ul>
+<li>参数写成 <code>{ name, age = 0, vip = false }</code>：调用者传一个对象，函数内自动解构出这几个字段，缺的用默认值。好处是<strong>调用时不用记参数顺序</strong>，只需按名字给。</li>
+<li>末尾的 <code>= {}</code> 很关键：如果调用者<strong>一个参数都不传</strong>，就用空对象兜底，否则对 <code>undefined</code> 解构会报错。💡 这是“带默认配置的函数“的标准模板。</li>
+</ul>
+<hr>
+<h2 id="36-引用类型-vs-值类型"><a class="header" href="#36-引用类型-vs-值类型">3.6 引用类型 vs 值类型</a></h2>
+<p>这一节回答一个看似简单、却坑了无数新手的问题：<strong><code>=</code> 到底赋了什么？</strong></p>
+<p>JavaScript 的类型分两类：</p>
+<ul>
+<li><strong>值类型（原始类型 primitive）</strong>：number、string、boolean、null、undefined、symbol、bigint。赋值时复制“值本身“。</li>
+<li><strong>引用类型（reference）</strong>：object、array、function（本质都是对象）。赋值时复制的是“引用“（可以理解成对象的内存地址）。</li>
+</ul>
+<pre><code class="language-javascript">// 文件：code/ch03/06-reference.js
+let n1 = 10;
+let n2 = n1; // 复制了一份值
+n2 = 20;
+console.log("值类型：", n1, n2); // 10 20（互不影响）
+
+const obj1 = { count: 1 };
+const obj2 = obj1; // obj2 和 obj1 指向同一个对象
+obj2.count = 999;
+console.log("引用类型：", obj1.count, obj2.count); // 999 999（一起变了！）
+console.log("是同一个对象吗：", obj1 === obj2); // true
+</code></pre>
+<ul>
+<li>值类型：<code>n2 = n1</code> 复制了数值 <code>10</code>，之后两者独立。改 <code>n2</code> 不影响 <code>n1</code>。</li>
+<li>引用类型：<code>obj2 = obj1</code> <strong>没有复制对象</strong>，只是让 <code>obj2</code> 和 <code>obj1</code> 指向<strong>同一个对象</strong>。所以通过 <code>obj2</code> 改 <code>count</code>，<code>obj1</code> 看到的也变了——因为它俩本就是同一个东西。数组同理。</li>
+</ul>
+<p>📌 一句话记住：<strong>对象/数组的 <code>=</code> 赋的是“引用“，不是“副本“。想要独立的副本，必须显式拷贝。</strong></p>
+<h3 id="浅拷贝-vs-深拷贝"><a class="header" href="#浅拷贝-vs-深拷贝">浅拷贝 vs 深拷贝</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/06-reference.js
+const source = { name: "小明", hobbies: ["篮球"] };
+const shallow = { ...source }; // 浅拷贝（或 Object.assign({}, source)）
+shallow.name = "小红"; // 第一层独立，改了不影响原对象
+console.log("浅拷贝改第一层：", source.name, shallow.name); // 小明 小红
+shallow.hobbies.push("足球"); // ⚠️ 内层数组仍是共享的引用！
+console.log("浅拷贝改内层：", source.hobbies); // ["篮球","足球"] 也被改了！
+</code></pre>
+<p><strong>浅拷贝（shallow copy）</strong>——<code>{...source}</code> 或 <code>Object.assign</code>——只复制<strong>第一层</strong>。第一层的原始值（如 <code>name</code>）是独立的，改了互不影响；但第一层里如果是个对象/数组（如 <code>hobbies</code>），复制的仍是那个引用，<strong>内层还是共享的</strong>！这是极其常见的隐蔽 bug。</p>
+<p>要连内层一起复制，用<strong>深拷贝（deep copy）</strong>。现代 Node/浏览器内置了 <code>structuredClone</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/06-reference.js
+const source2 = { name: "小明", hobbies: ["篮球"] };
+const deep = structuredClone(source2); // 深拷贝
+deep.hobbies.push("足球");
+console.log("深拷贝改内层：", source2.hobbies, deep.hobbies);
+// ["篮球"] ["篮球","足球"]  —— 互不影响
+</code></pre>
+<p>💡 需要真正独立的完整副本时，<code>structuredClone(obj)</code> 是目前最方便的选择。此外也有人用 <code>JSON.parse(JSON.stringify(obj))</code> 做深拷贝，但它有局限（函数、<code>undefined</code>、<code>Date</code> 会丢失或变形），下一节会看到。</p>
+<h3 id="对象比较的坑"><a class="header" href="#对象比较的坑">对象比较的坑</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/06-reference.js
+const p1 = { x: 1 };
+const p2 = { x: 1 };
+console.log("内容相同但不是同一个：", p1 === p2); // false！
+console.log("和自己比：", p1 === p1); // true
+console.log("按内容比：", JSON.stringify(p1) === JSON.stringify(p2)); // true
+</code></pre>
+<p>⚠️ <strong><code>===</code> 比较对象时，比的是“是不是同一个对象（同一个引用）“，而不是内容！</strong> 所以两个内容一模一样的对象 <code>p1 === p2</code> 也是 <code>false</code>。想按内容比较，简易办法是转成 JSON 字符串再比（有局限，复杂场景见第 6 章）。</p>
+<h3 id="函数传参也是传引用"><a class="header" href="#函数传参也是传引用">函数传参也是传引用</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/06-reference.js
+function addTag(o) {
+  o.tag = "已处理"; // 直接改会影响外部对象
+}
+const data = { id: 1 };
+addTag(data);
+console.log("函数改了外部对象：", data); // { id:1, tag:"已处理" }
+</code></pre>
+<p>把对象传给函数，函数拿到的是<strong>同一个对象的引用</strong>。函数内部改它的属性，外面也会变。这既是特性也是陷阱：如果你不想让函数改到外部数据，就在函数里先拷贝一份再操作——本章小项目的所有函数都遵循“不改传入的旧数据、返回新数据“这一原则，正是为了避开这类问题。</p>
+<hr>
+<h2 id="37-json-简介"><a class="header" href="#37-json-简介">3.7 JSON 简介</a></h2>
+<p><strong>JSON</strong>（JavaScript Object Notation）是一种<strong>文本格式</strong>，长得几乎和 JS 对象字面量一样，用来在“程序内的对象“和“可存储/可传输的文本“之间转换。存文件、发网络请求，几乎都用 JSON。本章先认个脸，第 6 章会深入。</p>
+<pre><code class="language-javascript">// 文件：code/ch03/07-json.js
+const user = {
+  name: "小明",
+  age: 18,
+  hobbies: ["篮球", "编程"],
+  address: { city: "北京" },
+};
+
+const json = JSON.stringify(user);
+console.log("stringify：", json);
+console.log("类型：", typeof json); // string
+
+console.log("美化输出：");
+console.log(JSON.stringify(user, null, 2)); // 第三参数 2 = 缩进 2 空格
+</code></pre>
+<ul>
+<li><strong><code>JSON.stringify(对象)</code></strong> 把对象/数组转成 <strong>JSON 字符串</strong>（注意结果类型是 <code>string</code>）。</li>
+<li>加上参数 <code>JSON.stringify(user, null, 2)</code>，会输出带缩进的漂亮格式，便于人阅读或写进配置文件。</li>
+</ul>
+<p>反过来：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/07-json.js
+const text = '{"id":1,"title":"买牛奶","done":false}';
+const obj = JSON.parse(text);
+console.log("parse：", obj);
+console.log("访问字段：", obj.title); // 买牛奶
+</code></pre>
+<p><strong><code>JSON.parse(字符串)</code></strong> 把 JSON 字符串还原成 JS 对象，之后就能正常访问字段了。从文件读进来的、从网络接口拿到的，通常都是字符串，第一步就是 <code>JSON.parse</code>。</p>
+<p>⚠️ 用 JSON 做深拷贝虽方便，但<strong>有损</strong>——函数、<code>undefined</code> 会消失，<code>Date</code> 会变成字符串：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/07-json.js
+const tricky = { fn: () =&gt; 1, u: undefined, when: new Date(0) };
+console.log("有损转换：", JSON.stringify(tricky));
+// {"when":"1970-01-01T00:00:00.000Z"}  —— fn 和 u 都没了
+</code></pre>
+<p>所以需要可靠深拷贝时，优先用上一节的 <code>structuredClone</code>。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<p>把本章反复强调的“陷阱“集中列一遍，遇到 bug 时可以回来对照：</p>
+<ol>
+<li>⚠️ <strong>字符串不可变</strong>：所有字符串方法都返回新串、不改原串。忘了用变量接住返回值，你的“修改“就白做了。</li>
+<li>⚠️ <strong><code>replace</code> 只替换第一个</strong>：要全部替换用 <code>replaceAll</code>。</li>
+<li>⚠️ <strong><code>sort()</code> 默认按字符串排序</strong>：排数字一定要传比较函数 <code>(a, b) =&gt; a - b</code>。而且 <code>sort</code> 会改原数组，需要保护原数组就先 <code>[...arr]</code> 拷贝。</li>
+<li>⚠️ <strong><code>slice</code> 不改原数组，<code>splice</code> 改原数组</strong>：名字像，行为反，别用混。</li>
+<li>⚠️ <strong><code>reduce</code> 的回调忘了 <code>return</code></strong>：账本会变成 <code>undefined</code>，结果全错。</li>
+<li>⚠️ <strong>对象/数组是引用</strong>：<code>=</code> 不拷贝内容；<code>{...obj}</code>/<code>[...arr]</code> 只是浅拷贝，内层仍共享；要完整独立副本用 <code>structuredClone</code>。</li>
+<li>⚠️ <strong><code>===</code> 比对象比的是引用不是内容</strong>：两个内容相同的对象不相等。</li>
+<li>💡 <strong>优先用不可变风格</strong>：需要“改“数据时，用 <code>map</code>/<code>filter</code>/展开生成<strong>新</strong>数组/对象，而不是就地 <code>push</code>/<code>splice</code>/改属性。数据流更可预测，也更容易调试——这正是下面小项目采用的风格。</li>
+<li>💡 <strong><code>map</code>/<code>filter</code>/<code>reduce</code> 各司其职</strong>：变形用 <code>map</code>，筛选用 <code>filter</code>，塌缩成一个值用 <code>reduce</code>。别把什么都硬塞进 <code>reduce</code>。</li>
+</ol>
+<hr>
+<h2 id="本章小项目待办清单数据模型"><a class="header" href="#本章小项目待办清单数据模型">本章小项目：待办清单数据模型</a></h2>
+<p>现在把本章知识拧成一股绳，做一个<strong>待办清单（Todo List）的数据模型</strong>。注意：这里<strong>只做数据层</strong>——用数组 + 对象表示一批待办，并实现一组操作它们的<strong>纯函数</strong>（添加、删除、切换完成、筛选、统计、排序、格式化）。交互界面留到后面章节（第 4 章会复用这些函数，第 23 章会给它接上 REST API）。</p>
+<p><strong>核心设计原则：所有函数都是“纯函数“</strong>——不修改传入的旧数组，而是<strong>返回一个新数组</strong>。这样数据流清晰可预测，也为将来做“撤销/重做““状态管理“打好基础。这正是 3.6 节强调的不可变风格的实战。</p>
+<p>一条待办事项的“形状“约定如下：</p>
+<pre><code class="language-text">{
+  id: number,        // 唯一标识
+  title: string,     // 标题
+  done: boolean,     // 是否完成
+  createdAt: number, // 创建时间（时间戳，毫秒）
+}
+</code></pre>
+<h3 id="完整实现"><a class="header" href="#完整实现">完整实现</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch03/todo-model.js
+
+// ---------- 1) 生成 id ----------
+// 简单起见，用"当前最大 id + 1"。真实项目里会用 uuid（第 24 章）。
+function nextId(todos) {
+  const maxId = todos.reduce((max, t) =&gt; (t.id &gt; max ? t.id : max), 0);
+  return maxId + 1;
+}
+
+// ---------- 2) 添加 ----------
+function addTodo(todos, title) {
+  const newTodo = {
+    id: nextId(todos),
+    title,
+    done: false,
+    createdAt: Date.now(),
+  };
+  return [...todos, newTodo]; // 用展开运算符拼出新数组
+}
+
+// ---------- 3) 删除 ----------
+function removeTodo(todos, id) {
+  return todos.filter((t) =&gt; t.id !== id);
+}
+
+// ---------- 4) 标记完成 / 切换状态 ----------
+function toggleTodo(todos, id) {
+  return todos.map((t) =&gt; (t.id === id ? { ...t, done: !t.done } : t));
+}
+
+// ---------- 5) 按状态筛选 ----------
+// status: "all" | "active"(未完成) | "completed"(已完成)
+function filterTodos(todos, status) {
+  switch (status) {
+    case "active":
+      return todos.filter((t) =&gt; !t.done);
+    case "completed":
+      return todos.filter((t) =&gt; t.done);
+    default:
+      return todos; // "all"
+  }
+}
+
+// ---------- 6) 统计未完成数量 ----------
+function countActive(todos) {
+  return todos.reduce((n, t) =&gt; (t.done ? n : n + 1), 0);
+}
+
+// ---------- 7) 按创建时间排序 ----------
+function sortByCreatedAt(todos, order = "asc") {
+  const sign = order === "desc" ? -1 : 1;
+  return [...todos].sort((a, b) =&gt; (a.createdAt - b.createdAt) * sign);
+}
+
+// ---------- 8) 格式化打印成好看的清单 ----------
+function formatTodos(todos) {
+  if (todos.length === 0) return "（清单为空）";
+
+  const lines = todos.map((t) =&gt; {
+    const box = t.done ? "[x]" : "[ ]"; // 完成打勾
+    const idText = `#${t.id}`.padEnd(4, " "); // 对齐 id
+    return `${box} ${idText} ${t.title}`;
+  });
+
+  const active = countActive(todos);
+  const total = todos.length;
+  const footer = `—— 共 ${total} 项，未完成 ${active} 项 ——`;
+
+  return [...lines, footer].join("\n");
+}
+
+export {
+  nextId,
+  addTodo,
+  removeTodo,
+  toggleTodo,
+  filterTodos,
+  countActive,
+  sortByCreatedAt,
+  formatTodos,
+};
+</code></pre>
+<h3 id="逐段讲解"><a class="header" href="#逐段讲解">逐段讲解</a></h3>
+<ol>
+<li>
+<p><strong><code>nextId</code>（reduce 求最大值）</strong>：用 <code>reduce</code> 遍历现有待办，账本 <code>max</code> 存“目前最大的 id“，返回 <code>+1</code>。空数组时初始值 <code>0</code>，于是第一条 id 是 1。</p>
+</li>
+<li>
+<p><strong><code>addTodo</code>（展开生成新数组）</strong>：构造一个新待办对象（<code>title</code> 用了<strong>简写属性</strong>，<code>done</code> 初始为 <code>false</code>，<code>createdAt</code> 用 <code>Date.now()</code> 取当前毫秒时间戳），然后用 <code>[...todos, newTodo]</code> <strong>拼出一个新数组</strong>返回——原数组完全没动。这就是不可变风格。</p>
+</li>
+<li>
+<p><strong><code>removeTodo</code>（filter 删除）</strong>：用 <code>filter</code> 留下“id 不等于目标“的所有项，被删的自然就被排除了。同样返回新数组。</p>
+</li>
+<li>
+<p><strong><code>toggleTodo</code>（map + 展开改单项）</strong>：用 <code>map</code> 遍历，只有 id 命中的那一项，用 <code>{ ...t, done: !t.done }</code> 生成一个“其余字段照抄、只翻转 <code>done</code>“的<strong>新对象</strong>；其余项原样返回。这是 3.4 节“基于旧对象改一个字段生成新对象“模式的实战。</p>
+</li>
+<li>
+<p><strong><code>filterTodos</code>（filter + switch）</strong>：按 <code>"active"</code>/<code>"completed"</code>/<code>"all"</code> 三种状态返回不同筛选结果，<code>switch</code> 的 <code>default</code> 兜底返回全部。</p>
+</li>
+<li>
+<p><strong><code>countActive</code>（reduce 计数）</strong>：用 <code>reduce</code> 数出未完成（<code>!done</code>）的数量。也可以写成 <code>todos.filter(t =&gt; !t.done).length</code>，两种都对；这里用 reduce 是为了再练一次它。</p>
+</li>
+<li>
+<p><strong><code>sortByCreatedAt</code>（拷贝后 sort）</strong>：先 <code>[...todos]</code> 拷贝再 <code>sort</code>，避免改原数组（3.3 节的陷阱）。比较函数用 <code>createdAt</code> 相减，<code>sign</code> 控制升序/降序。</p>
+</li>
+<li>
+<p><strong><code>formatTodos</code>（map + join 排版）</strong>：用 <code>map</code> 把每条待办渲染成一行文本（完成的画 <code>[x]</code>，用 <code>padEnd</code> 对齐 id），最后拼上一行统计，用 <code>join("\n")</code> 连成多行字符串。这里 <code>map</code>、<code>padEnd</code>、模板字符串、<code>join</code> 全用上了。</p>
+</li>
+<li>
+<p><strong><code>export</code></strong>：把这些纯函数导出，方便后续章节复用（本书 <code>code/</code> 目录采用 ES 模块，所以用 <code>export</code>；模块化细节见第 9 章）。</p>
+</li>
+</ol>
+<h3 id="演示各操作使用这个模型"><a class="header" href="#演示各操作使用这个模型">演示各操作（使用这个模型）</a></h3>
+<p>下面是同一个文件里“使用“这些函数的部分：</p>
+<pre><code class="language-javascript">// 文件：code/ch03/todo-model.js（演示部分）
+let todos = [];
+todos = addTodo(todos, "学习字符串方法");
+todos = addTodo(todos, "学习数组方法");
+todos = addTodo(todos, "完成本章小项目");
+todos = addTodo(todos, "预习第 4 章");
+
+console.log("【添加 4 项后】");
+console.log(formatTodos(todos));
+
+todos = toggleTodo(todos, 1);
+todos = toggleTodo(todos, 2);
+console.log("【标记 #1、#2 完成后】");
+console.log(formatTodos(todos));
+
+todos = removeTodo(todos, 4);
+console.log("【删除 #4 后】");
+console.log(formatTodos(todos));
+
+console.log("【只看未完成 active】");
+console.log(formatTodos(filterTodos(todos, "active")));
+
+console.log("【统计】未完成数量：", countActive(todos));
+
+console.log("【按创建时间降序】");
+console.log(formatTodos(sortByCreatedAt(todos, "desc")));
+</code></pre>
+<p>注意每次操作我们都写 <code>todos = 某函数(todos, ...)</code>——因为函数不改原数组、只返回新数组，我们用返回值<strong>覆盖</strong>变量来“推进状态“。这种“旧状态 → 新状态“的更新方式，正是现代前端状态管理（React、Redux 等）的核心思想，你在这里已经提前体会到了。</p>
+<h3 id="运行它"><a class="header" href="#运行它">运行它</a></h3>
+<pre><code class="language-bash">cd code/ch03
+node todo-model.js
+</code></pre>
+<p><strong>部分输出</strong>（时间戳每次运行不同，此处不显示）：</p>
+<pre><code class="language-text">【添加 4 项后】
+[ ] #1   学习字符串方法
+[ ] #2   学习数组方法
+[ ] #3   完成本章小项目
+[ ] #4   预习第 4 章
+—— 共 4 项，未完成 4 项 ——
+
+【标记 #1、#2 完成后】
+[x] #1   学习字符串方法
+[x] #2   学习数组方法
+[ ] #3   完成本章小项目
+[ ] #4   预习第 4 章
+—— 共 4 项，未完成 2 项 ——
+</code></pre>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li>加一个 <code>editTitle(todos, id, newTitle)</code> 函数：修改某条待办的标题（仿照 <code>toggleTodo</code> 的 <code>map</code> + 展开写法）。</li>
+<li>加一个 <code>clearCompleted(todos)</code>：一键删除所有已完成项（一行 <code>filter</code> 搞定）。</li>
+<li>给待办加一个 <code>priority</code>（1~3）字段，写一个 <code>sortByPriority</code>，让高优先级排在前——注意比较函数怎么写。</li>
+<li>用 <code>Object.entries</code> 或 <code>reduce</code> 写一个 <code>stats(todos)</code>，返回 <code>{ total, active, completed }</code> 三个数字组成的对象。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p><strong>本章重点回顾：</strong></p>
+<ul>
+<li><strong>字符串</strong>：<code>length</code>、索引、<code>slice</code>/<code>substring</code>、<code>indexOf</code>/<code>includes</code>、<code>split</code>/<code>join</code>、<code>replace</code>/<code>replaceAll</code>、大小写、<code>trim</code>、<code>padStart</code>/<code>padEnd</code>、<code>repeat</code>。核心记住<strong>字符串不可变，方法只返回新串</strong>。</li>
+<li><strong>数组基础</strong>：索引、<code>push</code>/<code>pop</code>/<code>shift</code>/<code>unshift</code>/<code>splice</code>（改原数组）、<code>slice</code>/<code>concat</code>（不改）、扩展运算符 <code>...</code>（合并与浅拷贝）。</li>
+<li><strong>函数式方法（核心）</strong>：<code>forEach</code>、<code>map</code>（一对一变形）、<code>filter</code>（筛选）、<code>reduce</code>（塌缩成一个值）、<code>find</code>/<code>findIndex</code>、<code>some</code>/<code>every</code>、<code>sort</code>（注意默认按字符串+改原数组两大坑）、<code>flat</code>/<code>flatMap</code>，以及<strong>链式调用</strong>。</li>
+<li><strong>对象</strong>：字面量、点/方括号读写、增删、嵌套、方法与 <code>this</code>、简写属性、计算属性名、<code>Object.keys/values/entries</code>、<code>Object.assign</code> 与展开 <code>{...obj}</code>。</li>
+<li><strong>解构</strong>：数组/对象解构、默认值、重命名、嵌套、函数参数解构。</li>
+<li><strong>引用 vs 值</strong>：<code>=</code> 对对象赋的是引用；浅拷贝只拷第一层，深拷贝用 <code>structuredClone</code>；<code>===</code> 比对象比的是引用。</li>
+<li><strong>JSON</strong>：<code>JSON.stringify</code> / <code>JSON.parse</code>，以及它做深拷贝的局限。</li>
+</ul>
+<p><strong>自测题：</strong></p>
+<ol>
+<li><code>"a-b-a".replace("a", "X")</code> 和 <code>.replaceAll("a", "X")</code> 的结果分别是什么？为什么？</li>
+<li><code>[10, 9, 100, 2].sort()</code> 的结果为什么不是从小到大？怎么改才对？</li>
+<li><code>map</code>、<code>filter</code>、<code>reduce</code> 三者的返回值在“个数/形态“上有什么区别？各举一个典型用途。</li>
+<li><code>const b = a</code>（<code>a</code> 是数组）之后，<code>b.push(1)</code> 会不会影响 <code>a</code>？为什么？怎样才能得到一个真正独立的副本？</li>
+<li>两个内容完全相同的对象用 <code>===</code> 比较，结果是 <code>true</code> 还是 <code>false</code>？如果想按内容比较，可以怎么做？</li>
+<li>小项目里 <code>toggleTodo</code> 为什么用 <code>{ ...t, done: !t.done }</code> 生成新对象，而不是直接 <code>t.done = !t.done</code>？</li>
+</ol>
+<blockquote>
+<p>答案都在正文里。答不上来的，回到对应小节重读一遍再往下走。</p>
+</blockquote>
+<p>本章我们已经在小项目里<strong>大量使用了箭头函数当回调</strong>（<code>map</code>、<code>filter</code>、<code>reduce</code> 的参数），也顺带碰到了方法里的 <code>this</code>。但函数还有更深的一面：<strong>作用域（scope）、闭包（closure）、<code>this</code> 的完整规则、高阶函数（higher-order function）</strong>。下一章——第 4 章·函数进阶——就来把这些讲透，让你真正理解“为什么回调能记住外部变量““<code>this</code> 到底怎么确定”。届时我们还会拿本章的 todo 函数继续加料。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

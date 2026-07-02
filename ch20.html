@@ -1,0 +1,850 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 20 章 · tsconfig、声明文件与 JS 互操作 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch20.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-20-章--tsconfig声明文件与-js-互操作"><a class="header" href="#第-20-章--tsconfig声明文件与-js-互操作">第 20 章 · tsconfig、声明文件与 JS 互操作</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前面十九章，你写的每个 <code>.ts</code> 文件都是靠 <code>npx tsx</code> 直接跑起来的。tsx 帮你把 TypeScript 悄悄转成 JavaScript 再执行，你几乎没操心过“编译器到底怎么配置“。但真实项目里，一切都绕不开一份文件——<strong><code>tsconfig.json</code></strong>。它是 TypeScript 编译器（<code>tsc</code>）的“控制面板“：编到哪个 JS 版本、用哪种模块系统、检查严不严、怎么找模块、要不要顺带处理 <code>.js</code>……全在这里定。配错一个选项，可能整个项目红成一片，或者反过来——检查形同虚设、<code>bug</code> 一路溜进生产环境。</p>
+<p>与之相伴的还有两个绕不开的话题。其一，你迟早要用一些<strong>只有 JS、没有类型</strong>的第三方库（npm 上一大半老库都是这样），或者要在自己项目里保留一部分旧 <code>.js</code> 文件。TypeScript 怎么“看懂“它们？答案是<strong>声明文件（declaration file，<code>.d.ts</code>）</strong>——一种“只有类型、没有实现“的文件，专门给 JS 补上类型。其二，很多时候你不想推倒重写，而是想<strong>让 TS 和 JS 共存、再逐步迁移</strong>，这就要用到 <code>allowJs</code>、<code>checkJs</code> 和 JSDoc。</p>
+<p>学完本章，你将能够：</p>
+<ul>
+<li>看懂并写出一份<strong>生产级 <code>tsconfig.json</code></strong>，理解常用编译选项分组的含义与取舍。</li>
+<li>说清楚 <strong><code>strict</code> 及其子项</strong>分别在防什么错，以及 <code>noUncheckedIndexedAccess</code>、<code>exactOptionalPropertyTypes</code> 这些“严上加严“的选项。</li>
+<li>理解 TS 的**模块解析（module resolution）**是怎么找模块和类型的，会用 <code>baseUrl</code> + <code>paths</code> 配路径别名。</li>
+<li>掌握<strong>声明文件 <code>.d.ts</code></strong> 的写法：<code>declare</code>、<code>declare module</code>、全局声明、各种 <code>export</code> 形态。</li>
+<li>会用 <strong><code>@types/*</code>（DefinitelyTyped）</strong> 给没类型的库装类型。</li>
+<li>会用 <strong><code>allowJs</code> / <code>checkJs</code> + JSDoc</strong> 做 JS→TS 的<strong>渐进迁移</strong>。</li>
+<li>认识 triple-slash 指令 <code>/// &lt;reference&gt;</code> 与 <code>declare global</code>。</li>
+<li>亲手为一个纯 JS 库<strong>手写一份 <code>.d.ts</code></strong>，让它在 TS 里获得完整类型提示与检查。</li>
+</ul>
+<p>本章的示例配置放在 <code>code/ch20/tsconfig.example.jsonc</code>（带注释讲解），小项目代码在 <code>code/ch20/</code> 下，用 <code>npx tsx ch20/use-lib.ts</code> 运行。</p>
+<p>📌 <strong>一句话记住 tsconfig</strong>：它回答两个问题——“<strong>编译成什么</strong>”（target/module/输出）和“<strong>检查多严</strong>“（strict 及各种检查项）；顺带回答”<strong>怎么找模块和类型</strong>“（moduleResolution/paths/types）。</p>
+<hr>
+<h2 id="tsconfigjson-是什么从哪来"><a class="header" href="#tsconfigjson-是什么从哪来">tsconfig.json 是什么，从哪来</a></h2>
+<p>在项目根目录放一个 <code>tsconfig.json</code>，就等于告诉 TypeScript：“<strong>这里是一个 TS 项目</strong>，编译时按我写的选项来。” 你可以手写，也可以用 <code>npx tsc --init</code> 生成一份带大量注释的模板。</p>
+<p>一份最小可用的配置长这样：</p>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true
+  },
+  "include": ["src"]
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>compilerOptions</code></strong>：绝大多数配置都在这个对象里，控制编译器的行为。下面各小节会分组细讲。</li>
+<li><strong><code>include</code></strong>：告诉编译器“编译哪些文件“。<code>"src"</code> 表示 <code>src</code> 目录下所有 <code>.ts</code>/<code>.tsx</code>（以及开了 <code>allowJs</code> 后的 <code>.js</code>）。</li>
+<li>没写的选项都用<strong>默认值</strong>。TS 的默认值有些偏“宽松“（历史包袱），所以我们几乎总要显式打开 <code>strict</code> 等。</li>
+</ul>
+<p>⚠️ <strong><code>tsconfig.json</code> 允许写注释和尾逗号</strong>——它其实是 JSONC（JSON with Comments），不是严格 JSON。所以 <code>tsc --init</code> 生成的模板里全是 <code>//</code> 注释。但如果你用别的工具去 <code>JSON.parse</code> 它就会报错，注意区分。</p>
+<p>本书的示例配置文件 <code>code/ch20/tsconfig.example.jsonc</code> 就是一份带满注释的“讲解版“，你可以对照着读。下面我们分组过一遍最常用的选项。</p>
+<hr>
+<h2 id="编译选项之一输出编成什么样"><a class="header" href="#编译选项之一输出编成什么样">编译选项之一：输出（编成什么样）</a></h2>
+<p>这一组决定“TS 编译出来的 JS 长什么样、放到哪“。</p>
+<pre><code class="language-jsonc">// 文件：code/ch20/tsconfig.example.jsonc（节选）
+{
+  "compilerOptions": {
+    "target": "ES2022",            // 编译到哪个 JS 版本
+    "module": "ESNext",            // 生成哪种模块格式
+    "moduleResolution": "Bundler", // 模块解析策略
+    "lib": ["ES2022"],             // 允许使用的内置 API 类型
+    "outDir": "./dist",            // 产物输出目录
+    "rootDir": "./src",            // 源码根目录
+    "declaration": true,           // 顺便生成 .d.ts
+    "sourceMap": true              // 生成 .map
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>target</code></strong>：把你的 TS/新语法<strong>降级</strong>到哪个 JS 版本。比如 <code>target: "ES2015"</code> 时，可选链 <code>?.</code>、<code>async/await</code> 等会被编译成等价的老写法，以便在老环境里跑；<code>target: "ES2022"</code> 则保留大部分现代语法（因为现代 Node 和浏览器都支持）。<strong>选 target 的依据是“你的代码最终跑在哪“</strong>：现代 Node 用 <code>ES2022</code>/<code>ES2023</code> 即可，需要兼容老浏览器就调低（并交给打包器进一步处理）。</li>
+<li><strong><code>module</code></strong>：生成哪种<strong>模块系统</strong>的代码。<code>ESNext</code>/<code>ES2022</code> 生成 <code>import</code>/<code>export</code>（ES Modules）；<code>CommonJS</code> 生成 <code>require</code>/<code>module.exports</code>（老 Node 风格）；<code>NodeNext</code> 让 TS 按 Node 的规则在两者间自动切换。<strong>跑在现代 Node（package.json 里 <code>"type": "module"</code>）或交给打包器时，用 <code>ESNext</code>。</strong></li>
+<li><strong><code>moduleResolution</code></strong>：编译器“<strong>怎么找模块</strong>“的算法，下一节专门讲。这里先记住三个常见值：
+<ul>
+<li><code>"node"</code>（旧版 Node 算法，逐渐淘汰）；</li>
+<li><code>"nodenext"</code>（匹配现代 Node 的 ESM/CJS 双模式，<strong>跑在 Node 上时选它</strong>，通常与 <code>module: "NodeNext"</code> 配对）；</li>
+<li><code>"bundler"</code>（给 Vite/webpack/esbuild 这类<strong>打包器</strong>用的宽松算法，允许省略 import 里的 <code>.js</code> 后缀，<strong>本书选它</strong>，因为 tsx 与它兼容）。</li>
+</ul>
+</li>
+<li><strong><code>lib</code></strong>：告诉 TS “你可以用哪些内置 API 的类型”。<code>["ES2022"]</code> 提供 <code>Array</code>、<code>Promise</code>、<code>Map</code> 等到 ES2022 为止的类型。<strong>写浏览器代码要加 <code>"DOM"</code></strong>（才有 <code>window</code>、<code>document</code>、<code>fetch</code> 等类型）；纯 Node 后端一般不加 DOM。不写 <code>lib</code> 时，TS 会根据 <code>target</code> 推一个默认值。</li>
+<li><strong><code>outDir</code> / <code>rootDir</code></strong>：<code>outDir</code> 是编译产物（<code>.js</code>）的输出目录；<code>rootDir</code> 是源码根。<code>rootDir</code> 决定了 <code>outDir</code> 里的目录结构——<code>src/a/b.ts</code> 会输出到 <code>dist/a/b.js</code>。</li>
+<li><strong><code>declaration</code></strong>：额外为每个 <code>.ts</code> 生成一份 <code>.d.ts</code>。<strong>发布 npm 库时必开</strong>——别人 <code>import</code> 你的库时靠这些 <code>.d.ts</code> 获得类型。</li>
+<li><strong><code>sourceMap</code></strong>：生成 <code>.js.map</code>，把编译后的 JS 映射回原始 TS，这样调试器/浏览器报错时能定位到你的 <code>.ts</code> 源码行。</li>
+</ul>
+<p>📌 <strong>本书主配置为什么没有 <code>outDir</code>？</strong> 因为我们用 tsx 直接跑、并设了 <code>noEmit: true</code>（只做类型检查、不产出文件）。真实项目要发布或部署时才需要真正 emit，那时 <code>outDir</code>/<code>declaration</code> 就派上用场了。</p>
+<hr>
+<h2 id="编译选项之二严格性检查多严"><a class="header" href="#编译选项之二严格性检查多严">编译选项之二：严格性（检查多严）</a></h2>
+<p>这是最影响“TS 能帮你挡多少 bug“的一组。</p>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    "strict": true,                     // 一键打开一整组严格检查
+    "noUncheckedIndexedAccess": true,   // 下标访问结果带上 | undefined
+    "exactOptionalPropertyTypes": true  // 区分「没有属性」和「属性=undefined」
+  }
+}
+</code></pre>
+<p><strong><code>strict: true</code> 是一个“开关组“</strong>——打开它，等于同时打开下面这些子项（都默认变成 <code>true</code>）：</p>
+<ul>
+<li><strong><code>noImplicitAny</code></strong>：禁止“隐式 any“。如果 TS 推断不出一个参数/变量的类型，它默认会给个 <code>any</code>（等于放弃检查）。开启后，这种情况会<strong>报错</strong>，逼你要么标类型、要么显式写 <code>any</code>。这是 strict 里最重要的一项。</li>
+<li><strong><code>strictNullChecks</code></strong>：把 <code>null</code> 和 <code>undefined</code> 当成<strong>独立类型</strong>看待。关闭时 <code>null</code>/<code>undefined</code> 能赋给任何类型（无数运行时 <code>Cannot read property of undefined</code> 的根源）；开启后，<code>string</code> 就不再能装 <code>null</code>，你必须写成 <code>string | null</code> 并显式处理。<strong>这是 TS 类型安全的基石，务必开。</strong></li>
+<li><strong><code>strictFunctionTypes</code></strong>：更严格地检查函数参数类型（逆变检查），防止把“要求宽参数“的函数赋给“只接受窄参数“的位置。</li>
+<li>还有 <code>strictBindCallApply</code>（检查 <code>bind</code>/<code>call</code>/<code>apply</code> 的参数）、<code>strictPropertyInitialization</code>（类字段必须在构造时初始化）、<code>alwaysStrict</code>（输出 <code>"use strict"</code>）、<code>useUnknownInCatchVariables</code>（<code>catch (e)</code> 里 <code>e</code> 是 <code>unknown</code> 而非 <code>any</code>）等。</li>
+</ul>
+<p>💡 <strong>无脑建议：新项目一律 <code>"strict": true</code>。</strong> 逐项开太麻烦也容易漏。老项目迁移时可以先关掉，再逐个子项打开逐步收紧。</p>
+<p>再看两个 <code>strict</code> <strong>之外</strong>、需要单独开的“严上加严“选项，它们能堵住 <code>strict</code> 覆盖不到的漏洞：</p>
+<pre><code class="language-typescript">// 文件：code/ch20/strictness-demo.ts（讲解示例，未纳入运行）
+
+// —— noUncheckedIndexedAccess 的效果 ——
+const arr = [1, 2, 3];
+const x = arr[10]; // 未开启时类型是 number（骗你！其实是 undefined）
+                   // 开启后类型是 number | undefined，逼你先判空
+
+const dict: Record&lt;string, number&gt; = { a: 1 };
+const v = dict["z"]; // 同理：开启后是 number | undefined
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>noUncheckedIndexedAccess</code></strong>：默认情况下，<code>arr[10]</code> 的类型是 <code>number</code>——但数组只有 3 个元素，<code>arr[10]</code> 运行时其实是 <code>undefined</code>！这是 TS 一个众所周知的“善意的谎言“。开启此项后，任何<strong>下标/索引访问</strong>（<code>arr[i]</code>、<code>obj[key]</code>）的结果都会自动带上 <code>| undefined</code>，逼你在用之前先判空。它能挡掉大量“下标越界当成有值“的 bug，代价是要多写一些判空。</li>
+</ul>
+<pre><code class="language-typescript">// —— exactOptionalPropertyTypes 的效果 ——
+interface Options {
+  timeout?: number; // 可选属性
+}
+// 未开启时：下面两者被视为「一样」
+const a: Options = {};                     // 没有 timeout
+const b: Options = { timeout: undefined }; // 显式设成 undefined
+// 开启 exactOptionalPropertyTypes 后：b 会报错，
+// 因为「可选（可以没有）」不等于「值可以是 undefined」。
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>exactOptionalPropertyTypes</code></strong>：<code>timeout?: number</code> 严格来说意思是“<strong>可以没有这个属性</strong>“，而不是“这个属性的值可以是 <code>undefined</code>”。默认 TS 把这两者混为一谈；开启此项后，显式写 <code>{ timeout: undefined }</code> 会报错。这个区别在某些库（比如它用 <code>"timeout" in options</code> 判断“用户到底传没传“）里很关键。它比较“轴“，默认不开也很常见，但知道它的存在有助于理解可选属性的精确语义。</li>
+</ul>
+<hr>
+<h2 id="编译选项之三额外检查"><a class="header" href="#编译选项之三额外检查">编译选项之三：额外检查</a></h2>
+<p><code>strict</code> 管的是<strong>类型</strong>层面的严格；下面这组管的是<strong>代码质量</strong>层面的常见疏忽，需要单独开。</p>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    "noUnusedLocals": true,            // 未使用的局部变量报错
+    "noUnusedParameters": true,        // 未使用的参数报错
+    "noImplicitReturns": true,         // 有的分支 return 有的不 return 时报错
+    "noFallthroughCasesInSwitch": true // switch 漏写 break 时报错
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>noUnusedLocals</code></strong>：声明了却没用到的局部变量会报错。能帮你清掉死代码。（注意：本书主 tsconfig 把它设成了 <code>false</code>，因为教学示例里经常故意留一些“演示用但没使用“的变量。）</li>
+<li><strong><code>noUnusedParameters</code></strong>：没用到的函数参数报错。想保留参数占位（比如回调签名要求）又不想报错，把参数名以 <code>_</code> 开头即可，如 <code>(_event) =&gt; ...</code>。</li>
+<li><strong><code>noImplicitReturns</code></strong>：如果一个函数有的代码路径 <code>return</code> 了值、有的路径却“走到底没 return“（隐式返回 <code>undefined</code>），报错。逼你把所有分支都显式处理。</li>
+</ul>
+<pre><code class="language-typescript">// noImplicitReturns 会抓的错误：
+function grade(score: number): string {
+  if (score &gt;= 60) return "及格";
+  // ❌ 少了 else 分支的 return，某些路径隐式返回 undefined
+}
+</code></pre>
+<ul>
+<li><strong><code>noFallthroughCasesInSwitch</code></strong>：<code>switch</code> 的某个 <code>case</code> 里写了语句、却没 <code>break</code>/<code>return</code>，导致“贯穿“到下一个 <code>case</code>，报错。（空的 <code>case</code>（一行都没有，故意贯穿）不算。）这能堵掉经典的“忘写 break“bug。本书主 tsconfig 已开启此项。</li>
+</ul>
+<p>💡 这几个选项不影响类型安全，但对<strong>团队协作和代码整洁</strong>很有价值。个人练习项目可以关掉 <code>noUnusedLocals</code>/<code>noUnusedParameters</code> 图个清静，正式项目建议全开。</p>
+<hr>
+<h2 id="编译选项之四互操作与-js"><a class="header" href="#编译选项之四互操作与-js">编译选项之四：互操作与 JS</a></h2>
+<p>这组关系到“TS 怎么和 JS 生态、模块系统打交道“，也是本章后半部分的重点。</p>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    "esModuleInterop": true,       // 让默认导入 CommonJS 模块好用
+    "allowJs": true,               // 允许编译 .js
+    "checkJs": false,              // 顺带对 .js 做类型检查
+    "resolveJsonModule": true,     // 允许 import ... from "./x.json"
+    "skipLibCheck": true,          // 跳过对 .d.ts 的检查
+    "isolatedModules": true,       // 保证每个文件可被单独转译
+    "verbatimModuleSyntax": true   // import/export 原样保留
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>esModuleInterop</code></strong>：解决 ESM 和 CommonJS 混用时的“默认导入“痛点。很多老库是 CommonJS 的（<code>module.exports = ...</code>），按 ESM 规范你本该写 <code>import * as express from "express"</code>，很别扭。开启此项后可以写更自然的 <code>import express from "express"</code>。<strong>几乎所有项目都开。</strong></li>
+<li><strong><code>allowJs</code></strong>：允许 TS 项目里包含并编译 <code>.js</code> 文件。<strong>默认关闭</strong>——所以本书主 tsconfig 没开它，<code>include</code> 也只匹配 <code>.ts</code>。做 TS/JS 混编、或渐进迁移时才开。</li>
+<li><strong><code>checkJs</code></strong>：在 <code>allowJs</code> 基础上，<strong>顺带对 <code>.js</code> 也做类型检查</strong>（配合 JSDoc 注解，见后文）。相当于“给 JS 也上一层类型保护“。</li>
+<li><strong><code>resolveJsonModule</code></strong>：允许 <code>import data from "./config.json"</code>，并根据 JSON 内容推断类型。本书已开。</li>
+<li><strong><code>skipLibCheck</code></strong>：跳过对所有 <code>.d.ts</code> 文件（包括 <code>node_modules</code> 里第三方库的类型）的类型检查。<strong>几乎必开</strong>——它能大幅加快编译，并避开“两个第三方库的类型互相冲突“这种你无力修复的问题。代价是：你自己写的 <code>.d.ts</code> 里的错误也不会被检查到。</li>
+<li><strong><code>isolatedModules</code></strong>：要求每个文件都能<strong>被单独转译</strong>（不依赖跨文件的类型信息）。像 tsx、esbuild、swc、Babel 这类“逐文件转译“的工具需要它，因为它们不做全局类型分析。开启后 TS 会禁止一些“单文件转译搞不定“的写法（比如 <code>export</code> 一个 <code>const enum</code>）。</li>
+<li><strong><code>verbatimModuleSyntax</code></strong>：让 <code>import</code>/<code>export</code> 语句<strong>原样保留</strong>到输出（不由 TS 自作主张删掉它认为“只用于类型“的导入）。开启后，导入类型时<strong>必须</strong>显式写 <code>import type</code> 或 <code>import { type Foo }</code>，否则它会被当成值导入保留下来。这消除了“这个 import 到底会不会出现在运行时“的歧义。</li>
+</ul>
+<p>⚠️ <strong><code>allowJs</code> 与 <code>.d.ts</code> 的关系，一个常见误解</strong>：很多人以为“要 import 一个 <code>.js</code> 文件、必须开 <code>allowJs</code>“。<strong>不完全对</strong>。如果那个 <code>.js</code> 旁边有同名 <code>.d.ts</code>（如 <code>foo.js</code> + <code>foo.d.ts</code>），TS 会直接用 <code>.d.ts</code> 提供的类型来理解这个 import，<strong>根本不需要 <code>allowJs</code></strong>——因为它把 <code>.js</code> 当成了“已经有类型声明的外部模块”，并不需要自己去编译那个 <code>.js</code>。本章小项目正是利用了这一点：主 tsconfig 没开 <code>allowJs</code>，但 <code>use-lib.ts</code> 依然能 <code>import</code> 旁边的 <code>legacy-math.js</code>，因为有 <code>legacy-math.d.ts</code> 顶着。<strong>只有当你想让 TS 去编译/检查 <code>.js</code> 本身（比如迁移场景）时，才需要 <code>allowJs</code>。</strong></p>
+<hr>
+<h2 id="编译选项之五类型来源与-includeexclude"><a class="header" href="#编译选项之五类型来源与-includeexclude">编译选项之五：类型来源与 include/exclude</a></h2>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    // "types": ["node"],          // 只自动加载这些全局类型包
+    // "typeRoots": ["./node_modules/@types", "./typings"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "dist"]
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>typeRoots</code></strong>：TS 去哪些<strong>目录</strong>里找“全局类型包“。默认是 <code>["./node_modules/@types"]</code>——所以你 <code>npm i -D @types/node</code> 后，<code>@types/node</code> 里的全局类型（如 Node 的 <code>process</code>、<code>Buffer</code>）会<strong>自动</strong>生效，无需 import。</li>
+<li><strong><code>types</code></strong>：在 <code>typeRoots</code> 找到的众多类型包里，<strong>只自动加载列出的这几个</strong>。不写 <code>types</code> 时，<code>@types</code> 下的<strong>所有</strong>包都被自动加载。本书主 tsconfig 写了 <code>"types": ["node"]</code>，意思是“只自动加载 <code>@types/node</code>“，避免无关的全局类型污染。⚠️ 注意：<code>types</code> 只限制”<strong>自动全局加载</strong>“的范围，不影响你用 <code>import</code> 显式引入的类型。</li>
+<li><strong><code>include</code></strong>：要编译的文件（支持 glob）。本书用 <code>["ch*/**/*.ts"]</code>，只收 <code>.ts</code>。</li>
+<li><strong><code>exclude</code></strong>：从 <code>include</code> 里<strong>排除</strong>的文件。默认就会排除 <code>node_modules</code>，通常再加上 <code>dist</code> 等产物目录。</li>
+<li><strong><code>files</code></strong>（未在上面示例中）：精确列出少量入口文件，与 <code>include</code> 二选一，适合小项目或库入口。</li>
+</ul>
+<h3 id="extends配置继承"><a class="header" href="#extends配置继承">extends：配置继承</a></h3>
+<p>一份 tsconfig 可以 <code>extends</code>（继承）另一份，自己只写“差异项“。这在 monorepo 或“一套基线、多处复用“时极有用。</p>
+<pre><code class="language-jsonc">// tsconfig.base.json —— 团队共享的基线
+{ "compilerOptions": { "strict": true, "target": "ES2022", "module": "ESNext" } }
+</code></pre>
+<pre><code class="language-jsonc">// 某子包的 tsconfig.json —— 继承基线，只改自己需要的
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": { "outDir": "./dist" },
+  "include": ["src"]
+}
+</code></pre>
+<p>社区还维护了一批开箱即用的基线，比如 <code>@tsconfig/node20</code>、<code>@tsconfig/strictest</code>，装上后写 <code>"extends": "@tsconfig/node20/tsconfig.json"</code> 即可，省去自己调一堆选项。</p>
+<h3 id="project-references-简介"><a class="header" href="#project-references-简介">project references 简介</a></h3>
+<p>大型项目（尤其 monorepo）可以拆成多个“子项目“，每个有自己的 tsconfig，再用 <strong>project references</strong> 把它们串起来：</p>
+<pre><code class="language-jsonc">{
+  "references": [{ "path": "./packages/core" }, { "path": "./packages/web" }],
+  "files": []
+}
+</code></pre>
+<p>配合 <code>tsc --build</code>（或 <code>tsc -b</code>），TS 能<strong>增量编译</strong>：只重编改动过的子项目，并按依赖顺序构建。这是大仓库加速编译的标准手段。日常小项目用不到，知道有这么回事即可。</p>
+<hr>
+<h2 id="模块解析ts-是怎么找模块和类型的"><a class="header" href="#模块解析ts-是怎么找模块和类型的">模块解析：TS 是怎么找模块和类型的</a></h2>
+<p>当你写 <code>import { add } from "./legacy-math.js"</code> 或 <code>import express from "express"</code> 时，TS 要先<strong>找到这个模块的类型</strong>才能检查你的代码。它遵循一套算法（由 <code>moduleResolution</code> 决定），大致是：</p>
+<p><strong>对相对路径</strong>（以 <code>./</code> 或 <code>../</code> 开头，如 <code>"./legacy-math.js"</code>）：</p>
+<ol>
+<li>从当前文件所在目录出发，按路径找对应文件；</li>
+<li>优先找<strong>类型来源</strong>——<code>.ts</code>、<code>.d.ts</code>（同名的 <code>.d.ts</code> 会被认作那个 <code>.js</code> 的类型），再考虑 <code>.js</code>（视 <code>allowJs</code> 而定）。</li>
+</ol>
+<p><strong>对“裸模块名“</strong>（不带路径，如 <code>"express"</code>、<code>"lodash"</code>）：</p>
+<ol>
+<li>到 <code>node_modules/express</code> 里找，读它的 <code>package.json</code>（<code>types</code>/<code>typings</code> 字段指向 <code>.d.ts</code>，<code>exports</code>/<code>main</code> 指向入口）；</li>
+<li>如果这个库<strong>自带类型</strong>（很多现代库会打包 <code>.d.ts</code>），直接用；</li>
+<li>如果库<strong>不带类型</strong>，就去 <code>node_modules/@types/express</code> 找社区补的类型（下一节讲 <code>@types</code>）；</li>
+<li>逐级往上层目录的 <code>node_modules</code> 找，直到找到或报 <code>Cannot find module</code>。</li>
+</ol>
+<p>📌 <code>moduleResolution</code> 的选择会影响细节。<code>"bundler"</code>（本书用）比较宽松，允许你在 import 里<strong>省略后缀</strong>（写 <code>"./foo"</code> 而非 <code>"./foo.js"</code>）、也允许写 <code>.js</code> 后缀指向 <code>.ts</code>/<code>.d.ts</code>；<code>"nodenext"</code> 更严格，要求你按 Node ESM 规范<strong>写全后缀</strong>。</p>
+<h3 id="baseurl-与-paths路径别名"><a class="header" href="#baseurl-与-paths路径别名">baseUrl 与 paths：路径别名</a></h3>
+<p>深层目录里满屏的 <code>import x from "../../../../utils/x"</code> 又丑又脆（移动文件就断）。用 <code>baseUrl</code> + <code>paths</code> 可以配<strong>路径别名</strong>：</p>
+<pre><code class="language-jsonc">{
+  "compilerOptions": {
+    "baseUrl": ".",              // 非相对 import 的解析基准
+    "paths": {
+      "@/*": ["src/*"],          // @/utils/x  -&gt;  src/utils/x
+      "@utils/*": ["src/utils/*"]
+    }
+  }
+}
+</code></pre>
+<p>于是你可以写：</p>
+<pre><code class="language-typescript">import { x } from "@/utils/x";     // 等价于 src/utils/x
+import { y } from "@utils/y";      // 等价于 src/utils/y
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>baseUrl</code></strong>：非相对导入的“根“。<code>"."</code> 表示以 tsconfig 所在目录为基准。</li>
+<li><strong><code>paths</code></strong>：一组映射规则。<code>"@/*": ["src/*"]</code> 表示“凡是以 <code>@/</code> 开头的导入，把 <code>@/</code> 换成 <code>src/</code> 去找“。<code>*</code> 是通配，代表后面的任意路径片段。</li>
+</ul>
+<p>⚠️ <strong><code>paths</code> 只在类型层面生效，编译器不会改写运行时的 import 路径！</strong> 也就是说，光配 <code>paths</code> 后 <code>tsc</code> 类型检查能过，但真正运行时（Node/tsx/浏览器）并不认识 <code>@/</code>。你必须让<strong>运行时或打包器</strong>也知道这套别名：Vite/webpack 有各自的 <code>resolve.alias</code> 配置，tsx/Node 可用 <code>tsconfig-paths</code> 之类的加载器，或在 <code>package.json</code> 的 <code>imports</code> 字段里配。<strong>别名要“两头配“（TS 一份、运行时一份）才真正可用。</strong> 本书示例为避免这层复杂性没有使用 <code>paths</code>。</p>
+<hr>
+<h2 id="声明文件dts给-js-补类型"><a class="header" href="#声明文件dts给-js-补类型">声明文件（.d.ts）：给 JS 补类型</a></h2>
+<p><strong>声明文件</strong>是后缀为 <code>.d.ts</code> 的文件。它的特点是：<strong>只有类型声明，没有任何实现</strong>。它不会被编译成 JS（里面本来也没有可执行代码），它的唯一使命是“<strong>告诉 TS：某段 JS 代码/某个模块/某个全局变量，具有什么类型</strong>“。</p>
+<p>核心关键字是 <strong><code>declare</code></strong>，意思是“我<strong>声明</strong>存在这么个东西，它的实现在别处（某个 JS 文件里）“。</p>
+<pre><code class="language-typescript">// 文件：code/ch20/globals-demo.d.ts（讲解示例）
+
+// 声明一个「运行时确实存在、但 TS 本来不知道」的全局变量。
+// 比如某个 &lt;script&gt; 往 window 上挂了 APP_VERSION。
+declare const APP_VERSION: string;
+
+// 声明一个全局函数。
+declare function track(event: string, payload?: Record&lt;string, unknown&gt;): void;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>declare const APP_VERSION: string</code>：告诉 TS “有一个全局常量 <code>APP_VERSION</code>，类型是 <code>string</code>，它的值哪来的不用你管（运行时由别的脚本注入）”。有了它，你在任意 <code>.ts</code> 里用 <code>APP_VERSION</code> 就有类型、不报错。</li>
+<li><code>declare function track(...)</code>：同理，声明一个全局函数的签名。<code>declare</code> 后面<strong>不能写函数体</strong>——因为它只是声明，实现在别处。</li>
+</ul>
+<h3 id="declare-module给整个模块声明类型"><a class="header" href="#declare-module给整个模块声明类型">declare module：给整个模块声明类型</a></h3>
+<p>如果一个<strong>没有类型的第三方模块</strong>你要 import，可以用 <code>declare module "模块名"</code> 给它整体补类型：</p>
+<pre><code class="language-typescript">// 文件：code/ch20/module-decl-demo.d.ts（讲解示例）
+
+// 给一个假想的、没有类型的库 "tiny-emitter" 补类型。
+declare module "tiny-emitter" {
+  export interface Emitter {
+    on(event: string, handler: (...args: unknown[]) =&gt; void): void;
+    emit(event: string, ...args: unknown[]): void;
+  }
+  const createEmitter: () =&gt; Emitter;
+  export default createEmitter;
+}
+
+// 也常用来让 TS 认识「非代码资源」的 import（配合打包器）：
+declare module "*.svg" {
+  const src: string;
+  export default src;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>declare module "tiny-emitter" { ... }</code>：括号里描述“<code>import ... from "tiny-emitter"</code> 时能拿到什么“。这样即便这个库一行类型都没有，你 import 它时也有完整提示。</li>
+<li><code>declare module "*.svg"</code>：用通配符匹配一类 import。前端项目里 <code>import logo from "./logo.svg"</code> 本来会让 TS 报错（它不认识 <code>.svg</code> 模块），加上这段声明后，TS 就知道“import 一个 svg 会得到一个 string（图片 URL）“。</li>
+</ul>
+<h3 id="全局声明-vs-模块声明一个关键区别"><a class="header" href="#全局声明-vs-模块声明一个关键区别">全局声明 vs 模块声明：一个关键区别</a></h3>
+<p>一个 <code>.d.ts</code> 文件是“全局脚本“还是“模块“，取决于<strong>它里面有没有顶层的 <code>import</code>/<code>export</code></strong>：</p>
+<ul>
+<li><strong>没有</strong> <code>import</code>/<code>export</code>：整个文件是<strong>全局脚本</strong>，里面的 <code>declare const</code>/<code>declare function</code> 会成为<strong>全局可见</strong>的声明（无需 import 就能用，如上面的 <code>APP_VERSION</code>）。</li>
+<li><strong>有</strong> <code>import</code>/<code>export</code>：整个文件是一个<strong>模块</strong>，里面的声明默认是“模块作用域“的，别人要 <code>import</code> 才能用。</li>
+</ul>
+<p>📌 这个规则常常“坑“到人：你本想写一个全局声明，结果文件里不小心带了个 <code>export</code>，全局声明就“消失“了。反过来，本章小项目的 <code>legacy-math.d.ts</code> 里全是 <code>export</code>——因为它就是要作为一个<strong>模块</strong>被 import。</p>
+<h3 id="triple-slash-指令与-declare-global"><a class="header" href="#triple-slash-指令与-declare-global">triple-slash 指令与 declare global</a></h3>
+<ul>
+<li><strong><code>/// &lt;reference types="node" /&gt;</code></strong>：这种以三斜线开头的注释叫 <strong>triple-slash 指令</strong>，用于在一个 <code>.d.ts</code> 里“引入另一份类型声明的依赖“。现代项目多用 tsconfig 的 <code>types</code>/<code>typeRoots</code> 管理，triple-slash 主要出现在老的 <code>.d.ts</code> 或某些库的类型入口里，认得即可。</li>
+<li><strong><code>declare global</code></strong>：在一个<strong>模块</strong>文件（带 <code>import</code>/<code>export</code> 的）里，如果你想往<strong>全局</strong>添加声明，就得用 <code>declare global { ... }</code> 把它“提升“到全局作用域。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch20/declare-global-demo.d.ts（讲解示例）
+export {}; // 有这行（或任意 import/export），本文件就是「模块」
+
+declare global {
+  // 给全局的 Window 接口补一个属性（前端常见：第三方脚本挂在 window 上）
+  interface Window {
+    dataLayer?: unknown[];
+  }
+  // 往全局加一个变量
+  const BUILD_TIME: string;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>export {}</code> 是个惯用法——它什么都不导出，但足以把文件标记成“模块“（这样才能用 <code>declare global</code>，且避免文件里其他声明意外变成全局）。</li>
+<li><code>declare global { interface Window { ... } }</code>：<strong>接口是“开放“的</strong>，同名接口会自动合并（declaration merging）。这里给内置的 <code>Window</code> <strong>补</strong>了一个 <code>dataLayer</code> 属性，于是 <code>window.dataLayer</code> 全项目可用且有类型。这是给第三方脚本、polyfill 补全局类型的标准手法。</li>
+</ul>
+<hr>
+<h2 id="types-与-definitelytyped"><a class="header" href="#types-与-definitelytyped">@types 与 DefinitelyTyped</a></h2>
+<p>现实中，你要用的大多数没类型的库，<strong>不用自己写 <code>.d.ts</code></strong>——社区早就替你写好了，放在一个叫 <strong>DefinitelyTyped</strong> 的巨型仓库里，以 <code>@types/库名</code> 的形式发布到 npm。</p>
+<p>规则很简单：</p>
+<ul>
+<li>库<strong>自带类型</strong>（现代库、TS 写的库）：直接 <code>npm i 库名</code> 就有类型，什么都不用做。</li>
+<li>库<strong>不带类型</strong>（很多老的 JS 库，如早期的 <code>lodash</code>、<code>express</code>）：额外装 <code>npm i -D @types/库名</code>，类型就来了。</li>
+</ul>
+<pre><code class="language-bash"># 例：lodash 本身是 JS，没类型；装它的社区类型包
+npm i lodash
+npm i -D @types/lodash
+</code></pre>
+<p>装完 <code>@types/lodash</code> 后，<code>import _ from "lodash"</code> 就有完整提示了——因为 TS 的模块解析会自动去 <code>node_modules/@types/lodash</code> 找类型（回忆前面“模块解析“那节的第 3 步）。</p>
+<p>判断一个库“要不要装 @types“的最快方法：先 <code>import</code>，如果 TS 报 <code>Could not find a declaration file for module 'xxx'</code>，就去搜 <code>@types/xxx</code>；如果不报错，说明库自带类型或已装过。</p>
+<p>💡 <code>@types/*</code> 一律装成 <code>devDependencies</code>（<code>-D</code>）——它们只在开发/编译期需要，运行时用不到。</p>
+<p>⚠️ <strong><code>@types</code> 版本可能和库本身版本对不上</strong>（社区维护有滞后）。偶尔会遇到“类型说有这个方法，实际库版本没有“或反之。遇到诡异的类型错误时，检查一下两者版本是否匹配。</p>
+<hr>
+<h2 id="与-js-互操作allowjscheckjs-与-jsdoc-迁移"><a class="header" href="#与-js-互操作allowjscheckjs-与-jsdoc-迁移">与 JS 互操作：allowJs、checkJs 与 JSDoc 迁移</a></h2>
+<p>假设你接手一个纯 JS 老项目，想<strong>渐进迁移</strong>到 TS——不可能一夜之间全改成 <code>.ts</code>。TS 为此提供了平滑路径。</p>
+<p><strong>第一步：让 TS “接纳” JS。</strong> 开 <code>allowJs</code>，TS 就允许项目里有 <code>.js</code> 并参与编译。此时 TS 不检查 <code>.js</code> 的类型（只当它是一堆 <code>any</code>），但你已经可以在 <code>.ts</code> 里 import <code>.js</code>、逐个文件把 <code>.js</code> 改名成 <code>.ts</code>。</p>
+<p><strong>第二步：让 TS “检查” JS。</strong> 再开 <code>checkJs</code>（或在单个 <code>.js</code> 文件顶部写 <code>// @ts-check</code>），TS 就会<strong>对 <code>.js</code> 也做类型检查</strong>。这时它会尽力推断，并且——关键——<strong>读取你写的 JSDoc 注释</strong>当类型用。</p>
+<p><strong>JSDoc 就是“写在注释里的类型“</strong>。它让你<strong>不改 <code>.js</code> 后缀、不引入编译步骤</strong>，就能获得几乎和 TS 一样的类型检查：</p>
+<pre><code class="language-javascript">// 文件：code/ch20/jsdoc-demo.js（讲解示例，配合 checkJs 或 // @ts-check）
+// @ts-check
+
+/**
+ * 把两个数相加。
+ * @param {number} a 第一个加数
+ * @param {number} b 第二个加数
+ * @returns {number}
+ */
+function add(a, b) {
+  return a + b;
+}
+
+/**
+ * @typedef {Object} Point
+ * @property {number} x
+ * @property {number} y
+ */
+
+/** @type {Point} */
+const p = { x: 1, y: 2 };
+
+add(1, 2);       // ✓
+// add(1, "x");  // 报错：参数 "x" 不是 number（和 .ts 一样的检查！）
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>// @ts-check</code>：写在 <code>.js</code> 文件顶部，让 TS <strong>只对这一个文件</strong>做类型检查（即使没开全局 <code>checkJs</code>）。反过来 <code>// @ts-nocheck</code> 是关闭某个文件的检查。</li>
+<li><code>@param {number} a</code>：用 JSDoc 标注参数 <code>a</code> 的类型是 <code>number</code>。<code>{...}</code> 里就是 TS 类型语法（可以写联合类型 <code>{string|number}</code>、数组 <code>{number[]}</code> 等）。</li>
+<li><code>@returns {number}</code>：标注返回值类型。</li>
+<li><code>@typedef {Object} Point</code> + <code>@property</code>：在 JS 里“定义一个类型/接口“，相当于 TS 的 <code>interface Point { x: number; y: number }</code>。</li>
+<li><code>@type {Point}</code>：给一个变量标类型。</li>
+<li>效果：<code>add(1, "x")</code> 会像在 TS 里一样报错。<strong>一行代码没改成 TS，却拿到了类型检查</strong>——这就是渐进迁移的第一站。</li>
+</ul>
+<p><strong>渐进迁移 JS→TS 的推荐顺序</strong>：</p>
+<ol>
+<li>建 tsconfig，开 <code>allowJs</code>（让项目跑起来、TS 接纳现有 JS）。</li>
+<li>开 <code>checkJs</code>（或给关键文件加 <code>// @ts-check</code>），给核心 JS 补 JSDoc，先把最容易出错的地方保护起来。</li>
+<li>一个文件一个文件地把 <code>.js</code> 改名成 <code>.ts</code>，把 JSDoc 翻成真正的 TS 类型标注（TS 里类型更强大、更好写）。</li>
+<li>全部迁完后，关掉 <code>allowJs</code>/<code>checkJs</code>，收紧 <code>strict</code>。</li>
+</ol>
+<p>💡 JSDoc 类型的表达力<strong>接近但不等于</strong> TS——泛型、复杂条件类型等写起来很啰嗦。它的定位是“迁移过渡“和“不方便引入编译步骤的纯 JS 项目（如某些 Node 脚本、构建配置）“，正式 TS 项目还是直接写 <code>.ts</code> 更舒服。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>
+<p>⚠️ <strong><code>paths</code> 别名要“两头配“</strong>：只配 tsconfig 的 <code>paths</code>，类型检查过了但运行时会 <code>Cannot find module</code>。必须同时配运行时/打包器的别名（Vite/webpack 的 <code>alias</code>、Node 的 <code>imports</code>、<code>tsconfig-paths</code>）。</p>
+</li>
+<li>
+<p>⚠️ <strong><code>.d.ts</code> 里有没有 <code>export</code>，决定它是“模块“还是“全局“</strong>。想写全局声明就别带 <code>import</code>/<code>export</code>（或用 <code>declare global</code>）；想作为模块被 import 就写 <code>export</code>。搞混了会出现“我明明声明了全局变量，却找不到“或“我的全局声明污染了所有文件“。</p>
+</li>
+<li>
+<p>⚠️ <strong><code>skipLibCheck: true</code> 会跳过你自己 <code>.d.ts</code> 的检查</strong>。它带来的速度和“避开第三方类型冲突“的好处通常远大于代价，建议开；但要知道：你手写的 <code>.d.ts</code> 里如果有类型错误，不会在编译时被抓到——所以手写声明文件时要格外仔细，最好写个 <code>use-lib.ts</code> 实际 import 来验证（就像本章小项目做的）。</p>
+</li>
+<li>
+<p>⚠️ <strong><code>strict</code> 是新项目的默认起点</strong>，不是可选项。省下的调试时间远超“多写几个判空“的成本。老项目迁移时逐子项打开。</p>
+</li>
+<li>
+<p>💡 <strong><code>target</code> 跟着运行环境走</strong>：现代 Node 后端用 <code>ES2022</code>+ 即可，别无脑降到 <code>ES5</code>（会生成臃肿的降级代码）。前端交给打包器时，TS 的 target 也不必太低，让打包器（配 browserslist）负责最终兼容。</p>
+</li>
+<li>
+<p>💡 <strong>发布库时</strong>：开 <code>declaration: true</code> 生成 <code>.d.ts</code>，并在 <code>package.json</code> 里用 <code>"types"</code>（或 <code>exports</code> 的 <code>types</code> 条件）指向类型入口，别人才能用上你的类型。</p>
+</li>
+<li>
+<p>💡 <strong>手写 <code>.d.ts</code> 的名字与位置</strong>：给 <code>foo.js</code> 写声明，最省事的方式是同目录放一个同名的 <code>foo.d.ts</code>——TS 会自动关联，无需任何配置（本章小项目正是如此）。</p>
+</li>
+<li>
+<p>⚠️ <strong><code>allowJs</code> 不是 import <code>.js</code> 的必要条件</strong>：只要 <code>.js</code> 旁有同名 <code>.d.ts</code>，不开 <code>allowJs</code> 也能 import（TS 用 <code>.d.ts</code> 当类型）。只有要让 TS <strong>编译/检查 <code>.js</code> 本身</strong>时才需要 <code>allowJs</code>。</p>
+</li>
+</ul>
+<hr>
+<h2 id="本章小项目为-js-库编写-dts"><a class="header" href="#本章小项目为-js-库编写-dts">本章小项目：为 JS 库编写 .d.ts</a></h2>
+<p>现在把声明文件的知识用到实处。我们有一个“第三方“纯 JS 库 <code>legacy-math.js</code>（假装是从 npm 装来的、一行类型都没有的老库），要为它<strong>手写一份配套的 <code>legacy-math.d.ts</code></strong>，然后在 <code>use-lib.ts</code> 里 import 它、享受完整类型提示与检查。</p>
+<h3 id="第一步认识这个没类型的-js-库"><a class="header" href="#第一步认识这个没类型的-js-库">第一步：认识这个“没类型“的 JS 库</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch20/legacy-math.js
+export function add(a, b) {
+  return a + b;
+}
+
+export function clamp(value, min, max) {
+  if (value &lt; min) return min;
+  if (value &gt; max) return max;
+  return value;
+}
+
+export function randomBetween(min, max, integer) {
+  const r = Math.random() * (max - min) + min;
+  return integer ? Math.floor(r) : r;
+}
+
+export function formatCurrency(amount, options) {
+  const opts = options || {};
+  const currency = opts.currency || "CNY";
+  const locale = opts.locale || "zh-CN";
+  const decimals = opts.decimals == null ? 2 : opts.decimals;
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(amount);
+}
+
+const legacyMath = { add, clamp, randomBetween, formatCurrency };
+export default legacyMath;
+</code></pre>
+<p>观察这个库的“接口形态“（这决定了 <code>.d.ts</code> 怎么写）：</p>
+<ul>
+<li><code>add(a, b)</code>：两数相加。但 <code>+</code> 对字符串是拼接——我们希望类型上体现“数字+数字=数字、字符串+字符串=字符串“，这需要<strong>函数重载（overload）</strong>。</li>
+<li><code>clamp(value, min, max)</code>：三个数字参数，返回数字。普通签名。</li>
+<li><code>randomBetween(min, max, integer)</code>：第三个参数 <code>integer</code> <strong>可选</strong>。</li>
+<li><code>formatCurrency(amount, options)</code>：第二个参数是<strong>选项对象</strong>，且整体可选；对象里的字段（<code>currency</code>/<code>locale</code>/<code>decimals</code>）也都可选。这要用一个<strong>接口</strong>描述。</li>
+<li>既有<strong>命名导出</strong>（<code>add</code> 等），又有一个<strong>默认导出</strong>（打包所有函数的对象）。</li>
+</ul>
+<h3 id="第二步手写-legacy-mathdts"><a class="header" href="#第二步手写-legacy-mathdts">第二步：手写 legacy-math.d.ts</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch20/legacy-math.d.ts
+export interface CurrencyOptions {
+  /** 货币代码，如 "CNY"、"USD"、"JPY"。默认 "CNY"。 */
+  currency?: string;
+  /** BCP 47 语言标签，如 "zh-CN"、"en-US"。默认 "zh-CN"。 */
+  locale?: string;
+  /** 小数位数。默认 2。 */
+  decimals?: number;
+}
+
+// 函数重载：数字 + 数字 =&gt; 数字；字符串 + 字符串 =&gt; 字符串。
+export function add(a: number, b: number): number;
+export function add(a: string, b: string): string;
+
+export function clamp(value: number, min: number, max: number): number;
+
+export function randomBetween(min: number, max: number, integer?: boolean): number;
+
+export function formatCurrency(amount: number, options?: CurrencyOptions): string;
+
+declare const legacyMath: {
+  add: typeof add;
+  clamp: typeof clamp;
+  randomBetween: typeof randomBetween;
+  formatCurrency: typeof formatCurrency;
+};
+export default legacyMath;
+</code></pre>
+<p>逐段拆解——这是本章最核心的写法：</p>
+<ul>
+<li><strong>文件名与位置</strong>：<code>legacy-math.d.ts</code> 和 <code>legacy-math.js</code> <strong>同名、同目录</strong>。这样 TS 在解析 <code>import ... from "./legacy-math.js"</code> 时会自动把这份 <code>.d.ts</code> 当作那个 <code>.js</code> 的类型来源，<strong>无需任何 tsconfig 配置、也无需 <code>allowJs</code></strong>。</li>
+<li><strong><code>export interface CurrencyOptions</code></strong>：把选项对象的形状抽成一个<strong>接口</strong>，并 <code>export</code> 出去（这样使用方也能引用这个类型）。三个字段都带 <code>?</code>（可选），因为库里对它们都有默认值。<code>/** ... */</code> 是 JSDoc 文档注释——它会显示在编辑器的悬浮提示里，是给声明文件加说明的好习惯。</li>
+<li><strong>函数重载</strong>：<code>add</code> 写了<strong>两行</strong>声明——<code>(number, number): number</code> 和 <code>(string, string): string</code>。这就是<strong>声明文件里的函数重载</strong>：列出多个签名，调用方按实参匹配其中一个。注意 <code>.d.ts</code> 里的 <code>function</code> 声明<strong>天然没有函数体</strong>（它本就是“声明“）。这样 <code>add(1, 2)</code> 得 <code>number</code>、<code>add("a", "b")</code> 得 <code>string</code>、而 <code>add(1, "x")</code> 因不匹配任何重载而报错。</li>
+<li><strong><code>clamp</code></strong>：最普通的函数声明，三个 <code>number</code> 参数、返回 <code>number</code>。</li>
+<li><strong><code>randomBetween</code></strong>：<code>integer?: boolean</code> ——参数名后加 <code>?</code> 表示<strong>可选参数</strong>，可传可不传。可选参数必须排在必填参数<strong>后面</strong>。</li>
+<li><strong><code>formatCurrency</code></strong>：<code>options?: CurrencyOptions</code> ——整个选项对象可选，且类型是我们上面定义的接口。于是使用方写 <code>options</code> 时，<code>currency</code>/<code>locale</code>/<code>decimals</code> 都会有提示和检查。</li>
+<li><strong>默认导出</strong>：<code>declare const legacyMath: { ... }</code> 先声明一个“内部“常量，描述默认导出对象的形状——每个字段用 <code>typeof add</code> 复用上面已声明的函数类型（避免重复写签名，<code>typeof</code> 在类型位置表示“取某个值的类型“）。最后 <code>export default legacyMath</code> 把它作为默认导出。这样 <code>import legacyMath from "./legacy-math.js"</code> 也能拿到完整类型。</li>
+</ul>
+<p>📌 <strong><code>.d.ts</code> 里只写“形状“，不写“实现“</strong>。你不会在这里写 <code>return a + b</code>——那是 <code>.js</code> 的事。声明文件的职责是“描述契约“，实现与描述由你保证一致（TS 无法替你核对 <code>.js</code> 实现是否真的符合声明，这也是手写 <code>.d.ts</code> 要仔细的原因）。</p>
+<h3 id="第三步在-use-libts-里享受类型"><a class="header" href="#第三步在-use-libts-里享受类型">第三步：在 use-lib.ts 里享受类型</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch20/use-lib.ts
+import legacyMath, {
+  add,
+  clamp,
+  randomBetween,
+  formatCurrency,
+  type CurrencyOptions,
+} from "./legacy-math.js";
+
+const sum: number = add(2, 3);                 // 走 (number, number) =&gt; number
+const joined: string = add("Type", "Script"); // 走 (string, string) =&gt; string
+// add(1, "x"); // 报错：没有匹配 (number, string) 的重载
+
+const clamped: number = clamp(15, 0, 10); // =&gt; 10
+
+const rndFloat: number = randomBetween(0, 1);     // 不传 integer
+const rndInt: number = randomBetween(1, 7, true); // 传 integer
+
+const opts: CurrencyOptions = { currency: "USD", locale: "en-US", decimals: 2 };
+const priceUSD: string = formatCurrency(1234.5, opts);
+const priceCNY: string = formatCurrency(88.8);    // options 可省略
+// formatCurrency(100, { currency: 123 }); // 报错：currency 应为 string
+
+const viaDefault: number = legacyMath.clamp(99, 0, 100);
+
+console.log("add(2,3) =", sum);
+console.log('add("Type","Script") =', joined);
+console.log("clamp(15,0,10) =", clamped);
+console.log("randomBetween(0,1) =", rndFloat.toFixed(4));
+console.log("randomBetween(1,7,true) =", rndInt);
+console.log("formatCurrency(1234.5, USD) =", priceUSD);
+console.log("formatCurrency(88.8) =", priceCNY);
+console.log("legacyMath.clamp(99,0,100) =", viaDefault);
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>导入方式</strong>：<code>import legacyMath, { add, ..., type CurrencyOptions } from "./legacy-math.js"</code> 一次性演示了默认导入（<code>legacyMath</code>）、命名导入（<code>add</code> 等）、以及<strong>类型导入</strong> <code>type CurrencyOptions</code>。因为本书开了 <code>verbatimModuleSyntax</code>，导入类型时<strong>必须</strong>加 <code>type</code> 前缀，否则会被当成值导入。</li>
+<li><strong>import 路径写 <code>.js</code></strong>：我们 import 的是 <code>"./legacy-math.js"</code>（真实存在的运行时文件），TS 会自动去找同名的 <code>legacy-math.d.ts</code> 拿类型。<code>moduleResolution: "bundler"</code> 允许这样写。</li>
+<li><strong>重载生效</strong>：<code>add(2, 3)</code> 命中数字重载得 <code>number</code>，<code>add("Type", "Script")</code> 命中字符串重载得 <code>string</code>。注释里的 <code>add(1, "x")</code> 会报错——没有任何重载匹配“数字+字符串“。</li>
+<li><strong>可选参数</strong>：<code>randomBetween(0, 1)</code> 省略了第三个参数（合法），<code>randomBetween(1, 7, true)</code> 传了。</li>
+<li><strong>选项对象</strong>：<code>opts</code> 标成 <code>CurrencyOptions</code> 后，写错字段类型（如 <code>currency: 123</code>）会被抓。<code>formatCurrency(88.8)</code> 省略整个 options 也合法。</li>
+<li><strong>默认导出</strong>：<code>legacyMath.clamp(...)</code> 同样有完整类型。</li>
+</ul>
+<h3 id="运行与验证"><a class="header" href="#运行与验证">运行与验证</a></h3>
+<pre><code class="language-bash">npx tsx ch20/use-lib.ts
+</code></pre>
+<p>预期输出：</p>
+<pre><code>add(2,3) = 5
+add("Type","Script") = TypeScript
+clamp(15,0,10) = 10
+randomBetween(0,1) = 0.xxxx   （随机小数）
+randomBetween(1,7,true) = 5   （1~6 的随机整数）
+formatCurrency(1234.5, USD) = $1,234.50
+formatCurrency(88.8) = ¥88.80
+legacyMath.clamp(99,0,100) = 99
+</code></pre>
+<p>再跑一次类型检查，确认 <code>.d.ts</code> 被正确识别、零类型错误：</p>
+<pre><code class="language-bash">npx tsc --noEmit
+</code></pre>
+<p><strong>关键点回顾</strong>：本项目的主 tsconfig <strong>没有开 <code>allowJs</code></strong>，<code>include</code> 也只匹配 <code>.ts</code>，但 <code>use-lib.ts</code> 依然能 import <code>legacy-math.js</code> 并获得完整类型——<strong>全靠那份同名 <code>legacy-math.d.ts</code></strong>。这印证了前面反复强调的：<strong>有 <code>.d.ts</code> 时，import <code>.js</code> 不需要 <code>allowJs</code>。</strong></p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li>
+<p><strong>用 JSDoc 达到类似效果</strong>：新建一个 <code>legacy-math-jsdoc.js</code>，把函数实现和 JSDoc 类型注解写在同一个文件里（<code>@param</code>/<code>@returns</code>/<code>@typedef</code>），文件顶部加 <code>// @ts-check</code>。对比“手写独立 <code>.d.ts</code>“和“就地 JSDoc“两种方式的取舍——JSDoc 无需额外文件、类型和实现在一处不易脱节，但表达复杂类型（如重载）时更啰嗦。（提示：JSDoc 里重载可用多个 <code>@overload</code> 标签。）</p>
+</li>
+<li>
+<p><strong>给 <code>formatCurrency</code> 的 <code>currency</code> 收窄类型</strong>：把 <code>currency?: string</code> 改成联合字面量 <code>currency?: "CNY" | "USD" | "JPY" | "EUR"</code>，让传错货币代码时编译报错。体会“声明文件比原 JS 更严“是完全可以的。</p>
+</li>
+<li>
+<p><strong>补一个 <code>declare module</code></strong>：假设这个库在 npm 上叫 <code>"legacy-math"</code>（裸模块名），写一份 <code>declare module "legacy-math" { ... }</code> 形式的声明，放到项目的 <code>typings/</code> 目录并配好 <code>typeRoots</code>，让 <code>import ... from "legacy-math"</code> 也能用。</p>
+</li>
+<li>
+<p><strong>故意写错声明验证</strong>：把 <code>.d.ts</code> 里 <code>clamp</code> 的返回改成 <code>string</code>，观察 <code>use-lib.ts</code> 里 <code>const clamped: number = clamp(...)</code> 报错。这说明声明文件的正确性由你负责——写完务必用真实调用验证。</p>
+</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们把“配置与互操作“这一块讲透了：</p>
+<ul>
+<li><strong>tsconfig.json</strong> 是 TS 编译器的控制面板。分组记忆：
+<ul>
+<li><strong>输出</strong>：<code>target</code>（编到哪个 JS 版本）、<code>module</code>（模块格式）、<code>moduleResolution</code>（node/nodenext/bundler）、<code>lib</code>、<code>outDir</code>/<code>rootDir</code>、<code>declaration</code>、<code>sourceMap</code>。</li>
+<li><strong>严格性</strong>：<code>strict</code>（一键开一组）及其子项（<code>noImplicitAny</code>、<code>strictNullChecks</code>、<code>strictFunctionTypes</code>…），以及 <code>noUncheckedIndexedAccess</code>、<code>exactOptionalPropertyTypes</code>。</li>
+<li><strong>额外检查</strong>：<code>noUnusedLocals</code>、<code>noImplicitReturns</code>、<code>noFallthroughCasesInSwitch</code>。</li>
+<li><strong>互操作/JS</strong>：<code>esModuleInterop</code>、<code>allowJs</code>、<code>checkJs</code>、<code>resolveJsonModule</code>、<code>skipLibCheck</code>、<code>isolatedModules</code>、<code>verbatimModuleSyntax</code>、<code>types</code>/<code>typeRoots</code>。</li>
+<li><strong>组织</strong>：<code>include</code>/<code>exclude</code>/<code>files</code>、<code>extends</code>（继承）、project references（大仓库增量编译）。</li>
+</ul>
+</li>
+<li><strong>模块解析</strong>：相对路径按文件找、优先 <code>.ts</code>/<code>.d.ts</code>；裸模块名去 <code>node_modules</code> 及 <code>@types</code> 找。<code>baseUrl</code>+<code>paths</code> 配别名（记得两头配）。</li>
+<li><strong>声明文件 <code>.d.ts</code></strong>：只有类型没有实现，用 <code>declare</code> 声明“实现在别处“的东西。<code>declare module</code> 给整个模块补类型，全局声明（无 <code>export</code> 的文件）/<code>declare global</code> 加全局类型。<code>@types/*</code> 是社区维护的类型包（<code>npm i -D @types/xxx</code>）。</li>
+<li><strong>JS 互操作</strong>：<code>allowJs</code> 让 TS 接纳 <code>.js</code>，<code>checkJs</code> + JSDoc 给 <code>.js</code> 上类型检查，是 JS→TS 渐进迁移的阶梯。</li>
+<li><strong>小项目</strong>：为纯 JS 库 <code>legacy-math.js</code> 手写 <code>legacy-math.d.ts</code>，演示了函数重载、可选参数、选项对象接口、命名导出与默认导出；并验证了“有 <code>.d.ts</code> 时 import <code>.js</code> 无需 <code>allowJs</code>“。</li>
+</ul>
+<p><strong>自测题</strong>（先自己想，再回代码/配置验证）：</p>
+<ol>
+<li><code>strict: true</code> 打开后，至少列出 3 个被同时打开的子项，各防什么错？</li>
+<li><code>noUncheckedIndexedAccess</code> 开启后，<code>const x = arr[0]</code> 里 <code>x</code> 是什么类型？为什么这样更安全？</li>
+<li>一个 <code>.d.ts</code> 文件什么情况下是“全局脚本“、什么情况下是“模块“？这个区别导致什么后果？</li>
+<li>我要 import 一个旁边有同名 <code>.d.ts</code> 的 <code>.js</code> 文件，一定要开 <code>allowJs</code> 吗？为什么？</li>
+<li><code>moduleResolution</code> 的 <code>nodenext</code> 和 <code>bundler</code> 有什么区别？本书为什么选 <code>bundler</code>？</li>
+<li>声明文件里怎么表达“函数重载“？用本章 <code>add</code> 举例说明。</li>
+<li><code>paths</code> 别名为什么“只配 tsconfig 还不够“？运行时会发生什么？</li>
+<li>想给一个没类型的 JS 老项目做渐进迁移，你会按什么顺序动用 <code>allowJs</code>、<code>checkJs</code>、JSDoc？</li>
+</ol>
+<p>答得上来，你就掌握了从“能跑“到“能配置、能对接 JS 生态“的关键一跃。</p>
+<hr>
+<p>配好了 tsconfig、也能给 JS 补类型了，你的 TypeScript 项目已经“立得住“。但真实工程里，光有编译器还不够：代码风格要统一（不然每次 diff 全是空格之争）、低级错误要在写代码时就被点出、成百上千个模块最终还要打包成能部署的产物。这些活儿交给一套<strong>工具链</strong>。</p>
+<p><strong>第 21 章 · 工具链：ESLint、Prettier 与打包器</strong>将带你搭起现代前端/Node 项目的“周边设施“：用 <strong>Prettier</strong> 自动格式化（告别风格争论）、用 <strong>ESLint</strong>（配合 <code>typescript-eslint</code>）做静态检查揪出可疑代码、用<strong>打包器（bundler）</strong>（如 esbuild/Vite/tsup）把项目打成一个个可发布、可部署的产物。学完那章，你就能从零搭起一个“配置齐全、开箱即写“的 TypeScript 工程。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch19.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch21.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch19.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch21.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

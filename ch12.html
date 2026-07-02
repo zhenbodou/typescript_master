@@ -1,0 +1,842 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 12 章 · 正则表达式与文本处理 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch12.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-12-章--正则表达式与文本处理"><a class="header" href="#第-12-章--正则表达式与文本处理">第 12 章 · 正则表达式与文本处理</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前面几章我们一直在跟数据打交道：数组、对象、文件、网络请求。可有一类数据格外顽固——<strong>文本（text）</strong>。校验一个邮箱格式对不对、从一段日志里揪出所有 IP、把 <code>2026-07-02</code> 拆成年月日、把连续的空格压成一个……这些活儿如果全靠 <code>indexOf</code>、<code>slice</code>、<code>split</code> 一点点手搓，代码会又长又脆。</p>
+<p><strong>正则表达式（regular expression，简称 regex 或 regexp）<strong>就是专门对付文本的“模式语言“。你写一小段“模式“，它就能在字符串里帮你</strong>查找、校验、提取、替换</strong>。它非常强大，但对新手确实不友好——满屏的 <code>\d+</code>、<code>(?&lt;=...)</code> 看着像天书。所以本章我会<strong>从零开始、一个符号一个符号地讲</strong>，每讲一点就配一个能跑的小例子。</p>
+<p>学完本章，你将能够：</p>
+<ul>
+<li>说清楚正则是什么、它擅长解决什么问题、又不该拿它干什么。</li>
+<li>用<strong>字面量</strong>和 <strong><code>new RegExp</code></strong> 两种方式创建正则，理解 <code>g i m s u y</code> 这些 <strong>flags（标志）</strong>。</li>
+<li>掌握<strong>元字符</strong>（<code>. \d \w \s</code> 等）、<strong>字符组</strong> <code>[...]</code>、<strong>量词</strong> <code>* + ? {n,m}</code>、<strong>贪婪与非贪婪</strong>。</li>
+<li>掌握<strong>锚点</strong> <code>^ $</code> 和<strong>单词边界</strong> <code>\b</code>。</li>
+<li>掌握<strong>分组与捕获</strong>：<code>(...)</code>、非捕获 <code>(?:...)</code>、命名捕获 <code>(?&lt;name&gt;...)</code>、反向引用、<code>|</code>。</li>
+<li>认识<strong>前瞻/后顾（lookahead/lookbehind）</strong>。</li>
+<li>熟练在 JS 里用 <code>test</code>、<code>match</code>、<code>matchAll</code>、<code>replace</code>、<code>split</code>、<code>exec</code>，并绕开 <code>g</code> 标志的 <code>lastIndex</code> 陷阱。</li>
+<li>写出几个常用实用正则（邮箱、URL、手机号等），并知道它们的边界。</li>
+<li>亲手做一个 <strong>Markdown → HTML 迷你解析器</strong>。</li>
+</ul>
+<p>本章示例仍用 Node.js 运行。别急着背符号，跟着例子敲一遍，感觉自然就来了。</p>
+<hr>
+<h2 id="正则表达式是什么"><a class="header" href="#正则表达式是什么">正则表达式是什么</a></h2>
+<p>先看一个“不用正则“的场景。假设要判断一个字符串是不是“纯数字“：</p>
+<pre><code class="language-javascript">function isAllDigits(str) {
+  for (const ch of str) {
+    if (ch &lt; "0" || ch &gt; "9") return false;
+  }
+  return str.length &gt; 0;
+}
+</code></pre>
+<p>能用，但啰嗦。换成正则：</p>
+<pre><code class="language-javascript">const isAllDigits = (str) =&gt; /^\d+$/.test(str);
+</code></pre>
+<p>一行搞定。<code>/^\d+$/</code> 读作：“从头（<code>^</code>）到尾（<code>$</code>），全是数字（<code>\d</code>），至少一个（<code>+</code>）”。</p>
+<p>📌 <strong>正则的本质</strong>：用一串符号描述“一类字符串长什么样“，也就是一个<strong>模式（pattern）</strong>。引擎拿这个模式去一段文本里“扫描“，找出符合模式的片段。它最擅长四件事：<strong>校验</strong>（这段文本合法吗）、<strong>查找</strong>（有没有 / 在哪）、<strong>提取</strong>（把符合的部分抠出来）、<strong>替换</strong>（把符合的部分换掉）。</p>
+<p>⚠️ 正则也有它不擅长的：处理<strong>有嵌套结构</strong>的东西（HTML、JSON、编程语言源码）。这些应该交给专门的<strong>解析器（parser）</strong>。本章末尾会反复强调这一点。</p>
+<hr>
+<h2 id="创建正则字面量-vs-构造函数"><a class="header" href="#创建正则字面量-vs-构造函数">创建正则：字面量 vs 构造函数</a></h2>
+<p>JS 里有两种方式造一个正则对象（<code>RegExp</code>）。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/01-basics.js
+
+// 1) 字面量方式：两个斜杠之间写模式，斜杠后面写 flags。
+const re1 = /hello/i; // i = 忽略大小写（ignore case）
+console.log("1) test:", re1.test("Hello, world")); // true
+
+// 2) 构造函数方式：模式是字符串，适合"模式在运行时才拼出来"的场景。
+const word = "hello";
+const re2 = new RegExp(word, "i");
+console.log("2) test:", re2.test("HELLO")); // true
+</code></pre>
+<p>逐段看：</p>
+<ul>
+<li><strong>字面量</strong> <code>/hello/i</code>：两个斜杠 <code>/ /</code> 之间是模式，第二个斜杠后面是 flags。这是最常用的写法，简洁，编辑器还能高亮。<strong>当你写模式时就已经确定内容</strong>，就用它。</li>
+<li><strong>构造函数</strong> <code>new RegExp("hello", "i")</code>：模式是一个<strong>字符串</strong>，flags 是第二个字符串参数。<strong>当模式要在运行时动态拼出来</strong>（比如从用户输入或变量组装）才用它。</li>
+</ul>
+<pre><code class="language-javascript">// 文件：code/ch12/01-basics.js
+
+// ⚠️ 用字符串写模式时，反斜杠要写两个：JS 字符串先吃掉一层。
+const digitLiteral = /\d+/; // 字面量里一个反斜杠就够
+const digitCtor = new RegExp("\\d+"); // 字符串里必须写两个
+console.log("3) 字面量匹配:", digitLiteral.test("abc123")); // true
+console.log("4) 构造匹配:", digitCtor.test("abc123")); // true
+</code></pre>
+<p>⚠️ <strong>反斜杠陷阱</strong>：在普通字符串里，<code>\</code> 本身是转义符（比如 <code>\n</code> 是换行）。所以 <code>"\d"</code> 会先被 JS 字符串解释一次，<code>\d</code> 并不是合法转义，结果可能不是你想的。用 <code>new RegExp</code> 时，正则里的每个 <code>\</code> 都要写成 <code>\\</code>。这也是“能用字面量就用字面量“的一个理由。</p>
+<h3 id="flags一串小写字母改变匹配行为"><a class="header" href="#flags一串小写字母改变匹配行为">flags：一串小写字母，改变匹配行为</a></h3>
+<p>flags 写在字面量的第二个斜杠之后，或作为 <code>RegExp</code> 的第二个参数。常用的有 6 个：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>flag</th><th>名字</th><th>作用</th></tr>
+</thead>
+<tbody>
+<tr><td><code>g</code></td><td>global</td><td><strong>全局</strong>匹配，找出所有，而不是找到第一个就停</td></tr>
+<tr><td><code>i</code></td><td>ignore case</td><td>忽略大小写</td></tr>
+<tr><td><code>m</code></td><td>multiline</td><td>让 <code>^</code> <code>$</code> 匹配<strong>每一行</strong>的开头/结尾</td></tr>
+<tr><td><code>s</code></td><td>dotAll</td><td>让 <code>.</code> 也能匹配换行符</td></tr>
+<tr><td><code>u</code></td><td>unicode</td><td>正确处理 Unicode（如 emoji、<code>\u{...}</code>）</td></tr>
+<tr><td><code>y</code></td><td>sticky</td><td><strong>粘性</strong>匹配，必须从 <code>lastIndex</code> 那个位置开始匹配</td></tr>
+</tbody>
+</table>
+</div>
+<p>可以组合，比如 <code>/foo/gi</code> 就是“全局 + 忽略大小写“。这些 flag 后面用到时会再演示，现在有个印象即可。</p>
+<h3 id="先认识-test-和-exec"><a class="header" href="#先认识-test-和-exec">先认识 test 和 exec</a></h3>
+<p><code>RegExp</code> 对象有两个自带方法，先见个面：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/01-basics.js
+
+// test：返回 true/false，"有没有匹配到"。
+// exec：返回一个"匹配结果数组"，没匹配到返回 null。
+const m = /(\d+)-(\d+)/.exec("范围 12-34 结束");
+console.log("5) exec:", m[0], m[1], m[2], "index=", m.index);
+// m[0] 是整段匹配 "12-34"，m[1]/m[2] 是两个分组
+</code></pre>
+<ul>
+<li><code>test(str)</code>：只回答“有没有“，返回布尔值。校验场景最常用。</li>
+<li><code>exec(str)</code>：找到一次匹配，返回一个数组：<code>m[0]</code> 是<strong>整段匹配到的字符串</strong>，<code>m[1]</code>、<code>m[2]</code>……是各个<strong>分组</strong>（后面讲），<code>m.index</code> 是匹配开始的位置。没找到就返回 <code>null</code>。</li>
+</ul>
+<p>运行 <code>node code/ch12/01-basics.js</code> 看看结果。下面我们正式拆解模式里的符号。</p>
+<hr>
+<h2 id="元字符用一个符号代表一类字符"><a class="header" href="#元字符用一个符号代表一类字符">元字符：用一个符号代表“一类字符“</a></h2>
+<p>正则里，大部分字符就是它字面的意思——<code>a</code> 匹配字母 a，<code>5</code> 匹配数字 5。但有些字符有“魔力“，叫<strong>元字符（metacharacter）</strong>。最有用的是这几个“字符类简写“：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/02-metachars.js
+
+const s = "价格 A1_ b2? 空 格";
+
+// \d 数字，\D 非数字
+console.log("\\d 找数字:", s.match(/\d/g)); // ['1','2']
+// \w 单词字符（字母、数字、下划线），\W 取反
+console.log("\\w 单词字符:", "a_1 中!".match(/\w/g)); // ['a','_','1']  中文和 ! 不算
+// \s 空白（空格、制表符、换行），\S 非空白
+console.log("\\s 空白数量:", ("a b\tc\nd".match(/\s/g) || []).length); // 3
+</code></pre>
+<p>逐个记：</p>
+<ul>
+<li><code>\d</code> = digit，一个<strong>数字</strong> <code>0-9</code>；大写 <code>\D</code> 取反，一个<strong>非数字</strong>。</li>
+<li><code>\w</code> = word，一个<strong>单词字符</strong>：字母、数字、下划线（<code>[A-Za-z0-9_]</code>）；大写 <code>\W</code> 取反。⚠️ 注意：<code>\w</code> <strong>不包含中文</strong>，中文的 <code>中</code> 不算单词字符。</li>
+<li><code>\s</code> = space，一个<strong>空白字符</strong>：空格、制表符 <code>\t</code>、换行 <code>\n</code> 等；大写 <code>\S</code> 取反。</li>
+</ul>
+<p>📌 规律：<strong>小写是“某一类“，对应的大写就是“这类之外的所有“</strong>。</p>
+<h3 id="点-几乎任意一个字符"><a class="header" href="#点-几乎任意一个字符">点 <code>.</code>：几乎任意一个字符</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/02-metachars.js
+
+// . 匹配"除换行外任意一个字符"
+console.log(".  任意字符:", "cat cut cot".match(/c.t/g)); // ['cat','cut','cot']
+</code></pre>
+<p><code>.</code> 匹配<strong>除换行符外的任意一个字符</strong>。<code>c.t</code> 就是“c、任意一个字符、t“。⚠️ 想让 <code>.</code> 连换行也匹配，加 <code>s</code>（dotAll）flag。</p>
+<h3 id="字符组-自己定义一类字符"><a class="header" href="#字符组-自己定义一类字符">字符组 <code>[...]</code>：自己定义“一类字符“</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/02-metachars.js
+
+// [...] 字符组：括号内任选一个
+console.log("[aeiou] 元音:", "regex".match(/[aeiou]/g)); // ['e','e']
+// 范围：a-z、0-9
+console.log("[a-f0-3]:", "a3g9c".match(/[a-f0-3]/g)); // ['a','3','c']
+// [^...] 取反：不是这些字符
+console.log("[^0-9] 非数字:", "a1b2".match(/[^0-9]/g)); // ['a','b']
+</code></pre>
+<ul>
+<li><code>[aeiou]</code>：方括号里的<strong>任意一个</strong>字符（这里是任一元音）。</li>
+<li><code>[a-f0-3]</code>：用连字符 <code>-</code> 表示<strong>范围</strong>，等于 <code>[abcdef0123]</code>。</li>
+<li><code>[^...]</code>：方括号里<strong>开头</strong>加 <code>^</code> 表示<strong>取反</strong>——“不是这些字符里的任何一个”。比如 <code>[^0-9]</code> 就是“非数字“。</li>
+</ul>
+<p>⚠️ <strong>组内元字符会失去魔力</strong>：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/02-metachars.js
+
+// 在字符组里，大多数元字符会"失去魔力"变成普通字符。
+console.log("组内的 . + *:", "1.2+3*4".match(/[.+*]/g)); // ['.','+','*']
+</code></pre>
+<p>在 <code>[...]</code> 里面，<code>.</code>、<code>+</code>、<code>*</code> 这些平时有特殊含义的符号，大多变回它们<strong>字面本身</strong>。所以 <code>[.+*]</code> 匹配的就是真正的点、加号、星号。这是个好消息：想匹配这些符号本身时，放进字符组是最省心的写法之一。</p>
+<hr>
+<h2 id="量词控制重复多少次"><a class="header" href="#量词控制重复多少次">量词：控制“重复多少次“</a></h2>
+<p>前面 <code>\d</code> 只匹配一个数字。想匹配“一串数字“就得用<strong>量词（quantifier）</strong>，写在某个模式后面，表示它要重复几次。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/03-quantifiers.js
+
+// * 零或多，+ 一或多，? 零或一
+console.log("ab* :", "a ab abbb".match(/ab*/g)); // ['a','ab','abbb']
+console.log("ab+ :", "a ab abbb".match(/ab+/g)); // ['ab','abbb']（单独的 a 不匹配）
+console.log("colou?r:", "color colour".match(/colou?r/g)); // ['color','colour']
+</code></pre>
+<p>三个基础量词：</p>
+<ul>
+<li><code>*</code>：<strong>零次或多次</strong>。<code>ab*</code> = 一个 a，后面跟零个或多个 b。所以单独的 <code>a</code> 也算。</li>
+<li><code>+</code>：<strong>一次或多次</strong>。<code>ab+</code> 要求至少一个 b，所以单独的 <code>a</code> 不匹配。</li>
+<li><code>?</code>：<strong>零次或一次</strong>（可有可无）。<code>colou?r</code> 里 u 可有可无，于是 <code>color</code> 和 <code>colour</code> 都匹配。</li>
+</ul>
+<p>⚠️ 注意量词只作用于<strong>紧挨着它前面的那一个东西</strong>（一个字符、一个字符组、或一个分组）。<code>ab*</code> 里 <code>*</code> 只管 <code>b</code>，不管 <code>a</code>。</p>
+<h3 id="精确次数n-n-nm"><a class="header" href="#精确次数n-n-nm">精确次数：<code>{n} {n,} {n,m}</code></a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/03-quantifiers.js
+
+// {n} 恰好 n 次，{n,} 至少 n 次，{n,m} n 到 m 次
+console.log("\\d{4}:", "年份 2026 和 12".match(/\d{4}/g)); // ['2026']
+console.log("\\d{2,3}:", "1 22 333 4444".match(/\d{2,3}/g)); // ['22','333','444']
+</code></pre>
+<ul>
+<li><code>{n}</code>：<strong>恰好</strong> n 次。<code>\d{4}</code> = 恰好 4 个数字。上例里 <code>12</code> 只有两位，被排除。</li>
+<li><code>{n,}</code>：<strong>至少</strong> n 次（上不封顶）。</li>
+<li><code>{n,m}</code>：<strong>n 到 m 次</strong>。<code>\d{2,3}</code> 匹配 2~3 位数字。注意 <code>4444</code> 会先吃掉 <code>444</code>（尽量多），剩下的单个 <code>4</code> 不足 2 位就被丢弃了。</li>
+</ul>
+<h3 id="贪婪-vs-非贪婪吃多还是吃少"><a class="header" href="#贪婪-vs-非贪婪吃多还是吃少">贪婪 vs 非贪婪：吃多还是吃少</a></h3>
+<p>这是新手最容易栽的坑。默认情况下，量词是**贪婪（greedy）**的——尽可能多吃字符。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/03-quantifiers.js
+
+const html = "&lt;b&gt;粗&lt;/b&gt;&lt;i&gt;斜&lt;/i&gt;";
+// 贪婪：默认尽可能多吃
+console.log("贪婪 &lt;.+&gt;:", html.match(/&lt;.+&gt;/)[0]); // 整个字符串！
+// 非贪婪：量词后加 ?，尽可能少吃
+console.log("非贪婪 &lt;.+?&gt;:", html.match(/&lt;.+?&gt;/g)); // ['&lt;b&gt;','&lt;/b&gt;','&lt;i&gt;','&lt;/i&gt;']
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li><code>&lt;.+&gt;</code> 想匹配“一个标签“，但 <code>.+</code> 贪婪，它从第一个 <code>&lt;</code> 一路吃到<strong>最后一个</strong> <code>&gt;</code>，结果把整个字符串当成一个匹配。</li>
+<li><code>&lt;.+?&gt;</code> 在 <code>+</code> 后面加了个 <code>?</code>，把它变成<strong>非贪婪（lazy / non-greedy）</strong>——尽可能少吃。于是每遇到最近的 <code>&gt;</code> 就停下，正确地一个个抠出标签。</li>
+</ul>
+<p>📌 记忆法：<strong>量词后加 <code>?</code> = “见好就收”</strong>。凡是用 <code>.+</code> 或 <code>.*</code> 去“框住一段内容“时，几乎都要加 <code>?</code> 改成非贪婪，否则很容易一口吞太多。</p>
+<hr>
+<h2 id="锚点与边界匹配位置而不是字符"><a class="header" href="#锚点与边界匹配位置而不是字符">锚点与边界：匹配“位置“而不是字符</a></h2>
+<p>有些符号不匹配任何字符，而是匹配一个<strong>位置</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/04-anchors.js
+
+// ^ 匹配开头，$ 匹配结尾
+console.log("^\\d:", /^\d/.test("1abc"), /^\d/.test("abc1")); // true false
+console.log("\\d$:", /\d$/.test("abc1"), /\d$/.test("1abc")); // true false
+
+// 完整匹配一个整数：从头到尾都必须是数字
+const isInt = /^\d+$/;
+console.log("整数校验:", isInt.test("12345"), isInt.test("12a45")); // true false
+</code></pre>
+<ul>
+<li><code>^</code>：<strong>字符串开头</strong>。<code>^\d</code> = “开头是一个数字”。</li>
+<li><code>$</code>：<strong>字符串结尾</strong>。<code>\d$</code> = “结尾是一个数字”。</li>
+<li><code>^...$</code> 一起用，表示“<strong>整个字符串</strong>都要符合中间的模式“，这是做<strong>校验</strong>的标准套路。<code>^\d+$</code> 就是“从头到尾全是数字“。</li>
+</ul>
+<p>⚠️ 别混淆两个 <code>^</code>：在字符组开头 <code>[^...]</code> 是“取反“；在模式开头 <code>^</code> 是“字符串开头“。位置不同，含义不同。</p>
+<h3 id="单词边界-b"><a class="header" href="#单词边界-b">单词边界 <code>\b</code></a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/04-anchors.js
+
+// \b 单词边界：单词字符与非单词字符之间的"缝隙"
+console.log("\\bcat\\b:", "cat category scatter".match(/\bcat\b/g)); // ['cat']
+</code></pre>
+<p><code>\b</code> 匹配一个<strong>单词边界（word boundary）</strong>——就是单词字符（<code>\w</code>）和非单词字符之间的那道“缝“。<code>\bcat\b</code> 要求 cat 两侧都是边界，所以只匹配独立的单词 <code>cat</code>，而 <code>category</code>（右边还是字母）和 <code>scatter</code>（cat 嵌在中间）都不算。做“整词搜索/替换“时特别有用。</p>
+<h3 id="m-标志多行模式"><a class="header" href="#m-标志多行模式"><code>m</code> 标志：多行模式</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/04-anchors.js
+
+const text = "第一行\n第二行\n第三行";
+console.log("不带 m:", text.match(/^第.行/g)); // ['第一行']
+console.log("带 m:", text.match(/^第.行/gm)); // ['第一行','第二行','第三行']
+</code></pre>
+<p>默认 <code>^</code> <code>$</code> 只认整段文本的开头和结尾。加上 <code>m</code>（multiline）后，它们会匹配<strong>每一行</strong>的开头和结尾。处理多行文本（日志、配置文件）时常用。</p>
+<hr>
+<h2 id="分组与捕获把关心的部分抠出来"><a class="header" href="#分组与捕获把关心的部分抠出来">分组与捕获：把关心的部分抠出来</a></h2>
+<p>用一对圆括号 <code>(...)</code> 把一段模式括起来，就成了一个<strong>分组（group）</strong>。分组有两个作用：<strong>让量词作用于一整段</strong>，以及<strong>把匹配到的内容单独“捕获“下来</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/05-groups.js
+
+// 捕获分组：括号里的内容会被单独"抓"出来
+const date = "2026-07-02";
+const m1 = date.match(/(\d{4})-(\d{2})-(\d{2})/);
+console.log("捕获:", m1[1], m1[2], m1[3]); // 2026 07 02
+</code></pre>
+<p><code>(\d{4})-(\d{2})-(\d{2})</code> 有三个分组。匹配后，<code>m1[0]</code> 是整段 <code>2026-07-02</code>，<code>m1[1]</code>/<code>m1[2]</code>/<code>m1[3]</code> 分别是年、月、日。这就是<strong>捕获（capture）</strong>——把一次匹配里的“部件“分别取出来。</p>
+<h3 id="-或"><a class="header" href="#-或"><code>|</code> 或</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/05-groups.js
+
+// | 或：匹配多个备选之一。用分组限定"或"的范围。
+console.log("cat|dog:", "I have a cat and a dog".match(/cat|dog/g)); // ['cat','dog']
+console.log("分组限定或:", "grey gray".match(/gr(a|e)y/g)); // ['grey','gray']
+</code></pre>
+<p><code>|</code> 是“或“，<code>cat|dog</code> 匹配 cat 或 dog。⚠️ <code>|</code> 的“势力范围“很大，会一路延伸到两端或最近的括号边界。想只在局部选择，就用分组框起来：<code>gr(a|e)y</code> 表示 gr 后面是 a 或 e，再接 y。</p>
+<h3 id="非捕获分组-"><a class="header" href="#非捕获分组-">非捕获分组 <code>(?:...)</code></a></h3>
+<p>有时你只想用括号来“分组“（配合量词或 <code>|</code>），并不需要把内容捕获下来。这时用 <code>(?:...)</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/05-groups.js
+
+// 非捕获分组 (?:...)：只想分组、不想留捕获结果时用
+const m2 = "grey".match(/gr(?:a|e)y/);
+console.log("非捕获:", m2[0], "没有 m2[1]:", m2[1]); // grey undefined
+</code></pre>
+<p><code>(?:a|e)</code> 只做分组，不占用捕获编号，所以 <code>m2[1]</code> 是 <code>undefined</code>。💡 好处：捕获编号更清爽，性能也略好。<strong>不需要取出内容时，优先用非捕获分组</strong>。</p>
+<h3 id="命名捕获-name"><a class="header" href="#命名捕获-name">命名捕获 <code>(?&lt;name&gt;...)</code></a></h3>
+<p>用数字编号取分组，多了容易数错。可以给分组起名字：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/05-groups.js
+
+// 命名捕获 (?&lt;name&gt;...)：给分组起名字，通过 groups 访问
+const m3 = date.match(/(?&lt;year&gt;\d{4})-(?&lt;month&gt;\d{2})-(?&lt;day&gt;\d{2})/);
+console.log("命名捕获:", m3.groups.year, m3.groups.month, m3.groups.day);
+</code></pre>
+<p><code>(?&lt;year&gt;...)</code> 给分组起名叫 <code>year</code>，之后通过 <code>m3.groups.year</code> 访问。💡 分组一多，命名捕获比 <code>m[3]</code>、<code>m[7]</code> 可读得多。</p>
+<h3 id="反向引用-1"><a class="header" href="#反向引用-1">反向引用 <code>\1</code></a></h3>
+<p>分组还能在<strong>同一个模式内</strong>被“回引“：<code>\1</code> 表示“这里要重复第 1 个分组刚匹配到的内容“。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/05-groups.js
+
+// 反向引用 \1：要求后面重复前面第 1 个分组匹配到的内容——可用来找叠词
+console.log("叠词 (\\w)\\1:", "book cool tree hi".match(/(\w)\1/g)); // ['oo','oo','ee']
+</code></pre>
+<p><code>(\w)\1</code> 的意思是：“一个单词字符，紧接着<strong>同一个</strong>字符”。于是它匹配 book 的 <code>oo</code>、cool 的 <code>oo</code>、tree 的 <code>ee</code>——都是“某个字符连着出现两次“。注意它要求的是“内容相同“，不是“再来一个任意字符“。</p>
+<hr>
+<h2 id="前瞻与后顾lookaround"><a class="header" href="#前瞻与后顾lookaround">前瞻与后顾（lookaround）</a></h2>
+<p>有时你想说：“匹配 X，但<strong>前提是</strong>它左边/右边是（或不是）某个东西，而这个东西本身<strong>不算进匹配结果</strong>”。这就是<strong>环视（lookaround）</strong>，分为前瞻和后顾。它们是“条件判断“，<strong>不消耗字符</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/06-lookaround.js
+
+// 正向前瞻 (?=...)：要求右边"跟着"某模式，但不把它算进匹配
+console.log("前瞻:", "10px 20em 30px".match(/\d+(?=px)/g)); // ['10','30']
+
+// 负向前瞻 (?!...)：要求右边"不跟着"某模式
+console.log("负前瞻:", "10px 20em 30px".match(/\d+(?!px|\d)/g)); // ['20']
+
+// 正向后顾 (?&lt;=...)：要求左边"前面是"某模式
+console.log("后顾:", "$100 ￥200 $300".match(/(?&lt;=\$)\d+/g)); // ['100','300']
+
+// 负向后顾 (?&lt;!...)：要求左边"前面不是"某模式
+console.log("负后顾:", "$100 ￥200".match(/(?&lt;!\$)\b\d+/g)); // ['200']
+</code></pre>
+<p>四种写法：</p>
+<ul>
+<li><code>(?=...)</code> <strong>正向前瞻</strong>：右边必须跟着某模式。<code>\d+(?=px)</code> 匹配“后面跟着 px 的数字“，但匹配结果里<strong>不含</strong> px。</li>
+<li><code>(?!...)</code> <strong>负向前瞻</strong>：右边必须<strong>不</strong>跟着某模式。</li>
+<li><code>(?&lt;=...)</code> <strong>正向后顾</strong>：左边必须是某模式。<code>(?&lt;=\$)\d+</code> 匹配“前面是 $ 的数字“，结果不含 $。</li>
+<li><code>(?&lt;!...)</code> <strong>负向后顾</strong>：左边必须<strong>不</strong>是某模式。</li>
+</ul>
+<p>一个经典应用——给数字加千分位逗号：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/06-lookaround.js
+
+const n = "1234567";
+const withCommas = n.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+console.log("千分位:", withCommas); // 1,234,567
+</code></pre>
+<p>这个模式在“每往右数正好是 3 的倍数个数字、且后面没有更多数字“的位置插逗号。看不懂没关系——它就是想说明环视能表达相当精巧的条件。💡 环视是进阶特性，初学阶段能看懂 <code>(?=...)</code> 和 <code>(?&lt;=...)</code> 就够了。</p>
+<hr>
+<h2 id="在-javascript-里使用正则"><a class="header" href="#在-javascript-里使用正则">在 JavaScript 里使用正则</a></h2>
+<p>模式会写了，现在看怎么把它用在字符串上。核心是 <code>RegExp</code> 的 <code>test</code>/<code>exec</code> 和 <code>String</code> 的 <code>match</code>/<code>matchAll</code>/<code>replace</code>/<code>split</code>。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/07-methods.js
+
+const s = "订单 A-12, B-34, C-56";
+
+// str.match：不带 g 返回带分组的详细结果；带 g 只返回所有整段匹配的数组
+console.log("match 无 g:", s.match(/([A-Z])-(\d+)/)); // 含分组、index
+console.log("match 有 g:", s.match(/[A-Z]-\d+/g)); // ['A-12','B-34','C-56']
+</code></pre>
+<p>⚠️ <strong><code>match</code> 的行为取决于有没有 <code>g</code></strong>：</p>
+<ul>
+<li><strong>不带 <code>g</code></strong>：像 <code>exec</code> 一样，返回<strong>第一次</strong>匹配的详细数组（含分组、<code>index</code>）。</li>
+<li><strong>带 <code>g</code></strong>：返回<strong>所有整段匹配</strong>组成的数组，但<strong>丢掉分组信息</strong>（没有 <code>m[1]</code>）。</li>
+</ul>
+<p>想“既要全部匹配、又要分组“，用 <code>matchAll</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/07-methods.js
+
+// str.matchAll：返回迭代器，每项都带分组，最适合"全部匹配且要分组"
+for (const m of s.matchAll(/([A-Z])-(\d+)/g)) {
+  console.log("matchAll:", m[1], "=&gt;", m[2]);
+}
+</code></pre>
+<p><code>matchAll</code> 返回一个<strong>迭代器（iterator）</strong>，用 <code>for...of</code> 遍历，每一项都是完整的匹配结果（带分组）。⚠️ <code>matchAll</code> 的正则<strong>必须带 <code>g</code></strong>，否则报错。这是现代代码里遍历全部匹配的首选。</p>
+<h3 id="replace查找并替换"><a class="header" href="#replace查找并替换">replace：查找并替换</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/07-methods.js
+
+// str.replace：$1 引用分组，$&lt;name&gt; 引用命名分组
+console.log("replace $:", s.replace(/([A-Z])-(\d+)/g, "$1$2"));
+// 函数替换：拿到每次匹配，动态计算替换内容
+console.log(
+  "replace 函数:",
+  s.replace(/(\d+)/g, (whole) =&gt; Number(whole) * 2)
+); // 数字翻倍
+</code></pre>
+<p><code>replace</code> 有两种“替换值“：</p>
+<ul>
+<li><strong>字符串</strong>：里面可用 <code>$1</code>、<code>$2</code> 引用分组，<code>$&lt;name&gt;</code> 引用命名分组，<code>$&amp;</code> 代表整段匹配。上例 <code>"$1$2"</code> 把 <code>A-12</code> 换成 <code>A12</code>（去掉中间的横杠）。</li>
+<li><strong>函数</strong>：每匹配一次就调用一次，参数依次是“整段匹配、各分组、位置、原串“，<strong>返回值</strong>作为替换内容。上例把每个数字翻倍。函数替换非常灵活，能做字符串模板做不到的动态计算。</li>
+</ul>
+<p>⚠️ 想替换<strong>所有</strong>匹配，正则要带 <code>g</code>（或用更新的 <code>replaceAll</code>）。不带 <code>g</code> 只换第一处。</p>
+<h3 id="split用正则切分"><a class="header" href="#split用正则切分">split：用正则切分</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/07-methods.js
+
+// str.split：用正则切分
+console.log("split:", "a1b22c333d".split(/\d+/)); // ['a','b','c','d']
+</code></pre>
+<p><code>split</code> 的分隔符可以是正则。<code>split(/\d+/)</code> 表示“按一段或多段数字切开“，很适合分隔符不固定的场景。</p>
+<h3 id="exec--lastindexg-标志的坑"><a class="header" href="#exec--lastindexg-标志的坑">exec + lastIndex：<code>g</code> 标志的坑</a></h3>
+<p>这是本章<strong>最重要的陷阱</strong>，务必看懂。带 <code>g</code> 的正则对象是<strong>有状态的</strong>：它会记住一个 <code>lastIndex</code> 属性，下次匹配从这个位置继续。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/07-methods.js
+
+// exec + lastIndex：带 g 的正则每次从 lastIndex 继续，配合 while 遍历全部匹配。
+const re = /[A-Z]-\d+/g;
+let match;
+while ((match = re.exec(s)) !== null) {
+  console.log("exec:", match[0], "下次从", re.lastIndex, "开始");
+}
+</code></pre>
+<p>这段能正确遍历所有匹配：每次 <code>exec</code> 找到下一个，并把 <code>lastIndex</code> 前移；找不到时返回 <code>null</code>，循环结束。这是“逐个处理匹配“的经典写法。</p>
+<p>但同一个“有状态“的特性，如果误用，就会咬人：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/07-methods.js
+
+// ⚠️ 陷阱：把带 g 的正则放进循环反复 test，lastIndex 会乱跳。
+const bad = /\d/g;
+console.log("坑演示:", bad.test("1"), bad.test("1"), bad.test("1"));
+// true false true —— 状态残留导致结果不稳定！
+</code></pre>
+<p>对<strong>同一个</strong>带 <code>g</code> 的正则连续调 <code>test</code>（或 <code>exec</code>），<code>lastIndex</code> 会一直变，导致对相同输入给出<strong>不一样的结果</strong>。</p>
+<p>📌 <strong>避坑口诀</strong>：</p>
+<ol>
+<li>做<strong>校验</strong>（<code>test</code>）的正则，<strong>别加 <code>g</code></strong>。</li>
+<li>要<strong>复用</strong>带 <code>g</code> 的正则做全局操作时，优先用 <code>matchAll</code> / <code>replace</code>，它们不依赖你手动管理状态。</li>
+<li>用 <code>exec</code> 循环时，正则对象<strong>声明在循环外</strong>，让 <code>lastIndex</code> 自然推进；别每次循环都新建。</li>
+</ol>
+<hr>
+<h2 id="常见实用正则"><a class="header" href="#常见实用正则">常见实用正则</a></h2>
+<p>下面是几个日常够用的正则。⚠️ 先说重点：<strong>邮箱、URL 的“完全正确“规范极其复杂</strong>，这里的目标是“表单校验够用“，不是覆盖所有合法情况。</p>
+<pre><code class="language-javascript">// 文件：code/ch12/08-practical.js
+
+// 邮箱（简化版）：用户名@域名.后缀
+const emailRe = /^[\w.+-]+@[\w-]+(\.[\w-]+)+$/;
+console.log("邮箱:", emailRe.test("a.b+tag@mail.example.com"), emailRe.test("bad@@x"));
+
+// URL（简化版）：http(s):// 开头
+const urlRe = /^https?:\/\/[\w.-]+(:\d+)?(\/[^\s]*)?$/i;
+console.log("URL:", urlRe.test("https://example.com/path?q=1"), urlRe.test("ftp://x"));
+
+// 中国大陆手机号：1 开头，第二位 3-9，共 11 位
+const phoneRe = /^1[3-9]\d{9}$/;
+console.log("手机号:", phoneRe.test("13812345678"), phoneRe.test("12345"));
+</code></pre>
+<ul>
+<li><strong>邮箱</strong> <code>^[\w.+-]+@[\w-]+(\.[\w-]+)+$</code>：<code>@</code> 前是用户名（允许字母数字和 <code>. + -</code>），<code>@</code> 后是“域名段（点 段）+“，保证至少有一个点分后缀。</li>
+<li><strong>URL</strong> <code>^https?:\/\/...</code>：<code>https?</code> 里 <code>?</code> 让 s 可有可无（http 或 https）；<code>\/\/</code> 是转义的双斜杠；后面是主机、可选端口、可选路径。</li>
+<li><strong>手机号</strong> <code>^1[3-9]\d{9}$</code>：1 开头，第二位 3~9，再加 9 位数字，共 11 位。</li>
+</ul>
+<p>两个常用文本清洗：</p>
+<pre><code class="language-javascript">// 文件：code/ch12/08-practical.js
+
+// 去除多余空白：把连续空白压成一个空格，并去掉首尾
+const messy = "  多个   空格   和\t制表符  ";
+console.log("去空白:", JSON.stringify(messy.replace(/\s+/g, " ").trim()));
+
+// 提取所有数字（含小数）
+const text = "苹果 3.5 元，香蕉 12 元，一共 15.5";
+console.log("提取数字:", text.match(/\d+(\.\d+)?/g)); // ['3.5','12','15.5']
+</code></pre>
+<ul>
+<li><strong>去多余空白</strong>：<code>replace(/\s+/g, " ")</code> 把任意连续空白压成一个空格，再 <code>trim()</code> 去首尾。</li>
+<li><strong>提取数字</strong>：<code>\d+(\.\d+)?</code> 匹配整数或小数（小数部分可选）。</li>
+</ul>
+<p>💡 <strong>别过度依赖正则</strong>：<code>3.5</code> 好提取，可一旦遇到千分位 <code>1,234.5</code>、科学计数法 <code>1e3</code>、负号，正则会越写越长越易错。<strong>结构复杂时，先分割成小块，再用 <code>Number()</code>/<code>parseFloat</code> 转换</strong>，往往比一个巨型正则清晰得多。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong><code>.</code> 不匹配换行</strong>：想跨行匹配，加 <code>s</code>（dotAll）flag。</li>
+<li>⚠️ <strong>贪婪吞太多</strong>：凡是 <code>.+</code> / <code>.*</code> 想“框住一段“，几乎都要改成非贪婪 <code>.+?</code> / <code>.*?</code>。</li>
+<li>⚠️ <strong><code>g</code> 的 <code>lastIndex</code> 状态</strong>：校验用的正则不要加 <code>g</code>；遍历全部匹配优先 <code>matchAll</code>。别对同一个带 <code>g</code> 的正则反复 <code>test</code>。</li>
+<li>⚠️ <strong>在字符串里写模式要双反斜杠</strong>：<code>new RegExp("\\d")</code>。能用字面量就用字面量。</li>
+<li>⚠️ <strong>忘了转义元字符</strong>：想匹配真正的点 <code>.</code>、问号 <code>?</code>、括号 <code>(</code>，要写成 <code>\.</code>、<code>\?</code>、<code>\(</code>，或放进字符组 <code>[.?()]</code>。</li>
+<li>💡 <strong>用命名捕获和非捕获分组</strong>提高可读性：需要取值就 <code>(?&lt;name&gt;...)</code>，只分组就 <code>(?:...)</code>。</li>
+<li>💡 <strong>复杂正则加注释和测试</strong>：正则是“写起来一时爽、半年后看不懂“的重灾区。旁边写一行注释说明它匹配什么，并留几个测试用例。</li>
+<li>💡 <strong>别用正则解析嵌套结构</strong>：HTML、JSON、编程语言……交给专门的解析库。正则适合“局部、扁平、规则简单“的文本。</li>
+</ul>
+<h3 id="redos灾难性回溯"><a class="header" href="#redos灾难性回溯">ReDoS：灾难性回溯</a></h3>
+<p>⚠️ 有一类正则会在特定输入下<strong>卡死</strong>，叫 <strong>ReDoS（Regular expression Denial of Service，正则拒绝服务）</strong>。根源是<strong>灾难性回溯（catastrophic backtracking）</strong>：当模式里出现“<strong>嵌套的量词</strong>“且能以指数级方式尝试组合时，引擎会陷入海量回溯。</p>
+<p>典型危险模式长这样：<code>(a+)+$</code>、<code>(\w+\s?)*$</code>——量词套量词，且允许同一段文本被多种方式切分。喂给它一个“差一点就匹配“的长字符串，CPU 就会飙满、页面/服务卡住。</p>
+<p>怎么防：</p>
+<ul>
+<li><strong>避免“量词套量词“</strong>：如 <code>(x+)+</code>、<code>(x*)*</code>、<code>(x+)*</code>。能改成 <code>(?:x)+</code> 这种单层就改。</li>
+<li><strong>让分支互斥</strong>：别让引擎有“多种切法都可能“的空间。比如把 <code>(\d+)*</code> 改成 <code>\d+</code>。</li>
+<li><strong>限制输入长度</strong>：对用户输入先卡个合理上限，再跑正则。</li>
+<li><strong>拿不准就上工具</strong>：用现成的校验库，或用能检测危险模式的工具（如 <code>safe-regex</code> 思路）体检你的正则。</li>
+</ul>
+<p>📌 记住：正则的强大来自“回溯尝试“，而灾难性回溯正是这份强大的阴暗面。写校验正则时，多想一句“最坏输入会让它试多少种可能“。</p>
+<hr>
+<h2 id="本章小项目markdown--html-迷你解析器"><a class="header" href="#本章小项目markdown--html-迷你解析器">本章小项目：Markdown → HTML 迷你解析器</a></h2>
+<p>我们来把学到的正则串成一个能跑的小工具：把一小撮 <strong>Markdown</strong> 语法转成 <strong>HTML</strong>。</p>
+<p>⚠️ <strong>郑重声明</strong>：这是一个<strong>教学玩具</strong>，只为体会正则怎么协作。真实项目请用成熟库（如 <code>marked</code>、<code>markdown-it</code>），它们处理了海量边界情况，也做过 ReDoS 加固。别把这个玩具搬进生产环境。</p>
+<p>支持的语法：标题 <code>#</code>/<code>##</code>/<code>###</code>、粗体 <code>**x**</code>、斜体 <code>*x*</code>、行内代码 <code>`x`</code>、链接 <code>[文字](地址)</code>、无序列表 <code>- item</code>、以及普通段落。</p>
+<p>思路分两层：<strong>行内元素</strong>（在一行内部替换，如粗体、链接）和<strong>块级元素</strong>（按行扫描，如标题、列表、段落）。</p>
+<h3 id="行内替换"><a class="header" href="#行内替换">行内替换</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/md-to-html.js
+
+function renderInline(text) {
+  // 行内代码要最先处理：先把 `x` 抠出来，避免里面的 * 被误当成粗体。
+  text = text.replace(/`([^`]+)`/g, "&lt;code&gt;$1&lt;/code&gt;");
+
+  // 链接 [文字](地址)：\[ \] \( \) 都要转义，因为它们是元字符。
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '&lt;a href="$2"&gt;$1&lt;/a&gt;');
+
+  // 粗体 **x**：必须放在斜体之前，否则单个 * 会先把 ** 拆掉。
+  text = text.replace(/\*\*(.+?)\*\*/g, "&lt;strong&gt;$1&lt;/strong&gt;");
+
+  // 斜体 *x*：单个星号包裹。此时 ** 已经被换成 &lt;strong&gt;，不会再干扰。
+  text = text.replace(/\*(.+?)\*/g, "&lt;em&gt;$1&lt;/em&gt;");
+
+  return text;
+}
+</code></pre>
+<p>逐条拆解正则，<strong>顺序很关键</strong>：</p>
+<ul>
+<li><code>/`([^`]+)`/g</code> —— 行内代码。两个反引号之间，<code>[^</code>]+<code>抓"不是反引号的一段字符"。**最先处理**，这样代码块内部的</code>*<code>、</code>[` 不会被后面的规则误伤。</li>
+<li><code>/\[([^\]]+)\]\(([^)]+)\)/g</code> —— 链接。<code>\[ \] \( \)</code> 全都转义（它们是元字符）。第 1 组 <code>[^\]]+</code> 抓方括号里的<strong>文字</strong>，第 2 组 <code>[^)]+</code> 抓圆括号里的<strong>地址</strong>，替换成 <code>&lt;a href="$2"&gt;$1&lt;/a&gt;</code>。</li>
+<li><code>/\*\*(.+?)\*\*/g</code> —— 粗体。<code>\*\*</code> 是两个转义星号，<code>(.+?)</code> 非贪婪抓中间最短内容。⚠️ <strong>必须在斜体之前</strong>，否则单星号规则会先把 <code>**</code> 拆成一对 <code>*</code>，粗体就毁了。</li>
+<li><code>/\*(.+?)\*/g</code> —— 斜体。单星号包裹。此时 <code>**</code> 已经变成 <code>&lt;strong&gt;</code>，剩下的单星号才是真斜体。</li>
+</ul>
+<p>📌 这里体现了正则处理的一个通用原则：<strong>规则之间会互相影响，处理顺序需要精心设计</strong>（先内层/先具体，再外层/再宽泛）。</p>
+<h3 id="按行扫描块级结构"><a class="header" href="#按行扫描块级结构">按行扫描块级结构</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/md-to-html.js
+
+function mdToHtml(md) {
+  const lines = md.split(/\r?\n/); // 兼容 Windows 的 \r\n 和 Unix 的 \n
+  const out = []; // 收集输出的 HTML 片段
+  let inList = false; // 当前是否正处在一个 &lt;ul&gt; 里
+
+  const closeListIfOpen = () =&gt; {
+    if (inList) {
+      out.push("&lt;/ul&gt;");
+      inList = false;
+    }
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trimEnd();
+
+    // 空行：结束段落/列表，不产生标签
+    if (/^\s*$/.test(line)) {
+      closeListIfOpen();
+      continue;
+    }
+
+    // 标题：(#{1,3}) 抓 1~3 个井号，井号个数决定 h 几
+    const heading = line.match(/^(#{1,3})\s+(.+)$/);
+    if (heading) {
+      closeListIfOpen();
+      const level = heading[1].length;
+      out.push(`&lt;h${level}&gt;${renderInline(heading[2])}&lt;/h${level}&gt;`);
+      continue;
+    }
+
+    // 无序列表项：行首可有空格，然后是 "- " 再跟内容
+    const item = line.match(/^\s*-\s+(.+)$/);
+    if (item) {
+      if (!inList) {
+        out.push("&lt;ul&gt;");
+        inList = true;
+      }
+      out.push(`&lt;li&gt;${renderInline(item[1])}&lt;/li&gt;`);
+      continue;
+    }
+
+    // 其它非空行：当作段落
+    closeListIfOpen();
+    out.push(`&lt;p&gt;${renderInline(line.trim())}&lt;/p&gt;`);
+  }
+
+  closeListIfOpen(); // 文档结尾若列表未关，补上
+  return out.join("\n");
+}
+</code></pre>
+<p>逐段讲：</p>
+<ul>
+<li><code>md.split(/\r?\n/)</code> —— 按行拆。<code>\r?</code> 让回车符可有可无，同时兼容 Windows（<code>\r\n</code>）和 Unix（<code>\n</code>）换行。</li>
+<li><code>inList</code> 是一个<strong>状态开关</strong>：Markdown 的列表是“连续多行 <code>- </code>“合成一个 <code>&lt;ul&gt;</code>，所以我们要记住“当前是否在列表里”。遇到非列表行时用 <code>closeListIfOpen()</code> 补 <code>&lt;/ul&gt;</code>。这类“跨行状态“是正则单独搞不定的，需要配合普通代码——这正说明<strong>正则是工具，不是全部</strong>。</li>
+<li><code>/^\s*$/</code> —— 判断空行（全是空白）。空行结束当前列表。</li>
+<li><code>/^(#{1,3})\s+(.+)$/</code> —— 标题。<code>(#{1,3})</code> 抓 1~3 个井号，它的<strong>长度</strong>就是标题级别（<code>h1</code>~<code>h3</code>）；<code>\s+</code> 至少一个空格；<code>(.+)</code> 是标题文字，再交给 <code>renderInline</code> 处理行内样式。</li>
+<li><code>/^\s*-\s+(.+)$/</code> —— 列表项。行首允许缩进空格，然后 <code>- </code>，再抓内容。第一次遇到就开 <code>&lt;ul&gt;</code>。</li>
+<li>都不匹配的非空行 → 段落 <code>&lt;p&gt;</code>。</li>
+</ul>
+<h3 id="试跑"><a class="header" href="#试跑">试跑</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch12/md-to-html.js
+
+const sample = `# 我的笔记
+
+这是一个**粗体**和*斜体*的段落，还有 \`inline code\`。
+访问 [示例站点](https://example.com) 了解更多。
+
+## 待办清单
+
+- 学习 **正则表达式**
+- 写一个 *小* 解析器
+- 阅读 \`md-to-html.js\`
+
+### 结束
+
+普通段落一段话。`;
+
+console.log(mdToHtml(sample));
+</code></pre>
+<p>运行 <code>node code/ch12/md-to-html.js</code>，输出：</p>
+<pre><code class="language-html">&lt;h1&gt;我的笔记&lt;/h1&gt;
+&lt;p&gt;这是一个&lt;strong&gt;粗体&lt;/strong&gt;和&lt;em&gt;斜体&lt;/em&gt;的段落，还有 &lt;code&gt;inline code&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;访问 &lt;a href="https://example.com"&gt;示例站点&lt;/a&gt; 了解更多。&lt;/p&gt;
+&lt;h2&gt;待办清单&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;学习 &lt;strong&gt;正则表达式&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;写一个 &lt;em&gt;小&lt;/em&gt; 解析器&lt;/li&gt;
+&lt;li&gt;阅读 &lt;code&gt;md-to-html.js&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;结束&lt;/h3&gt;
+&lt;p&gt;普通段落一段话。&lt;/p&gt;
+</code></pre>
+<p>标题变 <code>&lt;h1&gt;</code>~<code>&lt;h3&gt;</code>，粗斜体、行内代码、链接都在段落和列表项里正确渲染，连续的 <code>- </code> 合成了一个 <code>&lt;ul&gt;</code>。一个几十行的小工具，就把本章大半知识点用上了。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>有序列表</strong>：识别 <code>1. item</code>（正则如 <code>/^\s*\d+\.\s+(.+)$/</code>），生成 <code>&lt;ol&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ol&gt;</code>。注意也要一个状态开关。</li>
+<li><strong>引用块</strong>：识别以 <code>&gt; </code> 开头的行，连续多行合成一个 <code>&lt;blockquote&gt;</code>。</li>
+<li><strong>转义 HTML</strong>：现在如果 Markdown 里出现 <code>&lt;</code> 或 <code>&amp;</code>，会原样进 HTML（有安全隐患）。加一步把 <code>&amp;</code> <code>&lt;</code> <code>&gt;</code> 转成 <code>&amp;amp;</code> <code>&amp;lt;</code> <code>&amp;gt;</code>，想想应该在<strong>哪一步</strong>做（在行内替换之前还是之后？）。</li>
+<li><strong>给玩具挑刺</strong>：构造一段能让它出错的 Markdown（比如 <code>**未闭合</code>、嵌套 <code>**a *b* c**</code>），体会“为什么真实解析器不用正则硬来“。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们从零把正则表达式过了一遍，核心要点：</p>
+<ul>
+<li><strong>正则</strong>是描述“一类字符串“的模式语言，擅长<strong>校验、查找、提取、替换</strong>扁平文本；<strong>不擅长</strong>嵌套结构（那是解析器的活）。</li>
+<li><strong>创建</strong>：字面量 <code>/.../flags</code>（首选）vs <code>new RegExp("...", "flags")</code>（模式动态拼装时用，反斜杠要双写）。</li>
+<li><strong>flags</strong>：<code>g</code> 全局、<code>i</code> 忽略大小写、<code>m</code> 多行、<code>s</code> 点匹配换行、<code>u</code> Unicode、<code>y</code> 粘性。</li>
+<li><strong>元字符</strong>：<code>.</code>（任意非换行）、<code>\d \w \s</code>（数字/单词字符/空白）及大写取反；<strong>字符组</strong> <code>[...]</code>、取反 <code>[^...]</code>、范围 <code>a-z</code>。</li>
+<li><strong>量词</strong>：<code>* + ?</code>、<code>{n} {n,} {n,m}</code>；默认<strong>贪婪</strong>，加 <code>?</code> 变<strong>非贪婪</strong>。</li>
+<li><strong>锚点</strong>：<code>^</code> <code>$</code>（开头/结尾，<code>^...$</code> 做整串校验）、<code>\b</code>（单词边界）。</li>
+<li><strong>分组</strong>：捕获 <code>(...)</code>、非捕获 <code>(?:...)</code>、命名 <code>(?&lt;name&gt;...)</code>、反向引用 <code>\1</code>、或 <code>|</code>。</li>
+<li><strong>环视</strong>：前瞻 <code>(?=)</code>/<code>(?!)</code>、后顾 <code>(?&lt;=)</code>/<code>(?&lt;!)</code>，是“条件“不消耗字符。</li>
+<li><strong>JS 方法</strong>：<code>test</code>（校验，别加 <code>g</code>）、<code>match</code>（有无 <code>g</code> 行为不同）、<code>matchAll</code>（全部+分组，必带 <code>g</code>）、<code>replace</code>（<code>$1</code>/命名/函数替换）、<code>split</code>、<code>exec</code>+<code>lastIndex</code>（<code>g</code> 的状态陷阱）。</li>
+<li><strong>安全</strong>：警惕 <strong>ReDoS</strong>，避免“量词套量词“，限制输入长度。</li>
+</ul>
+<p>自测题（能脱口而出就说明掌握了）：</p>
+<ol>
+<li><code>/^\d+$/</code> 和 <code>/\d+/</code> 用来校验“纯数字“，哪个对？为什么？</li>
+<li><code>.+</code> 和 <code>.+?</code> 有什么区别？各在什么时候用？</li>
+<li><code>str.match(/(\d+)/g)</code> 能拿到分组吗？想要全部匹配又要分组该用什么？</li>
+<li>为什么对同一个 <code>/\d/g</code> 连续 <code>test</code> 同一个字符串，结果会一会儿 true 一会儿 false？</li>
+<li><code>(?:...)</code> 和 <code>(...)</code> 有什么区别？什么时候优先用前者？</li>
+<li><code>\bcat\b</code> 为什么不匹配 <code>category</code> 里的 cat？</li>
+<li>什么是灾难性回溯？举一个危险模式，并说说怎么改。</li>
+<li>在小项目里，为什么行内代码要<strong>最先</strong>替换、粗体要在斜体<strong>之前</strong>替换？</li>
+</ol>
+<p>答完对照前文检查。全部答对，你就把正则这块“新手劝退区“啃下来了——它会在你今后处理日志、表单、配置、数据清洗时反复救场。</p>
+<hr>
+<p>下一章我们开启全书的第二大板块：<strong>TypeScript</strong>。第 13 章《TypeScript 起步》会告诉你，为什么给 JavaScript 加上“类型（type）“能让大型项目更稳、更好维护，以及如何搭好 TS 环境、写下第一个带类型的程序。你在前 12 章打下的 JS 功底，会让 TypeScript 学起来水到渠成——因为 TS 只是“带类型标注的 JavaScript”。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch11.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch13.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch11.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch13.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

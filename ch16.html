@@ -1,0 +1,861 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 16 章 · 泛型 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch16.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-16-章--泛型generics"><a class="header" href="#第-16-章--泛型generics">第 16 章 · 泛型（Generics）</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前面几章我们学了接口、类型别名、联合类型、类。你已经能给函数的参数和返回值标上类型，让 TypeScript 帮你挡住一大批低级错误。但很快你会撞上一堵墙：<strong>有些函数、有些容器，天生就要能装「任意类型」，可我们又不想丢掉类型信息。</strong></p>
+<p>举个最直白的例子：写一个“取数组第一个元素“的函数。数组里可能是数字、字符串、用户对象……你希望：传进去数字数组，返回值就是数字；传进去字符串数组，返回值就是字符串。用目前学过的工具，你要么给每种类型各写一份（啰嗦到爆），要么用 <code>any</code>（等于把类型系统关掉）。</p>
+<p>**泛型（generics）**就是为解决这类问题而生的。它让类型也能像函数参数一样被“传进来“，在真正调用时才确定。学完本章，你将能够：</p>
+<ul>
+<li>说清楚“为什么需要泛型“——不用它会付出什么代价。</li>
+<li>写出泛型函数，理解<strong>类型推断（type inference）<strong>和</strong>显式指定</strong>两种用法。</li>
+<li>使用多个类型参数，处理数组与元组。</li>
+<li>掌握<strong>泛型约束（constraints）</strong> <code>extends</code>，特别是用 <code>keyof</code> 实现<strong>类型安全的属性访问</strong>。</li>
+<li>给类型参数设置<strong>默认值</strong>。</li>
+<li>写出泛型接口、泛型类型别名、泛型类。</li>
+<li>用泛型表达常见模式：包装容器、<code>Result</code> / <code>Option</code> 类型。</li>
+<li>认识 TypeScript 内置的<strong>工具类型（utility types）</strong>：<code>Partial</code> / <code>Required</code> / <code>Readonly</code> / <code>Record</code> / <code>Pick</code> / <code>Omit</code> / <code>ReturnType</code>。</li>
+<li>避开泛型的常见坑：过度泛型化、以及“泛型 vs 联合类型“怎么选。</li>
+<li>亲手实现一个<strong>类型安全的仓储 <code>Repository&lt;T&gt;</code></strong>。</li>
+</ul>
+<p>本章代码用 <code>npx tsx</code> 运行，例如 <code>npx tsx ch16/01-why-generics.ts</code>。</p>
+<p>📌 <strong>一句话记住泛型</strong>：泛型就是**“类型的参数”**。普通函数的参数是“值的占位符“（<code>function f(x)</code> 里的 <code>x</code>），泛型是“类型的占位符“（<code>function f&lt;T&gt;()</code> 里的 <code>T</code>），在调用时才被填上具体类型。</p>
+<hr>
+<h2 id="为什么需要泛型不用它会怎样"><a class="header" href="#为什么需要泛型不用它会怎样">为什么需要泛型：不用它会怎样</a></h2>
+<p>我们把“取数组第一个元素“这件小事，用三种“不带泛型“的思路各写一遍，看看各自的痛处。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/01-why-generics.ts
+
+// 做法一：为每种类型各写一份，啰嗦且无法穷尽。
+function firstNumber(arr: number[]): number | undefined {
+  return arr[0];
+}
+function firstString(arr: string[]): string | undefined {
+  return arr[0];
+}
+
+// 做法二：用 any，虽然「通用」了，但丢掉了全部类型信息。
+function firstAny(arr: any[]): any {
+  return arr[0];
+}
+
+// 做法三：泛型。类型参数 T 像一个「占位符」，在调用时才被填上。
+function first&lt;T&gt;(arr: T[]): T | undefined {
+  return arr[0];
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>做法一（各写一份）</strong>：<code>firstNumber</code>、<code>firstString</code>……逻辑一模一样（都是 <code>return arr[0]</code>），只有类型不同。这叫<strong>重复代码（duplication）</strong>。而且你永远写不完——布尔数组、日期数组、你自定义的 <code>User</code> 数组，每来一种就得再抄一份。</li>
+<li><strong>做法二（用 <code>any</code>）</strong>：<code>firstAny</code> 确实“通用“了，一个函数吃所有类型。但代价是<strong>类型信息全丢了</strong>。<code>any</code> 的意思是“我放弃对这个值做任何类型检查“。返回 <code>any</code> 意味着后面你对结果做什么操作，TS 都不管了——保护网被你亲手剪断。</li>
+<li><strong>做法三（泛型）</strong>：<code>first&lt;T&gt;</code> 里的 <code>&lt;T&gt;</code> 声明了一个<strong>类型参数（type parameter）</strong>，名字叫 <code>T</code>（type 的首字母，习惯用大写单字母，但你完全可以起有意义的名字）。参数 <code>arr</code> 的类型是 <code>T[]</code>（元素类型为 <code>T</code> 的数组），返回值是 <code>T | undefined</code>。<code>T</code> 具体是什么，现在还不知道——<strong>要等调用时才确定</strong>。</li>
+</ul>
+<p>现在看看三者用起来的差别：</p>
+<pre><code class="language-typescript">// 文件：code/ch16/01-why-generics.ts（续）
+const a = firstNumber([1, 2, 3]); // number | undefined
+const b = firstString(["x", "y"]); // string | undefined
+
+const bad = firstAny([1, 2, 3]); // 类型是 any，下面这行不会报编译错误（危险！）
+try {
+  bad.toUpperCase(); // 编译通过，但 bad 其实是 number，运行时才炸
+} catch (e) {
+  console.log("any 埋下的雷在运行时爆炸:", (e as Error).message);
+}
+
+const n = first([1, 2, 3]); // T 被推断为 number，n: number | undefined
+const s = first(["hello", "world"]); // T 被推断为 string，s: string | undefined
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>firstAny([1, 2, 3])</code> 返回 <code>any</code>。于是 <code>bad.toUpperCase()</code>（字符串方法）<strong>在编译期一路绿灯</strong>，因为 <code>any</code> 关掉了检查。可 <code>bad</code> 实际是数字 <code>1</code>，运行到这行才崩——这正是 <code>any</code> 最阴险的地方：<strong>把错误从编译期推迟到了运行期</strong>，还是在用户面前爆炸。</li>
+<li>而 <code>first([1, 2, 3])</code>，TS 看到实参是 <code>number[]</code>，就把 <code>T</code> <strong>推断</strong>为 <code>number</code>，于是 <code>n</code> 的类型精确地是 <code>number | undefined</code>。如果你对 <code>n</code> 调用字符串方法，TS 会当场拦下来。<strong>一份代码，类型却随输入精确变化</strong>——这就是泛型的魔力。</li>
+</ul>
+<p>⚠️ <strong><code>any</code> 不是“通用“，而是“投降“。</strong> 每当你想写 <code>any</code>，先停一下问自己：是不是该用泛型？泛型能做到“通用“的同时<strong>保留</strong>类型，<code>any</code> 是“通用“的同时<strong>丢掉</strong>类型。</p>
+<p>运行看看：</p>
+<pre><code class="language-bash">npx tsx ch16/01-why-generics.ts
+</code></pre>
+<p>你会看到 <code>any</code> 那行在运行时抛出 <code>bad.toUpperCase is not a function</code>，而泛型版本一切安好。</p>
+<hr>
+<h2 id="泛型函数推断-vs-显式指定"><a class="header" href="#泛型函数推断-vs-显式指定">泛型函数：推断 vs 显式指定</a></h2>
+<p>泛型函数最经典的例子是 <code>identity</code>（恒等函数）——原样返回传入的值。它虽然没什么实际用处，却是理解泛型语法的最佳教具。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/02-generic-func.ts
+
+function identity&lt;T&gt;(x: T): T {
+  return x;
+}
+
+// 1) 类型推断（inference）：不写 &lt;...&gt;，TS 从实参推断 T。
+const r1 = identity(42); // T = number，r1: number
+const r2 = identity("hi"); // T = string，r2: string
+const r3 = identity(true); // T = boolean，r3: boolean
+
+// 2) 显式指定（explicit）：手动写 &lt;...&gt;，覆盖推断结果。
+const r4 = identity&lt;string&gt;("abc"); // 明确 T = string
+// const r5 = identity&lt;number&gt;("abc"); // 报错：字符串不能赋给 number
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>function identity&lt;T&gt;(x: T): T</code> 读作：“这个函数接受一个类型参数 <code>T</code>；它有一个值参数 <code>x</code>，类型是 <code>T</code>；它返回一个 <code>T</code>。” 三个 <code>T</code> 必须是<strong>同一个</strong>类型——传进来是什么，返回就是什么。</li>
+<li><strong>推断</strong>：<code>identity(42)</code>，你没写 <code>&lt;...&gt;</code>，TS 看到 <code>42</code> 是 <code>number</code>，自动令 <code>T = number</code>。这是<strong>最常用</strong>的方式——大多数时候你不需要手写类型参数，让 TS 推断即可。</li>
+<li><strong>显式指定</strong>：<code>identity&lt;string&gt;("abc")</code>，你用尖括号手动把 <code>T</code> 钉死为 <code>string</code>。当推断不出来、或推断结果不合你意时才需要这么写。</li>
+<li>被注释掉的 <code>identity&lt;number&gt;("abc")</code> 会报错：你说了 <code>T = number</code>，却传了字符串，矛盾。</li>
+</ul>
+<p>💡 <strong>优先靠推断，需要时才显式指定。</strong> 显式写 <code>&lt;...&gt;</code> 会让代码变啰嗦；只在 TS 推断不出、或你想收窄/放宽类型时才动手。</p>
+<h3 id="多个类型参数元组"><a class="header" href="#多个类型参数元组">多个类型参数、元组</a></h3>
+<p>一个泛型函数可以有<strong>多个</strong>类型参数，用逗号分隔。它们之间还能互相引用。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/02-generic-func.ts（续）
+
+// 多个类型参数：pair 把两个值组成一个元组。
+function pair&lt;A, B&gt;(a: A, b: B): [A, B] {
+  return [a, b];
+}
+const p = pair("age", 30); // p: [string, number]
+
+// swap：交换元组的两个元素，返回类型也随之交换。
+function swap&lt;A, B&gt;(t: [A, B]): [B, A] {
+  return [t[1], t[0]];
+}
+const sw = swap(p); // sw: [number, string]
+
+// 类型参数之间可以互相引用：把数组每一项做映射。
+function mapArray&lt;T, U&gt;(arr: T[], fn: (item: T) =&gt; U): U[] {
+  const result: U[] = [];
+  for (const item of arr) {
+    result.push(fn(item));
+  }
+  return result;
+}
+const lengths = mapArray(["a", "bb", "ccc"], (s) =&gt; s.length); // number[]
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>pair&lt;A, B&gt;</code>：两个类型参数 <code>A</code>、<code>B</code>，分别对应两个值参数。返回<strong>元组</strong> <code>[A, B]</code>。调用 <code>pair("age", 30)</code> 时，<code>A</code> 推断为 <code>string</code>、<code>B</code> 推断为 <code>number</code>，所以 <code>p</code> 的类型是精确的 <code>[string, number]</code>。</li>
+<li><code>swap&lt;A, B&gt;(t: [A, B]): [B, A]</code>：注意返回类型把顺序反过来了。传入 <code>[string, number]</code>，返回类型就是 <code>[number, string]</code>——<strong>类型跟着逻辑一起翻转</strong>，这是普通类型标注做不到的。</li>
+<li><code>mapArray&lt;T, U&gt;</code>：这是 <code>Array.prototype.map</code> 的简化版。它体现了泛型的精髓——<strong>类型的“流动“</strong>：输入是 <code>T[]</code>，映射函数把每个 <code>T</code> 变成 <code>U</code>（<code>fn: (item: T) =&gt; U</code>），所以输出是 <code>U[]</code>。调用 <code>mapArray(["a","bb","ccc"], s =&gt; s.length)</code> 时，<code>T = string</code>（数组元素），<code>fn</code> 返回 <code>number</code> 所以 <code>U = number</code>，最终 <code>lengths</code> 的类型是 <code>number[]</code>。全程没写一个类型标注，TS 全推出来了。</li>
+</ul>
+<hr>
+<h2 id="泛型约束给类型参数设门槛"><a class="header" href="#泛型约束给类型参数设门槛">泛型约束：给类型参数设“门槛“</a></h2>
+<p>泛型很自由——<code>T</code> 可以是任何类型。但有时“太自由“反而办不成事。看这个想求“更长的那个“的函数：</p>
+<pre><code class="language-typescript">// 没有约束时，T 可能是任何类型，不能假设它有 .length。
+// function longest&lt;T&gt;(a: T, b: T): T {
+//   return a.length &gt;= b.length ? a : b; // 报错：T 上不存在 length
+// }
+</code></pre>
+<p>因为 <code>T</code> 可能是 <code>number</code>（没有 <code>length</code>），TS 不敢让你访问 <code>a.length</code>。我们需要告诉 TS：“<code>T</code> 不是随便什么类型，它<strong>至少</strong>得有个 <code>length</code>。” 这就是<strong>泛型约束</strong>，用 <code>extends</code> 表达。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/03-constraints.ts
+
+// 约束 T 必须有 length: number 这个属性。
+interface HasLength {
+  length: number;
+}
+function longest&lt;T extends HasLength&gt;(a: T, b: T): T {
+  return a.length &gt;= b.length ? a : b;
+}
+
+const longerStr = longest("hello", "hi"); // string 有 length ✓
+const longerArr = longest([1, 2, 3], [9]); // 数组有 length ✓
+// longest(10, 20); // 报错：number 没有 length，不满足约束
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>T extends HasLength</code> 读作：“<code>T</code> 必须是 <code>HasLength</code> 的<strong>子类型</strong>——也就是说，<code>T</code> 至少要具备 <code>length: number</code> 这个属性。” 这里的 <code>extends</code> <strong>不是继承</strong>，而是“满足……的形状“的意思。</li>
+<li>有了约束，函数体里访问 <code>a.length</code> 就合法了，因为 TS 保证任何 <code>T</code> 都有 <code>length</code>。</li>
+<li><code>longest("hello", "hi")</code>：字符串有 <code>length</code>，✓。<code>longest([1,2,3], [9])</code>：数组也有 <code>length</code>，✓。而 <code>longest(10, 20)</code> 会报错——<code>number</code> 没有 <code>length</code>，不满足门槛。</li>
+<li>注意：约束限制了“能传什么“，但<strong>没有丢掉具体类型</strong>。<code>longerStr</code> 的类型仍然是精确的 <code>string</code>，而不是 <code>HasLength</code>。</li>
+</ul>
+<h3 id="keyof-约束类型安全的属性访问"><a class="header" href="#keyof-约束类型安全的属性访问"><code>keyof</code> 约束：类型安全的属性访问</a></h3>
+<p>泛型约束最强大、最常用的场景，是配合 <strong><code>keyof</code></strong> 做“按 key 取属性值“。<code>keyof T</code> 会得到 <code>T</code> 所有键名组成的联合类型。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/03-constraints.ts（续）
+
+// K 被约束为「T 的所有键之一」，返回类型精确到 T[K]。
+function getProp&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+const user = { id: 1, name: "Alice", active: true };
+const uid = getProp(user, "id"); // number
+const uname = getProp(user, "name"); // string
+// getProp(user, "email"); // 报错："email" 不是 user 的键
+
+// 反过来：按 key 安全地写入属性值。
+function setProp&lt;T, K extends keyof T&gt;(obj: T, key: K, value: T[K]): void {
+  obj[key] = value;
+}
+setProp(user, "name", "Bob"); // ✓ value 必须是 string
+// setProp(user, "id", "oops"); // 报错：id 需要 number
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>对于 <code>user</code>，它的类型是 <code>{ id: number; name: string; active: boolean }</code>，那么 <code>keyof typeof user</code> 就是联合类型 <code>"id" | "name" | "active"</code>。</li>
+<li><code>getProp&lt;T, K extends keyof T&gt;</code>：两个类型参数。<code>T</code> 是对象类型；<code>K</code> 被约束为 <code>keyof T</code>，也就是“<code>T</code> 的某个键名“。返回类型是 <strong><code>T[K]</code></strong>——这叫<strong>索引访问类型（indexed access type）</strong>，意思是“<code>T</code> 里 <code>K</code> 这个键对应的值的类型“。</li>
+<li>于是 <code>getProp(user, "id")</code>，<code>K</code> 被推断为字面量 <code>"id"</code>，返回类型精确到 <code>T["id"]</code> 即 <code>number</code>；<code>getProp(user, "name")</code> 返回 <code>string</code>。<strong>返回类型随你传的 key 精确变化</strong>，这是普通标注绝对做不到的。</li>
+<li><code>getProp(user, "email")</code> 会报错——<code>"email"</code> 不在 <code>keyof user</code> 里，约束不满足。<strong>拼错属性名当场被抓</strong>。</li>
+<li><code>setProp</code> 是反方向：写入时 <code>value</code> 的类型被约束为 <code>T[K]</code>，所以给 <code>"name"</code> 只能传 <code>string</code>，给 <code>"id"</code> 传字符串会报错。读写两端都类型安全。</li>
+</ul>
+<p>📌 <strong><code>K extends keyof T</code> + 返回 <code>T[K]</code> 是 TS 最经典的泛型套路之一</strong>，任何“按字段名操作对象“的工具函数都靠它。我们的本章小项目 <code>Repository.where</code> 就用到它。</p>
+<hr>
+<h2 id="泛型默认值"><a class="header" href="#泛型默认值">泛型默认值</a></h2>
+<p>和函数参数可以有默认值一样，类型参数也可以有<strong>默认值</strong>，写作 <code>&lt;T = 默认类型&gt;</code>。当调用方没指定、也推断不出来时，就用默认值。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/04-default-and-shapes.ts
+
+// 不指定时 T 默认为 string。
+interface Box&lt;T = string&gt; {
+  value: T;
+}
+const b1: Box = { value: "默认就是 string" }; // T 用默认值 string
+const b2: Box&lt;number&gt; = { value: 123 }; // 显式指定 number
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>interface Box&lt;T = string&gt;</code>：类型参数 <code>T</code> 的默认值是 <code>string</code>。</li>
+<li><code>const b1: Box</code>——注意 <code>Box</code> 后面没写 <code>&lt;...&gt;</code>，此时 <code>T</code> 取默认值 <code>string</code>，所以 <code>value</code> 必须是字符串。</li>
+<li><code>const b2: Box&lt;number&gt;</code>——显式指定 <code>T = number</code>，<code>value</code> 就必须是数字。</li>
+</ul>
+<p>💡 默认值在设计“大多数情况用某个类型，偶尔需要换“的 API 时很有用（比如很多库的配置对象），能让常见用法省去写尖括号。</p>
+<hr>
+<h2 id="泛型接口类型别名类"><a class="header" href="#泛型接口类型别名类">泛型接口、类型别名、类</a></h2>
+<p>泛型不只用于函数，<strong>接口、类型别名、类</strong>都能带类型参数。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/04-default-and-shapes.ts（续）
+
+// 泛型接口：描述「可以装任意类型」的容器。
+interface Container&lt;T&gt; {
+  items: T[];
+  add(item: T): void;
+  get(index: number): T | undefined;
+}
+
+// 泛型类型别名：Result 表示「成功或失败」二选一。
+type Result&lt;T, E = Error&gt; =
+  | { ok: true; value: T }
+  | { ok: false; error: E };
+
+function parseIntSafe(s: string): Result&lt;number&gt; {
+  const n = Number(s);
+  if (Number.isNaN(n)) {
+    return { ok: false, error: new Error(`不是合法数字: ${s}`) };
+  }
+  return { ok: true, value: n };
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>interface Container&lt;T&gt;</code>：一个泛型接口。<code>Container&lt;string&gt;</code> 就是“装字符串的容器“，<code>Container&lt;User&gt;</code> 就是“装用户的容器“，一份定义覆盖所有元素类型。</li>
+<li><code>type Result&lt;T, E = Error&gt;</code>：这是一个<strong>极其实用</strong>的模式。它是可辨识联合（第 14 章学过）：要么 <code>{ ok: true, value: T }</code>（成功，带上结果值），要么 <code>{ ok: false, error: E }</code>（失败，带上错误）。<code>E</code> 有默认值 <code>Error</code>。很多语言（Rust、Go 风格）用这种类型代替“抛异常“，让“可能失败“这件事<strong>写进类型里</strong>，调用方不得不处理。</li>
+<li><code>parseIntSafe</code> 返回 <code>Result&lt;number&gt;</code>：成功时 <code>value</code> 是数字，失败时 <code>error</code> 是 <code>Error</code>。</li>
+</ul>
+<p>再来看泛型类，以及 <code>Result</code> 怎么用——靠 <code>ok</code> 字段<strong>收窄类型</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch16/04-default-and-shapes.ts（续）
+
+// 泛型类：Stack&lt;T&gt; 是一个类型安全的栈。
+class Stack&lt;T&gt; {
+  private data: T[] = [];
+  push(item: T): void {
+    this.data.push(item);
+  }
+  pop(): T | undefined {
+    return this.data.pop();
+  }
+  get size(): number {
+    return this.data.length;
+  }
+}
+
+const numStack = new Stack&lt;number&gt;();
+numStack.push(1);
+numStack.push(2);
+const top = numStack.pop(); // number | undefined
+
+const r1 = parseIntSafe("42");
+const r2 = parseIntSafe("abc");
+// 用「可辨识联合」的 ok 字段收窄类型：
+if (r1.ok) console.log("解析成功:", r1.value); // 这个分支里 r1.value 是 number
+if (!r2.ok) console.log("解析失败:", r2.error.message); // 这个分支里 r2.error 是 Error
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>class Stack&lt;T&gt;</code>：泛型类。类型参数写在<strong>类名后面</strong>，然后 <code>T</code> 就能在整个类体里用——字段 <code>data: T[]</code>、方法 <code>push(item: T)</code>、<code>pop(): T | undefined</code>。</li>
+<li><code>new Stack&lt;number&gt;()</code>：实例化时指定 <code>T = number</code>，于是这个栈只接受数字，<code>pop()</code> 返回 <code>number | undefined</code>。想要字符串栈就 <code>new Stack&lt;string&gt;()</code>，一份类定义通吃。</li>
+<li><code>if (r1.ok)</code> 之后，TS 知道 <code>r1</code> 一定是 <code>{ ok: true, value: number }</code> 那个分支，所以能安全访问 <code>r1.value</code>；<code>if (!r2.ok)</code> 分支里能安全访问 <code>r2.error</code>。<strong>类型系统逼你先判断成功/失败，再取对应字段</strong>，从根上杜绝了“忘了处理错误“。</li>
+</ul>
+<p>⚠️ <strong>泛型类的类型参数只影响类型，不影响运行时。</strong> 例如 <code>Stack&lt;T&gt;</code> 里没法在运行时知道 <code>T</code> 到底是什么（TS 类型在编译后会被擦除，这叫<strong>类型擦除 / type erasure</strong>）。想在运行时判断类型，得靠值本身（<code>typeof</code>、字段标记等），不能靠 <code>T</code>。</p>
+<hr>
+<h2 id="内置工具类型入门"><a class="header" href="#内置工具类型入门">内置工具类型入门</a></h2>
+<p>TypeScript 内置了一批<strong>工具类型（utility types）</strong>——它们本质上就是官方帮你写好的泛型类型别名，专门用来“基于已有类型造新类型“。这里先学<strong>怎么用</strong>，它们的<strong>实现原理</strong>（映射类型、条件类型）我们留到第 17 章。</p>
+<pre><code class="language-typescript">// 文件：code/ch16/05-utility-types.ts
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+}
+
+// Partial&lt;T&gt;：把 T 的所有属性变成可选，常用于「更新时只传一部分字段」。
+function updateUser(user: User, patch: Partial&lt;User&gt;): User {
+  return { ...user, ...patch };
+}
+const u0: User = { id: 1, name: "Alice", email: "a@x.com", age: 20 };
+const u1 = updateUser(u0, { age: 21 }); // 只更新 age，合法
+
+// Required&lt;T&gt;：把所有属性变成必填（Partial 的反面）。
+interface Config {
+  host?: string;
+  port?: number;
+}
+const fullConfig: Required&lt;Config&gt; = { host: "localhost", port: 8080 };
+
+// Readonly&lt;T&gt;：把所有属性变成只读。
+const frozen: Readonly&lt;User&gt; = u0;
+// frozen.age = 99; // 报错：只读属性不能赋值
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>Partial&lt;T&gt;</code></strong>：把 <code>T</code> 每个属性都变成可选（<code>?</code>）。<code>Partial&lt;User&gt;</code> 就是“User 的任意子集“，特别适合“局部更新“——<code>updateUser</code> 允许只传 <code>{ age: 21 }</code>，其余字段沿用旧值。</li>
+<li><strong><code>Required&lt;T&gt;</code></strong>：反过来，把所有可选属性变成必填。<code>Config</code> 里 <code>host</code>、<code>port</code> 本来可选，<code>Required&lt;Config&gt;</code> 要求两个都得给。</li>
+<li><strong><code>Readonly&lt;T&gt;</code></strong>：把所有属性变成只读，赋值就报错。适合表达“这份数据不许改“。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch16/05-utility-types.ts（续）
+
+// Record&lt;K, V&gt;：构造「键为 K、值为 V」的对象类型。
+const scores: Record&lt;string, number&gt; = { math: 90, english: 85 };
+type Role = "admin" | "guest";
+const perms: Record&lt;Role, boolean&gt; = { admin: true, guest: false };
+
+// Pick&lt;T, K&gt;：从 T 中「挑出」若干属性。
+type UserPreview = Pick&lt;User, "id" | "name"&gt;;
+const preview: UserPreview = { id: 1, name: "Alice" };
+
+// Omit&lt;T, K&gt;：从 T 中「去掉」若干属性（Pick 的反面）。
+type UserWithoutEmail = Omit&lt;User, "email"&gt;;
+const noEmail: UserWithoutEmail = { id: 1, name: "Alice", age: 20 };
+
+// ReturnType&lt;F&gt;：取出函数的返回值类型。
+function makeUser() {
+  return { id: 1, name: "Alice" };
+}
+type MadeUser = ReturnType&lt;typeof makeUser&gt;; // { id: number; name: string }
+const made: MadeUser = { id: 2, name: "Bob" };
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong><code>Record&lt;K, V&gt;</code></strong>：造一个“所有键类型为 <code>K</code>、所有值类型为 <code>V</code>“的对象类型。<code>Record&lt;string, number&gt;</code> 是“任意字符串键、值为数字“的字典；<code>Record&lt;Role, boolean&gt;</code> 更严格——键<strong>必须恰好是</strong> <code>"admin"</code> 和 <code>"guest"</code>，少一个都报错。</li>
+<li><strong><code>Pick&lt;T, K&gt;</code></strong>：从 <code>T</code> 里<strong>挑出</strong> <code>K</code> 指定的那几个属性。<code>Pick&lt;User, "id" | "name"&gt;</code> 只保留 <code>id</code> 和 <code>name</code>。常用于造“精简版对象“（如列表预览）。</li>
+<li><strong><code>Omit&lt;T, K&gt;</code></strong>：<code>Pick</code> 的反面，从 <code>T</code> 里<strong>去掉</strong> <code>K</code> 指定的属性。<code>Omit&lt;User, "email"&gt;</code> 就是“去掉 email 的 User“。</li>
+<li><strong><code>ReturnType&lt;F&gt;</code></strong>：抽取一个函数类型的<strong>返回值类型</strong>。<code>ReturnType&lt;typeof makeUser&gt;</code> 得到 <code>{ id: number; name: string }</code>。注意 <code>typeof makeUser</code> 先拿到函数的类型，再交给 <code>ReturnType</code>。这在“不想手写、想直接复用某函数返回结构“时非常方便。</li>
+</ul>
+<p>📌 <strong>这些工具类型全是泛型。</strong> 记不住没关系，用到时查即可。常见的还有 <code>NonNullable&lt;T&gt;</code>（去掉 <code>null</code>/<code>undefined</code>）、<code>Parameters&lt;F&gt;</code>（取参数元组类型）、<code>Awaited&lt;T&gt;</code>（取 Promise 解开后的类型）等。它们全靠第 17 章要讲的映射类型和条件类型实现——学完那章，你能自己写出 <code>Partial</code>、<code>Pick</code>。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<h3 id="坑一过度泛型化"><a class="header" href="#坑一过度泛型化">坑一：过度泛型化</a></h3>
+<p>看到泛型好用，新手容易“见谁都套个 <code>&lt;T&gt;</code>“。但<strong>泛型只有在“类型需要流动、需要关联“时才有意义</strong>。</p>
+<pre><code class="language-typescript">// ❌ 过度泛型：T 只用了一次，等于没用，反而更难读。
+function logIt&lt;T&gt;(value: T): void {
+  console.log(value);
+}
+
+// ✅ 直接用 unknown 即可，函数根本不关心 value 是什么。
+function logItBetter(value: unknown): void {
+  console.log(value);
+}
+</code></pre>
+<p>判断法则很简单：<strong>如果一个类型参数在签名里只出现一次，它多半是多余的。</strong> 泛型的价值在于把多个位置的类型“绑在一起“（如 <code>identity</code> 把参数和返回值绑成同一个 <code>T</code>，<code>getProp</code> 把 key 和返回值绑起来）。只出现一次，就没有“绑定“可言，用 <code>unknown</code> 或具体类型更清晰。</p>
+<h3 id="坑二约束加得不够或加得太狠"><a class="header" href="#坑二约束加得不够或加得太狠">坑二：约束加得不够，或加得太狠</a></h3>
+<ul>
+<li>约束<strong>太松</strong>（不加）：函数体里没法安全地用 <code>T</code> 的属性（回忆 <code>longest</code> 不加约束就访问不了 <code>.length</code>）。</li>
+<li>约束<strong>太狠</strong>（如直接把参数标成 <code>HasLength</code> 而不是 <code>T extends HasLength</code>）：会<strong>丢掉具体类型</strong>。</li>
+</ul>
+<pre><code class="language-typescript">// ❌ 参数直接标成接口：返回类型也退化成接口，丢了 string / 数组的具体类型。
+function badLongest(a: HasLength, b: HasLength): HasLength {
+  return a.length &gt;= b.length ? a : b;
+}
+const x = badLongest("hello", "hi"); // x: HasLength，不再是 string！
+
+// ✅ 用 T extends HasLength：既能约束，又保留具体类型（见前面 longest）。
+</code></pre>
+<p>用 <code>T extends HasLength</code> 时结果会是 <code>string</code>；直接标 <code>HasLength</code> 时结果退化成 <code>HasLength</code>，你就没法再当字符串用了。<strong>能用泛型约束保留具体类型时，就别直接标接口。</strong></p>
+<h3 id="坑三泛型-vs-联合类型怎么选"><a class="header" href="#坑三泛型-vs-联合类型怎么选">坑三：泛型 vs 联合类型，怎么选？</a></h3>
+<p>这是最容易混淆的决策。两者都能“处理多种类型“，但语义完全不同：</p>
+<pre><code class="language-typescript">// 联合类型：这个函数能接受 string 或 number，但两者是「或」的关系。
+function formatUnion(x: string | number): string {
+  return String(x);
+}
+
+// 泛型：调用时确定「一种」具体类型，并保持它。
+function wrap&lt;T&gt;(x: T): { value: T } {
+  return { value: x };
+}
+</code></pre>
+<p>选择标准：</p>
+<ul>
+<li><strong>用联合类型</strong>：当一个参数本身就“可能是这几种之一“，而且你要在函数里<strong>分别处理</strong>它们（<code>typeof</code> 收窄）。它表达的是“<strong>或</strong>“。</li>
+<li><strong>用泛型</strong>：当类型需要在<strong>参数与返回值之间流动/关联</strong>，或者需要<strong>保留调用方传入的精确类型</strong>。它表达的是“<strong>同一个、由调用方决定</strong>“。</li>
+</ul>
+<p>一句话：<strong>问“这几种类型之间有没有关联“。</strong> 有关联（输入决定输出）用泛型；没关联（就是几选一）用联合。</p>
+<p>💡 <strong>最佳实践清单</strong>：类型参数优先靠推断；名字有意义时别吝啬（<code>Repository&lt;TEntity&gt;</code> 比 <code>&lt;T&gt;</code> 更清晰，虽然本书多数场景 <code>T</code> 已足够）；约束尽量精确；一个类型参数只出现一次时删掉它。</p>
+<hr>
+<h2 id="本章小项目类型安全的仓储-repositoryt"><a class="header" href="#本章小项目类型安全的仓储-repositoryt">本章小项目：类型安全的仓储 <code>Repository&lt;T&gt;</code></a></h2>
+<p>我们来做一个能“装任意实体、且全程类型安全“的内存仓储（Repository）。它的每个方法——增删改查、按字段筛选、分页、排序——返回类型都会<strong>随实体类型自动变化</strong>。这正是泛型 + 约束 + <code>keyof</code> 的综合演武场。</p>
+<p>设计要点：</p>
+<ul>
+<li>所有实体必须有 <code>id: number</code>，用约束 <code>T extends Entity</code> 表达。</li>
+<li><code>getById</code> 返回 <code>T | undefined</code>，<code>findAll</code> 返回 <code>T[]</code>——类型随 <code>T</code> 变。</li>
+<li><code>where&lt;K extends keyof T&gt;(key, value)</code>：只能按 <code>T</code> 真实存在的字段筛选，<code>value</code> 类型必须匹配该字段。</li>
+<li>扩展：<code>sortBy</code>（泛型排序）、<code>paginate</code>（泛型分页）。</li>
+</ul>
+<p>先看核心的仓储类：</p>
+<pre><code class="language-typescript">// 文件：code/ch16/repository.ts
+// 运行：npx tsx ch16/repository.ts
+
+// 所有能被仓储管理的实体，都必须有一个 number 类型的 id。
+interface Entity {
+  id: number;
+}
+
+interface PageOptions {
+  page: number; // 从 1 开始
+  pageSize: number;
+}
+
+// 分页结果：随 T 变化的泛型返回类型。
+interface Page&lt;T&gt; {
+  data: T[];
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+}
+
+class Repository&lt;T extends Entity&gt; {
+  private store = new Map&lt;number, T&gt;();
+
+  add(entity: T): T {
+    if (this.store.has(entity.id)) {
+      throw new Error(`id=${entity.id} 已存在`);
+    }
+    this.store.set(entity.id, entity);
+    return entity;
+  }
+
+  getById(id: number): T | undefined {
+    return this.store.get(id);
+  }
+
+  // 局部更新：patch 是 T 的「部分字段」，用 Partial 表达；
+  // 再用 Omit 去掉 id，避免调用方偷偷改主键。
+  update(id: number, patch: Partial&lt;Omit&lt;T, "id"&gt;&gt;): T | undefined {
+    const existing = this.store.get(id);
+    if (!existing) return undefined;
+    const updated = { ...existing, ...patch } as T;
+    this.store.set(id, updated);
+    return updated;
+  }
+
+  remove(id: number): boolean {
+    return this.store.delete(id);
+  }
+
+  findAll(): T[] {
+    return [...this.store.values()];
+  }
+
+  findBy(predicate: (entity: T) =&gt; boolean): T[] {
+    return this.findAll().filter(predicate);
+  }
+
+  // 按「某个字段等于某个值」筛选。类型安全的关键：
+  // K 被约束为 keyof T，value 精确到 T[K]。
+  where&lt;K extends keyof T&gt;(key: K, value: T[K]): T[] {
+    return this.findAll().filter((entity) =&gt; entity[key] === value);
+  }
+
+  // 扩展：按某字段排序。key 必须是 T 的键。
+  sortBy&lt;K extends keyof T&gt;(key: K, order: "asc" | "desc" = "asc"): T[] {
+    const sign = order === "asc" ? 1 : -1;
+    return this.findAll().sort((a, b) =&gt; {
+      if (a[key] &lt; b[key]) return -1 * sign;
+      if (a[key] &gt; b[key]) return 1 * sign;
+      return 0;
+    });
+  }
+
+  // 扩展：分页，返回 Page&lt;T&gt;。
+  paginate(options: PageOptions): Page&lt;T&gt; {
+    const { page, pageSize } = options;
+    const all = this.findAll();
+    const total = all.length;
+    const start = (page - 1) * pageSize;
+    return {
+      data: all.slice(start, start + pageSize),
+      page,
+      pageSize,
+      total,
+      totalPages: Math.ceil(total / pageSize),
+    };
+  }
+
+  get count(): number {
+    return this.store.size;
+  }
+}
+</code></pre>
+<p>逐段拆解——重点看泛型如何保证类型安全：</p>
+<ul>
+<li><code>interface Entity { id: number }</code> + <code>class Repository&lt;T extends Entity&gt;</code>：约束保证<strong>每种实体都有 <code>id</code></strong>，所以 <code>add</code> 里的 <code>entity.id</code>、以及用 <code>Map&lt;number, T&gt;</code> 以 id 作键，全都合法。任何不带 <code>id</code> 的类型都无法作为 <code>Repository</code> 的实体，编译期就被挡住。</li>
+<li><code>getById(id): T | undefined</code>：找不到返回 <code>undefined</code>，所以返回类型是 <code>T | undefined</code>。调用方<strong>被迫</strong>处理“可能没有“的情况——这是类型安全，不是麻烦。</li>
+<li><code>update(id, patch: Partial&lt;Omit&lt;T, "id"&gt;&gt;)</code>：这里把两个工具类型叠起来用。<code>Omit&lt;T, "id"&gt;</code> 先去掉 <code>id</code>（禁止改主键），再用 <code>Partial&lt;...&gt;</code> 变成“部分可选“，于是你能只更新几个字段，且<strong>碰不到 id</strong>。<code>{ ...existing, ...patch }</code> 处用了 <code>as T</code> 断言——因为 TS 无法静态证明“旧对象 + 部分补丁“必然还是完整的 <code>T</code>，这是合理的类型断言。</li>
+<li><code>findBy(predicate: (entity: T) =&gt; boolean)</code>：谓词函数接收的 <code>entity</code> 类型是 <code>T</code>，所以你在谓词里能安全访问实体的所有字段。</li>
+<li><strong><code>where&lt;K extends keyof T&gt;(key: K, value: T[K])</code></strong>：本项目的类型安全之魂。<code>key</code> 只能是 <code>T</code> 真实存在的字段名；<code>value</code> 的类型被钉死为 <code>T[K]</code>（那个字段的值类型）。传错字段名或传错值类型，全在编译期报错。</li>
+<li><code>sortBy&lt;K extends keyof T&gt;</code>：同样的 <code>keyof</code> 约束——只能按真实字段排序。<code>a[key] &lt; b[key]</code> 的比较对字符串和数字字段都成立。</li>
+<li><code>paginate(options): Page&lt;T&gt;</code>：返回泛型 <code>Page&lt;T&gt;</code>，其中 <code>data: T[]</code> 随实体类型变化。</li>
+</ul>
+<p>现在定义两种截然不同的实体，各建一个仓储：</p>
+<pre><code class="language-typescript">// 文件：code/ch16/repository.ts（续）
+
+interface User extends Entity {
+  id: number;
+  name: string;
+  age: number;
+  role: "admin" | "guest";
+}
+
+interface Product extends Entity {
+  id: number;
+  title: string;
+  price: number;
+  inStock: boolean;
+}
+
+const users = new Repository&lt;User&gt;();
+users.add({ id: 1, name: "Alice", age: 30, role: "admin" });
+users.add({ id: 2, name: "Bob", age: 25, role: "guest" });
+users.add({ id: 3, name: "Carol", age: 35, role: "guest" });
+
+const products = new Repository&lt;Product&gt;();
+products.add({ id: 101, title: "键盘", price: 199, inStock: true });
+products.add({ id: 102, title: "鼠标", price: 89, inStock: false });
+products.add({ id: 103, title: "显示器", price: 1299, inStock: true });
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>User</code> 和 <code>Product</code> 都 <code>extends Entity</code>（都带 <code>id</code>），所以都能塞进 <code>Repository</code>。但它们的其余字段天差地别——<code>User</code> 有 <code>role</code>，<code>Product</code> 有 <code>price</code>。</li>
+<li><code>new Repository&lt;User&gt;()</code> 把 <code>T</code> 钉成 <code>User</code>：这个仓储的 <code>add</code> 只接受 <code>User</code>，<code>getById</code> 返回 <code>User | undefined</code>。给它塞 <code>Product</code> 会报错。<strong>一份 <code>Repository</code> 类，服务两套完全不同的数据，且各自类型精确。</strong></li>
+</ul>
+<p>最后是使用与演示：</p>
+<pre><code class="language-typescript">// 文件：code/ch16/repository.ts（续）
+
+const alice = users.getById(1); // User | undefined
+console.log("getById(1):", alice);
+
+// where：key 只能是 User 的键，value 类型必须匹配。
+const guests = users.where("role", "guest"); // ✓ "guest" 是合法的 role
+console.log("where role=guest:", guests.map((u) =&gt; u.name));
+// users.where("role", "boss"); // 报错：不是合法的 role 字面量
+// users.where("email", "x"); // 报错：User 没有 email 字段
+
+const adults = users.findBy((u) =&gt; u.age &gt;= 30);
+console.log("findBy age&gt;=30:", adults.map((u) =&gt; u.name));
+
+users.update(2, { age: 26 }); // patch 是 Partial，且不能改 id
+console.log("update(2) 后:", users.getById(2));
+
+// where 在另一种实体上同样类型安全
+const available = products.where("inStock", true);
+console.log("在售商品:", available.map((p) =&gt; p.title));
+
+console.log(
+  "按 price 降序:",
+  products.sortBy("price", "desc").map((p) =&gt; `${p.title}=${p.price}`)
+);
+console.log("用户分页(第1页,每页2条):", users.paginate({ page: 1, pageSize: 2 }));
+
+users.remove(3);
+console.log("删除后用户数:", users.count);
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>users.where("role", "guest")</code>：<code>"role"</code> 是 <code>User</code> 的合法键，<code>"guest"</code> 是合法的 <code>role</code> 值——通过。而注释里的 <code>where("role", "boss")</code> 会报错（<code>"boss"</code> 不是 <code>"admin" | "guest"</code>），<code>where("email", ...)</code> 也报错（<code>User</code> 没有 <code>email</code>）。<strong>筛选条件的正确性由类型系统保证</strong>，你不可能按不存在的字段查询。</li>
+<li><code>products.where("inStock", true)</code>：同一个 <code>where</code> 方法，在 <code>Product</code> 仓储上照样类型安全——这里 <code>"inStock"</code> 要求 <code>value</code> 是 <code>boolean</code>。这就是泛型的复用威力。</li>
+<li><code>users.update(2, { age: 26 })</code>：只更新 <code>age</code>，合法；若写 <code>{ id: 999 }</code> 会报错，因为 <code>Omit&lt;T, "id"&gt;</code> 禁止改主键。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">npx tsx ch16/repository.ts
+</code></pre>
+<p>预期输出（节选）：</p>
+<pre><code>getById(1): { id: 1, name: 'Alice', age: 30, role: 'admin' }
+where role=guest: [ 'Bob', 'Carol' ]
+findBy age&gt;=30: [ 'Alice', 'Carol' ]
+update(2) 后: { id: 2, name: 'Bob', age: 26, role: 'guest' }
+在售商品: [ '键盘', '显示器' ]
+按 price 降序: [ '显示器=1299', '键盘=199', '鼠标=89' ]
+用户分页(第1页,每页2条): { data: [ ... ], page: 1, pageSize: 2, total: 3, totalPages: 2 }
+删除后用户数: 2
+</code></pre>
+<h3 id="扩展练习加分项"><a class="header" href="#扩展练习加分项">扩展练习（加分项）</a></h3>
+<ol>
+<li><strong>多字段排序</strong>：让 <code>sortBy</code> 接受一个 <code>Array&lt;{ key: keyof T; order: "asc" | "desc" }&gt;</code>，实现“先按 A 升序、再按 B 降序“。想想类型怎么写才安全。</li>
+<li><strong><code>whereMany</code></strong>：接受一个 <code>Partial&lt;T&gt;</code> 作为查询条件，返回“所有字段都匹配“的实体。提示：遍历 <code>Object.keys(query)</code>，用 <code>keyof</code> 收窄。</li>
+<li><strong>给 <code>paginate</code> 加排序</strong>：让分页选项里能带一个 <code>sortKey: keyof T</code>，返回排序后的那一页。</li>
+<li><strong><code>Option</code> 类型</strong>：仿照 <code>Result</code>，定义 <code>type Option&lt;T&gt; = { some: true; value: T } | { some: false }</code>，把 <code>getById</code> 的返回从 <code>T | undefined</code> 改成 <code>Option&lt;T&gt;</code>，体会两种“可能没有“表达方式的取舍。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们把 TypeScript 的核心——泛型——从头讲透：</p>
+<ul>
+<li><strong>为什么需要泛型</strong>：为每种类型各写一份太啰嗦，用 <code>any</code> 又丢掉类型（把错误推迟到运行时）。泛型让一份代码同时“通用“且“保留类型“，让类型<strong>流动</strong>起来。</li>
+<li><strong>泛型函数</strong>：<code>function identity&lt;T&gt;(x: T): T</code>。优先靠<strong>类型推断</strong>，需要时用 <code>&lt;...&gt;</code> <strong>显式指定</strong>。可有多个类型参数（<code>pair&lt;A, B&gt;</code>），配合数组、元组使用（<code>swap</code>、<code>mapArray</code>）。</li>
+<li><strong>泛型约束</strong> <code>extends</code>：给 <code>T</code> 设“至少要满足什么形状“的门槛（<code>T extends HasLength</code>）。特别是 <strong><code>K extends keyof T</code> + 返回 <code>T[K]</code></strong>，实现类型安全的属性读写。</li>
+<li><strong>泛型默认值</strong> <code>&lt;T = string&gt;</code>：调用方不指定时的兜底。</li>
+<li><strong>泛型接口 / 类型别名 / 类</strong>：<code>Container&lt;T&gt;</code>、<code>Result&lt;T, E&gt;</code>、<code>Stack&lt;T&gt;</code>。<code>Result</code> 是把“可能失败“写进类型的实用模式。</li>
+<li><strong>内置工具类型</strong>：<code>Partial</code> / <code>Required</code> / <code>Readonly</code> / <code>Record</code> / <code>Pick</code> / <code>Omit</code> / <code>ReturnType</code>——都是官方写好的泛型，先会用，原理下章讲。</li>
+<li><strong>常见坑</strong>：别过度泛型化（只出现一次的类型参数多半多余）；约束别太松也别太狠（用 <code>T extends X</code> 而非直接标 <code>X</code> 以保留具体类型）；泛型 vs 联合看“类型间有没有关联“。</li>
+<li><strong>小项目</strong>：<code>Repository&lt;T extends Entity&gt;</code> 把上述全部串起来，做出返回类型随实体变化、按字段筛选/排序/分页全程类型安全的仓储。</li>
+</ul>
+<p><strong>自测题</strong>（先自己想，再回代码验证）：</p>
+<ol>
+<li><code>function identity&lt;T&gt;(x: T): T</code> 里三个 <code>T</code> 是同一个类型吗？如果我写 <code>identity&lt;string&gt;(123)</code> 会怎样？</li>
+<li>为什么 <code>longest</code> 不加 <code>T extends HasLength</code> 约束时，函数体里访问 <code>a.length</code> 会报错？</li>
+<li><code>getProp&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K]</code>——<code>getProp(user, "name")</code> 的返回类型是什么？为什么不是 <code>string | number | boolean</code>？</li>
+<li><code>Partial&lt;User&gt;</code> 和 <code>Required&lt;Config&gt;</code> 分别把属性变成什么？<code>Omit&lt;User, "email"&gt;</code> 得到什么类型？</li>
+<li>什么时候该用泛型，什么时候该用联合类型 <code>A | B</code>？用一句话概括判断标准。</li>
+<li><code>Repository.where("email", "x")</code> 为什么会编译报错？这体现了泛型的什么价值？</li>
+</ol>
+<p>答得上来，说明你已经掌握了泛型的核心。</p>
+<hr>
+<p>泛型是“参数化类型“的能力，但它本身还比较“直“——传进什么类型，就用什么类型。真正让 TypeScript 类型系统变得像一门“小型编程语言“的，是<strong>在类型层面做计算</strong>：根据条件选择类型、遍历并改造一个类型的每个属性、从字符串模板里提取类型、甚至从复杂类型里“反推“出某个部分。</p>
+<p><strong>第 17 章 · 高级类型</strong>将带你进入这个更强大的世界：<strong>条件类型（conditional types）</strong> <code>T extends U ? X : Y</code>、<strong>映射类型（mapped types）</strong>（<code>Partial</code>、<code>Pick</code> 到底是怎么写出来的）、<strong>模板字面量类型（template literal types）</strong>，以及神奇的 <strong><code>infer</code></strong> 关键字。学完那章，你不仅会<strong>用</strong>工具类型，还能<strong>亲手造</strong>出自己的工具类型。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch15.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch17.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch15.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch17.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 10 章 · 浏览器、DOM 与事件（概览） - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch10.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-10-章--浏览器dom-与事件概览"><a class="header" href="#第-10-章--浏览器dom-与事件概览">第 10 章 · 浏览器、DOM 与事件（概览）</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前九章我们一直在终端里用 Node.js 跑 JavaScript。但 JavaScript 的老家其实是<strong>浏览器（browser）</strong>——它当初就是为了让网页“动起来“而发明的。这本书的重点是 Node 后端，所以本章是一次<strong>概览（overview）</strong>：目标不是把你培养成前端工程师，而是让你彻底搞懂“一段 JS 在浏览器里到底怎么工作、能操纵什么“。这份理解在你以后调试网页、写全栈项目、甚至读别人前端代码时都用得上。</p>
+<p>学完本章，你将能够：</p>
+<ul>
+<li>说清楚 <strong>HTML、CSS、JavaScript</strong> 三者的分工，以及 <code>&lt;script&gt;</code> 标签放哪里、<code>defer</code> / <code>async</code> 有什么区别。</li>
+<li>认识 <strong>BOM</strong>：<code>window</code>、<code>document</code>、<code>console</code>、<code>alert</code>、<code>location</code> 这几个浏览器给你的全局对象。</li>
+<li>理解 <strong>DOM（Document Object Model，文档对象模型）</strong>：页面是一棵“节点树“，用 <code>querySelector</code> 等查到元素，读写它的内容、属性、样式，创建和删除节点。</li>
+<li>掌握<strong>事件（event）</strong>：用 <code>addEventListener</code> 监听、读事件对象、<code>preventDefault</code>、理解<strong>冒泡（bubbling）与捕获（capturing）</strong>、用**事件委托（event delegation）**优雅地处理一堆元素。</li>
+<li>读取表单、用 <code>localStorage</code> 存点小数据、知道 <code>fetch</code> 是怎么回事。</li>
+<li>亲手做一个<strong>不依赖任何框架</strong>的待办清单网页。</li>
+</ul>
+<p>📌 <strong>重要前提</strong>：本章代码要<strong>在浏览器里打开 HTML 文件运行</strong>，不是在终端 <code>node app.js</code>。原因很简单——<code>document</code>、<code>window</code> 这些东西只有浏览器才有，Node 里根本没有。</p>
+<hr>
+<h2 id="浏览器里的-jshtml--css--js-三者关系"><a class="header" href="#浏览器里的-jshtml--css--js-三者关系">浏览器里的 JS：HTML / CSS / JS 三者关系</a></h2>
+<p>打开任何一个网页，背后都是三种语言在协作，各管一摊：</p>
+<ul>
+<li><strong>HTML（HyperText Markup Language）</strong>：负责<strong>结构与内容</strong>。它用一层层“标签“描述“页面上有什么“——一个标题、一段文字、一个按钮、一个列表。</li>
+<li><strong>CSS（Cascading Style Sheets，层叠样式表）</strong>：负责<strong>外观</strong>。颜色、字体、间距、布局都归它管。</li>
+<li><strong>JavaScript</strong>：负责<strong>行为</strong>。用户点了按钮怎么办、输入了文字怎么响应、数据怎么变化，都靠 JS。</li>
+</ul>
+<p>一个最小的网页长这样：</p>
+<pre><code class="language-html">&lt;!-- 文件：code/ch10/demo-dom.html（片段） --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;DOM 与事件小实验&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 id="title"&gt;Hello DOM&lt;/h1&gt;
+    &lt;p class="note"&gt;这是一段说明文字。&lt;/p&gt;
+    &lt;button id="btn"&gt;点我&lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>&lt;!DOCTYPE html&gt;</code>：告诉浏览器“这是一个标准的 HTML5 文档“，必须写在第一行。</li>
+<li><code>&lt;html lang="zh-CN"&gt;</code>：整个文档的根标签，<code>lang</code> 声明语言（有利于搜索引擎和屏幕阅读器）。</li>
+<li><code>&lt;head&gt;</code>：<strong>看不见</strong>的头部信息。<code>&lt;meta charset="UTF-8"&gt;</code> 声明用 UTF-8 编码（不写中文可能乱码）；<code>&lt;title&gt;</code> 是浏览器标签页上显示的标题。</li>
+<li><code>&lt;body&gt;</code>：<strong>看得见</strong>的页面主体，用户在屏幕上看到的一切都在这里。</li>
+<li><code>&lt;h1&gt;</code>、<code>&lt;p&gt;</code>、<code>&lt;button&gt;</code>：分别是一级标题、段落、按钮。每个标签可以带<strong>属性（attribute）</strong>，比如 <code>id="title"</code>（给元素起个唯一名字）、<code>class="note"</code>（给元素分类，可多个元素共用）。</li>
+</ul>
+<p>💡 你不需要精通 HTML/CSS 才能学本章。记住“标签描述结构、属性给元素贴标记（尤其是 <code>id</code> 和 <code>class</code>，JS 靠它们找元素）“就够了。</p>
+<h3 id="script-标签js-怎么进入页面"><a class="header" href="#script-标签js-怎么进入页面"><code>&lt;script&gt;</code> 标签：JS 怎么进入页面</a></h3>
+<p>浏览器不会自己去找你的 JS 文件，你得用 <code>&lt;script&gt;</code> 标签告诉它。有两种写法：</p>
+<pre><code class="language-html">&lt;!-- 写法一：内联（inline），直接把代码写在标签里 --&gt;
+&lt;script&gt;
+  console.log("你好，浏览器");
+&lt;/script&gt;
+
+&lt;!-- 写法二：外链（external），引用一个 .js 文件 --&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;
+</code></pre>
+<p>小项目里我们会用外链——把 HTML（结构）和 JS（行为）分开，是良好习惯。</p>
+<h3 id="放哪里defer-和-async-是什么"><a class="header" href="#放哪里defer-和-async-是什么">放哪里？<code>defer</code> 和 <code>async</code> 是什么</a></h3>
+<p>这是个非常容易踩坑、又非常重要的点。浏览器<strong>从上到下</strong>解析 HTML，遇到普通的 <code>&lt;script&gt;</code> 会<strong>停下来</strong>：先下载脚本、执行完，再继续往下解析。这带来两个后果：</p>
+<ol>
+<li>如果脚本放在 <code>&lt;head&gt;</code> 里、又想操作 <code>&lt;body&gt;</code> 里的元素——此时 <code>&lt;body&gt;</code> 还没被解析，元素根本<strong>还不存在</strong>，你的代码会拿到 <code>null</code> 而报错。</li>
+<li>大脚本会**阻塞（block）**页面渲染，用户盯着白屏等。</li>
+</ol>
+<p>历史上的土办法是“把 <code>&lt;script&gt;</code> 放在 <code>&lt;/body&gt;</code> 前面“，等所有元素都解析完了再执行脚本。这能用，但现代更推荐用 <code>defer</code>：</p>
+<pre><code class="language-html">&lt;!-- 放在 head 里也没问题，因为 defer 会让它等到 DOM 就绪 --&gt;
+&lt;script src="app.js" defer&gt;&lt;/script&gt;
+</code></pre>
+<p>三种加载方式的区别：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>写法</th><th>何时下载</th><th>何时执行</th><th>顺序</th></tr>
+</thead>
+<tbody>
+<tr><td><code>&lt;script&gt;</code></td><td>遇到即下载</td><td><strong>立刻</strong>，阻塞解析</td><td>按出现顺序</td></tr>
+<tr><td><code>&lt;script defer&gt;</code></td><td>边解析边下载</td><td><strong>HTML 全部解析完后</strong>、按顺序执行</td><td>保持出现顺序</td></tr>
+<tr><td><code>&lt;script async&gt;</code></td><td>边解析边下载</td><td><strong>下载完立刻</strong>执行（可能打断解析）</td><td>谁先下完谁先跑</td></tr>
+</tbody>
+</table>
+</div>
+<p>📌 记住结论：<strong>操作页面元素的脚本，用 <code>defer</code></strong>（或放在 <code>&lt;/body&gt;</code> 前）。这样脚本执行时，页面元素保证都已存在。<code>async</code> 适合与页面无依赖的独立脚本（如统计代码），本书小项目统一用 <code>defer</code>。</p>
+<p>⚠️ <strong>陷阱</strong>：<code>defer</code> / <code>async</code> 只对<strong>外链</strong>脚本（有 <code>src</code>）生效。写在标签里的内联脚本加了也没用。</p>
+<hr>
+<h2 id="bom-简介浏览器给你的全局对象"><a class="header" href="#bom-简介浏览器给你的全局对象">BOM 简介：浏览器给你的全局对象</a></h2>
+<p>在 Node 里，全局对象是 <code>global</code>（或 <code>globalThis</code>）。在浏览器里，这个“万物之源“叫 <strong><code>window</code></strong>。它代表<strong>浏览器窗口本身</strong>，你能拿到的一切浏览器能力，几乎都挂在它上面。这一套围绕 <code>window</code> 的对象，统称 <strong>BOM（Browser Object Model，浏览器对象模型）</strong>。</p>
+<p>几个你最常打交道的成员：</p>
+<pre><code class="language-javascript">// 这些代码都在浏览器控制台或 &lt;script&gt; 里跑（不是 node）
+
+window.alert("弹个框");      // 弹出一个警告框，会打断用户
+window.console.log("日志");  // 打印到开发者工具的控制台
+
+// window 上的东西可以省略 window. 前缀，因为 window 是全局对象
+alert("和上面一样");
+console.log("和上面一样");
+
+console.log(location.href);  // 当前页面的完整网址（URL）
+console.log(location.host);  // 主机名，如 "example.com"
+</code></pre>
+<p>逐个说明：</p>
+<ul>
+<li><strong><code>window</code></strong>：浏览器窗口/标签页。所有全局变量其实都是 <code>window</code> 的属性——你在顶层写 <code>var x = 1</code>，<code>window.x</code> 就是它（<code>let</code>/<code>const</code> 不会挂上去）。正因为 <code>window</code> 是全局对象，<code>window.alert</code> 可以简写成 <code>alert</code>。</li>
+<li><strong><code>document</code></strong>：代表<strong>当前页面的内容</strong>。它是 BOM 里最重要的一员，也是<strong>通往 DOM 的大门</strong>——下一节整节都在讲它。</li>
+<li><strong><code>console</code></strong>：开发者工具里的控制台。<code>console.log</code> / <code>console.error</code> / <code>console.warn</code> 是你在浏览器里调试的主力，和 Node 里用法一样。按 <kbd>F12</kbd>（或右键“检查“）就能打开开发者工具看到输出。</li>
+<li><strong><code>alert</code> / <code>confirm</code> / <code>prompt</code></strong>：三个内置弹窗。<code>alert</code> 只提示；<code>confirm</code> 返回 <code>true</code>/<code>false</code>（确定/取消）；<code>prompt</code> 让用户输入一行文字。它们会<strong>冻结页面</strong>直到用户点掉，所以实际产品里很少用，学习和快速调试时方便。</li>
+<li><strong><code>location</code></strong>：当前网址信息。<code>location.href</code> 是完整 URL，给它赋值（<code>location.href = "..."</code>）能跳转页面；<code>location.reload()</code> 刷新。</li>
+</ul>
+<p>💡 打开任意网页，按 F12 切到 Console，直接敲 <code>document.title</code>，回车——你会看到这个页面的标题。控制台就是你探索 BOM/DOM 的游乐场。</p>
+<hr>
+<h2 id="dom把页面看成一棵树"><a class="header" href="#dom把页面看成一棵树">DOM：把页面看成一棵树</a></h2>
+<p>现在进入本章的核心。</p>
+<p>当浏览器读入 HTML，它不会把 HTML 当成一堆字符串，而是解析成一个<strong>对象的树</strong>，这棵树就叫 <strong>DOM（Document Object Model，文档对象模型）</strong>。树上的每个“节点（node）“对应 HTML 里的一样东西：一个标签是一个<strong>元素节点（element）</strong>，标签里的文字是一个<strong>文本节点（text node）</strong>。</p>
+<p>拿这段 HTML 举例：</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;h1 id="title"&gt;Hello DOM&lt;/h1&gt;
+  &lt;ul id="fruits"&gt;
+    &lt;li&gt;苹果&lt;/li&gt;
+    &lt;li&gt;香蕉&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+</code></pre>
+<p>它在内存里对应的 DOM 树（简化）：</p>
+<pre><code>document
+└── html
+    └── body
+        ├── h1#title      → 文本节点 "Hello DOM"
+        └── ul#fruits
+            ├── li        → 文本节点 "苹果"
+            └── li        → 文本节点 "香蕉"
+</code></pre>
+<p>📌 <strong>关键心智模型</strong>：JavaScript 通过 <code>document</code> 拿到这棵树，然后<strong>读它、改它、往上加节点、从上面删节点</strong>——你改的是内存里的 DOM 树，浏览器会立刻把变化重新画到屏幕上。这就是“JS 让网页动起来“的本质。</p>
+<h3 id="查询找到你要操作的元素"><a class="header" href="#查询找到你要操作的元素">查询：找到你要操作的元素</a></h3>
+<p>改一个元素之前，得先“抓住“它。最常用三个方法：</p>
+<pre><code class="language-javascript">// 文件：code/ch10/demo-dom.html（片段）
+
+// 按 id 查（返回单个元素，找不到返回 null）
+const title = document.getElementById("title");
+
+// 按 CSS 选择器查第一个匹配的（更通用，推荐）
+const note = document.querySelector(".note");        // 类名用 .
+const firstLi = document.querySelector("#fruits li"); // 后代选择器
+
+// 按 CSS 选择器查所有匹配的，返回一个 NodeList（类数组）
+const items = document.querySelectorAll("#fruits li");
+console.log(items.length); // 2
+</code></pre>
+<p>逐个拆解：</p>
+<ul>
+<li><strong><code>getElementById("title")</code></strong>：按 <code>id</code> 找，参数<strong>不带 <code>#</code></strong>。<code>id</code> 在页面里应当唯一，所以返回<strong>一个</strong>元素或 <code>null</code>。</li>
+<li><strong><code>querySelector(选择器)</code></strong>：用<strong>CSS 选择器</strong>语法找<strong>第一个</strong>匹配的元素。<code>#title</code> 按 id、<code>.note</code> 按 class、<code>li</code> 按标签名、<code>#fruits li</code> 表示“<code>#fruits</code> 里面的 <code>li</code>“。这是最灵活、最常用的一个。</li>
+<li><strong><code>querySelectorAll(选择器)</code></strong>：找<strong>所有</strong>匹配的，返回一个 <strong><code>NodeList</code></strong>。它长得像数组（有 <code>length</code>、能 <code>for...of</code> 遍历、能用 <code>forEach</code>），但不是真数组，没有 <code>map</code>/<code>filter</code>。需要的话用 <code>Array.from(items)</code> 转成真数组。</li>
+</ul>
+<p>⚠️ <strong>陷阱</strong>：<code>querySelector</code> 找不到时返回 <code>null</code>，你再 <code>.textContent</code> 就会报 <code>Cannot read properties of null</code>。这通常是因为脚本在元素存在之前就跑了——回去看你的 <code>&lt;script&gt;</code> 是不是没加 <code>defer</code>。</p>
+<h3 id="读写内容textcontent-vs-innerhtml务必看安全提醒"><a class="header" href="#读写内容textcontent-vs-innerhtml务必看安全提醒">读写内容：<code>textContent</code> vs <code>innerHTML</code>（务必看安全提醒）</a></h3>
+<p>抓到元素后，最常做的是改它的内容。有两个属性：</p>
+<pre><code class="language-javascript">const title = document.getElementById("title");
+
+// 读
+console.log(title.textContent); // "Hello DOM"
+
+// 写：textContent 把内容当"纯文本"
+title.textContent = "内容被 JS 改了";
+
+// 写：innerHTML 把内容当"HTML 片段"解析
+title.innerHTML = "被改成 &lt;em&gt;斜体&lt;/em&gt; 了";
+</code></pre>
+<p>区别：</p>
+<ul>
+<li><strong><code>textContent</code></strong>：读写<strong>纯文本</strong>。你赋进去的字符串里就算有 <code>&lt;em&gt;</code>，也会被当成普通字符原样显示，不会变成标签。</li>
+<li><strong><code>innerHTML</code></strong>：读写 <strong>HTML 字符串</strong>。浏览器会把它<strong>当成 HTML 解析</strong>，<code>&lt;em&gt;斜体&lt;/em&gt;</code> 会真的渲染成斜体。</li>
+</ul>
+<p><code>innerHTML</code> 很方便，但藏着一个严重的安全问题：</p>
+<p>⚠️ <strong>XSS（Cross-Site Scripting，跨站脚本攻击）</strong>：如果你把<strong>用户输入的内容</strong>直接塞进 <code>innerHTML</code>，攻击者就能输入一段带 <code>&lt;img onerror=...&gt;</code> 之类的字符串，让恶意代码在别人的浏览器里执行——盗取登录凭证、冒充用户操作等。看这个反面例子：</p>
+<pre><code class="language-javascript">// ❌ 危险！千万别这样处理用户输入
+const userInput = '&lt;img src="x" onerror="alert(\'你被攻击了\')"&gt;';
+someElement.innerHTML = userInput; // onerror 里的代码真的会执行！
+</code></pre>
+<p>（补充一个易被误解的点：直接把 <code>&lt;script&gt;...&lt;/script&gt;</code> 通过 <code>innerHTML</code> 插进去，里面的脚本<strong>不会</strong>自动执行；但像上面 <code>&lt;img onerror&gt;</code>、<code>&lt;svg onload&gt;</code> 这类“带事件处理属性的标签“照样会触发执行。所以结论不变——绝不要拿用户输入喂 <code>innerHTML</code>。）</p>
+<p>📌 <strong>安全铁律</strong>：<strong>展示用户输入的内容，一律用 <code>textContent</code>，不用 <code>innerHTML</code>。</strong> <code>textContent</code> 会把一切当纯文本，攻击者的标签只会原样显示成字符，无法执行。本章小项目里显示待办文字，我们坚持用 <code>textContent</code>。只有当 HTML 片段完全由你自己控制、不含任何用户数据时，用 <code>innerHTML</code> 才安全。</p>
+<h3 id="读写属性classstyle"><a class="header" href="#读写属性classstyle">读写属性、class、style</a></h3>
+<p>除了内容，元素的属性和样式也能读写：</p>
+<pre><code class="language-javascript">const note = document.querySelector(".note");
+
+// —— 属性（attribute）——
+note.setAttribute("data-role", "hint"); // 设置属性
+console.log(note.getAttribute("data-role")); // "hint"
+console.log(note.hasAttribute("hidden")); // false
+
+// data-* 自定义属性有个快捷入口：dataset
+note.dataset.role; // "hint"（把 data-role 读成 dataset.role）
+
+// —— class（推荐用 classList，而不是拼字符串）——
+note.classList.add("highlight");    // 加一个类
+note.classList.remove("old");       // 去掉一个类
+note.classList.toggle("active");    // 有就去掉、没有就加上
+console.log(note.classList.contains("highlight")); // true
+
+// —— 行内样式 style ——
+note.style.color = "crimson";       // 对应 CSS 的 color
+note.style.backgroundColor = "#eee"; // CSS 的 background-color → 驼峰写法
+</code></pre>
+<p>要点：</p>
+<ul>
+<li><strong>属性</strong>用 <code>getAttribute</code> / <code>setAttribute</code> / <code>hasAttribute</code> / <code>removeAttribute</code> 存取。<code>data-*</code> 开头的<strong>自定义属性</strong>还能通过 <code>element.dataset</code> 用驼峰名读写（<code>data-user-id</code> ↔ <code>dataset.userId</code>）——小项目里我们就用 <code>data-id</code> 把每条待办的 id 存在 DOM 上。</li>
+<li><strong>class</strong> 强烈建议用 <strong><code>classList</code></strong>：<code>add</code> / <code>remove</code> / <code>toggle</code> / <code>contains</code> 四个方法，语义清晰、不会误伤别的类。别去手动拼 <code>className</code> 字符串，容易把已有的类覆盖掉。</li>
+<li><strong>style</strong> 对应 CSS 的<strong>行内样式</strong>。注意 CSS 里带连字符的属性名，在 JS 里要写成<strong>驼峰（camelCase）</strong>：<code>background-color</code> → <code>backgroundColor</code>、<code>font-size</code> → <code>fontSize</code>。</li>
+</ul>
+<p>💡 大多数时候更好的做法是：在 CSS 里预先写好几个类（比如 <code>.done { text-decoration: line-through; }</code>），JS 只负责用 <code>classList.toggle("done")</code> 切换类，把“长什么样“留给 CSS。小项目正是这么做的。</p>
+<h3 id="创建插入删除节点"><a class="header" href="#创建插入删除节点">创建、插入、删除节点</a></h3>
+<p>页面上本来没有的东西，可以用 JS 现造出来再塞进去：</p>
+<pre><code class="language-javascript">// 1. 创建一个新元素（此时它还"游离"在内存里，不在页面上）
+const li = document.createElement("li");
+li.textContent = "橙子";
+
+// 2. 插入到某个父元素里
+const list = document.getElementById("fruits");
+list.appendChild(li);        // 追加到末尾
+list.prepend(li);            // 插到最前面
+list.insertBefore(li, list.firstChild); // 插到指定节点之前
+
+// 3. 删除
+li.remove();                 // 删掉自己（现代写法，最简单）
+list.removeChild(li);        // 或让父元素删掉某个子节点
+</code></pre>
+<p>拆解这套“创建 → 插入“的流程：</p>
+<ul>
+<li><strong><code>document.createElement("li")</code></strong>：造一个 <code>&lt;li&gt;</code> 元素节点。此刻它还没进 DOM 树，屏幕上看不到。</li>
+<li>给它设置内容/属性（<code>textContent</code>、<code>classList</code> 等），就像装配一个零件。</li>
+<li><strong><code>appendChild</code> / <code>prepend</code> / <code>insertBefore</code></strong>：把这个零件安到 DOM 树上，屏幕才会显示出来。<code>appendChild</code> 加到末尾最常用。</li>
+<li><strong><code>remove()</code></strong>：现代浏览器里删节点最简单——直接让节点删掉自己。老代码里常见 <code>parent.removeChild(child)</code>，效果一样。</li>
+</ul>
+<p>⚠️ <strong>性能小提醒</strong>：如果要一次性加很多节点，别在循环里每次都 <code>appendChild</code>（每次都可能触发浏览器重新计算布局）。可以先把它们攒进一个 <code>DocumentFragment</code> 再一次性插入，或者像小项目那样先拼好再统一 <code>render</code>。数据量小时不必纠结。</p>
+<hr>
+<h2 id="事件让页面响应用户"><a class="header" href="#事件让页面响应用户">事件：让页面响应用户</a></h2>
+<p>页面能“动“，核心在于<strong>响应用户操作</strong>：点击、输入、提交、按键……这些动作在浏览器里都表现为<strong>事件（event）</strong>。你的代码只要“订阅“感兴趣的事件，浏览器就会在事件发生时回调你的函数。</p>
+<h3 id="addeventlistener监听事件"><a class="header" href="#addeventlistener监听事件"><code>addEventListener</code>：监听事件</a></h3>
+<pre><code class="language-javascript">const btn = document.getElementById("btn");
+
+btn.addEventListener("click", (event) =&gt; {
+  console.log("按钮被点了！", event.type); // "click"
+  event.currentTarget.textContent = "已点击";
+});
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li><strong><code>addEventListener(事件名, 回调函数)</code></strong>：给元素挂一个监听器。第一个参数是<strong>事件名字符串</strong>（<code>"click"</code>、<code>"input"</code>、<code>"keydown"</code> 等，注意<strong>不带 <code>on</code></strong>）；第二个是<strong>事件处理函数（event handler）</strong>，事件发生时被浏览器调用。</li>
+<li>处理函数会收到一个<strong>事件对象（event object）</strong>，习惯叫它 <code>event</code> 或 <code>e</code>。它装着这次事件的所有信息。</li>
+<li>一个元素上可以 <code>addEventListener</code> <strong>多次</strong>，每个监听器都会被调用，互不覆盖。这比老式的 <code>btn.onclick = fn</code>（只能有一个）灵活得多。</li>
+</ul>
+<p>💡 需要取消监听时用 <code>removeEventListener(事件名, 同一个函数引用)</code>。注意必须传<strong>同一个函数</strong>，所以匿名箭头函数是没法移除的——要移除就得先把函数存进变量。</p>
+<h3 id="事件对象这次到底发生了什么"><a class="header" href="#事件对象这次到底发生了什么">事件对象：这次到底发生了什么</a></h3>
+<p>事件对象上你最常用的几个：</p>
+<pre><code class="language-javascript">input.addEventListener("keydown", (event) =&gt; {
+  console.log(event.type);          // 事件类型，如 "keydown"
+  console.log(event.key);           // 按下的键，如 "Enter"、"a"
+  console.log(event.target);        // 事件"最初"发生在哪个元素上
+  console.log(event.currentTarget); // 当前监听器挂在哪个元素上
+});
+</code></pre>
+<ul>
+<li><strong><code>event.type</code></strong>：事件类型字符串。</li>
+<li><strong><code>event.target</code></strong>：事件的<strong>源头元素</strong>——用户实际点/按到的那个元素。</li>
+<li><strong><code>event.currentTarget</code></strong>：<strong>当前监听器所在的元素</strong>。在事件委托里，<code>target</code> 和 <code>currentTarget</code> 常常不是同一个，这个区别是委托的关键，下面细讲。</li>
+<li>不同事件有各自的专属属性：键盘事件有 <code>event.key</code>，鼠标事件有 <code>event.clientX/clientY</code> 等。</li>
+</ul>
+<h3 id="常见事件与-preventdefault"><a class="header" href="#常见事件与-preventdefault">常见事件与 <code>preventDefault</code></a></h3>
+<p>几个最常打交道的事件：</p>
+<pre><code class="language-javascript">// click：鼠标点击
+button.addEventListener("click", (e) =&gt; { /* ... */ });
+
+// input：输入框内容变化时（每敲一个字都触发）
+searchBox.addEventListener("input", (e) =&gt; {
+  console.log("当前值：", e.target.value);
+});
+
+// keydown：按下键盘
+box.addEventListener("keydown", (e) =&gt; {
+  if (e.key === "Enter") console.log("按了回车");
+});
+
+// submit：表单提交（挂在 &lt;form&gt; 上）
+form.addEventListener("submit", (e) =&gt; {
+  e.preventDefault(); // 阻止浏览器默认的"跳转/刷新页面"
+  console.log("在这里处理表单，页面不会刷新");
+});
+</code></pre>
+<p>重点解释 <strong><code>preventDefault</code></strong>：很多事件有浏览器内置的<strong>默认行为</strong>——<code>&lt;form&gt;</code> 提交会刷新/跳转页面、点 <code>&lt;a&gt;</code> 链接会导航、右键会弹菜单。当你想用 JS 自己接管、不要浏览器插手时，就调 <strong><code>event.preventDefault()</code></strong> 取消默认行为。表单提交时几乎总要调它，否则页面会刷新，你的 JS 逻辑还没跑完就被打断了。</p>
+<p>⚠️ 别把 <code>preventDefault()</code>（阻止<strong>默认行为</strong>）和 <code>stopPropagation()</code>（阻止<strong>冒泡传播</strong>，下节讲）搞混，它俩管的是完全不同的事。</p>
+<h3 id="冒泡与捕获事件是怎么传播的"><a class="header" href="#冒泡与捕获事件是怎么传播的">冒泡与捕获：事件是怎么传播的</a></h3>
+<p>这是理解事件委托的前提，务必搞清楚。</p>
+<p>当你点击一个 <code>&lt;li&gt;</code> 里的 <code>&lt;span&gt;</code>，事件<strong>并不只发生在那个 <code>&lt;span&gt;</code> 上</strong>。浏览器让事件经历三个阶段：</p>
+<ol>
+<li><strong>捕获阶段（capturing phase）</strong>：从最外层 <code>document</code> <strong>向下</strong>传，一路经过 <code>html → body → ul → li → span</code>，直到目标元素。</li>
+<li><strong>目标阶段（target phase）</strong>：到达真正被点的元素（<code>span</code>）。</li>
+<li><strong>冒泡阶段（bubbling phase）</strong>：再从目标<strong>向上</strong>传，<code>span → li → ul → body → html → document</code>，像水里的气泡往上冒。</li>
+</ol>
+<pre><code>                 ┌─ 捕获 ↓ ─┐        ┌─ 冒泡 ↑ ─┐
+   document  →   html → body → ul → li → span（目标）
+                                          然后沿原路往上冒回 document
+</code></pre>
+<p>关键结论：<strong>默认情况下，<code>addEventListener</code> 在冒泡阶段触发</strong>。也就是说，你在外层 <code>ul</code> 上监听 <code>click</code>，点它里面任何一个 <code>li</code>/<code>span</code>，这个 click 都会<strong>冒泡到 <code>ul</code></strong>，从而触发 <code>ul</code> 的监听器。此时：</p>
+<ul>
+<li><code>event.target</code> = 你<strong>实际点到</strong>的元素（比如 <code>span</code>）；</li>
+<li><code>event.currentTarget</code> = <strong>监听器所在</strong>的元素（<code>ul</code>）。</li>
+</ul>
+<pre><code class="language-javascript">ul.addEventListener("click", (e) =&gt; {
+  // 点 ul 里的任意子元素都会跑到这里（冒泡上来的）
+  console.log("target:", e.target.tagName);        // 可能是 "SPAN"
+  console.log("currentTarget:", e.currentTarget.tagName); // "UL"
+});
+</code></pre>
+<p>如果想在<strong>捕获阶段</strong>监听，给 <code>addEventListener</code> 传第三个参数 <code>{ capture: true }</code>（很少用）。想<strong>阻止事件继续冒泡</strong>，调 <code>event.stopPropagation()</code>。</p>
+<h3 id="事件委托一个监听器搞定一堆元素"><a class="header" href="#事件委托一个监听器搞定一堆元素">事件委托：一个监听器搞定一堆元素</a></h3>
+<p>有了冒泡，就能用一个非常实用的技巧——<strong>事件委托（event delegation）</strong>。</p>
+<p>设想一个待办列表有 100 个 <code>&lt;li&gt;</code>，每个都要能点击。笨办法是给 100 个 <code>&lt;li&gt;</code> 各挂一个监听器：既啰嗦，又有个致命问题——<strong>新添加的 <code>&lt;li&gt;</code> 没有监听器</strong>，因为它是后来才创建的。</p>
+<p>委托的思路：<strong>别在每个子元素上监听，而是在它们共同的父元素上监听一次</strong>。反正子元素的 click 都会冒泡到父元素，我们在父元素这里用 <code>event.target</code> 判断“到底点的是哪个子元素、点的是不是删除按钮“，再决定怎么办。</p>
+<pre><code class="language-javascript">// 只在父级 ul 上监听一次
+listEl.addEventListener("click", (event) =&gt; {
+  // event.target 是实际被点的元素，用 closest 往上找到它所在的 &lt;li&gt;
+  const li = event.target.closest("li[data-id]");
+  if (!li) return; // 点到空白处，不是任何 li，忽略
+
+  const id = Number(li.dataset.id);
+
+  if (event.target.classList.contains("del-btn")) {
+    removeTodo(id);  // 点到的是删除按钮
+  } else {
+    toggleTodo(id);  // 点到别处 → 切换完成
+  }
+});
+</code></pre>
+<p>拆解这段委托逻辑：</p>
+<ul>
+<li>监听器只挂在 <code>listEl</code>（那个 <code>&lt;ul&gt;</code>）上，<strong>一次</strong>。以后无论新增多少 <code>&lt;li&gt;</code>，它们的点击都会冒泡到这里，<strong>自动</strong>被处理——不用给新节点补挂监听器。</li>
+<li><strong><code>event.target.closest("li[data-id]")</code></strong>：<code>closest</code> 从被点元素开始，<strong>沿 DOM 树往上</strong>找第一个匹配选择器的祖先（包括自己）。不管你点到的是 <code>&lt;li&gt;</code> 本身、里面的文字 <code>&lt;span&gt;</code>、还是删除按钮，都能定位到所属的那个 <code>&lt;li&gt;</code>。</li>
+<li>用 <code>li.dataset.id</code> 拿回我们当初存在 <code>data-id</code> 上的编号，就知道操作的是哪条数据。</li>
+<li>再用 <code>event.target.classList.contains("del-btn")</code> 区分：点的是删除按钮就删，否则就切换完成状态。</li>
+</ul>
+<p>📌 <strong>事件委托三步口诀</strong>：① 在父元素监听；② 用 <code>event.target</code> / <code>closest</code> 找出真正的目标；③ 据此分派处理。它省内存、天然支持动态添加的元素，是前端开发的常用模式。小项目的列表点击和筛选按钮都用了它。</p>
+<hr>
+<h2 id="表单读取与-localstorage"><a class="header" href="#表单读取与-localstorage">表单读取与 localStorage</a></h2>
+<h3 id="读取表单"><a class="header" href="#读取表单">读取表单</a></h3>
+<p>网页收集用户输入靠<strong>表单（form）</strong>。读取输入框的值就是读它的 <code>value</code> 属性：</p>
+<pre><code class="language-javascript">const input = document.querySelector("#new-todo");
+console.log(input.value); // 用户当前输入的字符串
+
+// 复选框/单选框看 checked
+const agree = document.querySelector("#agree");
+console.log(agree.checked); // true / false
+</code></pre>
+<ul>
+<li>文本框、文本域、下拉框：读 <strong><code>.value</code></strong>（永远是字符串，需要数字记得 <code>Number(...)</code>）。</li>
+<li>复选框、单选框：读 <strong><code>.checked</code></strong>（布尔值）。</li>
+<li>表单整体提交监听 <code>&lt;form&gt;</code> 的 <code>submit</code> 事件，并 <code>preventDefault()</code> 阻止刷新。</li>
+</ul>
+<h3 id="localstorage在浏览器里存点小数据"><a class="header" href="#localstorage在浏览器里存点小数据">localStorage：在浏览器里存点小数据</a></h3>
+<p>刷新页面后，JS 变量全没了。想让数据“活过刷新“，最简单的办法是 <strong><code>localStorage</code></strong>——浏览器提供的一个<strong>键值存储（key-value store）</strong>，数据存在用户本地磁盘，关掉浏览器也还在。</p>
+<pre><code class="language-javascript">// 存：键和值都必须是字符串
+localStorage.setItem("username", "小明");
+
+// 取：不存在返回 null
+console.log(localStorage.getItem("username")); // "小明"
+
+// 删 / 清空
+localStorage.removeItem("username");
+localStorage.clear();
+</code></pre>
+<p>⚠️ <strong>只能存字符串</strong>。要存对象或数组，得先用 <code>JSON.stringify</code> 转成字符串存，取出来再 <code>JSON.parse</code> 转回来——这正是小项目保存待办列表的做法：</p>
+<pre><code class="language-javascript">// 存对象/数组：序列化
+localStorage.setItem("todos", JSON.stringify(todos));
+
+// 取出来：反序列化（可能失败，用 try/catch 兜底）
+try {
+  const raw = localStorage.getItem("todos");
+  const todos = raw ? JSON.parse(raw) : [];
+} catch {
+  const todos = [];
+}
+</code></pre>
+<p>📌 <code>localStorage</code> 适合存少量、不敏感的数据（如界面偏好、草稿）。<strong>不要</strong>存密码、令牌等敏感信息。容量约 5MB，也别当数据库用。</p>
+<hr>
+<h2 id="简介-fetch浏览器怎么向服务器发请求"><a class="header" href="#简介-fetch浏览器怎么向服务器发请求">简介 fetch：浏览器怎么向服务器发请求</a></h2>
+<p>到目前为止我们的数据都在本地。真实网页常常要向<strong>服务器</strong>要数据。浏览器发网络请求的现代方式是 <strong><code>fetch</code></strong>：</p>
+<pre><code class="language-javascript">// fetch 返回一个 Promise（还记得第 8 章的异步吗？）
+async function loadUser() {
+  const res = await fetch("https://api.example.com/user/1");
+  if (!res.ok) throw new Error("请求失败：" + res.status);
+  const data = await res.json(); // 把响应体解析成 JSON
+  console.log(data);
+}
+</code></pre>
+<p>简单拆解（本章只需看懂，第 23 章后端时会深入）：</p>
+<ul>
+<li><strong><code>fetch(url)</code></strong> 发起一个 HTTP 请求，返回一个 <strong>Promise</strong>——正好用上第 8 章学的 <code>async/await</code>。</li>
+<li><code>await fetch(...)</code> 得到一个<strong>响应对象（Response）</strong>。<code>res.ok</code> 表示状态码是否 2xx；<code>res.status</code> 是状态码（如 200、404）。</li>
+<li><code>await res.json()</code> 把响应体解析成 JS 对象（也可用 <code>res.text()</code> 取纯文本）。</li>
+</ul>
+<p>💡 你会发现：无论浏览器端的 <code>fetch</code> 还是后面 Node 端处理请求，底层都是同一套 <strong>HTTP</strong> 协议、同一套 <strong>Promise/async</strong> 异步模型。前九章打下的语言功底，在两端都通用——这正是学 JavaScript 的性价比所在。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>脚本跑太早拿到 <code>null</code></strong>：操作元素的脚本一定要在 DOM 就绪后执行。用 <code>&lt;script defer&gt;</code>（或放 <code>&lt;/body&gt;</code> 前）。报 <code>Cannot read properties of null</code> 时，先怀疑这个。</li>
+<li>⚠️ <strong><code>innerHTML</code> + 用户输入 = XSS 漏洞</strong>：展示用户内容一律用 <code>textContent</code>。只有完全由自己控制、不含用户数据的 HTML 片段才用 <code>innerHTML</code>。</li>
+<li>⚠️ <strong>忘了 <code>preventDefault()</code></strong>：表单 <code>submit</code>、链接 <code>click</code> 有默认行为会刷新/跳转页面，用 JS 接管时记得阻止。</li>
+<li>⚠️ <strong><code>preventDefault</code> 与 <code>stopPropagation</code> 混淆</strong>：前者阻止<strong>默认行为</strong>，后者阻止<strong>冒泡传播</strong>，别用错。</li>
+<li>💡 <strong>优先事件委托</strong>：列表、动态生成的元素，用委托在父级监听一次，省内存又天然支持后加的元素。</li>
+<li>💡 <strong><code>querySelectorAll</code> 返回的不是数组</strong>：需要 <code>map</code>/<code>filter</code> 时先 <code>Array.from(...)</code>。</li>
+<li>💡 <strong>样式交给 CSS 类</strong>：JS 只 <code>classList.toggle</code> 切换类，别在 JS 里堆一堆 <code>style.xxx</code>，更好维护。</li>
+<li>💡 <strong>元素只查一次、缓存起来</strong>：把 <code>querySelector</code> 的结果存进变量复用，别在每次事件里反复查询。</li>
+<li>⚠️ <strong><code>localStorage</code> 只存字符串</strong>：对象/数组要 <code>JSON.stringify</code> / <code>JSON.parse</code>，且解析要用 <code>try/catch</code> 兜底（存的数据可能损坏或格式变了）。</li>
+</ul>
+<hr>
+<h2 id="本章小项目纯-js-交互小页面"><a class="header" href="#本章小项目纯-js-交互小页面">本章小项目：纯 JS 交互小页面</a></h2>
+<p>我们来做一个<strong>不依赖任何框架</strong>的待办清单网页，把本章所有知识点串起来：输入框 + 按钮添加待办、列表显示、点击项切换“完成“（划线）、删除按钮、按状态筛选、用 <code>localStorage</code> 持久化、用<strong>事件委托</strong>处理列表点击。数据模型呼应第 3 章的 todo：<code>{ id, text, done }</code>。</p>
+<p>产出两个文件：<code>code/ch10/index.html</code>（结构 + 样式）和 <code>code/ch10/app.js</code>（逻辑）。<strong>用浏览器打开 <code>index.html</code> 运行，不是 node。</strong></p>
+<h3 id="页面结构indexhtml"><a class="header" href="#页面结构indexhtml">页面结构（index.html）</a></h3>
+<p>关键部分（完整样式见仓库文件，这里聚焦结构）：</p>
+<pre><code class="language-html">&lt;!-- 文件：code/ch10/index.html（片段） --&gt;
+&lt;h1&gt;我的待办清单&lt;/h1&gt;
+
+&lt;div class="add-row"&gt;
+  &lt;input id="new-todo" type="text" placeholder="今天要做点什么？" autocomplete="off" /&gt;
+  &lt;button id="add-btn"&gt;添加&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="filters"&gt;
+  &lt;button data-filter="all" class="active"&gt;全部&lt;/button&gt;
+  &lt;button data-filter="active"&gt;未完成&lt;/button&gt;
+  &lt;button data-filter="done"&gt;已完成&lt;/button&gt;
+  &lt;span id="count"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;ul id="todo-list"&gt;&lt;/ul&gt;
+
+&lt;!-- defer：等 DOM 解析完再执行，且不阻塞渲染 --&gt;
+&lt;script src="app.js" defer&gt;&lt;/script&gt;
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li>一个输入框 <code>#new-todo</code> 和添加按钮 <code>#add-btn</code>。</li>
+<li>三个筛选按钮，用 <code>data-filter</code> 属性标记各自的过滤模式（<code>all</code>/<code>active</code>/<code>done</code>），后面 JS 用 <code>dataset.filter</code> 读它——又是 <code>data-*</code> 的用法。</li>
+<li>一个空的 <code>&lt;ul id="todo-list"&gt;</code>，列表项由 JS 动态生成。</li>
+<li>脚本用 <code>defer</code> 引入，保证执行时上面的元素都已存在。</li>
+</ul>
+<h3 id="逻辑appjs状态与持久化"><a class="header" href="#逻辑appjs状态与持久化">逻辑（app.js）：状态与持久化</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch10/app.js（片段）
+const STORAGE_KEY = "ch10.todos";
+
+function loadTodos() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveTodos() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+}
+
+let todos = loadTodos();
+let filter = "all";
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li><code>todos</code> 是唯一的<strong>数据来源（single source of truth）</strong>：一个 <code>{ id, text, done }</code> 数组。页面只是它的“投影“。</li>
+<li><code>loadTodos</code> 启动时从 <code>localStorage</code> 读回并 <code>JSON.parse</code>，用 <code>try/catch</code> 防止数据损坏时崩溃。</li>
+<li><code>saveTodos</code> 每次改动后把数组 <code>JSON.stringify</code> 存回去。</li>
+<li><code>filter</code> 记住当前筛选模式。</li>
+</ul>
+<h3 id="逻辑渲染"><a class="header" href="#逻辑渲染">逻辑：渲染</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch10/app.js（片段）
+const listEl = document.querySelector("#todo-list");
+const countEl = document.querySelector("#count");
+const filterBtns = document.querySelectorAll(".filters button[data-filter]");
+
+function render() {
+  const visible = todos.filter((t) =&gt; {
+    if (filter === "active") return !t.done;
+    if (filter === "done") return t.done;
+    return true;
+  });
+
+  listEl.innerHTML = ""; // 清空（这里是固定字符串，安全）
+
+  if (visible.length === 0) {
+    const li = document.createElement("li");
+    li.className = "empty";
+    li.textContent = "这里空空如也～";
+    listEl.appendChild(li);
+  } else {
+    for (const t of visible) {
+      listEl.appendChild(createItem(t));
+    }
+  }
+
+  const left = todos.filter((t) =&gt; !t.done).length;
+  countEl.textContent = `还剩 ${left} 项`;
+
+  for (const btn of filterBtns) {
+    btn.classList.toggle("active", btn.dataset.filter === filter);
+  }
+}
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li><strong><code>render</code> 是核心思想</strong>：数据一变就重新渲染。它先按 <code>filter</code> 过滤出该显示的 <code>visible</code>，清空列表，再逐个生成 <code>&lt;li&gt;</code> 塞进去。这种“改数据 → 重画“的模式，正是后面 React/Vue 等框架思路的雏形。</li>
+<li>清空用了 <code>listEl.innerHTML = ""</code>——这里赋的是<strong>固定空字符串</strong>，不涉及用户数据，安全。</li>
+<li>计数直接从 <code>todos</code> 数过未完成的，用 <code>textContent</code> 写进 <code>#count</code>。</li>
+<li>用 <code>classList.toggle("active", 条件)</code> 高亮当前筛选按钮：第二个参数为 <code>true</code> 就加类、<code>false</code> 就去类。</li>
+</ul>
+<h3 id="逻辑创建列表项坚持-textcontent-防-xss"><a class="header" href="#逻辑创建列表项坚持-textcontent-防-xss">逻辑：创建列表项（坚持 textContent 防 XSS）</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch10/app.js（片段）
+function createItem(todo) {
+  const li = document.createElement("li");
+  li.dataset.id = String(todo.id); // 把 id 存进 data-id，委托时靠它找回数据
+  if (todo.done) li.classList.add("done");
+
+  const span = document.createElement("span");
+  span.className = "text";
+  span.textContent = todo.text; // ✅ 用 textContent，绝不用 innerHTML
+
+  const del = document.createElement("button");
+  del.className = "del-btn";
+  del.textContent = "删除";
+
+  li.appendChild(span);
+  li.appendChild(del);
+  return li;
+}
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li>逐个 <code>createElement</code> 造节点、设内容、拼装，再返回。</li>
+<li><strong><code>li.dataset.id = String(todo.id)</code></strong>：把这条待办的 id 记在 DOM 的 <code>data-id</code> 上，事件委托时就能反查出点的是哪条。</li>
+<li><strong><code>span.textContent = todo.text</code></strong>：待办文字来自用户输入，这里<strong>必须用 <code>textContent</code></strong>。若用 <code>innerHTML</code>，用户输入 <code>&lt;img src=x onerror=...&gt;</code> 就会触发 XSS。这是本项目最重要的安全细节。</li>
+<li>完成状态通过给 <code>&lt;li&gt;</code> 加 <code>done</code> 类实现划线（CSS 里 <code>li.done .text { text-decoration: line-through }</code>），样式交给 CSS。</li>
+</ul>
+<h3 id="逻辑业务操作与事件绑定"><a class="header" href="#逻辑业务操作与事件绑定">逻辑：业务操作与事件绑定</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch10/app.js（片段）
+function addTodo(text) {
+  const trimmed = text.trim();
+  if (!trimmed) return; // 空白不加
+  todos.push({ id: Date.now(), text: trimmed, done: false });
+  saveTodos();
+  render();
+}
+
+function toggleTodo(id) {
+  const t = todos.find((t) =&gt; t.id === id);
+  if (t) { t.done = !t.done; saveTodos(); render(); }
+}
+
+function removeTodo(id) {
+  todos = todos.filter((t) =&gt; t.id !== id);
+  saveTodos();
+  render();
+}
+
+// 添加：点按钮 / 按回车
+addBtn.addEventListener("click", () =&gt; {
+  addTodo(input.value);
+  input.value = "";
+  input.focus();
+});
+input.addEventListener("keydown", (event) =&gt; {
+  if (event.key === "Enter") {
+    addTodo(input.value);
+    input.value = "";
+  }
+});
+
+// 列表点击：事件委托
+listEl.addEventListener("click", (event) =&gt; {
+  const li = event.target.closest("li[data-id]");
+  if (!li) return;
+  const id = Number(li.dataset.id);
+  if (event.target.classList.contains("del-btn")) {
+    removeTodo(id);
+  } else {
+    toggleTodo(id);
+  }
+});
+
+// 筛选：也用委托
+document.querySelector(".filters").addEventListener("click", (event) =&gt; {
+  const btn = event.target.closest("button[data-filter]");
+  if (!btn) return;
+  filter = btn.dataset.filter;
+  render();
+});
+
+render(); // 首次渲染
+</code></pre>
+<p>拆解：</p>
+<ul>
+<li>三个业务函数 <code>addTodo</code> / <code>toggleTodo</code> / <code>removeTodo</code> 都遵循同一节奏：<strong>改 <code>todos</code> 数组 → <code>saveTodos()</code> 存盘 → <code>render()</code> 重画</strong>。数据是主角，DOM 只是结果。</li>
+<li><code>addTodo</code> 用 <code>text.trim()</code> 挡掉纯空白；用 <code>Date.now()</code>（毫秒时间戳）当简单的唯一 id。</li>
+<li>添加支持两种触发：点按钮的 <code>click</code>、输入框里的 <code>keydown</code> 判断 <code>event.key === "Enter"</code>。</li>
+<li><strong>列表点击用事件委托</strong>：只在 <code>#todo-list</code> 上监听一次，<code>closest("li[data-id]")</code> 定位到所属 <code>&lt;li&gt;</code>，再用 <code>classList.contains("del-btn")</code> 区分是删除还是切换。新增的待办无需重新绑定，天然生效。</li>
+<li>筛选按钮同样用委托，绑在 <code>.filters</code> 容器上，读 <code>dataset.filter</code> 更新 <code>filter</code> 后重画。</li>
+<li>最后 <code>render()</code> 一次，把从 <code>localStorage</code> 读回的数据画到页面上。</li>
+</ul>
+<blockquote>
+<p>完整可运行的 <code>index.html</code> 和 <code>app.js</code> 见 <code>code/ch10/</code> 目录，<code>README.md</code> 里有打开方式。</p>
+</blockquote>
+<h3 id="运行方式"><a class="header" href="#运行方式">运行方式</a></h3>
+<p>用浏览器<strong>直接打开</strong> <code>code/ch10/index.html</code>（双击、拖进浏览器、或右键“用浏览器打开“均可）。添加几条待办，点一下会划线（完成），点“删除“移除，试试筛选按钮；然后<strong>刷新页面</strong>——数据还在，这就是 <code>localStorage</code> 的功劳。按 <kbd>F12</kbd> 打开控制台可以边玩边观察。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>编辑功能</strong>：双击某条待办（<code>dblclick</code> 事件）让它变成可编辑的输入框，回车保存、失焦（<code>blur</code>）也保存。</li>
+<li><strong>“清除已完成“按钮</strong>：一键删掉所有 <code>done: true</code> 的待办（<code>todos = todos.filter(t =&gt; !t.done)</code>）。</li>
+<li><strong>计数细化</strong>：<code>#count</code> 同时显示“共 N 项，完成 M 项“。</li>
+<li><strong>拖拽排序</strong>（进阶）：用 <code>draggable</code> 属性和 <code>dragstart</code>/<code>drop</code> 事件调整待办顺序，并把新顺序存回 <code>localStorage</code>。</li>
+<li><strong>防 XSS 自测</strong>：故意添加一条内容为 <code>&lt;img src=x onerror="alert(1)"&gt;</code> 的待办，确认它被<strong>当作纯文字</strong>显示、弹窗没弹出——这就验证了 <code>textContent</code> 的安全性。（做完删掉这条。）</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们从 Node 回到浏览器，快速走了一遍前端最核心的三块：</p>
+<ul>
+<li><strong>三者分工</strong>：HTML 管结构、CSS 管样式、JS 管行为。<code>&lt;script&gt;</code> 用 <strong><code>defer</code></strong> 引入外链脚本，保证 DOM 就绪后执行、不阻塞渲染。</li>
+<li><strong>BOM</strong>：<code>window</code> 是浏览器全局对象，<code>document</code>、<code>console</code>、<code>alert</code>、<code>location</code> 都挂在它上面。</li>
+<li><strong>DOM</strong>：页面是一棵<strong>节点树</strong>。用 <code>getElementById</code> / <code>querySelector</code> / <code>querySelectorAll</code> <strong>查</strong>；用 <code>textContent</code>（安全）/ <code>innerHTML</code>（有 <strong>XSS</strong> 风险）读写内容；用 <code>setAttribute</code> / <code>dataset</code> / <code>classList</code> / <code>style</code> 读写属性与样式；用 <code>createElement</code> + <code>appendChild</code> / <code>remove</code> <strong>增删</strong>节点。</li>
+<li><strong>事件</strong>：<code>addEventListener</code> 监听，处理函数拿到<strong>事件对象</strong>（<code>type</code>/<code>target</code>/<code>currentTarget</code>/<code>key</code>）；<code>preventDefault</code> 阻止默认行为；事件经历<strong>捕获→目标→冒泡</strong>，默认在<strong>冒泡</strong>阶段触发；据此用<strong>事件委托</strong>在父级监听一次搞定一堆（含动态）子元素。</li>
+<li><strong>表单</strong>读 <code>.value</code> / <code>.checked</code>；<strong>localStorage</strong> 存字符串（对象要 <code>JSON.stringify</code>/<code>parse</code>）做持久化；<strong>fetch</strong> 用 Promise 向服务器发请求。</li>
+</ul>
+<p>自测题（能脱口而出就算掌握）：</p>
+<ol>
+<li>普通 <code>&lt;script&gt;</code>、<code>&lt;script defer&gt;</code>、<code>&lt;script async&gt;</code> 在<strong>下载和执行时机</strong>上各有什么不同？操作页面元素的脚本该用哪个？</li>
+<li><code>textContent</code> 和 <code>innerHTML</code> 有什么区别？为什么展示用户输入必须用前者？XSS 是怎么发生的？</li>
+<li><code>event.target</code> 和 <code>event.currentTarget</code> 分别指什么？在事件委托里它俩为什么常常不一样？</li>
+<li>用自己的话描述事件的<strong>捕获、目标、冒泡</strong>三阶段。<code>addEventListener</code> 默认在哪个阶段触发？</li>
+<li><strong>事件委托</strong>是什么、解决了什么问题？为什么它天然支持“后来才添加的元素“？</li>
+<li><code>preventDefault()</code> 和 <code>stopPropagation()</code> 各管什么？举一个必须用 <code>preventDefault()</code> 的场景。</li>
+<li><code>localStorage</code> 为什么存对象前要 <code>JSON.stringify</code>？取回来忘了 <code>JSON.parse</code> 会得到什么？</li>
+</ol>
+<p>答完对照前文检查。全部答对，你就理解了“JS 在浏览器里到底怎么工作“——这份直觉在你以后做全栈、调网页时都会反复用到。</p>
+<hr>
+<p>浏览器之旅到此告一段落。从下一章起，我们正式回到本书的主战场——<strong>服务器端</strong>。第 11 章《Node.js 运行时基础》会讲清楚：同样一门 JavaScript，脱离了浏览器、跑在 Node 里时有什么不同？没有了 <code>window</code> 和 <code>document</code>，Node 给了我们哪些新能力（文件、网络、进程）？事件循环、模块、全局对象在 Node 里又是怎样一番光景？带着本章“JS 依附于宿主环境（host environment）“的认识，我们去认识另一个宿主——Node.js。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch09.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch11.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch09.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch11.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

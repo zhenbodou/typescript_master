@@ -1,0 +1,805 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 17 章 · 高级类型：条件、映射、模板字面量与 infer - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch17.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-17-章--高级类型条件映射模板字面量与-infer"><a class="header" href="#第-17-章--高级类型条件映射模板字面量与-infer">第 17 章 · 高级类型：条件、映射、模板字面量与 infer</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>上一章我们把**泛型（generics）**从头讲透——它让类型能像参数一样被“传进来“。但泛型本身还比较“直“：你传进什么类型，<code>T</code> 就是什么类型，中间不做加工。</p>
+<p>真正让 TypeScript 的类型系统变成一门“小型编程语言“的，是<strong>在类型层面做计算</strong>的能力：</p>
+<ul>
+<li>根据条件<strong>选择</strong>类型（if / else）；</li>
+<li><strong>遍历</strong>一个类型的每个属性并逐个改造；</li>
+<li>从一个复杂类型里<strong>反推 / 提取</strong>出某个部分；</li>
+<li>从字符串模板里<strong>拼接 / 解析</strong>出新的字符串字面量类型。</li>
+</ul>
+<p>这四件事，正好对应本章四大主角：<strong>条件类型（conditional types）</strong>、<strong>映射类型（mapped types）</strong>、<strong><code>infer</code> 关键字</strong>、<strong>模板字面量类型（template literal types）</strong>。社区把这类“用类型算类型“的技巧戏称为<strong>类型体操（type gymnastics）</strong>。学完本章，你将能够：</p>
+<ul>
+<li>写出条件类型 <code>T extends U ? X : Y</code>，并理解它和“泛型约束“的区别。</li>
+<li>讲清<strong>分布式条件类型（distributive conditional types）</strong>：联合类型在条件类型里会“分发“，以及如何用 <code>[T]</code> 阻止分发。</li>
+<li>用 <strong><code>infer</code></strong> 从数组、函数、Promise、元组里提取类型。</li>
+<li>写出映射类型 <code>{ [K in keyof T]: ... }</code>，用 <code>+/-</code> 修饰符增删 <code>readonly</code> 和 <code>?</code>，用 <code>as</code> 做<strong>键重映射（key remapping）</strong>。</li>
+<li>用模板字面量类型拼接字符串，配合内置的 <code>Uppercase</code> / <code>Lowercase</code> / <code>Capitalize</code> / <code>Uncapitalize</code>。</li>
+<li><strong>亲手实现</strong>内置工具类型：<code>Partial</code>、<code>Required</code>、<code>Readonly</code>、<code>Pick</code>、<code>Omit</code>、<code>Record</code>、<code>ReturnType</code>、<code>Exclude</code>、<code>Extract</code>、<code>NonNullable</code>、<code>Awaited</code>。</li>
+<li>写出<strong>递归类型</strong>：<code>DeepReadonly</code>、<code>DeepPartial</code>。</li>
+<li>避开类型体操的常见坑：<code>never</code> 的分发、递归深度限制、以及“别过度炫技“。</li>
+<li>做出一个<strong>类型级工具库</strong>，用自制的 <code>Equal</code> / <code>Expect</code> 在类型层面写单元测试。</li>
+</ul>
+<p>本章多为“类型层代码“。我们的做法是：<strong>用类型断言 + <code>console.log</code> 演示，用 <code>npx tsc --noEmit</code> 验证类型正确</strong>。运行示例：<code>npx tsx ch17/01-conditional.ts</code>；整体类型检查：在 <code>code/</code> 目录执行 <code>npx tsc --noEmit</code>。</p>
+<p>📌 <strong>一句话记住本章</strong>：泛型是“类型的参数“，本章是“类型的<strong>函数体</strong>“——条件类型是 <code>if</code>，映射类型是 <code>for...in</code>，<code>infer</code> 是“模式匹配里的变量绑定”，模板字面量是“字符串拼接“。</p>
+<hr>
+<h2 id="条件类型类型世界的-if--else"><a class="header" href="#条件类型类型世界的-if--else">条件类型：类型世界的 if / else</a></h2>
+<p>先从最像“编程“的一个特性开始。条件类型的语法是：</p>
+<pre><code>T extends U ? X : Y
+</code></pre>
+<p>读作：“<strong>如果</strong> <code>T</code> 能赋值给（是……的子类型）<code>U</code>，<strong>就取</strong> <code>X</code>，<strong>否则取</strong> <code>Y</code>。“注意这里的 <code>extends</code> 不是“继承”，而是“<strong>能不能赋值 / 是不是子类型</strong>“的判断。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/01-conditional.ts
+
+// 最简单的条件类型：判断 T 是不是 string
+type IsString&lt;T&gt; = T extends string ? true : false;
+
+type A = IsString&lt;string&gt;; // true
+type B = IsString&lt;number&gt;; // false
+type C = IsString&lt;"hello"&gt;; // true（字面量 "hello" 也是 string 的子类型）
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>IsString&lt;T&gt;</code> 是一个<strong>泛型类型别名</strong>，它的“函数体“是一个条件类型。</li>
+<li><code>IsString&lt;string&gt;</code>：<code>string extends string</code> 成立，取 <code>true</code>。</li>
+<li><code>IsString&lt;number&gt;</code>：<code>number extends string</code> 不成立，取 <code>false</code>。</li>
+<li><code>IsString&lt;"hello"&gt;</code>：字面量类型 <code>"hello"</code> 是 <code>string</code> 的<strong>子类型</strong>，所以 <code>"hello" extends string</code> 成立，取 <code>true</code>。</li>
+</ul>
+<p>💡 结果类型 <code>true</code> / <code>false</code> 是<strong>布尔字面量类型</strong>，不是值 <code>true</code> / <code>false</code>。你可以把 <code>IsString&lt;string&gt;</code> 当成一个“类型层的布尔值“，后面能拿去做进一步的类型判断。</p>
+<p>条件类型可以<strong>嵌套</strong>，就像 <code>if / else if / else</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/01-conditional.ts（续）
+type TypeName&lt;T&gt; = T extends string
+  ? "string"
+  : T extends number
+    ? "number"
+    : T extends boolean
+      ? "boolean"
+      : T extends undefined
+        ? "undefined"
+        : T extends Function
+          ? "function"
+          : "object";
+
+type T1 = TypeName&lt;"abc"&gt;; // "string"
+type T2 = TypeName&lt;42&gt;; // "number"
+type T3 = TypeName&lt;true&gt;; // "boolean"
+type T4 = TypeName&lt;() =&gt; void&gt;; // "function"
+type T5 = TypeName&lt;{ x: number }&gt;; // "object"
+</code></pre>
+<p>逐段拆解：这就是一串“三元表达式套三元表达式“。从上往下依次判断：是 <code>string</code> 吗？是 <code>number</code> 吗？……全都不是，就落到最后的 <code>"object"</code>。<code>TypeName&lt;() =&gt; void&gt;</code> 走到 <code>T extends Function</code> 这一支得到 <code>"function"</code>。</p>
+<p>📌 <strong>条件类型 vs 泛型约束</strong>——两个都用 <code>extends</code>，但意思完全不同：</p>
+<ul>
+<li><strong>约束</strong>（第 16 章）：<code>function f&lt;T extends U&gt;(x: T)</code> 里的 <code>extends</code> 是“<strong>门槛</strong>“，<code>T</code> 不满足 <code>U</code> 就<strong>直接编译报错</strong>。</li>
+<li><strong>条件类型</strong>：<code>T extends U ? X : Y</code> 里的 <code>extends</code> 是“<strong>分支</strong>“，<code>T</code> 不满足 <code>U</code> 不报错，只是走 <code>else</code> 分支取 <code>Y</code>。</li>
+</ul>
+<p>看这个“数组就取元素类型、不是数组就原样返回“的例子（<code>infer</code> 下一节详讲，这里先感受条件分支）：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/01-conditional.ts（续）
+type Flatten&lt;T&gt; = T extends Array&lt;infer Item&gt; ? Item : T;
+
+type F1 = Flatten&lt;number[]&gt;; // number
+type F2 = Flatten&lt;string&gt;; // string（不是数组，走 else，原样返回）
+</code></pre>
+<p><code>Flatten&lt;number[]&gt;</code>：<code>number[]</code> 匹配 <code>Array&lt;...&gt;</code>，提取出元素 <code>number</code>。<code>Flatten&lt;string&gt;</code>：<code>string</code> 不是数组，走 <code>else</code> 得到 <code>string</code> 本身。<strong>如果这里用的是约束而非条件类型，<code>Flatten&lt;string&gt;</code> 就会直接报错，而不是优雅地返回 <code>string</code>。</strong></p>
+<p>运行验证：</p>
+<pre><code class="language-bash">npx tsx ch17/01-conditional.ts
+# 类型检查通过：IsString&lt;string&gt; 推导为 true，得到 true
+# 类型检查通过：IsString&lt;number&gt; 推导为 false，得到 false
+</code></pre>
+<p>文件末尾我们写了 <code>const r1: IsString&lt;string&gt; = true;</code>——如果 <code>IsString&lt;string&gt;</code> 不是 <code>true</code>，这行会<strong>编译报错</strong>。这是本章反复用到的技巧：<strong>用一个精确类型的变量声明，把“类型是否符合预期“变成编译期检查。</strong></p>
+<hr>
+<h2 id="分布式条件类型联合类型会分发"><a class="header" href="#分布式条件类型联合类型会分发">分布式条件类型：联合类型会“分发“</a></h2>
+<p>这是本章第一个“反直觉但极其重要“的知识点，务必吃透。</p>
+<p>📌 <strong>规则</strong>：当条件类型作用在一个<strong>裸类型参数（naked type parameter）<strong>上——也就是形如 <code>T extends U ? ...</code>，且 <code>T</code> 是直接的类型参数、没被别的东西包住——如果传进来的 <code>T</code> 是</strong>联合类型</strong>，那么条件类型会对联合的<strong>每个成员分别求值</strong>，最后把结果<strong>合并成新的联合</strong>。这叫“<strong>分发（distribute）</strong>“。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/02-distributive.ts
+type ToArray&lt;T&gt; = T extends unknown ? T[] : never;
+
+type A = ToArray&lt;string | number&gt;; // string[] | number[]
+</code></pre>
+<p>逐段拆解——这里发生了分发：</p>
+<pre><code>ToArray&lt;string | number&gt;
+= ToArray&lt;string&gt; | ToArray&lt;number&gt;          // 联合被拆开，逐个代入
+= (string extends unknown ? string[] : never)
+  | (number extends unknown ? number[] : never)
+= string[] | number[]
+</code></pre>
+<p>💡 注意结果是 <code>string[] | number[]</code>（“字符串数组 或 数字数组”），<strong>不是</strong> <code>(string | number)[]</code>（“元素可能是字符串或数字的数组”）。这个区别很关键。</p>
+<p>如果你<strong>想要</strong> <code>(string | number)[]</code> 呢？用一对<strong>方括号</strong>把类型参数包起来，让它不再是“裸“的，就能<strong>阻止分发</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/02-distributive.ts（续）
+type ToArrayNonDist&lt;T&gt; = [T] extends [unknown] ? T[] : never;
+
+type B = ToArrayNonDist&lt;string | number&gt;; // (string | number)[]
+</code></pre>
+<p>逐段拆解：<code>[T]</code> 把 <code>T</code> 包进了一个元组类型，<code>T</code> 不再是“裸类型参数“，于是<strong>整个联合作为一个整体</strong>参与判断：<code>[string | number] extends [unknown]</code> 成立，取 <code>(string | number)[]</code>。</p>
+<p>⚠️ <strong><code>[T]</code> 是关闭分发的标准手法</strong>，记住它——很多时候分发帮了大忙，但也有很多时候它是 bug 的来源。</p>
+<p>分发的经典应用，是实现 <code>Exclude</code>（从联合里剔除某些成员）：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/02-distributive.ts（续）
+type MyExclude&lt;T, U&gt; = T extends U ? never : T;
+
+type C = MyExclude&lt;"a" | "b" | "c", "a"&gt;; // "b" | "c"
+</code></pre>
+<p>逐段拆解——分发让它逐个成员判断“该不该被剔除“：</p>
+<pre><code>MyExclude&lt;"a" | "b" | "c", "a"&gt;
+= ("a" extends "a" ? never : "a")   // 命中，变 never
+  | ("b" extends "a" ? never : "b") // 不命中，保留 "b"
+  | ("c" extends "a" ? never : "c") // 不命中，保留 "c"
+= never | "b" | "c"
+= "b" | "c"
+</code></pre>
+<p>💡 最后一步 <code>never | "b" | "c"</code> 化简成了 <code>"b" | "c"</code>。这是因为 <strong><code>never</code> 是联合类型的“零元“</strong>——<code>never | X</code> 永远等于 <code>X</code>，就像 <code>0 + x = x</code>。正是这个性质，让“把不想要的成员映射成 <code>never</code>“成为过滤联合的通用套路。</p>
+<h3 id="never-的分发陷阱"><a class="header" href="#never-的分发陷阱">never 的分发陷阱</a></h3>
+<p><code>never</code> 本身有个坑，很多人栽过：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/02-distributive.ts（续）
+type Wrap&lt;T&gt; = T extends unknown ? T[] : never;
+type D = Wrap&lt;never&gt;; // never（不是 never[]！）
+</code></pre>
+<p>逐段拆解：直觉会以为 <code>Wrap&lt;never&gt;</code> 得到 <code>never[]</code>，但实际是 <code>never</code>。原因是 <strong><code>never</code> 就是“空联合“</strong>——里面一个成员都没有。分发是“对每个成员循环“,既然没有任何成员，循环体一次都不执行，直接返回 <code>never</code>。就像对空数组做 <code>map</code>，得到的还是空数组。</p>
+<p>⚠️ 这个坑在写工具类型时经常暗中生效：只要你的条件类型作用在裸参数上，传入 <code>never</code> 就会“短路“成 <code>never</code>。想让 <code>never</code> 也走一次分支，还是用 <code>[T]</code> 阻止分发：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/02-distributive.ts（续）
+type WrapSafe&lt;T&gt; = [T] extends [never] ? "空类型" : "非空";
+type E = WrapSafe&lt;never&gt;; // "空类型"
+type G = WrapSafe&lt;string&gt;; // "非空"
+</code></pre>
+<p><code>[never] extends [never]</code> 是把 <code>never</code> 当整体判断，成立，得到 <code>"空类型"</code>。这也是社区检测“某类型是不是 <code>never</code>“的标准写法。</p>
+<hr>
+<h2 id="infer从类型里提取出一部分"><a class="header" href="#infer从类型里提取出一部分">infer：从类型里“提取“出一部分</a></h2>
+<p>前面 <code>Flatten</code> 里出现过 <code>infer</code>，现在正式讲。</p>
+<p>📌 <strong><code>infer X</code></strong> 只能用在条件类型的 <code>extends</code> <strong>右侧</strong>，作用是“<strong>声明一个临时类型变量 <code>X</code>，让 TypeScript 在匹配的过程中自动把对应位置的类型填给它</strong>“。你可以把它理解成”<strong>类型层的模式匹配 + 变量绑定</strong>“：写一个“模板”,在想提取的位置放 <code>infer X</code>，匹配成功后 <code>X</code> 就绑定到那个位置的实际类型。</p>
+<h3 id="提取数组元素类型"><a class="header" href="#提取数组元素类型">提取数组元素类型</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/03-infer.ts
+type ElementType&lt;T&gt; = T extends Array&lt;infer E&gt; ? E : never;
+
+type E1 = ElementType&lt;number[]&gt;; // number
+type E2 = ElementType&lt;string[]&gt;; // string
+type E3 = ElementType&lt;Array&lt;{ id: number }&gt;&gt;; // { id: number }
+type E4 = ElementType&lt;number&gt;; // never（不是数组）
+</code></pre>
+<p>逐段拆解：<code>T extends Array&lt;infer E&gt;</code> 的意思是“如果 <code>T</code> 长得像 <code>Array&lt;某个东西&gt;</code>，就把那个’某个东西’捕获到 <code>E</code> 里“。<code>ElementType&lt;number[]&gt;</code>：<code>number[]</code> 就是 <code>Array&lt;number&gt;</code>，匹配成功，<code>E</code> 绑定到 <code>number</code>。<code>ElementType&lt;number&gt;</code>：<code>number</code> 不是数组，匹配失败，走 <code>else</code> 得到 <code>never</code>。</p>
+<h3 id="提取函数返回值类型手写-returntype"><a class="header" href="#提取函数返回值类型手写-returntype">提取函数返回值类型（手写 ReturnType）</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/03-infer.ts（续）
+type MyReturnType&lt;T&gt; = T extends (...args: any[]) =&gt; infer R ? R : never;
+
+type R1 = MyReturnType&lt;() =&gt; string&gt;; // string
+type R2 = MyReturnType&lt;(a: number) =&gt; boolean&gt;; // boolean
+type R3 = MyReturnType&lt;() =&gt; void&gt;; // void
+</code></pre>
+<p>逐段拆解：模板是“一个函数 <code>(...args: any[]) =&gt; infer R</code>“，我们不关心参数（用 <code>...args: any[]</code> 通配），只在<strong>返回值</strong>位置放 <code>infer R</code>。匹配成功后 <code>R</code> 就是返回值类型。这就是标准库 <code>ReturnType</code> 的核心实现。</p>
+<h3 id="提取参数类型"><a class="header" href="#提取参数类型">提取参数类型</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/03-infer.ts（续）
+type FirstArg&lt;T&gt; = T extends (first: infer P, ...rest: any[]) =&gt; any ? P : never;
+type P1 = FirstArg&lt;(name: string, age: number) =&gt; void&gt;; // string
+
+type MyParameters&lt;T&gt; = T extends (...args: infer A) =&gt; any ? A : never;
+type PA = MyParameters&lt;(a: string, b: number) =&gt; void&gt;; // [a: string, b: number]
+</code></pre>
+<p>逐段拆解：<code>FirstArg</code> 把 <code>infer P</code> 放在<strong>第一个参数</strong>的位置，<code>...rest: any[]</code> 吃掉剩下的，于是只提取到第一个参数类型。<code>MyParameters</code> 把 <code>infer A</code> 放在<strong>整个参数列表</strong>位置，捕获到的是一个<strong>元组类型</strong> <code>[a: string, b: number]</code>（TypeScript 会保留参数名做标签，这是“具名元组“）。</p>
+<h3 id="promise-解包与递归"><a class="header" href="#promise-解包与递归">Promise 解包与递归</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/03-infer.ts（续）
+type UnwrapPromise&lt;T&gt; = T extends Promise&lt;infer V&gt; ? V : T;
+type U1 = UnwrapPromise&lt;Promise&lt;number&gt;&gt;; // number
+type U2 = UnwrapPromise&lt;string&gt;; // string（不是 Promise，原样返回）
+
+// 递归解包：多层 Promise 一直剥到底（近似标准库 Awaited）
+type MyAwaited&lt;T&gt; = T extends Promise&lt;infer V&gt; ? MyAwaited&lt;V&gt; : T;
+type W1 = MyAwaited&lt;Promise&lt;Promise&lt;number&gt;&gt;&gt;; // number
+type W2 = MyAwaited&lt;Promise&lt;Promise&lt;Promise&lt;string&gt;&gt;&gt;&gt;; // string
+</code></pre>
+<p>逐段拆解：<code>UnwrapPromise</code> 只剥一层。而 <code>MyAwaited</code> 在<strong>提取出内层类型 <code>V</code> 后，又把 <code>V</code> 交给自己</strong>——这就是<strong>递归类型</strong>。<code>MyAwaited&lt;Promise&lt;Promise&lt;number&gt;&gt;&gt;</code>：第一次剥出 <code>Promise&lt;number&gt;</code>，递归；第二次剥出 <code>number</code>，<code>number</code> 不是 Promise，停下来返回 <code>number</code>。这正是标准库 <code>Awaited&lt;T&gt;</code> 的思路。</p>
+<h3 id="一个条件类型里用多个-infer"><a class="header" href="#一个条件类型里用多个-infer">一个条件类型里用多个 infer</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/03-infer.ts（续）
+type HeadTail&lt;T&gt; = T extends [infer H, ...infer Rest] ? [H, Rest] : never;
+type HT = HeadTail&lt;[1, 2, 3]&gt;; // [1, [2, 3]]
+</code></pre>
+<p>逐段拆解：模板 <code>[infer H, ...infer Rest]</code> 同时捕获元组的<strong>头</strong>（<code>H</code>）和<strong>尾</strong>（<code>Rest</code>，用 <code>...</code> 收集剩余）。<code>HeadTail&lt;[1, 2, 3]&gt;</code> 得到 <code>[1, [2, 3]]</code>。这种“头 + 尾“拆解是元组类型递归处理的基础套路。</p>
+<p>运行验证：</p>
+<pre><code class="language-bash">npx tsx ch17/03-infer.ts
+# 类型检查通过：MyAwaited 解出的类型是 number，值为 42
+</code></pre>
+<p>文件里用了 <code>const n: MyAwaited&lt;ReturnType&lt;typeof fetchCount&gt;&gt; = await fetchCount();</code>——把类型层的 <code>MyAwaited</code> 和运行时真实的 <code>await</code> 对上，编译通过就说明我们的类型推导和 TS 的运行时语义一致。</p>
+<hr>
+<h2 id="映射类型遍历并改造每个属性"><a class="header" href="#映射类型遍历并改造每个属性">映射类型：遍历并改造每个属性</a></h2>
+<p>条件类型是 <code>if</code>，映射类型就是 <code>for...in</code>。它的基本形状是：</p>
+<pre><code>{ [K in keyof T]: 对 T[K] 做点什么 }
+</code></pre>
+<p>读作：“<strong>对 <code>T</code> 的每一个键 <code>K</code>，生成一个新属性</strong>。”</p>
+<pre><code class="language-typescript">// 文件：code/ch17/04-mapped.ts
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+// 原样复制，等价于 T 本身
+type Identity&lt;T&gt; = { [K in keyof T]: T[K] };
+type SameAsUser = Identity&lt;User&gt;; // { id: number; name: string; email: string }
+</code></pre>
+<p>逐段拆解：<code>keyof User</code> 是联合 <code>"id" | "name" | "email"</code>。<code>[K in keyof T]</code> 让 <code>K</code> 依次取这三个键，每次生成属性 <code>K: T[K]</code>（<code>T[K]</code> 是“索引访问类型“，取键 <code>K</code> 对应的值类型）。这里没做任何改造，所以结果和 <code>User</code> 一模一样。真正有用的是在 <code>T[K]</code> 或键上“做手脚“。</p>
+<h3 id="修饰符readonly-和--的增删"><a class="header" href="#修饰符readonly-和--的增删">修饰符：readonly 和 ? 的增删</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/04-mapped.ts（续）
+// 手写 Partial：给每个属性加 ?
+type MyPartial&lt;T&gt; = { [K in keyof T]?: T[K] };
+type PU = MyPartial&lt;User&gt;; // { id?: number; name?: string; email?: string }
+
+// 手写 Readonly：给每个属性加 readonly
+type MyReadonly&lt;T&gt; = { readonly [K in keyof T]: T[K] };
+type RU = MyReadonly&lt;User&gt;; // { readonly id: number; ... }
+</code></pre>
+<p>逐段拆解：在 <code>[K in keyof T]</code> <strong>后面</strong>加 <code>?</code>，就给每个属性加上“可选“修饰符；在<strong>前面</strong>加 <code>readonly</code>，就给每个属性加上“只读“。这就是标准库 <code>Partial</code> 和 <code>Readonly</code> 的真身。</p>
+<p>📌 修饰符还能<strong>减</strong>：<code>+</code> 是加（默认可省略），<code>-</code> 是减。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/04-mapped.ts（续）
+// 手写 Required：用 -? 去掉可选
+type MyRequired&lt;T&gt; = { [K in keyof T]-?: T[K] };
+type MaybeUser = { id?: number; name?: string };
+type RequiredUser = MyRequired&lt;MaybeUser&gt;; // { id: number; name: string }
+
+// 用 -readonly 去掉只读
+type Mutable&lt;T&gt; = { -readonly [K in keyof T]: T[K] };
+type MutableUser = Mutable&lt;MyReadonly&lt;User&gt;&gt;; // { id: number; name: string; email: string }
+</code></pre>
+<p>逐段拆解：<code>-?</code> 表示“移除可选修饰符“，把 <code>id?</code> 变回必填的 <code>id</code>——这就是 <code>Required</code>。<code>-readonly</code> 表示“移除只读修饰符“，把 <code>MyReadonly&lt;User&gt;</code> 又变回可写。有了 <code>+/-</code>，你就能在类型层面自由地增删这两个修饰符。</p>
+<h3 id="key-remapping用-as-改造键名"><a class="header" href="#key-remapping用-as-改造键名">key remapping：用 as 改造键名</a></h3>
+<p>📌 TypeScript 4.1 起，映射类型支持在键上用 <strong><code>as</code></strong> 重新命名——这叫<strong>键重映射（key remapping）</strong>。配合模板字面量类型，能批量改键名。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/04-mapped.ts（续）
+// 生成 getter：id -&gt; getId, name -&gt; getName
+type Getters&lt;T&gt; = {
+  [K in keyof T as `get${Capitalize&lt;string &amp; K&gt;}`]: () =&gt; T[K];
+};
+type UserGetters = Getters&lt;User&gt;;
+// { getId: () =&gt; number; getName: () =&gt; string; getEmail: () =&gt; string }
+</code></pre>
+<p>逐段拆解：<code>[K in keyof T as 新键名]</code> 里的 <code>as</code> 后面是新的键名类型。这里用模板字面量 <code>`get${Capitalize&lt;string &amp; K&gt;}`</code>：<code>Capitalize</code> 把首字母大写，<code>string &amp; K</code> 是因为 <code>K</code> 可能不是纯 <code>string</code>（<code>keyof</code> 理论上还含 <code>number | symbol</code>），用 <code>string &amp; K</code> 收窄到字符串。于是 <code>id</code> 变 <code>getId</code>，值类型变成 <code>() =&gt; T[K]</code>（一个返回该属性的函数）。</p>
+<p>💡 key remapping 还能<strong>过滤</strong>键：把某个键映射成 <code>never</code>，它就会被<strong>删除</strong>。这正是手写 <code>Omit</code> 的关键：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/04-mapped.ts（续）
+// 手写 Omit：删掉键 K
+type MyOmit&lt;T, K extends keyof any&gt; = {
+  [P in keyof T as P extends K ? never : P]: T[P];
+};
+type WithoutEmail = MyOmit&lt;User, "email"&gt;; // { id: number; name: string }
+</code></pre>
+<p>逐段拆解：<code>[P in keyof T as P extends K ? never : P]</code>——遍历 <code>T</code> 的每个键 <code>P</code>，如果 <code>P</code> 是要删的键（<code>P extends K</code>），就把键名映射成 <code>never</code>（该属性消失）；否则保留原键名 <code>P</code>。<code>MyOmit&lt;User, "email"&gt;</code>：遍历到 <code>"email"</code> 时映射成 <code>never</code> 被删掉，其余保留。</p>
+<p>运行验证：</p>
+<pre><code class="language-bash">npx tsx ch17/04-mapped.ts
+# 类型检查通过：getName() = Ada
+</code></pre>
+<hr>
+<h2 id="模板字面量类型在类型层拼字符串"><a class="header" href="#模板字面量类型在类型层拼字符串">模板字面量类型：在类型层拼字符串</a></h2>
+<p>模板字面量类型让你能像写模板字符串一样，在<strong>类型层</strong>拼接字符串字面量。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/05-template-literal.ts
+type Greeting = `Hello, ${string}`;
+const g1: Greeting = "Hello, world"; // ✅
+// const g2: Greeting = "Hi";        // ❌ 不匹配模板
+</code></pre>
+<p>逐段拆解：<code>`Hello, ${string}`</code> 描述“以 <code>Hello, </code> 开头、后面接任意字符串“的类型。<code>"Hello, world"</code> 符合，<code>"Hi"</code> 不符合会报错。</p>
+<p>📌 <strong>和联合类型结合会分发，做出笛卡尔积</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/05-template-literal.ts（续）
+type Lang = "zh" | "en";
+type Kind = "title" | "body";
+type Key = `${Lang}_${Kind}`;
+// "zh_title" | "zh_body" | "en_title" | "en_body"
+</code></pre>
+<p>逐段拆解：模板里出现联合类型时，TypeScript 会对每一种组合都生成一个字面量——2 个 <code>Lang</code> × 2 个 <code>Kind</code> = 4 个结果。这在生成“所有合法 key“时非常有用。</p>
+<h3 id="内置字符串工具类型"><a class="header" href="#内置字符串工具类型">内置字符串工具类型</a></h3>
+<p>TypeScript 内置了四个字符串变换类型：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/05-template-literal.ts（续）
+type U = Uppercase&lt;"hello"&gt;; // "HELLO"
+type L = Lowercase&lt;"HELLO"&gt;; // "hello"
+type Cap = Capitalize&lt;"hello"&gt;; // "Hello"
+type Unc = Uncapitalize&lt;"Hello"&gt;; // "hello"
+</code></pre>
+<p><code>Uppercase</code> / <code>Lowercase</code> 全大写 / 全小写；<code>Capitalize</code> / <code>Uncapitalize</code> 只改首字母。它们常和 key remapping 配合，比如从事件名生成处理器名：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/05-template-literal.ts（续）
+type EventName = "click" | "focus" | "blur";
+type Handlers = {
+  [E in EventName as `on${Capitalize&lt;E&gt;}`]: () =&gt; void;
+};
+// { onClick: () =&gt; void; onFocus: () =&gt; void; onBlur: () =&gt; void }
+</code></pre>
+<p>逐段拆解：遍历联合 <code>EventName</code> 的每个成员 <code>E</code>，键名映射成 <code>`on${Capitalize&lt;E&gt;}`</code>——<code>click</code> → <code>onClick</code>。这就是 React 里那种“事件名到 props 名“约定的类型化表达。</p>
+<h3 id="用-infer-从字符串里提取"><a class="header" href="#用-infer-从字符串里提取">用 infer 从字符串里提取</a></h3>
+<p>模板字面量还能出现在 <code>extends</code> 右侧，配合 <code>infer</code> 从字符串里<strong>解析</strong>出部分：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/05-template-literal.ts（续）
+type ExtractId&lt;S&gt; = S extends `user/${infer Id}` ? Id : never;
+type Id1 = ExtractId&lt;"user/123"&gt;; // "123"
+type Id2 = ExtractId&lt;"post/1"&gt;; // never（前缀不匹配）
+</code></pre>
+<p>逐段拆解：模板 <code>`user/${infer Id}`</code> 里，<code>user/</code> 是固定前缀，<code>infer Id</code> 捕获后面的部分。<code>"user/123"</code> 匹配，<code>Id</code> = <code>"123"</code>；<code>"post/1"</code> 前缀不对，走 <code>else</code> 得 <code>never</code>。</p>
+<p>再看一个<strong>递归 + 模板 + infer</strong> 的综合例子——把 <code>snake_case</code> 转成 <code>camelCase</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/05-template-literal.ts（续）
+type SnakeToCamel&lt;S extends string&gt; =
+  S extends `${infer Head}_${infer Tail}`
+    ? `${Head}${Capitalize&lt;SnakeToCamel&lt;Tail&gt;&gt;}`
+    : S;
+type C1 = SnakeToCamel&lt;"user_name"&gt;; // "userName"
+type C2 = SnakeToCamel&lt;"first_name_last"&gt;; // "firstNameLast"
+type C3 = SnakeToCamel&lt;"id"&gt;; // "id"（没有下划线，原样返回）
+</code></pre>
+<p>逐段拆解，以 <code>SnakeToCamel&lt;"user_name"&gt;</code> 为例：</p>
+<ol>
+<li><code>"user_name"</code> 匹配 <code>`${infer Head}_${infer Tail}`</code>：<code>Head</code> = <code>"user"</code>，<code>Tail</code> = <code>"name"</code>。</li>
+<li>结果 = <code>`${Head}${Capitalize&lt;SnakeToCamel&lt;Tail&gt;&gt;}`</code> = <code>`user${Capitalize&lt;SnakeToCamel&lt;"name"&gt;&gt;}`</code>。</li>
+<li>递归 <code>SnakeToCamel&lt;"name"&gt;</code>：<code>"name"</code> 里没有 <code>_</code>，走 <code>else</code> 返回 <code>"name"</code>。</li>
+<li><code>Capitalize&lt;"name"&gt;</code> = <code>"Name"</code>，拼起来 = <code>"userName"</code>。</li>
+</ol>
+<p><code>C2</code> 里有两个下划线，会递归两次，把每段的下划线后首字母都大写。<code>C3</code> 没有下划线，第一步就匹配失败，原样返回。</p>
+<p>运行验证：</p>
+<pre><code class="language-bash">npx tsx ch17/05-template-literal.ts
+# 类型检查通过：SnakeToCamel&lt;'user_name'&gt; = userName
+</code></pre>
+<hr>
+<h2 id="手写内置工具类型把原理彻底讲透"><a class="header" href="#手写内置工具类型把原理彻底讲透">手写内置工具类型：把原理彻底讲透</a></h2>
+<p>第 16 章你学会了<strong>用</strong> <code>Partial</code> / <code>Pick</code> / <code>Omit</code> 这些工具类型。现在有了条件类型、映射类型、<code>infer</code>，我们把它们<strong>亲手造一遍</strong>，你就再也不会觉得它们“神秘“了。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/06-rebuild-utility-types.ts
+
+// —— 映射类型家族 ——
+type MyPartial&lt;T&gt; = { [K in keyof T]?: T[K] };            // 全可选
+type MyRequired&lt;T&gt; = { [K in keyof T]-?: T[K] };          // 全必填（-?）
+type MyReadonly&lt;T&gt; = { readonly [K in keyof T]: T[K] };   // 全只读
+type MyPick&lt;T, K extends keyof T&gt; = { [P in K]: T[P] };   // 只留 K 里的键
+type MyRecord&lt;K extends keyof any, T&gt; = { [P in K]: T };  // 以 K 为键，值都是 T
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>MyPartial</code> / <code>MyRequired</code> / <code>MyReadonly</code>：前面讲过的修饰符增删，不再赘述。</li>
+<li><code>MyPick&lt;T, K extends keyof T&gt;</code>：约束 <code>K extends keyof T</code> 保证只能挑真实存在的键，然后 <code>[P in K]</code> <strong>只遍历 K</strong>（而不是 <code>keyof T</code>），所以只保留这些键。</li>
+<li><code>MyRecord&lt;K, T&gt;</code>：<code>[P in K]</code> 遍历 <code>K</code> 的每个成员当键，值统一是 <code>T</code>。<code>MyRecord&lt;"a" | "b", number&gt;</code> = <code>{ a: number; b: number }</code>。注意 <code>K extends keyof any</code>——<code>keyof any</code> 是 <code>string | number | symbol</code>，即“任何能当键的类型“。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch17/06-rebuild-utility-types.ts（续）
+// —— 条件类型 / 分发家族 ——
+type MyExclude&lt;T, U&gt; = T extends U ? never : T;           // 剔除
+type MyExtract&lt;T, U&gt; = T extends U ? T : never;           // 保留
+type MyNonNullable&lt;T&gt; = T extends null | undefined ? never : T;
+
+// —— Omit = Pick + Exclude ——
+type MyOmit&lt;T, K extends keyof any&gt; = MyPick&lt;T, MyExclude&lt;keyof T, K&gt;&gt;;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>MyExclude</code> 前面讲过——靠分发逐个成员判断，命中的变 <code>never</code> 被吸收。<code>MyExtract</code> 是它的反面：命中的保留，其余变 <code>never</code>。</li>
+<li><code>MyNonNullable&lt;T&gt;</code>：把 <code>null | undefined</code> 剔除。也可以直接写成 <code>MyExclude&lt;T, null | undefined&gt;</code>，原理一样。</li>
+<li><code>MyOmit</code> 的经典实现是<strong>组合</strong>：先用 <code>MyExclude&lt;keyof T, K&gt;</code> 从“所有键“里剔除要删的 <code>K</code>，得到“剩下的键“，再 <code>MyPick</code> 出这些键。这比上一节键重映射版更贴近标准库老实现，也展示了工具类型如何互相搭积木。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch17/06-rebuild-utility-types.ts（续）
+// —— infer 家族 ——
+type MyReturnType&lt;T extends (...args: any[]) =&gt; any&gt; =
+  T extends (...args: any[]) =&gt; infer R ? R : never;
+
+type MyParameters&lt;T extends (...args: any[]) =&gt; any&gt; =
+  T extends (...args: infer P) =&gt; any ? P : never;
+
+type MyAwaited&lt;T&gt; = T extends Promise&lt;infer V&gt; ? MyAwaited&lt;V&gt; : T;
+</code></pre>
+<p>逐段拆解：这三个前面 infer 一节都出现过。这里给 <code>MyReturnType</code> / <code>MyParameters</code> 加了约束 <code>T extends (...args: any[]) =&gt; any</code>，和标准库一致——这样传入非函数会<strong>在调用处就报错</strong>，而不是默默返回 <code>never</code>，错误信息更友好。</p>
+<p>我们用一个含可选、只读属性的接口验证全部实现：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/06-rebuild-utility-types.ts（续）
+interface User {
+  id: number;
+  name?: string;
+  readonly role: "admin" | "user";
+}
+
+type _P = MyPartial&lt;User&gt;;   // 全可选
+type _R = MyRequired&lt;User&gt;;  // name 变必填
+type _Pick = MyPick&lt;User, "id" | "role"&gt;;   // { id; role }
+type _Omit = MyOmit&lt;User, "role"&gt;;          // { id; name? }
+type _Exc = MyExclude&lt;"a" | "b" | "c", "b"&gt;; // "a" | "c"
+type _NN = MyNonNullable&lt;string | null | undefined&gt;; // string
+type _RT = MyReturnType&lt;() =&gt; number&gt;;      // number
+type _AW = MyAwaited&lt;Promise&lt;Promise&lt;boolean&gt;&gt;&gt;; // boolean
+</code></pre>
+<pre><code class="language-bash">npx tsx ch17/06-rebuild-utility-types.ts
+# 类型检查通过：手写内置工具类型全部编译成功
+</code></pre>
+<p>📌 <strong>能通过 <code>tsc</code> 就说明我们的实现和标准库行为一致</strong>——因为文件在类型层面把每个结果都用上了，任何偏差都会报错。</p>
+<hr>
+<h2 id="递归类型deepreadonly-与-deeppartial"><a class="header" href="#递归类型deepreadonly-与-deeppartial">递归类型：DeepReadonly 与 DeepPartial</a></h2>
+<p>标准库的 <code>Readonly</code> / <code>Partial</code> 只作用于<strong>顶层</strong>属性——嵌套对象里面还是可变的。要“深“下去，需要<strong>递归的映射类型</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts（节选）
+type DeepReadonly&lt;T&gt; = T extends (...args: any[]) =&gt; any
+  ? T // 函数原样返回，别去 readonly 它的属性
+  : T extends object
+    ? { readonly [K in keyof T]: DeepReadonly&lt;T[K]&gt; }
+    : T; // 基本类型到底，原样返回
+</code></pre>
+<p>逐段拆解，这是“三层判断“：</p>
+<ol>
+<li><code>T</code> 是<strong>函数</strong>吗？是就原样返回（函数也是对象，但我们不想把它的属性变只读，那没意义）。</li>
+<li><code>T</code> 是<strong>对象</strong>吗？是就映射它的每个属性，加 <code>readonly</code>，并<strong>对属性值 <code>T[K]</code> 递归调用 <code>DeepReadonly</code></strong>——这一步是“深“的关键。</li>
+<li>都不是（基本类型如 <code>string</code> / <code>number</code>），到底了，原样返回。</li>
+</ol>
+<p><code>DeepReadonly&lt;{ a: { b: number } }&gt;</code> 的推导：外层是对象 → <code>{ readonly a: DeepReadonly&lt;{ b: number }&gt; }</code> → 内层还是对象 → <code>{ readonly a: { readonly b: DeepReadonly&lt;number&gt; } }</code> → <code>number</code> 是基本类型 → <code>{ readonly a: { readonly b: number } }</code>。<strong>每一层都被加上了 <code>readonly</code>。</strong></p>
+<p><code>DeepPartial</code> 同理，只是把 <code>readonly</code> 换成给属性加 <code>?</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts（节选）
+type DeepPartial&lt;T&gt; = T extends (...args: any[]) =&gt; any
+  ? T
+  : T extends object
+    ? { [K in keyof T]?: DeepPartial&lt;T[K]&gt; }
+    : T;
+</code></pre>
+<p>⚠️ <strong>递归深度有上限</strong>。TypeScript 对类型递归有大约 50 层的展开限制，太深会报 <code>Type instantiation is excessively deep and possibly infinite</code>。日常对象嵌套远达不到这个深度，但如果你写“对元组逐元素累加计数“之类的极限体操，就可能撞墙。届时的信号很明确：编译器直接报错提示“递归过深“。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<p>📌 <strong>1. 分清“约束 extends“和“条件 extends“。</strong> 同一个 <code>extends</code>，在 <code>&lt;T extends U&gt;</code> 里是“门槛“（不满足报错），在 <code>T extends U ? X : Y</code> 里是“分支“（不满足走 else）。看它在不在三元问号里。</p>
+<p>⚠️ <strong>2. 分发是把双刃剑。</strong> 裸类型参数 + 联合 = 自动分发。想要“整体判断“就用 <code>[T] extends [U]</code> 包起来。写工具类型时时刻问自己：“这里我要不要分发？”</p>
+<p>⚠️ <strong>3. <code>never</code> 会短路分发。</strong> 条件类型作用在裸参数上，传入 <code>never</code> 直接返回 <code>never</code>（空联合没有成员可循环）。检测“是不是 <code>never</code>“必须用 <code>[T] extends [never]</code>。</p>
+<p>⚠️ <strong>4. <code>boolean</code> 也会分发。</strong> <code>boolean</code> 其实是 <code>true | false</code> 的联合，所以 <code>SomeCond&lt;boolean&gt;</code> 会分别对 <code>true</code> 和 <code>false</code> 求值。偶尔会得到意外的联合结果，记住这一点能省下调试时间。</p>
+<p>💡 <strong>5. <code>Equal</code> 判等要用“函数兼容“写法，别用双向 extends。</strong> 朴素的 <code>A extends B ? B extends A ? true : false : false</code> 在多数情况下够用，但区分不了 <code>any</code>、也区分不了 <code>{ a: 1 }</code> 与 <code>{ readonly a: 1 }</code>。社区标准的 <code>Equal</code> 用两个泛型函数是否互相兼容来判断，更严格（下面小项目会用到）。</p>
+<p>⚠️ <strong>6. 递归有深度上限（约 50 层）。</strong> 撞到 <code>excessively deep</code> 报错时，考虑用尾递归优化的写法，或干脆承认“这个不该用类型来算“。</p>
+<p>💡 <strong>7. 别过度炫技（这是最重要的一条）。</strong> 类型体操很好玩，但<strong>类型的目的是帮人，不是难为人</strong>。一个需要盯着看五分钟才懂的类型，往往不如一个直白的 <code>interface</code> 加几行注释。真实项目里，<code>DeepReadonly</code>、<code>PickByValueType</code> 这种有明确用途的很值得写；而“用类型实现斐波那契数列“只适合练手。<strong>能让调用方少犯错、类型提示更准，才是好的类型编程。</strong></p>
+<hr>
+<h2 id="本章小项目类型级工具库"><a class="header" href="#本章小项目类型级工具库">本章小项目：类型级工具库</a></h2>
+<p>我们把本章所有武器集中起来，做一个 <code>type-utils.ts</code>——一个<strong>类型级工具库</strong>，并用<strong>自制的 <code>Equal</code> / <code>Expect</code></strong> 在类型层面写单元测试。</p>
+<h3 id="第一步断言工具-equal--expect"><a class="header" href="#第一步断言工具-equal--expect">第一步：断言工具 Equal / Expect</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts
+type Equal&lt;A, B&gt; =
+  (&lt;T&gt;() =&gt; T extends A ? 1 : 2) extends (&lt;T&gt;() =&gt; T extends B ? 1 : 2)
+    ? true
+    : false;
+
+type Expect&lt;T extends true&gt; = T;
+type NotEqual&lt;A, B&gt; = Equal&lt;A, B&gt; extends true ? false : true;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>Equal&lt;A, B&gt;</code>：构造两个泛型函数类型 <code>&lt;T&gt;() =&gt; T extends A ? 1 : 2</code> 和 <code>&lt;T&gt;() =&gt; T extends B ? 1 : 2</code>，判断前者能不能赋给后者。只有当 <code>A</code> 和 <code>B</code> <strong>完全一致</strong>时，这两个函数类型才互相兼容，结果 <code>true</code>。这是 type-challenges 社区公认最可靠的类型判等写法。</li>
+<li><code>Expect&lt;T extends true&gt;</code>：约束 <code>T</code> 必须是 <code>true</code>。如果你把一个结果为 <code>false</code> 的 <code>Equal</code> 塞进来，<code>false extends true</code> 不成立，<strong>立刻编译报错</strong>。它就是我们的“断言“。</li>
+<li><code>NotEqual</code>：<code>Equal</code> 取反，用来表达“应当不相等“。</li>
+</ul>
+<p>📌 <strong>用法</strong>：写 <code>type _ = Expect&lt;Equal&lt;实际, 期望&gt;&gt;</code>。编译通过 = 断言成立；编译报错 = 断言失败。<strong>这就是在类型层面写单元测试。</strong></p>
+<h3 id="第二步deepreadonly--deeppartial--pickbyvaluetype"><a class="header" href="#第二步deepreadonly--deeppartial--pickbyvaluetype">第二步：DeepReadonly / DeepPartial / PickByValueType</a></h3>
+<p><code>DeepReadonly</code> / <code>DeepPartial</code> 上一节讲过了。新增 <code>PickByValueType</code>——挑出“值类型匹配“的属性：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts
+type PickByValueType&lt;T, V&gt; = {
+  [K in keyof T as T[K] extends V ? K : never]: T[K];
+};
+</code></pre>
+<p>逐段拆解：又是“键重映射做过滤“。遍历每个键 <code>K</code>，如果它的值类型 <code>T[K]</code> 能赋给 <code>V</code>（<code>T[K] extends V</code>），就保留键名 <code>K</code>；否则映射成 <code>never</code> 删掉。<code>PickByValueType&lt;Mixed, number&gt;</code> 只保留值是 <code>number</code> 的属性。</p>
+<h3 id="第三步camelcasekeys--pathkeys--paths"><a class="header" href="#第三步camelcasekeys--pathkeys--paths">第三步：CamelCaseKeys / PathKeys / Paths</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts
+type SnakeToCamel&lt;S extends string&gt; =
+  S extends `${infer Head}_${infer Tail}`
+    ? `${Head}${Capitalize&lt;SnakeToCamel&lt;Tail&gt;&gt;}`
+    : S;
+
+type CamelCaseKeys&lt;T&gt; = {
+  [K in keyof T as SnakeToCamel&lt;string &amp; K&gt;]: T[K];
+};
+
+type PathKeys&lt;T&gt; = keyof T &amp; string; // 顶层键（string 化）
+</code></pre>
+<p>逐段拆解：<code>SnakeToCamel</code> 是前面那个字符串转换器。<code>CamelCaseKeys</code> 用 key remapping，把每个键名交给 <code>SnakeToCamel</code> 改写（<code>string &amp; K</code> 把键收窄到字符串），值类型不变。<code>PathKeys</code> 简单地取顶层键并交给 <code>string</code> 过滤掉 <code>number | symbol</code>。</p>
+<p>重头戏是 <code>Paths</code>——递归生成所有嵌套路径 <code>"a" | "a.b" | "a.b.c"</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts
+type IsRecord&lt;T&gt; = T extends readonly any[]
+  ? false
+  : T extends (...args: any[]) =&gt; any
+    ? false
+    : T extends object
+      ? true
+      : false;
+
+type Paths&lt;T&gt; = IsRecord&lt;T&gt; extends true
+  ? {
+      [K in keyof T &amp; string]: IsRecord&lt;T[K]&gt; extends true
+        ? K | `${K}.${Paths&lt;T[K]&gt;}`
+        : K;
+    }[keyof T &amp; string]
+  : never;
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>⚠️ <strong><code>IsRecord</code> 是关键的“护栏“。</strong> 数组和函数在 TS 里都是 <code>object</code>，如果直接对它们递归，会冒出 <code>"tags.length"</code>、<code>"tags.0"</code>、数组方法名等一堆噪声。所以我们先判断：数组 → <code>false</code>，函数 → <code>false</code>，其余对象 → <code>true</code>，基本类型 → <code>false</code>。只有“真正的记录型对象“才往里钻。</li>
+<li><code>Paths&lt;T&gt;</code>：如果 <code>T</code> 是记录型对象，就遍历它的每个键 <code>K</code>——若 <code>T[K]</code> 还是记录型对象，产出 <code>K</code>（当前这层的路径）<strong>和</strong> <code>`${K}.${Paths&lt;T[K]&gt;}`</code>（拼上子路径）；否则只产出 <code>K</code>。</li>
+<li>结尾的 <code>[keyof T &amp; string]</code>：这是<strong>索引访问</strong>。前面 <code>{ [K in ...]: ... }</code> 得到的是一个“键 → 路径联合“的映射对象，用 <code>[keyof T &amp; string]</code> 把所有值（各个路径联合）<strong>取出来合并成一个大联合</strong>。这是“把映射对象压平成联合“的经典技巧。</li>
+</ul>
+<p><code>Paths&lt;{ id: number; profile: { name: string; address: { city: string } } }&gt;</code> 会产出 <code>"id" | "profile" | "profile.name" | "profile.address" | "profile.address.city"</code>。</p>
+<h3 id="第四步类型层单元测试"><a class="header" href="#第四步类型层单元测试">第四步：类型层单元测试</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch17/type-utils.ts
+type _tests = [
+  Expect&lt;Equal&lt;
+    DeepReadonly&lt;{ a: { b: number } }&gt;,
+    { readonly a: { readonly b: number } }
+  &gt;&gt;,
+  Expect&lt;Equal&lt;
+    DeepPartial&lt;{ a: { b: number } }&gt;,
+    { a?: { b?: number } }
+  &gt;&gt;,
+  Expect&lt;Equal&lt;PickByValueType&lt;Mixed, number&gt;, { id: number; score: number }&gt;&gt;,
+  Expect&lt;Equal&lt;PickByValueType&lt;Mixed, boolean&gt;, { active: boolean }&gt;&gt;,
+  Expect&lt;Equal&lt;SnakeToCamel&lt;"user_name"&gt;, "userName"&gt;&gt;,
+  Expect&lt;Equal&lt;
+    CamelCaseKeys&lt;SnakeShape&gt;,
+    { userName: string; createdAt: number; isAdmin: boolean }
+  &gt;&gt;,
+  Expect&lt;Equal&lt;PathKeys&lt;Nested&gt;, "id" | "profile" | "tags"&gt;&gt;,
+  Expect&lt;Equal&lt;
+    Paths&lt;Nested&gt;,
+    | "id" | "tags" | "profile"
+    | "profile.name" | "profile.address" | "profile.address.city"
+  &gt;&gt;,
+  Expect&lt;NotEqual&lt;string, number&gt;&gt;,
+];
+</code></pre>
+<p>逐段拆解：<code>_tests</code> 是一个<strong>元组类型</strong>，每个元素都是一个 <code>Expect&lt;Equal&lt;...&gt;&gt;</code>。只要任何一个 <code>Equal</code> 结果是 <code>false</code>，对应的 <code>Expect</code> 就会报错，整个文件编译失败。<strong>编译通过，就等于这一整套断言全部成立。</strong> 注意最后 <code>Paths&lt;Nested&gt;</code> 的期望里没有 <code>"tags.length"</code> 之类——因为 <code>tags</code> 是数组，被 <code>IsRecord</code> 挡在了外面。</p>
+<h3 id="运行"><a class="header" href="#运行">运行</a></h3>
+<pre><code class="language-bash">npx tsc --noEmit           # 类型层单元测试：无输出 = 全部通过
+npx tsx ch17/type-utils.ts
+# 类型检查通过： DeepReadonly 生效：server.port = 8080
+# 类型检查通过： CamelCaseKeys 生效：userName = Ada
+# 类型检查通过： PickByValueType 生效：id = 1, score = 99
+</code></pre>
+<p>文件末尾还构造了符合这些类型的真实值（如 <code>DeepReadonly</code> 的 config、<code>CamelCaseKeys</code> 的 camel 对象），让“类型正确“和“运行时能用“双双得到验证。</p>
+<h3 id="扩展练习加分项"><a class="header" href="#扩展练习加分项">扩展练习（加分项）</a></h3>
+<ol>
+<li><strong><code>DeepRequired&lt;T&gt;</code></strong>：仿照 <code>DeepPartial</code>，递归地去掉所有可选（<code>-?</code>），让嵌套里所有属性都必填。</li>
+<li><strong><code>OmitByValueType&lt;T, V&gt;</code></strong>：<code>PickByValueType</code> 的反面——删掉值类型匹配 <code>V</code> 的属性。提示：把 <code>T[K] extends V ? never : K</code> 反过来。</li>
+<li><strong><code>CamelToSnake&lt;S&gt;</code></strong>：<code>SnakeToCamel</code> 的逆运算，把 <code>userName</code> 转回 <code>user_name</code>。提示：用模板匹配大写字母，需要配合联合 <code>"A" | "B" | ... | "Z"</code> 或递归逐字符处理。</li>
+<li><strong><code>Get&lt;T, P&gt;</code></strong>：给一个对象类型 <code>T</code> 和一条路径字符串 <code>P</code>（如 <code>"profile.address.city"</code>），返回该路径处的类型。提示：用 <code>P extends `${infer Head}.${infer Rest}`</code> 递归下钻。</li>
+<li><strong>给 <code>Paths</code> 加数组下标支持</strong>：让数组路径产出 <code>"list.0"</code>、<code>"list.1"</code> 这种（可以用 number 索引）。想清楚要不要这么做——很多时候不做才是对的。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们进入了 TypeScript 类型系统最强大、也最像“编程“的一块——类型层计算：</p>
+<ul>
+<li><strong>条件类型</strong> <code>T extends U ? X : Y</code>：类型世界的 if / else，可嵌套。这里的 <code>extends</code> 是“分支“（不满足走 else），不同于泛型约束的“门槛“。</li>
+<li><strong>分布式条件类型</strong>：裸类型参数 + 联合 = 自动<strong>分发</strong>，对每个成员分别求值再合并。用 <code>[T] extends [U]</code> <strong>阻止分发</strong>。<code>never</code>（空联合）会短路成 <code>never</code>。</li>
+<li><strong><code>infer</code></strong>：条件类型 <code>extends</code> 右侧的“模式匹配变量绑定“，用来从数组、函数返回值、参数、Promise、元组里<strong>提取</strong>类型。配合递归能解开多层 Promise、拆解元组。</li>
+<li><strong>映射类型</strong> <code>{ [K in keyof T]: ... }</code>：类型世界的 for…in。<code>+/-</code> 增删 <code>readonly</code> 和 <code>?</code>；<code>as</code> 做<strong>键重映射</strong>（改名 / 用 <code>never</code> 过滤）。</li>
+<li><strong>模板字面量类型</strong>：类型层拼字符串，和联合结合做笛卡尔积；内置 <code>Uppercase</code> / <code>Lowercase</code> / <code>Capitalize</code> / <code>Uncapitalize</code>；配合 <code>infer</code> 能从字符串解析。</li>
+<li><strong>手写工具类型</strong>：<code>Partial</code> / <code>Required</code> / <code>Readonly</code> / <code>Pick</code> / <code>Omit</code> / <code>Record</code> / <code>Exclude</code> / <code>Extract</code> / <code>NonNullable</code> / <code>ReturnType</code> / <code>Parameters</code> / <code>Awaited</code> 全部亲手实现了一遍——它们不再神秘。</li>
+<li><strong>递归类型</strong>：<code>DeepReadonly</code> / <code>DeepPartial</code> 深入每一层；注意约 50 层的递归深度上限。</li>
+<li><strong>小项目</strong>：<code>type-utils.ts</code> 用自制的 <code>Equal</code> / <code>Expect</code> 在类型层面写单元测试，做出 <code>DeepReadonly</code>、<code>PickByValueType</code>、<code>CamelCaseKeys</code>、<code>Paths</code> 等实用工具。</li>
+<li><strong>别过度炫技</strong>：类型是帮人的，不是难为人的。</li>
+</ul>
+<p><strong>自测题</strong>（先自己想，再回代码验证）：</p>
+<ol>
+<li><code>T extends U ? X : Y</code> 里的 <code>extends</code> 和 <code>&lt;T extends U&gt;</code> 里的 <code>extends</code>，意思分别是什么？</li>
+<li><code>ToArray&lt;string | number&gt;</code> 得到 <code>string[] | number[]</code> 还是 <code>(string | number)[]</code>？怎么切换成另一种？</li>
+<li><code>Wrap&lt;never&gt;</code>（<code>Wrap&lt;T&gt; = T extends unknown ? T[] : never</code>）为什么是 <code>never</code> 而不是 <code>never[]</code>？</li>
+<li>用 <code>infer</code> 写一个 <code>MyReturnType</code>，说清 <code>infer R</code> 放在模板哪个位置、为什么。</li>
+<li>映射类型里 <code>-?</code> 和 <code>-readonly</code> 各做什么？<code>Required</code> 用的是哪个？</li>
+<li>key remapping 里，把键名映射成 <code>never</code> 会发生什么？<code>Omit</code> 是怎么利用这一点的？</li>
+<li><code>SnakeToCamel&lt;"user_name"&gt;</code> 的推导过程是怎样的？递归在哪一步发生？</li>
+<li>为什么 <code>Paths</code> 要先用 <code>IsRecord</code> 把数组挡在外面？不挡会多出什么路径？</li>
+</ol>
+<p>答得上来，说明你已经能读懂、也能写出中等难度的类型体操了。</p>
+<hr>
+<p>类型体操让我们能<strong>在编译期</strong>表达极其精细的约束。但类型系统还有另一面同样重要：<strong>在运行时，一个值的类型往往是“联合“或“宽泛“的</strong>（比如 <code>string | number</code>、<code>unknown</code>、<code>A | B | C</code>），我们需要在代码里<strong>逐步缩小它的范围</strong>，才能安全地使用。</p>
+<p><strong>第 18 章 · 类型收窄、类型守卫与断言</strong>将带你掌握这套“从宽到窄“的功夫：<code>typeof</code> / <code>instanceof</code> / <code>in</code> 收窄、真值收窄、可辨识联合（discriminated unions）、用户自定义<strong>类型守卫（type guard）</strong> <code>x is T</code>、断言函数 <code>asserts x is T</code>，以及 <code>as</code> 断言和 <code>!</code> 非空断言的正确用法与滥用陷阱。类型体操负责“设计精密的类型“，类型收窄负责“在运行时安全地落地它们“——两者合起来，才是完整的 TypeScript 类型思维。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch16.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch18.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch16.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch18.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

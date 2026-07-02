@@ -1,0 +1,825 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 1 章 · 变量、数据类型与运算符 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch01.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-1-章--变量数据类型与运算符"><a class="header" href="#第-1-章--变量数据类型与运算符">第 1 章 · 变量、数据类型与运算符</a></h1>
+<p>上一章我们把环境装好、跑通了第一个程序。从这一章开始，我们正式进入 JavaScript 语言本身。<strong>变量、数据类型、运算符</strong>是所有编程语言的三块基石——你写的每一行代码，几乎都在“用运算符处理某种类型的数据，并把结果存进变量“。把这一章吃透，后面所有内容都会顺很多。</p>
+<p>本章会讲得很细，请边读边把示例亲手敲进去、<code>node</code> 跑一遍、看输出对不对。<strong>看懂</strong>和<strong>能自己写出来</strong>是两回事，动手是唯一的桥梁。</p>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<ul>
+<li>理解什么是变量，会用 <code>let</code> / <code>const</code> 声明，知道为什么<strong>不推荐</strong> <code>var</code>。</li>
+<li>掌握 JavaScript 的基本数据类型：number、string、boolean、null、undefined，并认识 bigint、symbol。</li>
+<li>看懂 number 的三个经典坑：浮点精度、<code>NaN</code>、<code>Infinity</code>。</li>
+<li>会用模板字符串（template literal）拼接文本，掌握常用转义字符。</li>
+<li>理解“真假值（truthy / falsy）“，记住 6 个假值。</li>
+<li>会用 <code>typeof</code> 查看类型，理解 <code>typeof null === "object"</code> 这个历史遗留问题。</li>
+<li>掌握各类运算符，尤其分清 <code>==</code> 与 <code>===</code>、理解逻辑运算符的<strong>短路求值</strong>，会用三元、<code>??</code>、<code>?.</code>。</li>
+<li>理解<strong>显式</strong>与<strong>隐式</strong>类型转换的规则和陷阱。</li>
+<li>初步体会 JavaScript “动态类型“的特点，为后面学 TypeScript 埋下伏笔。</li>
+</ul>
+<hr>
+<h2 id="11-什么是变量"><a class="header" href="#11-什么是变量">1.1 什么是变量</a></h2>
+<p>想象你在厨房做菜，需要几个<strong>贴了标签的盒子</strong>来临时装东西：一个盒子贴“糖“、一个贴“盐“。做菜时你不用记“糖在第三个柜子左边“，只要说“拿糖那个盒子“就行。</p>
+<p><strong>变量（variable）就是这样一个贴了名字的盒子，用来存放数据。</strong> 你给它起个名字，往里放值，之后用名字就能取出、也能换成别的值。</p>
+<p>在 JavaScript 里，声明变量要先用一个<strong>关键字</strong>：<code>let</code> 或 <code>const</code>（还有个老旧的 <code>var</code>，稍后说为什么别用）。</p>
+<pre><code class="language-javascript">// 文件：code/ch01/01-variables.js
+// 运行方式：node 01-variables.js
+
+// 用 let 声明一个"可以改变"的变量。
+let score = 10; // 声明并赋初值
+console.log("初始分数：", score);
+
+score = 25; // 重新赋值，完全合法
+console.log("加分后：", score);
+
+// 用 const 声明一个"常量"：一旦赋值，就不能再指向别的值。
+const pi = 3.14159;
+console.log("圆周率：", pi);
+
+// 下面这行如果取消注释，运行会直接报错：
+// TypeError: Assignment to constant variable.
+// pi = 3.14;
+
+// 命名要见名知意：好的名字本身就是注释。
+let userAge = 18; // 驼峰命名（camelCase），推荐
+const MAX_RETRY = 3; // 全大写 + 下划线，常表示"配置型常量"
+console.log("用户年龄：", userAge, "，最大重试：", MAX_RETRY);
+</code></pre>
+<p>我们逐段拆解：</p>
+<ul>
+<li>
+<p><strong><code>let score = 10;</code></strong> —— 这行做了两件事：<strong>声明</strong>（告诉 JS “我要一个叫 <code>score</code> 的盒子”）和<strong>赋值</strong>（<code>=</code> 号把右边的 <code>10</code> 装进去）。注意 <code>=</code> 在编程里读作“赋值“，意思是“把右边的值放进左边的盒子“，<strong>不是数学里的“相等“</strong>。这一点初学者极易搞混，请务必记牢。</p>
+</li>
+<li>
+<p><strong><code>score = 25;</code></strong> —— 因为用的是 <code>let</code>，这个盒子里的东西<strong>可以换</strong>。这里不再写 <code>let</code>（变量已经声明过了，再写 <code>let score</code> 会报“重复声明“），直接换值即可。</p>
+</li>
+<li>
+<p><strong><code>const pi = 3.14159;</code></strong> —— <code>const</code> 是 constant（常量）的缩写，表示“声明后就不许再指向别的值“。如果你取消那行注释去改 <code>pi</code>，程序会直接崩溃报 <code>TypeError</code>。</p>
+</li>
+<li>
+<p><strong>命名</strong>：<code>userAge</code> 用的是<strong>驼峰命名法（camelCase）</strong>——第一个单词小写，后面每个单词首字母大写，像驼峰一样起伏。这是 JS 社区的主流约定。<code>MAX_RETRY</code> 用全大写加下划线，习惯上用来表示“写死的配置常量“。</p>
+</li>
+</ul>
+<p>📌 <strong><code>let</code> 还是 <code>const</code>，怎么选？</strong> 一条简单可靠的规则：<strong>默认全用 <code>const</code>，只有当你确实需要之后改这个变量时，才改用 <code>let</code>。</strong> 这样做的好处是，别人（和未来的你）看到 <code>const</code> 就知道“这个值不会变“，读代码时脑子里要记的东西更少，也能让引擎提前拦住“不小心改错“的 bug。</p>
+<p>⚠️ <strong>命名规则（硬性）</strong>：变量名可以由字母、数字、下划线 <code>_</code>、美元符 <code>$</code> 组成，但<strong>不能以数字开头</strong>（<code>2cat</code> 非法，<code>cat2</code> 合法）；不能用 JS 的保留字（如 <code>let</code>、<code>if</code>、<code>return</code>）当名字；区分大小写（<code>age</code> 和 <code>Age</code> 是两个不同的变量）。</p>
+<h3 id="为什么不推荐-var"><a class="header" href="#为什么不推荐-var">为什么不推荐 <code>var</code></a></h3>
+<p>在 2015 年（ES6）之前，声明变量只有一个关键字 <code>var</code>。今天你会在老代码里见到它，但<strong>新代码请一律用 <code>let</code> / <code>const</code></strong>，原因主要有两个：</p>
+<ol>
+<li><strong><code>var</code> 没有“块级作用域“</strong>。<code>let</code>/<code>const</code> 声明的变量只在它所在的 <code>{ }</code> 花括号内有效；而 <code>var</code> 会“泄漏“到整个函数里，容易造成意料之外的相互覆盖。</li>
+<li><strong><code>var</code> 允许重复声明同一个名字而不报错</strong>，掩盖了本该暴露的错误。</li>
+</ol>
+<p>作用域的细节我们留到第 4 章展开。现在你只要记住结论：<strong>忘掉 <code>var</code>，用 <code>const</code> 和 <code>let</code>。</strong></p>
+<hr>
+<h2 id="12-基本数据类型"><a class="header" href="#12-基本数据类型">1.2 基本数据类型</a></h2>
+<p>盒子里能装什么样的“东西“？JavaScript 把数据分成几种<strong>类型（type）</strong>。其中最基础的一批叫<strong>原始类型（primitive）</strong>，一共 7 种。它们的特点是“值本身“很简单、不可再分（相对第 3 章的对象、数组这些“复合类型“而言）。</p>
+<p>我们先把它们全部见一遍：</p>
+<pre><code class="language-javascript">// 文件：code/ch01/02-types.js
+// 运行方式：node 02-types.js
+
+// ===== 1. number（数字）=====
+const intNum = 42; // 整数
+const floatNum = 3.14; // 小数
+const negNum = -7; // 负数
+console.log("number：", intNum, floatNum, negNum);
+
+// number 的三个坑：
+console.log("0.1 + 0.2 =", 0.1 + 0.2); // 0.30000000000000004（浮点精度）
+console.log("1 / 0 =", 1 / 0); // Infinity（无穷大）
+console.log("0 / 0 =", 0 / 0); // NaN（Not a Number，不是一个数字）
+console.log("NaN === NaN ?", NaN === NaN); // false！NaN 谁都不等，包括它自己
+
+// ===== 2. string（字符串）=====
+const single = 'Hello'; // 单引号
+const double = "World"; // 双引号，二者等价
+console.log("string：", single, double);
+
+// ===== 3. boolean（布尔）=====
+const isDone = true;
+const isEmpty = false;
+console.log("boolean：", isDone, isEmpty);
+
+// ===== 4. undefined 和 null =====
+let notAssigned; // 只声明、不赋值 -&gt; undefined
+const nothing = null; // 主动表示"这里就是空"
+console.log("undefined：", notAssigned);
+console.log("null：", nothing);
+
+// ===== 5. bigint（大整数，简介）=====
+const big = 9007199254740993n; // 结尾加 n 表示 bigint
+console.log("bigint：", big);
+
+// ===== 6. symbol（唯一标识，简介）=====
+const id = Symbol("id"); // 每个 symbol 都独一无二
+console.log("symbol：", id.toString());
+
+// ===== 用 typeof 查看类型 =====
+console.log("--- typeof 一览 ---");
+console.log(typeof 42); // "number"
+console.log(typeof "hi"); // "string"
+console.log(typeof true); // "boolean"
+console.log(typeof undefined); // "undefined"
+console.log(typeof 10n); // "bigint"
+console.log(typeof Symbol()); // "symbol"
+console.log(typeof null); // "object"（历史遗留 bug，见正文）
+console.log(typeof console.log); // "function"
+</code></pre>
+<p>下面逐个类型讲。</p>
+<h3 id="number数字"><a class="header" href="#number数字">number：数字</a></h3>
+<p>JavaScript <strong>不区分整数和小数</strong>，统统叫 <code>number</code>。<code>42</code>、<code>3.14</code>、<code>-7</code> 都是同一种类型。这和很多语言（有 <code>int</code>、<code>float</code>、<code>double</code> 之分）不同，对初学者反而更省心。</p>
+<p>但 number 有三个必须知道的坑：</p>
+<p><strong>坑一：浮点精度。</strong> 运行会看到 <code>0.1 + 0.2</code> 竟然等于 <code>0.30000000000000004</code>，而不是 <code>0.3</code>。这<strong>不是 JavaScript 的 bug</strong>，几乎所有语言都这样。原因是计算机用二进制存小数，而 <code>0.1</code> 这种数在二进制里是“无限循环小数“，只能存一个近似值，多个近似值相加就产生了微小误差。<strong>结论：永远不要直接用 <code>===</code> 判断两个小数是否相等。</strong> 需要时先四舍五入（如 <code>(0.1 + 0.2).toFixed(2)</code> 得到 <code>"0.30"</code>），或比较它们的差是否足够小。</p>
+<p><strong>坑二：<code>Infinity</code>（无穷大）。</strong> <code>1 / 0</code> 在 JS 里不报错，而是返回 <code>Infinity</code>。还有 <code>-Infinity</code>。它们是合法的 number 值。</p>
+<p><strong>坑三：<code>NaN</code>。</strong> <code>NaN</code> 是 “Not a Number”（不是一个数字）的缩写，表示“一次本该得到数字、却失败了的运算“，比如 <code>0 / 0</code>。它有个反直觉到极点的性质：<strong><code>NaN</code> 不等于任何值，包括它自己</strong>，所以 <code>NaN === NaN</code> 是 <code>false</code>。想判断一个值是不是 <code>NaN</code>，不能用 <code>=== NaN</code>，要用专门的函数 <code>Number.isNaN(x)</code>（本章小项目里会用到）。</p>
+<h3 id="string字符串"><a class="header" href="#string字符串">string：字符串</a></h3>
+<p><strong>字符串（string）就是一段文本</strong>，用引号包起来。可以用单引号 <code>'...'</code> 或双引号 <code>"..."</code>，两者完全等价，选一种风格保持一致即可。字符串我们下一节（1.3）专门细讲，这里先混个眼熟。</p>
+<h3 id="boolean布尔"><a class="header" href="#boolean布尔">boolean：布尔</a></h3>
+<p><strong>布尔（boolean）只有两个值：<code>true</code>（真）和 <code>false</code>（假）</strong>，用来表达“是/否““开/关”“成立/不成立”。它是所有判断逻辑（第 2 章的 <code>if</code>）的基础。</p>
+<h3 id="undefined-和-null两种空"><a class="header" href="#undefined-和-null两种空">undefined 和 null：两种“空“</a></h3>
+<p>这两个都表示“没有值“，但含义不同，初学者常混淆：</p>
+<ul>
+<li><strong><code>undefined</code></strong> 是“系统给的空“：你声明了变量却没赋值（<code>let notAssigned;</code>），JS 自动把它设成 <code>undefined</code>，意思是“这盒子还空着，还没人放东西“。</li>
+<li><strong><code>null</code></strong> 是“你主动给的空“：<code>const nothing = null;</code>，表示“我明确知道这里没有值、就是空“。</li>
+</ul>
+<p>📌 一个记忆口诀：<strong><code>undefined</code> 是“还没赋值“，<code>null</code> 是“故意置空“。</strong> 大多数时候，让 JS 用 <code>undefined</code> 表示“缺失“就好；当你想主动表达“这里清空了“时才用 <code>null</code>。</p>
+<h3 id="bigint-和-symbol简介"><a class="header" href="#bigint-和-symbol简介">bigint 和 symbol（简介）</a></h3>
+<p>这两个用得少，简单认识即可：</p>
+<ul>
+<li><strong><code>bigint</code></strong> 用来表示<strong>超大整数</strong>。普通 number 能安全表示的最大整数约是 9 千万亿（<code>2^53 - 1</code>），超过就会丢精度。在数字末尾加个 <code>n</code>（如 <code>9007199254740993n</code>）就得到 bigint，可以精确表示任意大的整数。日常算钱、算年龄用不到，处理超大 ID 或高精度计算时才需要。</li>
+<li><strong><code>symbol</code></strong> 用来生成<strong>独一无二的标识</strong>。<code>Symbol("id")</code> 每次调用都产生一个全世界唯一、互不相等的值，常用于给对象设置“不会撞名“的特殊属性。第 7 章会展开，现在知道有这么个东西即可。</li>
+</ul>
+<hr>
+<h2 id="13-字符串详解模板字符串与转义"><a class="header" href="#13-字符串详解模板字符串与转义">1.3 字符串详解：模板字符串与转义</a></h2>
+<p>字符串是我们最常打交道的类型，值得单独一节。</p>
+<pre><code class="language-javascript">// 文件：code/ch01/03-strings.js
+// 运行方式：node 03-strings.js
+
+const name = "小明";
+const age = 18;
+
+// ===== 老办法：用 + 拼接 =====
+const s1 = "我叫" + name + "，今年" + age + "岁。";
+console.log(s1);
+
+// ===== 新办法：模板字符串（反引号 + ${}）=====
+const s2 = `我叫${name}，今年${age}岁。`;
+console.log(s2);
+
+// ${...} 里可以放任意表达式，不只是变量：
+console.log(`明年我${age + 1}岁。`);
+
+// 模板字符串天然支持换行：
+const poem = `静夜思
+床前明月光，
+疑是地上霜。`;
+console.log(poem);
+
+// ===== 常用转义字符 =====
+console.log("换行：第一行\n第二行"); // \n 换行
+console.log("制表符：姓名\t年龄"); // \t 制表符（对齐）
+console.log("双引号里放双引号：\"引用\""); // \" 转义引号
+console.log("反斜杠本身：C:\\Users"); // \\ 表示一个反斜杠
+
+// ===== 几个常用属性/方法（第 3 章详解）=====
+const word = "JavaScript";
+console.log("长度：", word.length); // 10
+console.log("转大写：", word.toUpperCase()); // JAVASCRIPT
+console.log("截取：", word.slice(0, 4)); // Java
+</code></pre>
+<p>逐段讲解：</p>
+<ul>
+<li>
+<p><strong><code>+</code> 拼接（老办法）</strong>：<code>"我叫" + name + ...</code>。<code>+</code> 号遇到字符串时，作用是把它们“接“在一起。这种写法一多就会淹没在一堆引号和加号里，容易出错。</p>
+</li>
+<li>
+<p><strong>模板字符串（template literal，新办法）</strong>：注意 <code>s2</code> 用的不是普通引号，而是<strong>反引号 <code>`</code></strong>（键盘上一般在数字 <code>1</code> 左边、<code>Esc</code> 下面那个键）。反引号里可以用 <code>${...}</code> 直接嵌入变量，一眼就能看出最终长什么样。<strong>这是现代 JS 拼字符串的首选方式</strong>，本书后面会大量使用。</p>
+</li>
+<li>
+<p><strong><code>${age + 1}</code></strong>：<code>${}</code> 里放的不只是变量名，而是<strong>任意表达式</strong>，JS 会先算出结果再塞进字符串。这里算出 <code>19</code> 再拼进去。</p>
+</li>
+<li>
+<p><strong>天然换行</strong>：模板字符串里直接按回车换行，输出就真的换行，写多行文本（如上面的诗）特别方便。普通引号字符串则不能直接换行。</p>
+</li>
+<li>
+<p><strong>转义字符</strong>：有些字符没法直接打出来，就用反斜杠 <code>\</code> 开头的“转义序列“表示。常见的有：<code>\n</code>（换行）、<code>\t</code>（制表符，用于对齐）、<code>\"</code>（在双引号字符串里表示一个双引号）、<code>\\</code>（表示一个反斜杠本身）。</p>
+</li>
+<li>
+<p><strong><code>.length</code>、<code>.toUpperCase()</code>、<code>.slice()</code></strong>：字符串自带很多好用的属性和方法。<code>.length</code> 是属性（取长度，不加括号）；<code>.toUpperCase()</code> 和 <code>.slice()</code> 是方法（要加括号调用）。<code>slice(0, 4)</code> 表示“从第 0 位截到第 4 位（不含第 4 位）“，得到 <code>"Java"</code>。这些第 3 章会系统讲，这里先感受一下。</p>
+</li>
+</ul>
+<p>💡 从今往后，<strong>能用模板字符串就别用 <code>+</code> 拼</strong>。你的代码会清爽很多。</p>
+<hr>
+<h2 id="14-真假值truthy--falsy"><a class="header" href="#14-真假值truthy--falsy">1.4 真假值（truthy / falsy）</a></h2>
+<p>前面说布尔只有 <code>true</code>/<code>false</code>。但 JavaScript 有个重要特性：<strong>在需要布尔的地方（比如 <code>if</code> 判断里），任何值都会被自动“当作“真或假来看待。</strong> 这叫“真值（truthy）“和“假值（falsy）”。</p>
+<p>这套规则很关键，因为你以后会经常写 <code>if (用户名)</code>、<code>if (列表)</code> 这样“直接拿一个非布尔值来判断“的代码。</p>
+<p><strong>记住这个铁律：只有下面这 6 个值是“假值（falsy）“，其余一切都是“真值（truthy）”。</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>假值</th><th>说明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>false</code></td><td>布尔假本身</td></tr>
+<tr><td><code>0</code></td><td>数字零（也包括 <code>-0</code>）</td></tr>
+<tr><td><code>""</code></td><td>空字符串</td></tr>
+<tr><td><code>null</code></td><td>主动置空</td></tr>
+<tr><td><code>undefined</code></td><td>未赋值</td></tr>
+<tr><td><code>NaN</code></td><td>非数字</td></tr>
+</tbody>
+</table>
+</div>
+<p>📌 <strong>反过来记更省事：背下这 6 个假值，看到不在名单里的值，一律是真值。</strong> 特别注意几个“看起来像假、其实是真“的坑：字符串 <code>"0"</code>（里面有个字符）、字符串 <code>"false"</code>、空数组 <code>[]</code>、空对象 <code>{}</code>——<strong>它们统统是真值！</strong> 这些在下一节的代码里会亲眼看到。</p>
+<p>我们会在 1.6 讲 <code>Boolean()</code> 时用代码把这 6 个假值全部验证一遍。</p>
+<hr>
+<h2 id="15-typeof-运算符"><a class="header" href="#15-typeof-运算符">1.5 typeof 运算符</a></h2>
+<p>想知道某个值到底是什么类型，用 <strong><code>typeof</code></strong> 运算符。它返回一个描述类型的字符串。回看 <code>02-types.js</code> 结尾那段：</p>
+<pre><code class="language-javascript">console.log(typeof 42); // "number"
+console.log(typeof "hi"); // "string"
+console.log(typeof true); // "boolean"
+console.log(typeof undefined); // "undefined"
+console.log(typeof 10n); // "bigint"
+console.log(typeof Symbol()); // "symbol"
+console.log(typeof null); // "object"（历史遗留 bug，见正文）
+console.log(typeof console.log); // "function"
+</code></pre>
+<p>大部分结果都很符合直觉，但有两个要特别说明：</p>
+<p>⚠️ <strong><code>typeof null === "object"</code> 是个著名的历史遗留 bug。</strong> 从含义上讲，<code>null</code> 明明是“空值“，<code>typeof</code> 却说它是 <code>"object"</code>。这是 1995 年 JavaScript 诞生时代码实现留下的错误，后来因为<strong>已经有海量网页依赖这个行为</strong>，一旦修正就会让无数老网站崩溃，所以官方决定“将错就错“、永久保留。你只需<strong>记住这个特例</strong>：判断一个值是不是 <code>null</code>，不要用 <code>typeof</code>，要直接写 <code>x === null</code>。</p>
+<p>💡 <strong><code>typeof 函数</code> 返回 <code>"function"</code></strong>。严格来说函数在 JS 里属于对象的一种，但 <code>typeof</code> 特地为它返回 <code>"function"</code>，方便我们判断“这东西能不能被调用“。函数是第 2 章的主角。</p>
+<p><code>typeof</code> 在调试时非常有用：当程序行为诡异，很可能是某个变量的类型和你以为的不一样，<code>console.log(typeof x)</code> 一打就真相大白。</p>
+<hr>
+<h2 id="16-运算符大全"><a class="header" href="#16-运算符大全">1.6 运算符大全</a></h2>
+<p>运算符（operator）就是 <code>+</code>、<code>-</code>、<code>===</code>、<code>&amp;&amp;</code> 这些“对数据做操作“的符号。我们分类过一遍。</p>
+<pre><code class="language-javascript">// 文件：code/ch01/04-operators.js
+// 运行方式：node 04-operators.js
+
+// ===== 算术运算符 =====
+console.log("加：", 7 + 3); // 10
+console.log("减：", 7 - 3); // 4
+console.log("乘：", 7 * 3); // 21
+console.log("除：", 7 / 3); // 2.333...
+console.log("取余：", 7 % 3); // 1（余数，常用来判断奇偶）
+console.log("幂：", 2 ** 10); // 1024（2 的 10 次方）
+
+// ===== 赋值运算符（简写）=====
+let n = 10;
+n += 5; // 等价于 n = n + 5
+console.log("n += 5 -&gt;", n); // 15
+n *= 2; // 等价于 n = n * 2
+console.log("n *= 2 -&gt;", n); // 30
+
+// ===== 比较：== 与 === 的区别（重点！）=====
+console.log("1 == '1' ?", 1 == "1"); // true：先转类型再比较（宽松相等）
+console.log("1 === '1' ?", 1 === "1"); // false：类型不同直接判 false（严格相等）
+console.log("0 == false ?", 0 == false); // true（隐式转换的坑）
+console.log("0 === false ?", 0 === false); // false
+console.log("null == undefined ?", null == undefined); // true（特例）
+console.log("null === undefined ?", null === undefined); // false
+
+// ===== 逻辑运算符与短路求值 =====
+console.log("true &amp;&amp; false -&gt;", true &amp;&amp; false); // false
+console.log("true || false -&gt;", true || false); // true
+console.log("!true -&gt;", !true); // false
+
+// &amp;&amp; 返回第一个"假值"或最后一个值；|| 返回第一个"真值"或最后一个值
+console.log("'' || '默认名' -&gt;", "" || "默认名"); // 默认名
+console.log("'张三' &amp;&amp; '已登录' -&gt;", "张三" &amp;&amp; "已登录"); // 已登录
+
+// ===== 三元运算符 =====
+const score = 72;
+const result = score &gt;= 60 ? "及格" : "不及格";
+console.log("三元判断：", result); // 及格
+
+// ===== ?? 空值合并 =====
+const count = 0;
+console.log("0 || 5 -&gt;", count || 5); // 5（0 被当成假值，不理想）
+console.log("0 ?? 5 -&gt;", count ?? 5); // 0（?? 只在 null/undefined 时取右边）
+
+// ===== ?. 可选链（简介）=====
+const user = { name: "小红" }; // 没有 address 属性
+console.log("user.address?.city -&gt;", user.address?.city); // undefined，而不是报错
+</code></pre>
+<h3 id="算术运算符"><a class="header" href="#算术运算符">算术运算符</a></h3>
+<p><code>+ - * /</code> 就是加减乘除。两个稍生的：</p>
+<ul>
+<li><strong><code>%</code> 取余（取模）</strong>：<code>7 % 3</code> 得 <code>1</code>，即 7 除以 3 的<strong>余数</strong>。它超级实用——判断奇偶就看 <code>n % 2</code> 是 0（偶）还是 1（奇）；每隔 5 次做点什么就看 <code>i % 5 === 0</code>。</li>
+<li><strong><code>**</code> 幂运算</strong>：<code>2 ** 10</code> 就是 2 的 10 次方 = 1024。</li>
+</ul>
+<h3 id="赋值运算符"><a class="header" href="#赋值运算符">赋值运算符</a></h3>
+<p><code>=</code> 是基本赋值。<code>+= -= *= /= %=</code> 是“简写“：<code>n += 5</code> 完全等价于 <code>n = n + 5</code>——“取出 <code>n</code> 现在的值，加上 5，再存回 <code>n</code>”。这类简写在循环计数时随处可见。</p>
+<h3 id="比较运算符-vs-本章最重要的知识点之一"><a class="header" href="#比较运算符-vs-本章最重要的知识点之一">比较运算符：<code>==</code> vs <code>===</code>（本章最重要的知识点之一）</a></h3>
+<p>比较运算返回布尔值。<code>&gt; &lt; &gt;= &lt;=</code> 好理解，麻烦的是“相等“的判断，JS 有<strong>两套</strong>：</p>
+<ul>
+<li><strong><code>===</code> 严格相等（strict equality）</strong>：先看类型，<strong>类型不同直接判 <code>false</code></strong>，类型相同再比值。<code>1 === "1"</code> 因为一个是 number、一个是 string，类型就不同，结果 <code>false</code>。</li>
+<li><strong><code>==</code> 宽松相等（loose equality）</strong>：如果两边类型不同，它会<strong>先偷偷把它们转成同一类型再比</strong>。<code>1 == "1"</code> 会把字符串 <code>"1"</code> 转成数字 <code>1</code>，于是结果 <code>true</code>。</li>
+</ul>
+<p>这个“偷偷转换“看着方便，实则是<strong>无数 bug 的源头</strong>，因为它的规则又多又绕：<code>0 == false</code> 是 <code>true</code>、<code>"" == false</code> 是 <code>true</code>、<code>null == undefined</code> 是 <code>true</code>……几乎没人能完整记住。</p>
+<p>📌 <strong>黄金法则：永远用 <code>===</code> 和 <code>!==</code>，忘掉 <code>==</code> 和 <code>!=</code>。</strong> 这是整个 JS 社区的共识，也是各种代码检查工具的默认规则。唯一常见的例外是 <code>x == null</code>（同时判断 <code>null</code> 和 <code>undefined</code>），但初学阶段你连这个都不用记，一律 <code>===</code> 就对了。</p>
+<h3 id="逻辑运算符与短路求值"><a class="header" href="#逻辑运算符与短路求值">逻辑运算符与短路求值</a></h3>
+<ul>
+<li><strong><code>&amp;&amp;</code>（与 / AND）</strong>：两边都为真才为真。</li>
+<li><strong><code>||</code>（或 / OR）</strong>：只要有一边为真就为真。</li>
+<li><strong><code>!</code>（非 / NOT）</strong>：真假反转，<code>!true</code> 是 <code>false</code>。</li>
+</ul>
+<p>这里有个深一层、也非常实用的机制叫<strong>短路求值（short-circuit evaluation）</strong>：<code>&amp;&amp;</code> 和 <code>||</code> 其实<strong>不一定返回 <code>true</code>/<code>false</code>，而是返回其中一个“操作数“本身</strong>，并且会“能确定结果就不再往下算“。</p>
+<ul>
+<li><strong><code>||</code></strong>：从左到右找<strong>第一个真值</strong>并返回它；全是假值就返回最后一个。所以 <code>"" || "默认名"</code> 中，<code>""</code> 是假值，于是返回 <code>"默认名"</code>。这就是给变量设默认值的经典写法：<code>const displayName = inputName || "游客";</code>。</li>
+<li><strong><code>&amp;&amp;</code></strong>：从左到右，遇到<strong>第一个假值</strong>就返回它；全是真值就返回最后一个。<code>"张三" &amp;&amp; "已登录"</code> 里两个都是真值，返回最后一个 <code>"已登录"</code>。它常用来“前面成立才做后面“。</li>
+</ul>
+<p>“短路“的意思是：<code>false &amp;&amp; 危险操作()</code> 里，因为 <code>&amp;&amp;</code> 左边已是 <code>false</code>，结果必然为假，右边的 <code>危险操作()</code> <strong>根本不会执行</strong>。这个特性以后会反复用到。</p>
+<h3 id="三元运算符"><a class="header" href="#三元运算符">三元运算符</a></h3>
+<p><code>条件 ? 值A : 值B</code> 是唯一需要三个部分的运算符，叫<strong>三元运算符</strong>。读作“如果<code>条件</code>为真，取<code>值A</code>，否则取<code>值B</code>“。<code>score &gt;= 60 ? "及格" : "不及格"</code> 就是一句话版的 <code>if/else</code>，特别适合“根据条件二选一“的场景。</p>
+<h3 id="-空值合并运算符"><a class="header" href="#-空值合并运算符"><code>??</code> 空值合并运算符</a></h3>
+<p><code>a ?? b</code> 的意思是：“如果 <code>a</code> 是 <code>null</code> 或 <code>undefined</code>，就取 <code>b</code>，否则取 <code>a</code>。”</p>
+<p>它和 <code>||</code> 长得像，但有个关键区别：<code>||</code> 对<strong>所有假值</strong>都会取右边，而 <code>??</code> <strong>只对 <code>null</code>/<code>undefined</code></strong> 取右边。看代码里 <code>count = 0</code> 的对比：<code>0 || 5</code> 得 <code>5</code>（因为 <code>0</code> 是假值，但这往往不是我们想要的——<code>0</code> 明明是个有效数字！），而 <code>0 ?? 5</code> 得 <code>0</code>（因为 <code>0</code> 不是 <code>null</code>/<code>undefined</code>，保留原值）。</p>
+<p>📌 <strong>当“0、空字符串、false 都是合法值，你只想在’真的没值’时才用默认值“时，用 <code>??</code> 而不是 <code>||</code>。</strong> 这是现代 JS 处理默认值的更精确方式。</p>
+<h3 id="-可选链简介"><a class="header" href="#-可选链简介"><code>?.</code> 可选链（简介）</a></h3>
+<p><code>user.address?.city</code> 中的 <code>?.</code> 叫<strong>可选链（optional chaining）</strong>。它的作用是：如果 <code>?.</code> 左边是 <code>null</code>/<code>undefined</code>，整个表达式<strong>直接返回 <code>undefined</code>，而不是报错崩溃</strong>。</p>
+<p>对象和属性访问是第 3 章的内容，这里只需知道：读取“可能不存在的深层属性“时，<code>?.</code> 能帮你避免 “Cannot read property of undefined” 这个新手最常见的报错。等学到对象你就会天天用它。</p>
+<hr>
+<h2 id="17-类型转换显式与隐式"><a class="header" href="#17-类型转换显式与隐式">1.7 类型转换：显式与隐式</a></h2>
+<p>JavaScript 是<strong>动态类型（dynamically typed）<strong>语言——同一个变量，前一刻装数字、后一刻装字符串都行，类型是在运行时才确定的。这带来灵活，也带来了“类型转换“这个必须搞懂的主题。转换分两种：<strong>显式</strong>（你亲手调用函数去转）和</strong>隐式</strong>（JS 在背后偷偷帮你转）。</p>
+<pre><code class="language-javascript">// 文件：code/ch01/05-conversion.js
+// 运行方式：node 05-conversion.js
+
+// ===== 显式转换：你主动调用函数 =====
+
+// 1) 转数字 Number()
+console.log("Number('42') -&gt;", Number("42")); // 42
+console.log("Number('3.14') -&gt;", Number("3.14")); // 3.14
+console.log("Number('') -&gt;", Number("")); // 0（空字符串转成 0！）
+console.log("Number('abc') -&gt;", Number("abc")); // NaN（转不了就是 NaN）
+console.log("Number(true) -&gt;", Number(true)); // 1
+console.log("Number(false) -&gt;", Number(false)); // 0
+console.log("Number(null) -&gt;", Number(null)); // 0
+console.log("Number(undefined) -&gt;", Number(undefined)); // NaN
+
+// parseInt / parseFloat：从字符串"开头"能读多少读多少
+console.log("parseInt('42px') -&gt;", parseInt("42px")); // 42
+console.log("parseFloat('3.14m') -&gt;", parseFloat("3.14m")); // 3.14
+
+// 2) 转字符串 String()
+console.log("String(42) -&gt;", String(42)); // "42"
+console.log("String(true) -&gt;", String(true)); // "true"
+console.log("String(null) -&gt;", String(null)); // "null"
+
+// 3) 转布尔 Boolean()
+console.log("Boolean(1) -&gt;", Boolean(1)); // true
+console.log("Boolean(0) -&gt;", Boolean(0)); // false
+console.log("Boolean('') -&gt;", Boolean("")); // false
+console.log("Boolean('hi') -&gt;", Boolean("hi")); // true
+
+// ===== 假值（falsy）全家福：只有这 6 个会被当成 false =====
+console.log("--- 6 个假值 ---");
+console.log(Boolean(false)); // false
+console.log(Boolean(0)); // false
+console.log(Boolean("")); // false
+console.log(Boolean(null)); // false
+console.log(Boolean(undefined)); // false
+console.log(Boolean(NaN)); // false
+// 其余一切（包括 "0"、"false"、[]、{}）都是真值（truthy）
+console.log('Boolean("0") -&gt;', Boolean("0")); // true！字符串 "0" 是真值
+console.log("Boolean([]) -&gt;", Boolean([])); // true！空数组是真值
+
+// ===== 隐式转换：JS 偷偷帮你转（陷阱重灾区）=====
+console.log("--- 隐式转换 ---");
+console.log("'5' + 3 -&gt;", "5" + 3); // "53"：+ 遇到字符串就变拼接
+console.log("'5' - 3 -&gt;", "5" - 3); // 2：- 只能算数，把 '5' 转成数字
+console.log("'5' * '2' -&gt;", "5" * "2"); // 10：都转成数字
+console.log("true + 1 -&gt;", true + 1); // 2：true 转成 1
+console.log("[] + [] -&gt;", [] + []); // ""（空字符串，很反直觉）
+</code></pre>
+<h3 id="显式转换三个转换函数"><a class="header" href="#显式转换三个转换函数">显式转换：三个转换函数</a></h3>
+<ul>
+<li><strong><code>Number(x)</code></strong>：把 <code>x</code> 转成数字。注意几个坑：<code>Number("")</code> 是 <code>0</code>（空字符串变零！）；<code>Number("abc")</code> 转不了就是 <code>NaN</code>；<code>Number(true)</code> 是 <code>1</code>、<code>Number(false)</code> 是 <code>0</code>；<code>Number(null)</code> 是 <code>0</code> 而 <code>Number(undefined)</code> 是 <code>NaN</code>（这俩“空“转出来还不一样）。</li>
+<li><strong><code>parseInt</code> / <code>parseFloat</code></strong>：它俩更宽容，从字符串<strong>开头</strong>尽量读数字，读到非数字就停。<code>parseInt("42px")</code> 得 <code>42</code>，<code>parseFloat("3.14m")</code> 得 <code>3.14</code>。处理 “100px” 这种带单位的文本时很好用。</li>
+<li><strong><code>String(x)</code></strong>：把任何值转成字符串。<code>String(42)</code> 得 <code>"42"</code>，<code>String(null)</code> 得 <code>"null"</code>。</li>
+<li><strong><code>Boolean(x)</code></strong>：把任何值转成布尔——这正好用来验证 1.4 讲的真假值规则！代码里 <code>Boolean(false/0/""/null/undefined/NaN)</code> 六个全是 <code>false</code>，其余都是 <code>true</code>。特别留意最后两行：<code>Boolean("0")</code> 是 <code>true</code>（字符串 <code>"0"</code> 里有个字符，非空，所以是真值），<code>Boolean([])</code> 也是 <code>true</code>（空数组是真值）。这两个坑请务必亲手跑一遍加深印象。</li>
+</ul>
+<h3 id="隐式转换js-背着你转"><a class="header" href="#隐式转换js-背着你转">隐式转换：JS 背着你转</a></h3>
+<p>真正折磨新手的是<strong>隐式转换</strong>——你没要求转，JS 却自作主张转了。看代码最后一段：</p>
+<ul>
+<li><strong><code>"5" + 3</code> 得 <code>"53"</code></strong>：<code>+</code> 号很特殊，<strong>只要有一边是字符串，它就切换成“字符串拼接“模式</strong>，把另一边也转成字符串。于是数字 <code>3</code> 变成 <code>"3"</code>，拼出 <code>"53"</code>。</li>
+<li><strong><code>"5" - 3</code> 得 <code>2</code></strong>：而 <code>-</code>（以及 <code>*</code> <code>/</code> <code>%</code>）<strong>没有拼接含义，只能做算术</strong>，于是反过来把字符串 <code>"5"</code> 转成数字 <code>5</code>，算出 <code>2</code>。</li>
+<li><strong><code>true + 1</code> 得 <code>2</code></strong>：<code>true</code> 被转成 <code>1</code>。</li>
+<li><strong><code>[] + []</code> 得 <code>""</code></strong>：空数组转成空字符串后拼接，得到空字符串——极其反直觉，纯粹是“隐式转换太随意“的反面教材。</li>
+</ul>
+<p>📌 <strong>实务建议：不要依赖隐式转换，尤其从用户输入或命令行读来的数据，一律先用 <code>Number()</code> / <code>String()</code> 显式转成你想要的类型再用。</strong> 本章小项目里，我们从命令行读到的参数天生是字符串，就必须先 <code>Number()</code> 转一下才能参与计算——这是真实开发中每天都在做的事。</p>
+<h3 id="埋个伏笔为什么会有-typescript"><a class="header" href="#埋个伏笔为什么会有-typescript">埋个伏笔：为什么会有 TypeScript</a></h3>
+<p>你可能已经隐约感到：JS 的动态类型 + 隐式转换，“自由“得有点危险。一个变量到底装的是数字还是字符串，全靠运行时才知道；<code>"5" - 3</code> 和 <code>"5" + 3</code> 结果天差地别却都不报错。程序一大，这种“类型不确定“就会埋下大量难查的 bug。</p>
+<p><strong>TypeScript（TS）正是为了解决这个问题而生的</strong>：它给 JavaScript 加上了“类型标注“，让你在<strong>写代码时</strong>就声明“这个变量必须是数字“，一旦你不小心传了字符串，编辑器当场标红、编译报错，把 bug 消灭在运行之前。本书第四部分（第 13 章起）会带你系统学习 TS。现在只需记住：<strong>你今天在 JS 里踩过的每一个类型坑，都是将来爱上 TypeScript 的理由。</strong></p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<p>把本章的“血泪教训“集中列一遍，建议做完项目回头再看一遍：</p>
+<ul>
+<li>⚠️ <strong>别用 <code>==</code>，一律用 <code>===</code>。</strong> <code>==</code> 的隐式转换规则复杂又反直觉，是 bug 温床。</li>
+<li>⚠️ <strong>别直接用 <code>===</code> 比较两个小数。</strong> 因浮点精度，<code>0.1 + 0.2 === 0.3</code> 是 <code>false</code>。需要时先 <code>.toFixed()</code> 或比较差值。</li>
+<li>⚠️ <strong>判断 <code>NaN</code> 不能用 <code>=== NaN</code></strong>（它谁都不等），要用 <code>Number.isNaN(x)</code>。</li>
+<li>⚠️ <strong><code>typeof null</code> 是 <code>"object"</code></strong>，历史遗留。判断 <code>null</code> 请写 <code>x === null</code>。</li>
+<li>⚠️ <strong><code>"0"</code>、<code>"false"</code>、<code>[]</code>、<code>{}</code> 都是真值</strong>，只有那 6 个才是假值。别想当然。</li>
+<li>⚠️ <strong>命令行 / 用户输入拿到的永远是字符串</strong>，参与数学运算前务必 <code>Number()</code> 转换。</li>
+<li>📌 <strong>默认用 <code>const</code>，需要改再换 <code>let</code>，永远别用 <code>var</code>。</strong></li>
+<li>📌 <strong>拼字符串优先用模板字符串</strong>（反引号 + <code>${}</code>），别再 <code>+</code> 一大串。</li>
+<li>📌 <strong>设默认值时，能用 <code>??</code> 就别用 <code>||</code></strong>——除非你确实想让 <code>0</code>/<code>""</code> 也走默认值。</li>
+<li>💡 <strong>变量名要见名知意</strong>，用 camelCase；调试时多用 <code>console.log(typeof x)</code> 和 <code>console.log(x)</code>。</li>
+</ul>
+<hr>
+<h2 id="本章小项目单位汇率换算器"><a class="header" href="#本章小项目单位汇率换算器">本章小项目：单位/汇率换算器</a></h2>
+<h3 id="需求"><a class="header" href="#需求">需求</a></h3>
+<p>做一个命令行小工具，能完成两类换算：</p>
+<ol>
+<li><strong>温度</strong>：摄氏 ↔ 华氏互转。</li>
+<li><strong>货币</strong>：美元 ↔ 人民币互转（用一个写死的固定汇率）。</li>
+</ol>
+<p>要求既能“不带参数直接跑，看几个演示“，也能“带命令行参数，算用户想算的“。整个项目要用上本章的：<code>const</code> 常量、number 计算、模板字符串、类型转换（<code>Number()</code>）、<code>NaN</code> 校验、比较与判断。</p>
+<h3 id="设计思路"><a class="header" href="#设计思路">设计思路</a></h3>
+<p>一步步想清楚“程序要干什么“，再动手写：</p>
+<ol>
+<li><strong>换算公式</strong>是固定的数学关系，我们把每种换算写成一个小函数（函数是第 2 章的内容，这里先用起来，你会发现很自然）。温度公式：华氏 <code>F = C × 9/5 + 32</code>，反过来 <code>C = (F − 32) × 5/9</code>。</li>
+<li><strong>汇率</strong>是个不该被中途改动的标准值，用 <code>const</code> 存。</li>
+<li><strong>怎么拿到用户要算的数？</strong> 用 <code>process.argv</code>——这是 Node 提供的数组，存着你在命令行敲的参数。关键点：<strong>从命令行读来的东西全是字符串</strong>，<code>"100"</code> 而不是数字 <code>100</code>，所以算之前必须 <code>Number()</code> 转一下，还要用 <code>Number.isNaN()</code> 挡住 <code>"abc"</code> 这种乱输入。</li>
+<li>如果用户<strong>什么参数都没给</strong>，就打印几个内置示例——这样零基础的你直接 <code>node converter.js</code> 就能看到效果，不必先学命令行参数。</li>
+<li>结果统一保留两位小数（<code>toFixed(2)</code>），用模板字符串拼成好看的句子输出。</li>
+</ol>
+<h3 id="完整实现"><a class="header" href="#完整实现">完整实现</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch01/converter.js
+// 单位/汇率换算器 —— 第 1 章小项目
+// 运行方式（默认示例）：node converter.js
+// 运行方式（命令行参数）：
+//   node converter.js c2f 100      -&gt; 摄氏 100 度转华氏
+//   node converter.js f2c 212      -&gt; 华氏 212 度转摄氏
+//   node converter.js usd2cny 20   -&gt; 20 美元转人民币
+//   node converter.js cny2usd 145  -&gt; 145 人民币转美元
+
+// ===== 1. 固定配置（用 const，因为这些"标准"不该被程序中途改掉）=====
+const USD_TO_CNY = 7.25; // 假设 1 美元 = 7.25 人民币（示例用固定汇率）
+
+// ===== 2. 四个换算公式，各写成一句表达式 =====
+// 摄氏 -&gt; 华氏： F = C × 9/5 + 32
+function celsiusToFahrenheit(c) {
+  return (c * 9) / 5 + 32;
+}
+// 华氏 -&gt; 摄氏： C = (F − 32) × 5/9
+function fahrenheitToCelsius(f) {
+  return ((f - 32) * 5) / 9;
+}
+// 美元 -&gt; 人民币
+function usdToCny(usd) {
+  return usd * USD_TO_CNY;
+}
+// 人民币 -&gt; 美元
+function cnyToUsd(cny) {
+  return cny / USD_TO_CNY;
+}
+
+// 把数字保留两位小数，返回字符串（便于展示金额/温度）
+function round2(n) {
+  return n.toFixed(2);
+}
+
+// ===== 3. 读取命令行参数 =====
+// process.argv 是一个数组：
+//   [0] node 可执行文件路径
+//   [1] 当前脚本路径
+//   [2] 起才是我们真正传的参数
+const op = process.argv[2]; // 操作类型，如 "c2f"
+const rawValue = process.argv[3]; // 数值（此时还是字符串！）
+
+// ===== 4. 没给参数时，跑几个内置示例（对零基础最友好）=====
+if (op === undefined) {
+  console.log("=== 单位 / 汇率换算器（示例演示）===");
+  console.log(`摄氏 100°C = 华氏 ${round2(celsiusToFahrenheit(100))}°F`);
+  console.log(`华氏 212°F = 摄氏 ${round2(fahrenheitToCelsius(212))}°C`);
+  console.log(`20 美元   = ${round2(usdToCny(20))} 人民币`);
+  console.log(`145 人民币 = ${round2(cnyToUsd(145))} 美元`);
+  console.log("");
+  console.log("想自己算？试试：node converter.js c2f 37");
+} else {
+  // ===== 5. 给了参数：先把字符串转成数字并校验 =====
+  const value = Number(rawValue); // 关键：命令行参数永远是字符串，必须转
+
+  if (Number.isNaN(value)) {
+    console.log(`⚠️ "${rawValue}" 不是一个有效数字。`);
+  } else {
+    // 用一串三元/判断根据 op 选择公式
+    let output;
+    if (op === "c2f") {
+      output = `摄氏 ${value}°C = 华氏 ${round2(celsiusToFahrenheit(value))}°F`;
+    } else if (op === "f2c") {
+      output = `华氏 ${value}°F = 摄氏 ${round2(fahrenheitToCelsius(value))}°C`;
+    } else if (op === "usd2cny") {
+      output = `${value} 美元 = ${round2(usdToCny(value))} 人民币`;
+    } else if (op === "cny2usd") {
+      output = `${value} 人民币 = ${round2(cnyToUsd(value))} 美元`;
+    } else {
+      output = `⚠️ 不认识的操作 "${op}"。可用：c2f / f2c / usd2cny / cny2usd`;
+    }
+    console.log(output);
+  }
+}
+</code></pre>
+<h3 id="逐段讲解"><a class="header" href="#逐段讲解">逐段讲解</a></h3>
+<ol>
+<li>
+<p><strong><code>const USD_TO_CNY = 7.25;</code></strong> —— 汇率用 <code>const</code> 存，全大写命名表明它是“配置常量“。用 <code>const</code> 能防止程序别处不小心把它改掉。</p>
+</li>
+<li>
+<p><strong>四个换算函数</strong> —— 每个函数把一条数学公式包起来。<code>function 名字(参数) { return 结果; }</code> 是函数的基本形态（第 2 章细讲）。这里注意运算优先级：<code>(c * 9) / 5 + 32</code>，先算乘除、再算加，和数学一致；<code>((f - 32) * 5) / 9</code> 用括号确保先减 32。把公式拆成函数的好处是——<strong>每个换算只写一次，哪里要用就调用，改公式也只改一处</strong>。</p>
+</li>
+<li>
+<p><strong><code>round2(n)</code></strong> —— <code>n.toFixed(2)</code> 把数字四舍五入保留两位小数。⚠️ 注意它返回的是<strong>字符串</strong>（如 <code>"212.00"</code>）不是数字，这正好方便我们直接拼进结果文本。这也是应对 1.2 那个“浮点精度“坑的实用手段。</p>
+</li>
+<li>
+<p><strong><code>process.argv</code></strong> —— 这是本项目的核心知识点。当你运行 <code>node converter.js c2f 100</code>，Node 会把命令行拆成一个数组存进 <code>process.argv</code>：第 <code>[0]</code> 个是 node 程序路径，第 <code>[1]</code> 个是脚本路径，<strong>从第 <code>[2]</code> 个起才是你真正传的参数</strong>。所以 <code>op = process.argv[2]</code> 拿到 <code>"c2f"</code>，<code>rawValue = process.argv[3]</code> 拿到 <code>"100"</code>。请牢牢记住：<strong>这个 <code>"100"</code> 是字符串，不是数字！</strong></p>
+</li>
+<li>
+<p><strong><code>if (op === undefined)</code></strong> —— 如果第 <code>[2]</code> 个参数不存在，<code>process.argv[2]</code> 就是 <code>undefined</code>，说明用户没带参数，我们走“演示分支“，打印四个写死的示例。注意这里用 <code>===</code>（严格相等）判断，符合本章的黄金法则。示例输出全用模板字符串拼接，<code>${round2(...)}</code> 把函数结果直接嵌进句子。</p>
+</li>
+<li>
+<p><strong><code>const value = Number(rawValue);</code></strong> —— 用户带了参数时，第一件事就是把字符串 <code>rawValue</code> 用 <code>Number()</code> <strong>显式转成数字</strong>。这正是 1.7 强调的“用户输入必须先转类型“。</p>
+</li>
+<li>
+<p><strong><code>if (Number.isNaN(value))</code></strong> —— 转换可能失败：用户要是输入 <code>"abc"</code>，<code>Number("abc")</code> 就是 <code>NaN</code>。我们用 <code>Number.isNaN()</code>（而不是 <code>=== NaN</code>，因为 <code>NaN</code> 谁都不等）来检测并友好提示，避免后面算出一堆 <code>NaN</code>。这就是 1.2 那个坑在真实项目里的应对。</p>
+</li>
+<li>
+<p><strong><code>if / else if</code> 选公式</strong> —— 根据 <code>op</code> 的值决定调用哪个换算函数，把结果拼成句子存进 <code>output</code>，最后统一 <code>console.log</code>。最后的 <code>else</code> 兜底处理“用户输错了操作名“的情况。</p>
+</li>
+</ol>
+<h3 id="运行它"><a class="header" href="#运行它">运行它</a></h3>
+<pre><code class="language-bash">cd code/ch01
+node converter.js
+</code></pre>
+<p>不带参数会看到四个演示。再试试带参数：</p>
+<pre><code class="language-bash">node converter.js c2f 37       # 摄氏 37°C = 华氏 98.60°F
+node converter.js usd2cny 20   # 20 美元 = 145.00 人民币
+node converter.js c2f abc      # ⚠️ "abc" 不是一个有效数字。
+</code></pre>
+<p>亲手把这几条都跑一遍，观察输出——尤其是最后那条错误输入，体会我们的校验是怎么把它挡下来的。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>加一种换算</strong>：仿照现有函数，加一个“千米 ↔ 英里“（1 英里 ≈ 1.609 千米），并在演示区和参数分支里都补上 <code>km2mi</code> / <code>mi2km</code>。</li>
+<li><strong>让汇率更真实</strong>：把 <code>USD_TO_CNY</code> 抽成可调整——试着支持第三个参数当汇率，比如 <code>node converter.js usd2cny 20 7.1</code>，用 <code>process.argv[4]</code> 读取（记得同样要 <code>Number()</code> 转换和 <code>NaN</code> 校验）。</li>
+<li><strong>精度实验</strong>：把 <code>round2</code> 里的 <code>2</code> 改成 <code>0</code> 或 <code>4</code>，观察结果小数位的变化，理解 <code>toFixed()</code> 的参数含义。</li>
+<li><strong>思考题</strong>：如果把第 6 步的 <code>Number(rawValue)</code> 删掉、直接用 <code>rawValue</code> 参与计算，<code>c2f 37</code> 会算出什么？（提示：想想 <code>"37" * 9</code> 和 <code>"37" + 32</code> 分别会发生什么隐式转换。）动手改一下、跑一跑，验证你的猜测。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p><strong>本章重点回顾：</strong></p>
+<ul>
+<li><strong>变量</strong>是“贴了名字的盒子“。用 <code>const</code>（默认）和 <code>let</code>（需要改时）声明，<strong>别用 <code>var</code></strong>。<code>=</code> 是赋值不是相等。</li>
+<li><strong>7 种原始类型</strong>：number、string、boolean、undefined、null、bigint、symbol。number 不分整数小数，但有浮点精度、<code>NaN</code>、<code>Infinity</code> 三个坑。</li>
+<li><strong>模板字符串</strong>（反引号 + <code>${}</code>）是拼文本的首选，还支持换行；<code>\n \t \" \\</code> 是常用转义。</li>
+<li><strong>6 个假值</strong>：<code>false 0 "" null undefined NaN</code>，其余全是真值（<code>"0"</code>、<code>[]</code>、<code>{}</code> 都是真值！）。</li>
+<li><strong><code>typeof</code></strong> 查类型；牢记 <code>typeof null === "object"</code> 是历史遗留特例。</li>
+<li><strong>运算符</strong>：<code>%</code> 取余、<code>**</code> 幂；比较<strong>只用 <code>===</code>/<code>!==</code></strong>；逻辑运算有<strong>短路求值</strong>，<code>||</code>/<code>&amp;&amp;</code> 返回操作数本身；<code>? :</code> 三元、<code>??</code> 空值合并、<code>?.</code> 可选链。</li>
+<li><strong>类型转换</strong>：显式用 <code>Number()</code>/<code>String()</code>/<code>Boolean()</code>，隐式转换（如 <code>"5" + 3</code>）是陷阱重灾区，<strong>用户输入务必先显式转换</strong>。</li>
+<li>JS 是<strong>动态类型</strong>语言，灵活但易埋类型 bug——这正是后面 TypeScript 要解决的痛点。</li>
+</ul>
+<p><strong>自测题：</strong></p>
+<ol>
+<li><code>let</code> 和 <code>const</code> 有什么区别？为什么建议“默认用 <code>const</code>“？<code>var</code> 又为什么被淘汰？</li>
+<li>不查代码，写出 <code>0.1 + 0.2 === 0.3</code> 的结果，并解释为什么。要正确判断两个小数是否相等，应该怎么做？</li>
+<li><code>1 == "1"</code> 和 <code>1 === "1"</code> 分别是什么结果？请用“隐式转换“和“类型不同直接判假“两个角度分别解释。</li>
+<li>完整列出 JavaScript 的 6 个假值。<code>"0"</code>、<code>[]</code>、<code>"false"</code> 是真值还是假值？</li>
+<li><code>0 || 5</code> 和 <code>0 ?? 5</code> 结果一样吗？为什么？各自适合什么场景？</li>
+<li>运行 <code>node converter.js c2f 100</code>，<code>process.argv[2]</code> 和 <code>process.argv[3]</code> 分别是什么？后者是数字还是字符串？如果不转换直接计算会怎样？</li>
+</ol>
+<blockquote>
+<p>答案都藏在本章正文和代码里。任何一题卡壳，回到对应小节重读并把示例再跑一遍——这个习惯请贯穿全书。</p>
+</blockquote>
+<hr>
+<p>下一章，我们让程序“会思考、会重复、能拆分“：进入<strong>第 2 章 · 控制流与函数基础</strong>，学习 <code>if/else</code>、<code>for</code>/<code>while</code> 循环，以及本章已经悄悄用上的“函数“到底怎么定义、怎么工作。有了控制流和函数，你就能写出真正“有逻辑“的程序了。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch00.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch02.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch00.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch02.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

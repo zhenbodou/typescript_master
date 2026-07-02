@@ -1,0 +1,761 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 24 章 · 数据持久化与配置管理 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch24.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-24-章--数据持久化与配置管理"><a class="header" href="#第-24-章--数据持久化与配置管理">第 24 章 · 数据持久化与配置管理</a></h1>
+<p>第 23 章我们把任务管理 API 跑了起来，但它有一个致命短板：数据存在一个内存数组里，<strong>进程一重启，所有任务就消失了</strong>。这一章我们就来解决它——让数据「落地」，重启不丢；顺便学会用规范的方式管理配置（端口、数据库路径、密钥这些「因环境而异」的东西）。</p>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<ul>
+<li>理解**数据持久化（persistence）**的几个层次：内存 → JSON 文件 → 嵌入式数据库（SQLite）→ 独立数据库（Postgres/MySQL）→ ORM，以及各自的取舍。</li>
+<li>会用 <code>fs/promises</code> 把数据存成 <strong>JSON 文件</strong>，并理解它的<strong>并发写风险</strong>。</li>
+<li>掌握 <strong>SQLite</strong>，用 Node <strong>内置的 <code>node:sqlite</code></strong> 模块（无需安装依赖）完成建表、增删改查、<strong>参数化查询（防 SQL 注入）<strong>和</strong>事务（transaction）</strong>。</li>
+<li>速成一小段 <strong>SQL 基础</strong>：<code>CREATE TABLE</code> / <code>INSERT</code> / <code>SELECT</code> / <code>UPDATE</code> / <code>DELETE</code>。</li>
+<li>了解 <strong>ORM / Query Builder</strong>（Prisma、Drizzle、Knex）的定位（只讲概念，不要求安装）。</li>
+<li>学会<strong>配置管理</strong>：环境变量、<code>.env</code> 文件、区分 dev/prod、敏感信息不入库不入 git，并用第 13 章的<strong>类型化配置</strong>思想校验环境变量。</li>
+<li>小项目：把第 23 章任务 API 的内存 store 换成 <strong>SQLite 持久化</strong>，数据重启不丢。</li>
+</ul>
+<blockquote>
+<p>📌 本章所有代码都在 <code>code/ch24/api/</code> 这个独立子项目里，<strong>零第三方运行时依赖</strong>（<code>node:sqlite</code> 是 Node 自带的）。本机 Node 版本是 <strong>v24</strong>，<code>node:sqlite</code> 已可直接使用，无需任何命令行标志。</p>
+</blockquote>
+<hr>
+<h2 id="241-持久化的层次从内存到数据库"><a class="header" href="#241-持久化的层次从内存到数据库">24.1 持久化的层次：从内存到数据库</a></h2>
+<p>「持久化」就一句话：<strong>让数据在程序结束后依然存在</strong>。实现方式有很多档次，越往下越强大，也越重：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>层次</th><th>代表</th><th>优点</th><th>缺点</th><th>适合</th></tr>
+</thead>
+<tbody>
+<tr><td>内存</td><td>一个数组 / Map</td><td>最快、最简单</td><td>重启即失，容量受内存限制</td><td>缓存、临时状态、demo</td></tr>
+<tr><td>JSON 文件</td><td><code>fs</code> + <code>JSON.stringify</code></td><td>零依赖、人可读</td><td>全量读写慢、<strong>并发写易丢数据</strong>、无查询能力</td><td>极小数据、原型、配置</td></tr>
+<tr><td>嵌入式数据库</td><td><strong>SQLite</strong></td><td>一个文件、无需服务器、支持 SQL/事务/索引</td><td>高并发写入受限（单写者）</td><td>学习、桌面应用、中小型服务</td></tr>
+<tr><td>独立数据库</td><td>PostgreSQL / MySQL</td><td>高并发、网络访问、功能完备</td><td>要单独部署运维</td><td>生产级、多实例应用</td></tr>
+<tr><td>ORM / Query Builder</td><td>Prisma / Drizzle / Knex</td><td>用对象/类型操作数据库、迁移管理</td><td>有学习成本和抽象泄漏</td><td>中大型项目的工程化</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>不要一上来就上最重的方案。</strong> 选型的黄金法则是「够用就好」。一个人用的小工具，JSON 文件可能就够了；一个中小型 Web 服务，SQLite 往往完全胜任；当你需要多台服务器同时高并发写同一份数据时，才真的需要 Postgres/MySQL。本章主线用 <strong>SQLite</strong>——它是「学习成本低」和「真实可用」的最佳平衡点。</p>
+</blockquote>
+<p>下面我们从最简单的 JSON 文件讲起，感受它的好与不好，再自然过渡到 SQLite。</p>
+<hr>
+<h2 id="242-文件持久化用-json-文件当仓库"><a class="header" href="#242-文件持久化用-json-文件当仓库">24.2 文件持久化：用 JSON 文件当仓库</a></h2>
+<p>思路非常直白：内存里维护一个数组，<strong>每次改动后，把整个数组序列化成 JSON 写回文件</strong>；程序启动时再把文件读回内存。</p>
+<p>我们用第 22 章学过的 <code>fs/promises</code>（Promise 版的文件 API）。看核心实现：</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/store/jsonTaskStore.ts
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import path from "node:path";
+import { randomUUID } from "node:crypto";
+import type { Task, CreateTaskInput, UpdateTaskInput } from "../types.js";
+
+export class JsonTaskStore {
+  private tasks: Task[] = [];
+  private loaded = false;
+  // 写入队列：保证所有写盘操作【串行】执行，避免并发覆盖。
+  private writeChain: Promise&lt;void&gt; = Promise.resolve();
+
+  constructor(private file: string) {}
+
+  /** 首次使用前从磁盘加载；文件不存在则视为空列表。 */
+  private async ensureLoaded(): Promise&lt;void&gt; {
+    if (this.loaded) return;
+    try {
+      const text = await readFile(this.file, "utf8");
+      this.tasks = JSON.parse(text) as Task[];
+    } catch (err: unknown) {
+      // ENOENT = 文件不存在，属正常（第一次运行）；其它错误照常抛出。
+      if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+      this.tasks = [];
+    }
+    this.loaded = true;
+  }
+  // ……（create / update / remove 见仓库文件）
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>private tasks: Task[]</code>：内存里的「当前快照」。所有读操作都从它返回，所以读很快。</li>
+<li><code>ensureLoaded()</code>：<strong>懒加载</strong>。第一次真正用到数据时才读文件，用 <code>loaded</code> 标志保证只读一次。</li>
+<li><code>try/catch</code> 里那个 <code>ENOENT</code> 判断很关键：文件第一次运行时并不存在，<code>readFile</code> 会抛一个 <code>code === "ENOENT"</code> 的错误。我们把「文件不存在」当作「空列表」正常处理，<strong>其它错误（比如权限问题、JSON 损坏）则原样抛出</strong>——不要用 <code>catch</code> 把所有错误都吞掉。</li>
+</ul>
+<p>写盘部分是这个方案最需要小心的地方：</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/store/jsonTaskStore.ts
+  /** 把当前内存快照写回磁盘。用 writeChain 把多次写串行化，避免竞态。 */
+  private persist(): Promise&lt;void&gt; {
+    const snapshot = JSON.stringify(this.tasks, null, 2);
+    this.writeChain = this.writeChain.then(async () =&gt; {
+      await mkdir(path.dirname(this.file), { recursive: true });
+      await writeFile(this.file, snapshot, "utf8");
+    });
+    return this.writeChain;
+  }
+</code></pre>
+<p><strong>逐段拆解与陷阱：</strong></p>
+<ul>
+<li>⚠️ <strong>并发写风险（race condition）</strong>：JSON 文件方案最大的坑。想象两个请求几乎同时到达：请求 A 读到 <code>[t1]</code>，加了 <code>t2</code>，准备写 <code>[t1, t2]</code>；与此同时请求 B 也读到 <code>[t1]</code>，加了 <code>t3</code>，写了 <code>[t1, t3]</code>。如果 B 后写，A 的 <code>t2</code> 就<strong>被覆盖丢失</strong>了。这类「读—改—写」竞态在异步代码里非常隐蔽。</li>
+<li>我们用一个小技巧缓解：<code>writeChain</code> 是一条 Promise 链，每次 <code>persist</code> 都把新的写操作 <code>.then</code> 挂到上一次之后，从而保证<strong>所有写盘串行执行</strong>，不会交叉。注意我们先在链外算好 <code>snapshot</code>（当下的快照），避免闭包读到后来被改动的数组。</li>
+<li>即便如此，JSON 方案仍然是<strong>每次都覆盖整个文件</strong>——数据一多就慢，而且没有「按条件查询」的能力。这正是我们要转向数据库的原因。</li>
+</ul>
+<blockquote>
+<p>📌 JSON 文件适合：配置、极小数据量、单进程原型。一旦你需要「并发安全 + 查询 + 只改一行」，就该上 SQLite 了。</p>
+</blockquote>
+<hr>
+<h2 id="243-sqlite一个文件就是一个数据库"><a class="header" href="#243-sqlite一个文件就是一个数据库">24.3 SQLite：一个文件就是一个数据库</a></h2>
+<p><strong>SQLite</strong> 是世界上部署最广的数据库引擎（你的手机里可能就有几十个）。它的特别之处：<strong>没有独立的服务器进程</strong>，整个数据库就是磁盘上的<strong>一个 <code>.db</code> 文件</strong>，你的程序直接读写这个文件。</p>
+<p>它为什么适合学习和中小项目？</p>
+<ul>
+<li><strong>零运维</strong>：不用安装、不用启动服务、不用配账号密码。</li>
+<li><strong>完整的 SQL</strong>：支持表、索引、事务、约束——你学到的 SQL 知识可以平滑迁移到 Postgres/MySQL。</li>
+<li><strong>足够快</strong>：对「读多写少 / 中等写入」的场景，性能绰绰有余。</li>
+<li>⚠️ <strong>写入是单写者</strong>：同一时刻只允许一个写事务。高并发<strong>写</strong>的场景（成千上万用户同时下单）才需要换成 Postgres/MySQL；大多数应用达不到这个量级。</li>
+</ul>
+<p>在 Node 里用 SQLite 有两条路：</p>
+<ol>
+<li><strong><code>node:sqlite</code>（本章首选）</strong>：Node <strong>内置</strong>模块（Node 22 引入，Node 24 起可直接使用）。<strong>无需 <code>npm install</code></strong>，<code>import { DatabaseSync } from "node:sqlite"</code> 即可。</li>
+<li><code>better-sqlite3</code>：一个成熟的第三方库，API 与 <code>node:sqlite</code> 高度相似，需要 <code>npm install</code> 并编译原生模块。老版本 Node 上没有内置模块时用它。</li>
+</ol>
+<blockquote>
+<p>📌 本机实测：Node <strong>v24.18.0</strong> 下 <code>import { DatabaseSync } from "node:sqlite"</code> <strong>无需任何标志</strong>即可运行。如果你的 Node 是 22.x，可能需要加 <code>--experimental-sqlite</code>（例如 <code>node --experimental-sqlite ...</code>），届时命令行会有提示。若你的环境完全没有 <code>node:sqlite</code>，把 <code>DatabaseSync</code> 换成 <code>better-sqlite3</code> 的 <code>Database</code>，其余代码几乎一字不改。</p>
+</blockquote>
+<hr>
+<h2 id="244-sql-基础速成"><a class="header" href="#244-sql-基础速成">24.4 SQL 基础速成</a></h2>
+<p>在写代码前，先花几分钟认识我们要用到的 SQL 语句。SQL（Structured Query Language）是操作关系型数据库的通用语言。</p>
+<p><strong>建表</strong>——定义一张表的结构（列名 + 类型 + 约束）：</p>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS tasks (
+  id         TEXT    PRIMARY KEY,          -- 主键，唯一标识一行
+  title      TEXT    NOT NULL,             -- 非空
+  done       INTEGER NOT NULL DEFAULT 0,   -- SQLite 无布尔类型，用 0/1
+  created_at TEXT    NOT NULL              -- ISO 8601 字符串
+);
+</code></pre>
+<ul>
+<li><code>IF NOT EXISTS</code>：表已存在就跳过，让「建表」这一步可以安全地重复执行。</li>
+<li><code>PRIMARY KEY</code>：主键，保证唯一、且自带索引，按它查很快。</li>
+<li>⚠️ SQLite <strong>没有独立的布尔类型和日期类型</strong>。布尔我们用 <code>INTEGER</code> 存 <code>0/1</code>；日期我们用 <code>TEXT</code> 存 ISO 字符串。取出来时在代码里转换回 <code>boolean</code>。</li>
+</ul>
+<p><strong>插入 / 查询 / 更新 / 删除</strong>（CRUD）：</p>
+<pre><code class="language-sql">INSERT INTO tasks (id, title, done, created_at) VALUES (?, ?, ?, ?);
+
+SELECT id, title, done, created_at FROM tasks
+  WHERE done = 0                 -- 过滤条件
+  ORDER BY created_at DESC       -- 排序（DESC 倒序）
+  LIMIT 10;                      -- 只取前 10 条
+
+UPDATE tasks SET title = ?, done = ? WHERE id = ?;
+
+DELETE FROM tasks WHERE id = ?;
+</code></pre>
+<p>那些 <code>?</code> 是<strong>占位符（placeholder）</strong>，我们下一节会重点讲它——它是防 SQL 注入的关键。</p>
+<hr>
+<h2 id="245-用-nodesqlite-实现-taskrepository"><a class="header" href="#245-用-nodesqlite-实现-taskrepository">24.5 用 <code>node:sqlite</code> 实现 TaskRepository</a></h2>
+<p>现在把 SQL 落到 TypeScript 里。我们写一个 <code>TaskRepository</code> 类，方法名和第 23 章的内存 store <strong>完全对应</strong>（<code>findAll</code> / <code>findById</code> / <code>create</code> / <code>update</code> / <code>remove</code>），这样上层代码几乎不用改。</p>
+<p>先看构造函数和建表：</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/store/taskRepository.ts
+import { DatabaseSync } from "node:sqlite";
+import { randomUUID } from "node:crypto";
+import type { Task, CreateTaskInput, UpdateTaskInput } from "../types.js";
+
+export class TaskRepository {
+  private db: DatabaseSync;
+
+  constructor(dbFile: string) {
+    // 打开（不存在则创建）数据库文件。传 ":memory:" 则用纯内存库。
+    this.db = new DatabaseSync(dbFile);
+    // 打开外键约束（SQLite 默认关闭），养成好习惯。
+    this.db.exec("PRAGMA foreign_keys = ON;");
+    this.migrate();
+  }
+
+  private migrate(): void {
+    // exec 执行「不返回结果、也不带参数」的 SQL。
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS tasks (
+        id         TEXT    PRIMARY KEY,
+        title      TEXT    NOT NULL,
+        done       INTEGER NOT NULL DEFAULT 0,
+        created_at TEXT    NOT NULL
+      );
+    `);
+    this.db.exec(`CREATE INDEX IF NOT EXISTS idx_tasks_created_at ON tasks(created_at);`);
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>new DatabaseSync(dbFile)</code>：打开一个数据库连接。<code>DatabaseSync</code> 是<strong>同步</strong>的（方法直接返回结果，不用 <code>await</code>）——对「一个进程一个文件」的场景，这反而更简单直观，不用到处写 async。</li>
+<li><code>db.exec(sql)</code>：执行一段 SQL，<strong>不带参数、不取结果</strong>，适合建表、<code>PRAGMA</code>、<code>BEGIN/COMMIT</code> 这类语句。</li>
+<li><code>migrate()</code>：把「初始化表结构」收拢在一处。因为用了 <code>IF NOT EXISTS</code>，每次启动都调用它是安全的——这是最朴素的「迁移（migration）」雏形。</li>
+<li>那个 <code>CREATE INDEX</code>：给 <code>created_at</code> 建索引，让「按时间排序/查询」更快。数据量小时看不出差别，量大时是数量级的区别（本章扩展练习会展开）。</li>
+</ul>
+<p>接着是读操作。⚠️ 数据库里的列是 <code>snake_case</code>、<code>done</code> 是 <code>0/1</code>，而我们的领域模型是 <code>camelCase</code>、<code>done</code> 是 <code>boolean</code>，所以需要一个<strong>映射函数</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/store/taskRepository.ts
+  private rowToTask(row: Record&lt;string, unknown&gt;): Task {
+    return {
+      id: row.id as string,
+      title: row.title as string,
+      done: (row.done as number) === 1, // 0/1 → boolean
+      createdAt: row.created_at as string,
+    };
+  }
+
+  findAll(): Task[] {
+    const rows = this.db
+      .prepare("SELECT id, title, done, created_at FROM tasks ORDER BY created_at DESC")
+      .all() as Record&lt;string, unknown&gt;[];
+    return rows.map((r) =&gt; this.rowToTask(r));
+  }
+
+  findById(id: string): Task | undefined {
+    const row = this.db
+      .prepare("SELECT id, title, done, created_at FROM tasks WHERE id = ?")
+      .get(id) as Record&lt;string, unknown&gt; | undefined;
+    return row ? this.rowToTask(row) : undefined;
+  }
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>db.prepare(sql)</code>：把一条 SQL <strong>预编译</strong>成一个可复用的「语句对象（statement）」。之后可以用不同参数反复执行它，既快又安全。</li>
+<li><code>.all()</code> 返回<strong>所有匹配行</strong>（数组）；<code>.get(...)</code> 返回<strong>第一行</strong>（或 <code>undefined</code>）。</li>
+<li><code>rowToTask</code> 做「数据库行 → 领域对象」的翻译。<strong>把这层转换收拢在仓储内部</strong>，上层拿到的永远是干净的 <code>Task</code>，不用关心数据库里存的是 0 还是 1。</li>
+</ul>
+<h3 id="参数化查询防-sql-注入的正解"><a class="header" href="#参数化查询防-sql-注入的正解">参数化查询：防 SQL 注入的正解</a></h3>
+<p>注意 <code>findById</code> 里的 <code>WHERE id = ?</code>，我们把 <code>id</code> 通过 <code>.get(id)</code> 传进去，而<strong>不是</strong>拼字符串。这就是<strong>参数化查询（parameterized query）</strong>，也叫预处理语句。</p>
+<p>先看反例，感受一下危险在哪：</p>
+<pre><code class="language-typescript">// ❌ 绝对不要这样做：把用户输入直接拼进 SQL
+const badSql = `SELECT * FROM tasks WHERE id = '${userInput}'`;
+this.db.exec(badSql);
+</code></pre>
+<p>如果 <code>userInput</code> 是普通 id，看起来没问题。但如果攻击者传入：</p>
+<pre><code>'; DROP TABLE tasks; --
+</code></pre>
+<p>拼出来的 SQL 就变成了：</p>
+<pre><code class="language-sql">SELECT * FROM tasks WHERE id = ''; DROP TABLE tasks; --'
+</code></pre>
+<p>数据库会<strong>先查询、再把整张表删掉</strong>——这就是 <strong>SQL 注入（SQL injection）</strong>。用户输入被当成了 SQL 代码执行。</p>
+<p>而参数化查询从根上杜绝了它：</p>
+<pre><code class="language-typescript">// ✅ 正确：? 是占位符，id 作为「数据」传入，永远不会被当成 SQL 代码
+this.db.prepare("SELECT * FROM tasks WHERE id = ?").get(userInput);
+</code></pre>
+<blockquote>
+<p>📌 <strong>为什么参数化就安全？</strong> 因为 SQL 语句的<strong>结构</strong>在 <code>prepare</code> 阶段就已经确定并编译好了，参数是在<strong>执行阶段</strong>才作为「纯数据」填进预留的槽位。数据库引擎从不会把参数值重新解析成 SQL 语法。所以哪怕你传一整段 <code>DROP TABLE</code>，它也只是被当作一个（找不到的）字符串 id。<strong>这是防注入唯一可靠的办法</strong>——不是靠「过滤特殊字符」，而是靠「代码与数据分离」。</p>
+</blockquote>
+<p>我们在演示脚本里实测了这一点：把上面那个恶意字符串当 id 去查，结果是 <code>undefined</code>，表安然无恙。</p>
+<h3 id="写操作create--update--remove"><a class="header" href="#写操作create--update--remove">写操作：create / update / remove</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/store/taskRepository.ts
+  create(input: CreateTaskInput): Task {
+    const task: Task = {
+      id: randomUUID(),
+      title: input.title,
+      done: input.done ?? false,
+      createdAt: new Date().toISOString(),
+    };
+    this.db
+      .prepare("INSERT INTO tasks (id, title, done, created_at) VALUES (?, ?, ?, ?)")
+      .run(task.id, task.title, task.done ? 1 : 0, task.createdAt);
+    return task;
+  }
+
+  update(id: string, patch: UpdateTaskInput): Task | undefined {
+    const existing = this.findById(id);
+    if (!existing) return undefined;
+    const next: Task = {
+      ...existing,
+      title: patch.title ?? existing.title,
+      done: patch.done ?? existing.done,
+    };
+    this.db
+      .prepare("UPDATE tasks SET title = ?, done = ? WHERE id = ?")
+      .run(next.title, next.done ? 1 : 0, next.id);
+    return next;
+  }
+
+  remove(id: string): boolean {
+    const result = this.db.prepare("DELETE FROM tasks WHERE id = ?").run(id);
+    return result.changes &gt; 0;
+  }
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>.run(...)</code>：执行「写」语句（<code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>）。四个 <code>?</code> 一一对应 <code>run</code> 的四个参数，顺序必须一致。布尔要手动转 <code>0/1</code>。</li>
+<li><code>create</code>：<code>id</code> 和 <code>createdAt</code> 由<strong>服务端生成</strong>（不信任客户端提供的 id），这和第 23 章一致。</li>
+<li><code>update</code> 采用 <strong>PATCH 语义</strong>：先查出已有值，用 <code>patch.title ?? existing.title</code> 只覆盖传入的字段，其余保持不变。</li>
+<li><code>remove</code>：<code>run()</code> 返回对象里的 <code>changes</code> 是<strong>受影响的行数</strong>。删到了返回 <code>&gt; 0</code>，本来就不存在返回 <code>0</code>，据此返回 <code>true/false</code>。</li>
+</ul>
+<h3 id="事务要么全成要么全不做"><a class="header" href="#事务要么全成要么全不做">事务：要么全成，要么全不做</a></h3>
+<p>有时我们要「一次性写入多条，且不允许写一半」。这时需要<strong>事务（transaction）</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/store/taskRepository.ts
+  createMany(inputs: CreateTaskInput[]): Task[] {
+    const created: Task[] = [];
+    this.db.exec("BEGIN");           // 开启事务
+    try {
+      for (const input of inputs) {
+        created.push(this.create(input));
+      }
+      this.db.exec("COMMIT");        // 全部成功，提交
+      return created;
+    } catch (err) {
+      this.db.exec("ROLLBACK");      // 中途出错，撤销这一批的全部写入
+      throw err;
+    }
+  }
+</code></pre>
+<p><strong>逐段拆解与「不能讲错」的要点：</strong></p>
+<ul>
+<li><code>BEGIN</code> 开启事务，<code>COMMIT</code> 提交，<code>ROLLBACK</code> 回滚。</li>
+<li>📌 <strong>事务的核心保证是「原子性」（atomicity）：事务里的一组写操作，要么全部生效（<code>COMMIT</code> 后），要么全部不生效（<code>ROLLBACK</code> 后）</strong>。绝不会出现「插了 3 条、剩 2 条没插」这种半截状态。</li>
+<li>所以：如果循环写到第 3 条时抛错，<code>catch</code> 里的 <code>ROLLBACK</code> 会把<strong>前 2 条也一并撤销</strong>，数据库回到事务开始前的样子。这就是为什么转账、下单这类操作必须用事务。</li>
+<li>💡 事务还有个附带好处：把大量写入包在一个事务里，比逐条自动提交<strong>快得多</strong>（少了很多次磁盘刷新）。批量导入时尤其明显。</li>
+</ul>
+<hr>
+<h2 id="246-orm-与-query-builder概念定位"><a class="header" href="#246-orm-与-query-builder概念定位">24.6 ORM 与 Query Builder：概念定位</a></h2>
+<p>到目前为止我们都是<strong>手写 SQL 字符串</strong>。项目变大后，很多团队会引入 **ORM（Object-Relational Mapping，对象关系映射）**或 <strong>Query Builder（查询构造器）</strong>，用更贴近编程语言的方式操作数据库。快速认识三个主流选手：</p>
+<ul>
+<li><strong>Prisma</strong>：最流行的 TypeScript ORM。你在一个 <code>schema.prisma</code> 文件里声明模型，它<strong>生成完全类型安全</strong>的客户端和数据库迁移。</li>
+<li><strong>Drizzle</strong>：更「贴近 SQL」的轻量方案，用 TypeScript 定义表结构，查询写法接近 SQL 但有类型提示，运行时开销小。</li>
+<li><strong>Knex</strong>：老牌 <strong>Query Builder</strong>（不是完整 ORM），帮你用链式调用拼 SQL（<code>knex('tasks').where('done', 0)</code>），并管理迁移。</li>
+</ul>
+<p>感受一下 Prisma 的 schema 长什么样（<strong>仅作概念展示，本章不要求安装使用</strong>）：</p>
+<pre><code>// 概念示例：Prisma schema（schema.prisma）
+model Task {
+  id        String   @id @default(uuid())
+  title     String
+  done      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+</code></pre>
+<p>有了它，查询就变成了类型安全的对象调用，而不是字符串：</p>
+<pre><code class="language-typescript">// 概念示例：Prisma 客户端用法（有完整类型提示与补全）
+const tasks = await prisma.task.findMany({
+  where: { done: false },
+  orderBy: { createdAt: "desc" },
+});
+</code></pre>
+<p><strong>该不该用 ORM？</strong></p>
+<ul>
+<li>💡 <strong>好处</strong>：类型安全、自动补全、内建迁移工具、跨数据库（同一份代码换 SQLite/Postgres）。</li>
+<li>⚠️ <strong>代价</strong>：多一层抽象和学习成本；复杂查询有时反而更难写、性能更难掌控（「抽象泄漏」）。</li>
+<li>📌 <strong>建议</strong>：先把手写 SQL 和参数化查询搞明白（也就是本章做的事），你才能真正读懂 ORM 生成了什么、出问题时如何排查。学习阶段用 <code>node:sqlite</code> 手写，是打地基；工程化项目里再按需引入 Prisma/Drizzle。</li>
+</ul>
+<hr>
+<h2 id="247-配置管理环境变量与-env"><a class="header" href="#247-配置管理环境变量与-env">24.7 配置管理：环境变量与 .env</a></h2>
+<p>端口、数据库文件路径、第三方密钥……这些值<strong>因环境而异</strong>（本地开发 vs 线上生产），而且有些是<strong>敏感信息</strong>。把它们<strong>硬编码在源码里</strong>是大忌：既不灵活，又容易把密钥泄露到 git 历史里。</p>
+<p>正确做法：<strong>通过环境变量（environment variables）注入配置</strong>。</p>
+<h3 id="env-文件与-processloadenvfile"><a class="header" href="#env-文件与-processloadenvfile"><code>.env</code> 文件与 <code>process.loadEnvFile</code></a></h3>
+<p>开发时逐个 <code>export</code> 环境变量很麻烦，社区惯例是把它们写在一个 <code>.env</code> 文件里：</p>
+<pre><code class="language-bash"># 文件：code/ch24/api/.env.example
+PORT=3000
+DB_FILE=data/tasks.db
+NODE_ENV=development
+</code></pre>
+<p>过去我们用第三方库 <strong>dotenv</strong> 来加载它。但从 Node 20.12 / 22 起，Node <strong>内置</strong>了这个能力，<strong>无需依赖</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/scripts/demo-config.ts
+try {
+  process.loadEnvFile(envFile);   // 把 .env 里的 KEY=VALUE 灌进 process.env
+  console.log("已加载 .env：", envFile);
+} catch {
+  console.log("没有 .env 文件，仅使用当前环境变量。");
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>process.loadEnvFile(path)</code>：读取指定 <code>.env</code> 文件，把里面的键值对写进 <code>process.env</code>。作用等价于 dotenv。</li>
+<li>用 <code>try/catch</code> 包住：<code>.env</code> 不存在时它会抛错，而<strong>生产环境常常没有 <code>.env</code> 文件</strong>（直接用真实环境变量），所以「没有就跳过」是合理的。</li>
+<li>💡 <code>loadEnvFile</code> <strong>不会覆盖已存在的</strong> <code>process.env</code>。所以命令行传入的 <code>PORT=8080 node ...</code> 优先级高于 <code>.env</code> 里的值——这正是我们想要的：临时覆盖很方便。</li>
+</ul>
+<h3 id="敏感信息不入库不入-git"><a class="header" href="#敏感信息不入库不入-git">敏感信息不入库、不入 git</a></h3>
+<p>📌 三条铁律：</p>
+<ol>
+<li><strong><code>.env</code> 绝不提交到 git</strong>（它可能含密钥）。在 <code>.gitignore</code> 里忽略它：</li>
+</ol>
+<pre><code class="language-bash"># 文件：code/ch24/api/.gitignore
+.env
+data/*.db
+</code></pre>
+<ol start="2">
+<li>提交一个 <strong><code>.env.example</code></strong> 作模板（不含真实密钥），告诉协作者「需要哪些变量」。别人 <code>cp .env.example .env</code> 后填自己的值。</li>
+<li><strong>密钥不入库，也不入数据库</strong>。数据库存业务数据，密钥属于「运行环境的配置」，两者分开。</li>
+</ol>
+<h3 id="用类型化配置校验环境变量"><a class="header" href="#用类型化配置校验环境变量">用「类型化配置」校验环境变量</a></h3>
+<p>环境变量有个天然问题：<strong>它们全是字符串，而且可能缺失或非法</strong>（<code>process.env.PORT</code> 的类型是 <code>string | undefined</code>）。如果直接 <code>Number(process.env.PORT)</code> 拿去用，传了个 <code>"abc"</code> 就会得到 <code>NaN</code>，然后在运行时某个莫名其妙的地方崩掉。</p>
+<p>我们沿用<strong>第 13 章的类型化配置</strong>思想：把「宽松的字符串输入」在<strong>启动时</strong>一次性解析、校验成一个<strong>强类型配置对象</strong>，非法就<strong>立刻报错（fail fast）</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch24/api/src/config/config.ts
+export interface AppConfig {
+  port: number;
+  dbFile: string;
+  nodeEnv: "development" | "production" | "test";
+}
+
+function parsePort(value: string | undefined, fallback: number): number {
+  if (value === undefined || value.trim() === "") return fallback;
+  const n = Number(value);
+  if (!Number.isInteger(n) || n &lt; 1 || n &gt; 65535) {
+    throw new Error(`配置错误：PORT 必须是 1~65535 的整数，收到的是 "${value}"`);
+  }
+  return n;
+}
+
+function parseNodeEnv(value: string | undefined): AppConfig["nodeEnv"] {
+  const v = value ?? "development";
+  if (v === "development" || v === "production" || v === "test") return v;
+  throw new Error(`配置错误：NODE_ENV 只能是 development/production/test，收到的是 "${v}"`);
+}
+
+export function loadConfig(
+  env: Record&lt;string, string | undefined&gt; = process.env,
+): AppConfig {
+  return {
+    port: parsePort(env.PORT, 3000),
+    dbFile: env.DB_FILE ? path.resolve(env.DB_FILE) : defaultDbFile,
+    nodeEnv: parseNodeEnv(env.NODE_ENV),
+  };
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>AppConfig</code> 是我们想要的<strong>目标形状</strong>：<code>port</code> 是 <code>number</code>，<code>nodeEnv</code> 是三选一的联合类型。程序其它地方拿到的都是这种干净的强类型。</li>
+<li><code>parsePort</code> 不仅转数字，还<strong>校验范围</strong>（端口必须 1~65535）。非法就抛错——<strong>在启动的第一秒就失败</strong>，好过带着坏配置跑到半夜才崩。</li>
+<li><code>parseNodeEnv</code> 校验取值并把返回类型收窄成联合类型，编译器从此知道 <code>config.nodeEnv</code> 只可能是那三个值之一。</li>
+<li><code>loadConfig(env = process.env)</code>：默认读 <code>process.env</code>，但允许传入自定义对象——这让<strong>单元测试</strong>可以直接喂一份假 env 做断言，不用真的改环境。</li>
+<li><code>dbFile</code>：给了相对路径就 <code>path.resolve</code> 成绝对路径，没给就用默认的 <code>data/tasks.db</code>。💡 区分 dev/prod 很自然：本地 <code>.env</code> 指向一个测试库，生产环境的环境变量指向真实库，<strong>同一份代码，不同配置</strong>。</li>
+</ul>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>JSON 文件的并发写会丢数据</strong>。多个异步操作「读—改—写」同一个文件时后写覆盖先写。要么串行化写入（如本章 <code>writeChain</code>），要么干脆换 SQLite。</li>
+<li>⚠️ <strong>永远不要拼接 SQL 字符串</strong>。凡是把用户输入放进 SQL 的地方，一律用 <code>?</code> 占位符 + 参数传值。这是防 SQL 注入的<strong>唯一</strong>可靠办法，「过滤特殊字符」不可靠。</li>
+<li>⚠️ <strong>SQLite 没有布尔和日期类型</strong>。布尔用 <code>INTEGER</code>（0/1）、日期用 <code>TEXT</code>（ISO 字符串）存，读出时在仓储层转换回来，别让这层细节泄漏到上层。</li>
+<li>⚠️ <strong>事务别忘了 <code>ROLLBACK</code></strong>。<code>BEGIN</code> 之后如果不 <code>COMMIT</code> 也不 <code>ROLLBACK</code>，事务会一直悬着、锁住数据库。务必用 <code>try/catch</code> 保证出错时回滚。</li>
+<li>⚠️ <strong><code>.env</code> 千万别进 git</strong>。先写好 <code>.gitignore</code> 再写 <code>.env</code>。已经误提交的密钥要视为已泄露、立即轮换。</li>
+<li>💡 <strong>配置在启动时校验、快速失败</strong>。坏配置越早报错越好，别等到运行时才神秘崩溃。</li>
+<li>💡 <strong>数据库文件路径由配置决定</strong>。测试用 <code>:memory:</code> 或临时文件，开发用 <code>data/tasks.db</code>，生产用环境变量指定——同一套代码到处跑。</li>
+<li>💡 <strong>让仓储层的方法名与内存版保持一致</strong>（<code>findAll</code>/<code>create</code>/…），换存储时上层零改动。这就是「面向接口而非实现」。</li>
+</ul>
+<hr>
+<h2 id="本章小项目给任务-api-接数据库"><a class="header" href="#本章小项目给任务-api-接数据库">本章小项目：给任务 API 接数据库</a></h2>
+<p>目标：把第 23 章任务 API 的内存 store，换成 <strong>SQLite 持久化</strong>，并接入<strong>类型化配置</strong>。数据重启不丢。</p>
+<p>项目结构（<code>code/ch24/api/</code>，独立子项目，零第三方运行时依赖）：</p>
+<pre><code>code/ch24/api/
+├── package.json            # 只依赖 tsx/typescript（开发用），无运行时依赖
+├── tsconfig.json
+├── .env.example            # 配置模板（可入库）
+├── .gitignore              # 忽略 .env 和 data/*.db
+├── src/
+│   ├── types.ts            # Task / CreateTaskInput / UpdateTaskInput（沿用第 23 章）
+│   ├── config/config.ts    # 类型化配置：从环境变量读 PORT / DB_FILE / NODE_ENV
+│   └── store/
+│       ├── taskRepository.ts   # ★ SQLite 仓储（node:sqlite）
+│       └── jsonTaskStore.ts    # JSON 文件仓储（对比方案）
+├── scripts/
+│   ├── demo-sqlite.ts      # 可运行演示：CRUD + 事务 + 防注入
+│   └── demo-config.ts      # 可运行演示：读取类型化配置
+└── data/                   # 运行时生成的 .db 文件（被 gitignore）
+</code></pre>
+<p><strong>第 1 步：领域类型</strong>（与第 23 章完全相同，见 <code>src/types.ts</code>）。这保证上层 service/router 不用改。</p>
+<p><strong>第 2 步：实现 <code>TaskRepository</code></strong>（<code>src/store/taskRepository.ts</code>，即 24.5 节完整代码）。它建表、做 CRUD、用参数化查询、提供事务。对上层暴露的方法名和内存 store 一致。</p>
+<p><strong>第 3 步：改造 store 层</strong>。第 23 章里 router 是这样用的：</p>
+<pre><code class="language-typescript">// 第 23 章：import { taskStore } from "./store/taskStore.js";
+// 直接用 taskStore.findAll() / taskStore.create(...) ...
+</code></pre>
+<p>现在只需在启动处创建一个仓储实例，注入给上层：</p>
+<pre><code class="language-typescript">// 概念示例：在 server 启动处（把内存 store 换成 SQLite 仓储）
+import { loadConfig } from "./config/config.js";
+import { TaskRepository } from "./store/taskRepository.js";
+
+const config = loadConfig();                       // 类型化配置
+const repo = new TaskRepository(config.dbFile);    // 数据落到文件
+
+// 之后 router 里把原来的 taskStore.xxx 换成 repo.xxx，
+// 因为方法签名一致（findAll/findById/create/update/remove），改动极小。
+// app.listen(config.port, ...)
+</code></pre>
+<blockquote>
+<p>📌 因为仓储方法名与第 23 章内存版一一对应，<strong>这一步的改动量非常小</strong>——这正是当初把数据访问单独分层的回报。</p>
+</blockquote>
+<p><strong>第 4 步：配置模块</strong>（<code>src/config/config.ts</code>，即 24.7 节代码）。端口和数据库路径都从环境变量读，带校验。</p>
+<h3 id="运行与验证"><a class="header" href="#运行与验证">运行与验证</a></h3>
+<p>在 <code>code/ch24/api/</code> 目录下运行（用仓库已装好的 <code>tsx</code>）：</p>
+<pre><code class="language-bash"># 演示 SQLite CRUD + 事务 + 参数化查询防注入
+npx tsx scripts/demo-sqlite.ts
+
+# 再运行一次——你会看到「启动时已有任务数」不是 0，数据累积了 = 持久化成功
+npx tsx scripts/demo-sqlite.ts
+
+# 演示类型化配置（默认值）
+npx tsx scripts/demo-config.ts
+
+# 用环境变量覆盖端口 / 环境
+PORT=8080 NODE_ENV=production npx tsx scripts/demo-config.ts
+
+# 故意传非法端口，观察「启动即报错」（fail fast）
+PORT=99999 npx tsx scripts/demo-config.ts
+</code></pre>
+<p><strong>实测输出要点</strong>（本机 Node v24.18.0，<code>node:sqlite</code> 无需任何标志）：</p>
+<ul>
+<li>第一次 <code>demo-sqlite</code>：<code>启动时已有任务数： 0</code>，创建若干任务，事务批量插入 2 条，用恶意字符串 <code>'; DROP TABLE tasks; --</code> 查询返回 <code>undefined</code> 且<strong>表安然无恙</strong>。</li>
+<li>第二次 <code>demo-sqlite</code>：<code>启动时已有任务数： 3</code>（或更多）——<strong>重启不丢</strong>，持久化确认成功。</li>
+<li><code>demo-config</code> 默认输出 <code>port: 3000</code>；加 <code>PORT=8080</code> 后变成 <code>8080</code>；传 <code>.env</code>（<code>PORT=4000</code>）时读到 <code>4000</code>；传 <code>PORT=99999</code> 时<strong>直接抛出配置错误</strong>并退出。</li>
+</ul>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>迁移（migration）版本管理</strong>：真实项目里表结构会演进。建一张 <code>schema_version</code> 表记录当前版本号，<code>migrate()</code> 里按版本号依次执行「升级脚本」（比如「v2：给 tasks 加一列 <code>priority</code>」）。想想如何让升级<strong>幂等</strong>且<strong>可回退</strong>。</li>
+<li><strong>索引与查询性能</strong>：给 <code>tasks</code> 插入 10 万条数据，对比「有 <code>idx_tasks_created_at</code> 索引」和「删掉索引」时 <code>ORDER BY created_at</code> 查询的耗时（用 <code>console.time</code>）。再用 <code>EXPLAIN QUERY PLAN SELECT ...</code> 看 SQLite 是否用上了索引。</li>
+<li><strong>分页查询</strong>：给 <code>findAll</code> 加上 <code>limit</code> / <code>offset</code> 参数（<code>SELECT ... LIMIT ? OFFSET ?</code>），实现「每页 10 条」的翻页。</li>
+<li><strong>把 JSON 方案接上 API</strong>：用 <code>JsonTaskStore</code> 替换仓储，跑并发请求，观察它和 SQLite 在数据一致性上的差异。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>这一章我们让数据「活」了过来——从「重启即失」走到了「重启不丢」：</p>
+<ul>
+<li>理清了持久化的层次（内存 → JSON → SQLite → 独立数据库 → ORM）和<strong>够用就好</strong>的选型原则。</li>
+<li>用 <code>fs/promises</code> 实现了 JSON 文件仓储，并认清了它的<strong>并发写风险</strong>。</li>
+<li>用 Node 内置的 <strong><code>node:sqlite</code></strong> 完成了建表、CRUD、<strong>参数化查询（防 SQL 注入）<strong>和</strong>事务（原子性）</strong>——这是本章的核心。</li>
+<li>补齐了 <strong>SQL 基础</strong>，了解了 <strong>ORM/Query Builder</strong> 的定位。</li>
+<li>建立了规范的<strong>配置管理</strong>：环境变量 + <code>.env</code>（<code>process.loadEnvFile</code>）+ <strong>类型化校验</strong> + 敏感信息不入库不入 git。</li>
+</ul>
+<p><strong>自测题：</strong></p>
+<ol>
+<li>为什么参数化查询能防 SQL 注入？它比「过滤用户输入里的特殊字符」好在哪？</li>
+<li>JSON 文件持久化的并发写为什么会丢数据？本章用什么手段缓解？</li>
+<li>SQLite 里没有布尔类型，我们是怎么存 <code>done</code> 字段的？取出来时如何转换？</li>
+<li>事务的「原子性」保证了什么？如果批量写入到一半抛错，数据库会是什么状态？</li>
+<li>为什么 <code>.env</code> 不能提交到 git？该提交什么来代替它？</li>
+<li><code>loadConfig</code> 里为什么要在启动时就校验 <code>PORT</code> 并在非法时抛错，而不是等用到时再说？</li>
+</ol>
+<p>答完这些，你就真正把「数据存哪、配置从哪来」这两件工程基本功握在手里了。</p>
+<p>下一章（<strong>第 25 章 · 性能、调试、打包与发布部署</strong>），我们会给这个已经能持久化数据的应用「上生产」：如何找出性能瓶颈、如何用调试器排查问题、如何把 TypeScript 项目打包，以及如何把它真正部署上线跑起来。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch23.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch25.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch23.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch25.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

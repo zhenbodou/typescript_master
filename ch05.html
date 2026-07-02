@@ -1,0 +1,929 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 5 章 · 面向对象：原型链、class 与继承 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch05.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-5-章--面向对象原型链class-与继承"><a class="header" href="#第-5-章--面向对象原型链class-与继承">第 5 章 · 面向对象：原型链、class 与继承</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前四章你已经打下了扎实的地基：变量与类型、控制流与函数、字符串数组对象，以及最硬核的函数进阶（闭包、<code>this</code>、高阶函数）。特别是上一章对 <strong><code>this</code></strong> 和 <strong><code>new</code></strong> 绑定的理解，会在本章大放异彩。</p>
+<p>这一章我们来讲 <strong>面向对象编程（Object-Oriented Programming，简称 OOP）</strong>。你可能听说过“类““继承”“封装“这些词，觉得高深莫测。别担心，本章会把它们一层层剥开。学完之后你会：</p>
+<ul>
+<li>理解<strong>面向对象</strong>到底在解决什么问题，以及工厂函数（factory function）为什么“不够用“，从而引出原型。</li>
+<li>彻底搞懂 JavaScript 独有的 <strong>原型（prototype）</strong> 与 <strong>原型链（prototype chain）</strong>：属性是怎么沿着一条链往上找的。</li>
+<li>看清 <strong>构造函数（constructor function）+ <code>new</code></strong> 背后发生的四步操作，我们还会<strong>亲手实现一个 <code>myNew</code></strong>。</li>
+<li>掌握现代 <strong><code>class</code> 语法</strong>：constructor、实例方法、字段、<code>static</code> 静态成员、getter/setter、私有字段 <code>#x</code>，并理解“class 只是原型的语法糖“。</li>
+<li>学会<strong>继承（inheritance）</strong>：<code>extends</code>、<code>super</code>、方法重写（override）、<code>instanceof</code>。</li>
+<li>建立<strong>封装（encapsulation）</strong>、<strong>多态（polymorphism）</strong> 的概念，并了解“<strong>组合优于继承</strong>“的设计思想。</li>
+<li>本章小项目：从零实现一个<strong>几何图形库</strong>，用一个数组装下各种图形并统一计算，亲身体会多态的威力。</li>
+</ul>
+<p>我们先从一个最朴素的问题讲起：怎么“批量“造出一堆结构相同的对象？</p>
+<hr>
+<h2 id="51-从工厂函数说起面向对象在解决什么"><a class="header" href="#51-从工厂函数说起面向对象在解决什么">5.1 从工厂函数说起：面向对象在解决什么</a></h2>
+<p>在第 3 章我们学过对象字面量，可以手写一个对象：</p>
+<pre><code class="language-javascript">const alice = {
+  name: "Alice",
+  age: 30,
+  greet() {
+    return `你好，我叫 ${this.name}`;
+  },
+};
+</code></pre>
+<p>但如果要造 100 个用户呢？总不能手写 100 遍。自然的想法是写一个函数，输入数据、返回对象——这就是 <strong>工厂函数（factory function）</strong>，像工厂流水线一样批量生产对象。</p>
+<pre><code class="language-javascript">// 文件：code/ch05/01-factory.js
+function createUser(name, age) {
+  return {
+    name,
+    age,
+    greet() {
+      return `你好，我叫 ${this.name}，今年 ${this.age} 岁。`;
+    },
+  };
+}
+
+const alice = createUser("Alice", 30);
+const bob = createUser("Bob", 25);
+
+console.log(alice.greet()); // 你好，我叫 Alice，今年 30 岁。
+console.log(bob.greet()); // 你好，我叫 Bob，今年 25 岁。
+
+console.log("两个 greet 是同一个函数吗？", alice.greet === bob.greet); // false
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>createUser</code> 每次被调用，都 <code>return</code> 一个<strong>全新的对象字面量</strong>。<code>{ name, age }</code> 用了第 3 章的属性简写。</li>
+<li><code>alice</code> 和 <code>bob</code> 各是一个独立对象，<code>greet()</code> 里的 <code>this</code> 指向调用它的那个对象（第 4 章的隐式绑定规则），所以打印各自的名字。</li>
+<li>最后一行是<strong>关键</strong>：<code>alice.greet === bob.greet</code> 是 <code>false</code>。</li>
+</ul>
+<p>📌 这暴露了工厂函数的<strong>局限</strong>：每造一个对象，就<strong>重新创建了一份 <code>greet</code> 函数</strong>。方法体明明一模一样，却在内存里存了两份。造一万个用户，就有一万份重复的 <code>greet</code>，纯属浪费。</p>
+<p>我们真正想要的是：<strong>数据（<code>name</code>、<code>age</code>）每个对象各有一份，但方法（<code>greet</code>）大家共享同一份。</strong> JavaScript 用一种独特的机制来实现“共享“——<strong>原型（prototype）</strong>。这就是我们接下来要攻克的核心概念。</p>
+<hr>
+<h2 id="52-原型与原型链对象背后的备用对象"><a class="header" href="#52-原型与原型链对象背后的备用对象">5.2 原型与原型链：对象背后的“备用对象“</a></h2>
+<h3 id="每个对象都有一个原型"><a class="header" href="#每个对象都有一个原型">每个对象都有一个“原型“</a></h3>
+<p>在 JavaScript 里，<strong>几乎每个对象都有一个隐藏的关联对象，叫作它的原型（prototype）</strong>。你可以把原型想象成一个“备用对象“或“后备箱“：当你想访问某个对象的属性时，如果它<strong>自己身上没有</strong>，JavaScript 就会去它的原型上找；原型上也没有，就去原型的原型上找……如此形成一条链，直到找到或到头为止。这条链就是 <strong>原型链（prototype chain）</strong>。</p>
+<p>打个类比：你去公司前台找一份文件（属性），前台自己没有（对象自身没有），就打电话问二楼的部门（原型），二楼没有再问三楼（原型的原型）……一层层往上问，直到问到或到顶。</p>
+<h3 id="用-objectcreate-手动指定原型"><a class="header" href="#用-objectcreate-手动指定原型">用 <code>Object.create</code> 手动指定原型</a></h3>
+<p>最直白的方式是用 <code>Object.create(proto)</code>，它创建一个新对象，并把它的原型指定为 <code>proto</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch05/02-prototype.js
+const animal = {
+  eats: true,
+  walk() {
+    return `${this.name} 正在走路`;
+  },
+};
+
+const rabbit = Object.create(animal); // rabbit 的原型是 animal
+rabbit.name = "兔子";
+rabbit.jumps = true;
+
+console.log(rabbit.name); // 兔子（自己的属性）
+console.log(rabbit.jumps); // true（自己的属性）
+console.log(rabbit.eats); // true（自己没有，沿原型链在 animal 上找到）
+console.log(rabbit.walk()); // 兔子 正在走路
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>animal</code> 是一个普通对象，有属性 <code>eats</code> 和方法 <code>walk</code>。</li>
+<li><code>Object.create(animal)</code> 创建了 <code>rabbit</code>，并把 <code>rabbit</code> 的原型设为 <code>animal</code>。此刻 <code>rabbit</code> 自己身上什么都没有。</li>
+<li>我们给 <code>rabbit</code> 加了 <code>name</code> 和 <code>jumps</code>，这两个是它<strong>自己的属性</strong>。</li>
+<li>读 <code>rabbit.eats</code> 时，<code>rabbit</code> 自己没有 <code>eats</code>，于是沿原型链到 <code>animal</code> 找到了 <code>true</code>。</li>
+<li>最有意思的是 <code>rabbit.walk()</code>：<code>walk</code> 定义在 <code>animal</code> 上，但它内部的 <code>this</code> 指向<strong>调用它的那个对象</strong>，也就是 <code>rabbit</code>。所以打印的是“兔子 正在走路“，而不是“undefined 正在走路“。</li>
+</ul>
+<p>📌 记住这条黄金规则：<strong>方法在哪个对象上定义不重要，<code>this</code> 指向的是“点号左边“那个调用者。</strong> 这正是“方法共享、数据独立“的秘密——<code>walk</code> 只有一份（在 <code>animal</code> 上），但每个继承它的对象调用时，<code>this</code> 各自不同。</p>
+<h3 id="查看和检查原型"><a class="header" href="#查看和检查原型">查看和检查原型</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/02-prototype.js（续）
+console.log(Object.getPrototypeOf(rabbit) === animal); // true
+console.log(rabbit.__proto__ === animal); // true（等价，但不推荐用）
+</code></pre>
+<ul>
+<li><code>Object.getPrototypeOf(obj)</code> 是<strong>推荐</strong>的、获取一个对象原型的标准方式。</li>
+<li><code>obj.__proto__</code>（读作 “dunder proto”）是一个历史遗留的访问器，效果相同。</li>
+</ul>
+<p>⚠️ <strong>陷阱</strong>：<code>__proto__</code> 虽然到处能用，但它是早期浏览器的非标准产物，性能差、语义混乱。<strong>代码里请用 <code>Object.getPrototypeOf</code> / <code>Object.setPrototypeOf</code></strong>，<code>__proto__</code> 只在调试时随手看看即可。</p>
+<h3 id="原型链是多层的"><a class="header" href="#原型链是多层的">原型链是多层的</a></h3>
+<p>原型的原型还可以有原型，层层相连：</p>
+<pre><code class="language-javascript">// 文件：code/ch05/02-prototype.js（续）
+const longEar = Object.create(rabbit);
+longEar.name = "长耳兔";
+console.log(longEar.eats); // true（跨了两层去找）
+</code></pre>
+<p><code>longEar</code> 的原型是 <code>rabbit</code>，<code>rabbit</code> 的原型是 <code>animal</code>。读 <code>longEar.eats</code> 时：<code>longEar</code> 没有 → <code>rabbit</code> 没有 → <code>animal</code> 有，返回 <code>true</code>。这条链是：</p>
+<pre><code>longEar → rabbit → animal → Object.prototype → null
+</code></pre>
+<p>链的尽头是 <code>Object.prototype</code>（所有普通对象的“祖先“，提供了 <code>hasOwnProperty</code>、<code>toString</code> 等），再往上就是 <code>null</code>，表示到顶了。</p>
+<h3 id="hasownproperty-与-in自己的还是继承的"><a class="header" href="#hasownproperty-与-in自己的还是继承的"><code>hasOwnProperty</code> 与 <code>in</code>：自己的还是继承的？</a></h3>
+<p>有时我们需要区分：某个属性是对象<strong>自己的</strong>，还是<strong>从原型继承来的</strong>？</p>
+<pre><code class="language-javascript">// 文件：code/ch05/02-prototype.js（续）
+console.log(rabbit.hasOwnProperty("name")); // true（自己的）
+console.log(rabbit.hasOwnProperty("eats")); // false（继承来的，不算自己的）
+
+console.log("eats" in rabbit); // true（in 会连原型链一起看）
+</code></pre>
+<ul>
+<li><code>obj.hasOwnProperty(key)</code>：<strong>只看对象自己身上</strong>有没有，不看原型链。<code>name</code> 是 <code>rabbit</code> 自己加的，返回 <code>true</code>；<code>eats</code> 来自 <code>animal</code>，返回 <code>false</code>。</li>
+<li><code>key in obj</code>：<strong>连原型链一起看</strong>。<code>eats</code> 虽然是继承的，但沿链能找到，返回 <code>true</code>。</li>
+</ul>
+<p>💡 <strong>技巧</strong>：遍历对象自身属性、避免把继承来的属性也算进去时，<code>hasOwnProperty</code> 非常有用。更现代的写法是 <code>Object.hasOwn(obj, key)</code>（ES2022），语义相同但更安全，推荐使用。</p>
+<h3 id="属性遮蔽shadowing"><a class="header" href="#属性遮蔽shadowing">属性遮蔽（shadowing）</a></h3>
+<p>如果给对象自己加一个和原型同名的属性，会发生什么？</p>
+<pre><code class="language-javascript">// 文件：code/ch05/02-prototype.js（续）
+rabbit.eats = false; // 在 rabbit 自己身上新建了 eats
+console.log(rabbit.eats); // false（自己的遮蔽了原型的）
+console.log(animal.eats); // true（原型没被改动）
+</code></pre>
+<p>**逐段拆解：**赋值 <code>rabbit.eats = false</code> <strong>不会</strong>去修改原型上的 <code>eats</code>，而是在 <code>rabbit</code> <strong>自己身上</strong>新建一个 <code>eats</code>。此后读 <code>rabbit.eats</code> 先在自己身上找到 <code>false</code>，就不再往上查了——这叫 <strong>属性遮蔽（property shadowing）</strong>。原型上的 <code>animal.eats</code> 依然是 <code>true</code>，安然无恙。</p>
+<p>📌 记住：<strong>读属性会沿原型链查找，写属性只写在对象自己身上</strong>（除非涉及 setter，后面会讲）。</p>
+<hr>
+<h2 id="53-构造函数与-new语法糖的前身"><a class="header" href="#53-构造函数与-new语法糖的前身">5.3 构造函数与 new：语法糖的前身</a></h2>
+<p><code>Object.create</code> 能手动搭原型，但每次还要手动加属性，很啰嗦。JavaScript 早期提供了另一套惯用法：<strong>构造函数（constructor function）+ <code>new</code></strong>。</p>
+<h3 id="构造函数怎么写"><a class="header" href="#构造函数怎么写">构造函数怎么写</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/03-constructor-new.js
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+User.prototype.greet = function () {
+  return `你好，我叫 ${this.name}，今年 ${this.age} 岁。`;
+};
+
+const alice = new User("Alice", 30);
+const bob = new User("Bob", 25);
+
+console.log(alice.greet()); // 你好，我叫 Alice，今年 30 岁。
+console.log(bob.greet()); // 你好，我叫 Bob，今年 25 岁。
+
+console.log("共享同一个 greet？", alice.greet === bob.greet); // true
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>User</code> 就是一个普通函数，但<strong>约定首字母大写</strong>，表示它是拿来配合 <code>new</code> 用的构造函数。</li>
+<li>函数体里 <code>this.name = name</code>——注意这里的 <code>this</code>，它并不是我们手动创建的对象，而是 <code>new</code> 帮我们悄悄准备好的（下面详解）。</li>
+<li><code>User.prototype.greet = ...</code>：每个函数都自带一个 <code>prototype</code> 属性（一个对象）。我们把共享方法挂在上面。</li>
+<li>最后 <code>alice.greet === bob.greet</code> 这次是 <strong><code>true</code></strong>！因为 <code>greet</code> 只有一份，挂在 <code>User.prototype</code> 上，所有实例共享。这正好解决了 5.1 节工厂函数的浪费问题。</li>
+</ul>
+<p>⚠️ <strong>两个容易混淆的 <code>prototype</code></strong>：</p>
+<ul>
+<li><strong>函数</strong>的 <code>prototype</code> 属性（<code>User.prototype</code>）：是一个对象，用来放“将来实例共享的方法“。</li>
+<li><strong>对象</strong>的原型（<code>Object.getPrototypeOf(alice)</code>）：是实例真正链接到的那个原型对象。</li>
+</ul>
+<p>它们的关系是：<code>new User()</code> 造出的实例，其<strong>原型</strong>正是 <code>User.prototype</code>。</p>
+<pre><code class="language-javascript">// 文件：code/ch05/03-constructor-new.js（续）
+console.log(Object.getPrototypeOf(alice) === User.prototype); // true
+console.log(alice.constructor === User); // true
+</code></pre>
+<p><code>User.prototype</code> 上还自带一个 <code>constructor</code> 属性，指回 <code>User</code> 本身，所以 <code>alice.constructor</code> 能找到 <code>User</code>。</p>
+<h3 id="-new-到底做了什么四步"><a class="header" href="#-new-到底做了什么四步">📌 new 到底做了什么（四步）</a></h3>
+<p>这是本章的重中之重，务必记牢。当你写 <code>new User("Alice", 30)</code> 时，JavaScript 在幕后做了<strong>四件事</strong>：</p>
+<ol>
+<li><strong>创建</strong>一个全新的空对象。</li>
+<li>把这个新对象的<strong>原型</strong>指向 <code>User.prototype</code>。</li>
+<li>以这个新对象作为 <code>this</code>，<strong>执行</strong> <code>User</code> 函数体（于是 <code>this.name = name</code> 等把属性挂到了新对象上）。</li>
+<li>如果函数<strong>没有显式返回一个对象</strong>，就<strong>自动返回</strong>这个新对象。</li>
+</ol>
+<p>为了把这四步看得清清楚楚，我们<strong>亲手实现一个 <code>myNew</code></strong>：</p>
+<pre><code class="language-javascript">// 文件：code/ch05/03-constructor-new.js（续）
+function myNew(Constructor, ...args) {
+  // 第 1、2 步：创建新对象，其原型指向 Constructor.prototype
+  const obj = Object.create(Constructor.prototype);
+  // 第 3 步：以该对象为 this 执行构造函数
+  const result = Constructor.apply(obj, args);
+  // 第 4 步：构造函数返回对象则用它，否则用我们创建的 obj
+  return typeof result === "object" &amp;&amp; result !== null ? result : obj;
+}
+
+const carol = myNew(User, "Carol", 40);
+console.log(carol.greet()); // 你好，我叫 Carol，今年 40 岁。
+console.log(carol instanceof User); // true
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>Object.create(Constructor.prototype)</code> 一步就完成了“创建新对象 + 设定原型“（第 1、2 步）。</li>
+<li><code>Constructor.apply(obj, args)</code> 用第 4 章学的 <code>apply</code> 把 <code>this</code> 显式绑定成 <code>obj</code> 并执行构造函数（第 3 步）。构造函数里的 <code>this.name = ...</code> 就把属性挂到了 <code>obj</code> 上。</li>
+<li>最后判断：如果构造函数返回了一个对象（少见但合法），就返回那个对象；否则返回我们造的 <code>obj</code>（第 4 步）。</li>
+<li><code>carol</code> 由我们手写的 <code>myNew</code> 造出，却和真正的 <code>new</code> 效果一致：能调 <code>greet</code>，<code>instanceof User</code> 也是 <code>true</code>。</li>
+</ul>
+<p>理解了这四步，<code>new</code>、<code>this</code>、<code>prototype</code> 三者的关系就彻底打通了。而现代的 <code>class</code> 语法，本质上就是把这一套包装得更好看——接下来就见分晓。</p>
+<hr>
+<h2 id="54-class-语法原型的现代外衣"><a class="header" href="#54-class-语法原型的现代外衣">5.4 class 语法：原型的现代外衣</a></h2>
+<p>构造函数 + <code>prototype</code> 的写法能用，但零散、易错（比如忘了 <code>new</code> 会污染全局 <code>this</code>）。ES2015 引入了 <strong><code>class</code>（类）</strong> 语法，让面向对象写起来更清晰。</p>
+<p>但请<strong>牢记一句话</strong>：📌 <strong>class 只是原型机制的“语法糖“（syntactic sugar）</strong>，底层依然是原型和构造函数，没有任何新魔法。我们会在本节末尾验证这一点。</p>
+<h3 id="一个完整的-class"><a class="header" href="#一个完整的-class">一个完整的 class</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/04-class.js
+class BankAccount {
+  owner = "未命名"; // 公有字段（class field）
+
+  #balance = 0; // 私有字段（private field），只能在类内访问
+
+  static bankName = "示例银行"; // 静态字段，属于类本身
+
+  static #count = 0; // 静态私有字段
+
+  constructor(owner, initial = 0) {
+    this.owner = owner;
+    this.#balance = initial;
+    BankAccount.#count++;
+  }
+
+  deposit(amount) {
+    if (amount &lt;= 0) return this.#balance;
+    this.#balance += amount;
+    return this.#balance;
+  }
+
+  withdraw(amount) {
+    if (amount &gt; this.#balance) {
+      console.log("余额不足");
+      return this.#balance;
+    }
+    this.#balance -= amount;
+    return this.#balance;
+  }
+
+  get balance() {
+    return this.#balance;
+  }
+
+  set balance(value) {
+    if (typeof value !== "number" || value &lt; 0) {
+      console.log("非法余额，已忽略");
+      return;
+    }
+    this.#balance = value;
+  }
+
+  static totalAccounts() {
+    return BankAccount.#count;
+  }
+}
+</code></pre>
+<p>这段代码信息量很大，我们逐个概念拆开讲。</p>
+<p><strong>① constructor（构造方法）</strong></p>
+<pre><code class="language-javascript">constructor(owner, initial = 0) {
+  this.owner = owner;
+  this.#balance = initial;
+  BankAccount.#count++;
+}
+</code></pre>
+<p><code>constructor</code> 是一个特殊方法，<code>new BankAccount(...)</code> 时会自动调用它，作用相当于前面的构造函数体。参数可以有默认值（<code>initial = 0</code>）。每 new 一个账户，就让静态计数 <code>#count</code> 加一。</p>
+<p><strong>② 实例方法（instance method）</strong></p>
+<p><code>deposit</code>、<code>withdraw</code> 直接写在类体里，<strong>自动挂到 <code>BankAccount.prototype</code> 上</strong>，所有实例共享同一份——正是 5.3 节手动 <code>User.prototype.greet = ...</code> 的自动化版本。</p>
+<p><strong>③ 公有字段（class field）</strong></p>
+<pre><code class="language-javascript">owner = "未命名";
+</code></pre>
+<p>直接在类体里写 <code>字段名 = 默认值</code>，相当于在 constructor 里 <code>this.owner = "未命名"</code>。它是<strong>每个实例各自一份</strong>的数据。</p>
+<p><strong>④ 私有字段（private field）<code>#</code></strong></p>
+<pre><code class="language-javascript">#balance = 0;
+</code></pre>
+<p>以 <code>#</code> 开头的字段是<strong>私有的</strong>，只能在类<strong>内部</strong>访问，外部完全碰不到。这是真正的封装（encapsulation）——把内部状态藏起来，只暴露受控的接口（<code>deposit</code>/<code>withdraw</code>/getter）。</p>
+<pre><code class="language-javascript">// 文件：code/ch05/04-class.js（使用）
+const acc = new BankAccount("Alice", 100);
+// console.log(acc.#balance); // ⚠️ SyntaxError：私有字段外部不可访问
+</code></pre>
+<p>⚠️ <strong>陷阱</strong>：<code>#balance</code> 里的 <code>#</code> 是名字的<strong>一部分</strong>，不是运算符。而且它必须先在类体里声明才能用。在类外访问 <code>acc.#balance</code> 会直接<strong>语法报错</strong>，不是返回 <code>undefined</code>。</p>
+<p><strong>⑤ getter / setter（存取器）</strong></p>
+<pre><code class="language-javascript">get balance() {
+  return this.#balance;
+}
+set balance(value) {
+  if (typeof value !== "number" || value &lt; 0) {
+    console.log("非法余额，已忽略");
+    return;
+  }
+  this.#balance = value;
+}
+</code></pre>
+<p>getter/setter 让你<strong>像读写普通属性一样</strong>，背后却执行方法：</p>
+<pre><code class="language-javascript">// 文件：code/ch05/04-class.js（使用）
+acc.deposit(50);
+console.log(acc.balance); // 150（读 balance 走的是 getter）
+acc.balance = 999; // 赋值走的是 setter
+console.log(acc.balance); // 999
+acc.balance = -1; // 非法余额，已忽略（setter 拦截了）
+console.log(acc.balance); // 999
+</code></pre>
+<p>注意用法：<strong>没有括号</strong>！<code>acc.balance</code> 而不是 <code>acc.balance()</code>。getter/setter 常用来在读写时做校验、计算或格式化，同时对外隐藏 <code>#balance</code> 的存在。</p>
+<p><strong>⑥ 静态成员（static）</strong></p>
+<pre><code class="language-javascript">static bankName = "示例银行";
+static totalAccounts() {
+  return BankAccount.#count;
+}
+</code></pre>
+<p>带 <code>static</code> 的字段和方法属于<strong>类本身</strong>，而不是某个实例。它们通过<strong>类名</strong>调用：</p>
+<pre><code class="language-javascript">// 文件：code/ch05/04-class.js（使用）
+console.log(BankAccount.bankName); // 示例银行
+new BankAccount("Bob");
+console.log(BankAccount.totalAccounts()); // 2
+</code></pre>
+<p><code>bankName</code> 是所有账户共享的银行名（不属于某个账户），<code>totalAccounts()</code> 是一个统计工具。静态方法里访问不到实例的 <code>this.xxx</code>，因为它跟具体实例无关。静态成员常用于工具函数、工厂方法、常量、计数器。</p>
+<h3 id="验证class-真的只是语法糖"><a class="header" href="#验证class-真的只是语法糖">验证：class 真的只是语法糖</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/04-class.js（验证）
+console.log(typeof BankAccount.prototype.deposit); // function
+console.log(Object.getPrototypeOf(acc) === BankAccount.prototype); // true
+</code></pre>
+<p>看：<code>deposit</code> 确实挂在 <code>BankAccount.prototype</code> 上，实例 <code>acc</code> 的原型就是 <code>BankAccount.prototype</code>——和 5.3 节手写构造函数的结构一模一样。<strong>class 没有引入新的对象模型，它只是把原型那套写法变得更清爽、更安全。</strong></p>
+<p>💡 <strong>class 相比构造函数的几个额外好处</strong>：类体内的代码自动处于严格模式；方法不可枚举（不会在 <code>for...in</code> 里意外冒出来）；忘记写 <code>new</code> 直接调用 class 会<strong>报错</strong>（构造函数则会静默污染全局），更安全。</p>
+<hr>
+<h2 id="55-继承extends-与-super"><a class="header" href="#55-继承extends-与-super">5.5 继承：extends 与 super</a></h2>
+<p>面向对象的另一大支柱是<strong>继承（inheritance）</strong>：让一个类“接过“另一个类的属性和方法，只需补充或修改差异部分，避免重复代码。</p>
+<h3 id="extends声明父子关系"><a class="header" href="#extends声明父子关系">extends：声明父子关系</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/05-inheritance.js
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    return `${this.name} 发出了声音`;
+  }
+
+  describe() {
+    return `这是 ${this.name}，${this.speak()}`;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name); // 调用父类构造函数
+    this.breed = breed;
+  }
+
+  speak() {
+    return `${this.name}（${this.breed}）汪汪叫`;
+  }
+
+  describe() {
+    return super.describe() + "，它是一只狗";
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>
+<p><code>class Dog extends Animal</code>：<code>extends</code> 表示 <code>Dog</code> <strong>继承自</strong> <code>Animal</code>，<code>Animal</code> 是<strong>父类（superclass）</strong>，<code>Dog</code> 是<strong>子类（subclass）</strong>。<code>Dog</code> 自动拥有 <code>Animal</code> 的方法。</p>
+</li>
+<li>
+<p><strong><code>super(name)</code></strong>：在子类的 constructor 里，<code>super(...)</code> 会<strong>调用父类的 constructor</strong>。这里它执行 <code>Animal</code> 的构造，把 <code>this.name</code> 设好，然后子类再补上 <code>this.breed</code>。</p>
+<p>📌 <strong>铁律：在子类 constructor 中，必须先调用 <code>super(...)</code>，才能使用 <code>this</code>。</strong> 因为父类构造还没跑，<code>this</code> 还没被完整初始化，提前用会直接报错。</p>
+</li>
+<li>
+<p><strong>方法重写（override）</strong>：<code>Dog</code> 定义了自己的 <code>speak</code>，<strong>覆盖</strong>了从 <code>Animal</code> 继承来的同名方法。这不是删除父类方法，而是“就近优先“——原型链上先找到 <code>Dog.prototype.speak</code>。</p>
+</li>
+<li>
+<p><strong><code>super.describe()</code></strong>：在<strong>方法</strong>里，<code>super.方法名()</code> 调用<strong>父类的同名方法</strong>。<code>Dog</code> 的 <code>describe</code> 先借用父类的实现，再拼上“它是一只狗“。这样既复用父类逻辑，又能扩展。</p>
+</li>
+</ul>
+<h3 id="super-的两种用法别混淆"><a class="header" href="#super-的两种用法别混淆">super 的两种用法，别混淆</a></h3>
+<p>⚠️ 这是初学者最容易搞错的地方：</p>
+<ul>
+<li>在 <strong>constructor 里</strong>，<code>super(参数)</code> 当<strong>函数</strong>用，作用是<strong>执行父类构造函数</strong>。</li>
+<li>在<strong>普通方法里</strong>，<code>super.方法名(参数)</code> 当<strong>对象</strong>用，作用是<strong>调用父类的那个方法</strong>。</li>
+</ul>
+<h3 id="运行看看理解多态"><a class="header" href="#运行看看理解多态">运行看看，理解多态</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/05-inheritance.js（使用）
+const generic = new Animal("某动物");
+const dog = new Dog("旺财", "柴犬");
+const cat = new Cat("咪咪"); // Cat 也 extends Animal，只重写了 speak
+
+console.log(dog.speak()); // 旺财（柴犬）汪汪叫
+console.log(dog.describe()); // 这是 旺财，旺财（柴犬）汪汪叫，它是一只狗
+console.log(cat.describe()); // 这是 咪咪，咪咪 喵喵叫
+</code></pre>
+<p>特别注意 <code>cat.describe()</code>：<code>Cat</code> <strong>没有</strong>重写 <code>describe</code>，用的是从 <code>Animal</code> 继承来的那个。而 <code>Animal.describe</code> 内部调用了 <code>this.speak()</code>——此时 <code>this</code> 是 <code>cat</code>，于是调用的是 <strong><code>Cat</code> 自己的 <code>speak</code></strong>（“喵喵叫”），而不是 <code>Animal</code> 的 <code>speak</code>。</p>
+<p>📌 这就是 <strong>多态（polymorphism）</strong>：<strong>同一段代码（<code>this.speak()</code>），作用在不同对象上，表现出不同行为。</strong> 父类的 <code>describe</code> 不需要知道子类具体是狗还是猫，运行时自动“对号入座“。这是面向对象最优雅的特性之一。</p>
+<pre><code class="language-javascript">// 文件：code/ch05/05-inheritance.js（使用）
+const zoo = [generic, dog, cat];
+for (const a of zoo) {
+  console.log(a.speak()); // 每个对象调用各自的 speak，各不相同
+}
+</code></pre>
+<p>一个循环、一行 <code>a.speak()</code>，就让三种动物各自发声——不用 <code>if...else</code> 判断类型。这就是多态带来的简洁。</p>
+<h3 id="instanceof检查原型链"><a class="header" href="#instanceof检查原型链">instanceof：检查原型链</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/05-inheritance.js（使用）
+console.log(dog instanceof Dog); // true
+console.log(dog instanceof Animal); // true（Dog 继承自 Animal）
+console.log(cat instanceof Dog); // false
+console.log(Object.getPrototypeOf(Dog.prototype) === Animal.prototype); // true
+</code></pre>
+<p><code>obj instanceof Class</code> 检查 <code>Class.prototype</code> <strong>是否出现在 <code>obj</code> 的原型链上</strong>。<code>dog</code> 的原型链是 <code>dog → Dog.prototype → Animal.prototype → Object.prototype → null</code>，所以对 <code>Dog</code> 和 <code>Animal</code> 都返回 <code>true</code>。最后一行直接验证了继承在底层就是<strong>原型链的串联</strong>——<code>extends</code> 干的事，就是把子类原型的原型接到父类原型上。</p>
+<hr>
+<h2 id="56-封装多态与组合优于继承"><a class="header" href="#56-封装多态与组合优于继承">5.6 封装、多态与“组合优于继承“</a></h2>
+<p>到这里，面向对象的<strong>三大特性</strong>你已经全部见过了，我们总结一下：</p>
+<ul>
+<li><strong>封装（encapsulation）</strong>：把数据和操作数据的方法打包在一起，并<strong>隐藏内部细节</strong>，只暴露必要接口。JS 里可用<strong>私有字段 <code>#</code></strong>（首选）或<strong>闭包</strong>（第 4 章的 <code>makeCounter</code> 就是用闭包藏住了 <code>count</code>）实现。</li>
+<li><strong>继承（inheritance）</strong>：子类复用父类的结构与行为（<code>extends</code> / <code>super</code>）。</li>
+<li><strong>多态（polymorphism）</strong>：同一接口、不同实现，运行时按实际对象分派（上一节的 <code>speak</code>）。</li>
+</ul>
+<h3 id="继承并非万能组合的思想"><a class="header" href="#继承并非万能组合的思想">继承并非万能：组合的思想</a></h3>
+<p>继承很好用，但<strong>滥用继承会带来麻烦</strong>。如果你设计一棵很深的继承树（A→B→C→D→……），一旦父类改动，所有子类可能受牵连；而现实世界的分类也常常是“横向“的能力，而非“纵向“的血缘。比如“鸭子会飞、会游、会走“，但“飞“这个能力，鸟、飞机、超人都有，硬塞进一棵继承树会很别扭。</p>
+<p>于是有了一条广受推崇的设计原则：📌 <strong>组合优于继承（composition over inheritance）</strong>——与其“是一个（is-a）“的继承关系，不如“有一个能力（has-a）“的<strong>拼装</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch05/06-composition.js
+const canFly = (obj) =&gt; ({ fly: () =&gt; `${obj.name} 正在飞` });
+const canSwim = (obj) =&gt; ({ swim: () =&gt; `${obj.name} 正在游` });
+const canWalk = (obj) =&gt; ({ walk: () =&gt; `${obj.name} 正在走` });
+
+function createDuck(name) {
+  const duck = { name };
+  return Object.assign(duck, canFly(duck), canSwim(duck), canWalk(duck));
+}
+
+function createFish(name) {
+  const fish = { name };
+  return Object.assign(fish, canSwim(fish));
+}
+
+const donald = createDuck("唐老鸭");
+console.log(donald.fly()); // 唐老鸭 正在飞
+console.log(donald.swim()); // 唐老鸭 正在游
+
+const nemo = createFish("尼莫");
+console.log(nemo.swim()); // 尼莫 正在游
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>每个“能力“（<code>canFly</code> / <code>canSwim</code> / <code>canWalk</code>）是一个小函数，接收对象、返回带某方法的对象。</li>
+<li><code>Object.assign(目标, ...来源)</code> 把多个来源对象的属性<strong>拷贝合并</strong>到目标对象上。<code>createDuck</code> 给鸭子拼上“飞、游、走“三种能力。</li>
+<li>鱼 <code>nemo</code> 只组合了 <code>canSwim</code>，所以它没有 <code>fly</code>——你<strong>按需拼装</strong>能力，不必背负庞大的继承树。</li>
+</ul>
+<p>💡 <strong>实践建议</strong>：继承适合表达清晰、稳定的“是一个“关系（正方形<strong>是一个</strong>矩形）；当关系是“能做某事““有某功能“这类可自由搭配的能力时，优先用<strong>组合</strong>。二者并非对立，实际项目里常常混用。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>
+<p>⚠️ <strong>忘记 <code>new</code>（构造函数写法）</strong>：<code>const u = User("A", 1)</code>（漏了 <code>new</code>）会让 <code>this</code> 指向全局或 <code>undefined</code>，悄悄出错。<strong>改用 <code>class</code></strong>：不写 <code>new</code> 直接调用会当场报错，避免踩坑。</p>
+</li>
+<li>
+<p>⚠️ <strong>子类 constructor 里 <code>super</code> 之前用 <code>this</code></strong>：如 <code>this.x = 1; super();</code>，直接抛 <code>ReferenceError</code>。<strong>永远先 <code>super(...)</code>，再碰 <code>this</code></strong>。</p>
+</li>
+<li>
+<p>⚠️ <strong>箭头函数当方法会丢 <code>this</code></strong>：类里如果把方法写成 <code>greet = () =&gt; {...}</code> 挂成字段，它会绑定实例的 <code>this</code>，看似方便，但<strong>每个实例各存一份、不再共享原型上的方法</strong>，也无法被子类用 <code>super</code> 调用。普通方法（<code>greet() {...}</code>）才挂在原型上、可被继承和重写。需要“回调里不丢 this“时再用箭头字段。</p>
+</li>
+<li>
+<p>⚠️ <strong>修改内置原型（monkey-patch）</strong>：别去改 <code>Array.prototype</code>、<code>Object.prototype</code> 添加自定义方法，会污染所有对象、和未来的语言特性冲突、破坏 <code>for...in</code>。要扩展就用工具函数或子类。</p>
+</li>
+<li>
+<p>⚠️ <strong><code>__proto__</code> 不是标准写法</strong>：读写原型请用 <code>Object.getPrototypeOf</code> / <code>Object.setPrototypeOf</code>。而且<strong>运行时改原型（<code>setPrototypeOf</code>）会严重拖慢性能</strong>，尽量在创建时就定好原型。</p>
+</li>
+<li>
+<p>📌 <strong>优先私有字段 <code>#</code> 做封装</strong>：需要真正隐藏的内部状态用 <code>#</code>；只读的对外暴露用 getter。别用“下划线前缀 <code>_balance</code>“假装私有——那只是约定，外部照样能改。</p>
+</li>
+<li>
+<p>💡 <strong>判断类型</strong>：<code>instanceof</code> 检查原型链归属；<code>obj.constructor</code> 可查构造者；跨 iframe/realm 等场景 <code>instanceof</code> 可能失灵，那时改用鸭子类型（检查是否有某方法）或 <code>Symbol.hasInstance</code>。</p>
+</li>
+<li>
+<p>💡 <strong>不确定该不该继承时，先想“组合“</strong>：能力可拼装的场景，组合往往更灵活、更易测试。</p>
+</li>
+</ul>
+<hr>
+<h2 id="本章小项目几何图形库"><a class="header" href="#本章小项目几何图形库">本章小项目：几何图形库</a></h2>
+<p>现在把本章所有知识——<code>class</code>、继承、<code>super</code>、私有字段、多态——揉进一个完整项目：<strong>几何图形库</strong>。</p>
+<p><strong>需求</strong>：定义抽象基类 <code>Shape</code>，派生 <code>Circle</code>（圆）、<code>Rectangle</code>（矩形）、<code>Square</code>（正方形，继承自 <code>Rectangle</code>）、<code>Triangle</code>（三角形）。每个图形实现 <code>area()</code>（面积）、<code>perimeter()</code>（周长）、<code>toString()</code>。最后用一个数组装下各种图形，遍历打印并求总面积——这一步会淋漓尽致地展示<strong>多态</strong>。</p>
+<h3 id="基类-shape"><a class="header" href="#基类-shape">基类 Shape</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/shapes.js
+class Shape {
+  #name; // 私有：图形名字，外部只读
+
+  constructor(name) {
+    if (new.target === Shape) {
+      throw new Error("Shape 是抽象基类，不能直接实例化，请使用其子类。");
+    }
+    this.#name = name;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  area() {
+    throw new Error(`${this.name} 未实现 area() 方法`);
+  }
+
+  perimeter() {
+    throw new Error(`${this.name} 未实现 perimeter() 方法`);
+  }
+
+  toString() {
+    return `${this.name}｜面积=${this.area().toFixed(2)}｜周长=${this.perimeter().toFixed(2)}`;
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>#name</code> 是私有字段，配合 <code>get name()</code> 对外只读，外部无法乱改图形名字——封装。</li>
+<li><strong><code>new.target</code></strong> 是一个特殊值：用 <code>new</code> 调用时它指向“被 new 的那个类“。<code>new Shape()</code> 时 <code>new.target === Shape</code> 为真，我们<strong>抛错</strong>，阻止直接实例化基类。而 <code>new Circle()</code> 时 <code>new.target</code> 是 <code>Circle</code>，条件为假，正常放行。这样就模拟了“抽象类（abstract class）“。</li>
+<li><code>area()</code> / <code>perimeter()</code> 在基类里<strong>故意抛错</strong>：基类不知道具体怎么算，逼子类去实现。这是“抽象方法“的模拟。</li>
+<li><code>toString()</code> 是<strong>通用逻辑</strong>：它调用 <code>this.area()</code> 和 <code>this.perimeter()</code>，但<strong>具体算哪种面积由运行时的子类决定</strong>——多态的伏笔。<code>toFixed(2)</code> 保留两位小数。</li>
+</ul>
+<h3 id="圆-circle"><a class="header" href="#圆-circle">圆 Circle</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/shapes.js（续）
+class Circle extends Shape {
+  #radius;
+
+  constructor(radius) {
+    super("圆"); // 先调父类构造，设置名字
+    this.#radius = radius;
+  }
+
+  get radius() {
+    return this.#radius;
+  }
+
+  area() {
+    return Math.PI * this.#radius ** 2; // πr²
+  }
+
+  perimeter() {
+    return 2 * Math.PI * this.#radius; // 2πr
+  }
+}
+</code></pre>
+<p><code>Circle</code> 继承 <code>Shape</code>，<code>super("圆")</code> 把名字传给基类。它<strong>重写</strong>了 <code>area</code>（πr²）和 <code>perimeter</code>（2πr）。<code>**</code> 是幂运算符，<code>r ** 2</code> 即 r 的平方。<code>Math.PI</code> 是圆周率常量。</p>
+<h3 id="矩形-rectangle-与正方形-square"><a class="header" href="#矩形-rectangle-与正方形-square">矩形 Rectangle 与正方形 Square</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/shapes.js（续）
+class Rectangle extends Shape {
+  #width;
+  #height;
+
+  constructor(width, height, name = "矩形") {
+    super(name);
+    this.#width = width;
+    this.#height = height;
+  }
+
+  get width() { return this.#width; }
+  get height() { return this.#height; }
+
+  area() {
+    return this.#width * this.#height;
+  }
+
+  perimeter() {
+    return 2 * (this.#width + this.#height);
+  }
+}
+
+class Square extends Rectangle {
+  constructor(side) {
+    super(side, side, "正方形"); // 宽高都传 side
+  }
+
+  get side() {
+    return this.width; // 复用父类的 getter
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>Rectangle</code> 的 constructor 多设计了一个 <code>name = "矩形"</code> 参数，默认叫“矩形“，但<strong>允许子类改名</strong>——这是为 <code>Square</code> 铺路。</li>
+<li><code>Square extends Rectangle</code>：正方形<strong>就是</strong>宽高相等的矩形，用继承表达“is-a“关系非常贴切。<code>super(side, side, "正方形")</code> 把宽高都设成 <code>side</code>，并把名字改成“正方形“。</li>
+<li><code>Square</code> <strong>无需重写</strong> <code>area</code> / <code>perimeter</code>——直接复用 <code>Rectangle</code> 的实现（边长平方、四倍边长），一行都不用写。<code>side</code> getter 复用了父类的 <code>width</code>。这就是继承的复用价值。</li>
+</ul>
+<h3 id="三角形-triangle"><a class="header" href="#三角形-triangle">三角形 Triangle</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/shapes.js（续）
+class Triangle extends Shape {
+  #a;
+  #b;
+  #c;
+
+  constructor(a, b, c) {
+    super("三角形");
+    if (a + b &lt;= c || a + c &lt;= b || b + c &lt;= a) {
+      throw new Error(`边长 ${a}, ${b}, ${c} 无法构成三角形`);
+    }
+    this.#a = a;
+    this.#b = b;
+    this.#c = c;
+  }
+
+  perimeter() {
+    return this.#a + this.#b + this.#c;
+  }
+
+  area() {
+    const s = this.perimeter() / 2; // 半周长
+    return Math.sqrt(s * (s - this.#a) * (s - this.#b) * (s - this.#c));
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>构造时<strong>校验合法性</strong>：任意两边之和必须大于第三边，否则抛错（构造函数里做参数校验是好习惯，第 6 章会专门讲错误处理）。</li>
+<li><code>perimeter()</code> 就是三边相加。</li>
+<li><code>area()</code> 用<strong>海伦公式（Heron’s formula）</strong>：设半周长 <code>s = 周长 / 2</code>，面积 = √(s(s-a)(s-b)(s-c))。注意这里<strong>复用了 <code>this.perimeter()</code></strong>，避免重复写三边相加——方法之间可以互相调用。</li>
+</ul>
+<h3 id="组装与多态遍历"><a class="header" href="#组装与多态遍历">组装与多态遍历</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch05/shapes.js（续）
+const shapes = [
+  new Circle(5),
+  new Rectangle(4, 6),
+  new Square(3),
+  new Triangle(3, 4, 5),
+];
+
+console.log("=== 图形清单 ===");
+for (const shape of shapes) {
+  console.log(shape.toString()); // 多态：每个图形算法不同
+}
+
+const totalArea = shapes.reduce((sum, shape) =&gt; sum + shape.area(), 0);
+console.log("=== 汇总 ===");
+console.log(`图形数量：${shapes.length}`);
+console.log(`总面积：${totalArea.toFixed(2)}`);
+
+const biggest = shapes.reduce((max, s) =&gt; (s.area() &gt; max.area() ? s : max));
+console.log(`面积最大的是：${biggest.name}（${biggest.area().toFixed(2)}）`);
+</code></pre>
+<p><strong>这段是全章的高潮：</strong></p>
+<ul>
+<li><code>shapes</code> 数组里装着<strong>四种不同类型</strong>的对象，但它们都是 <code>Shape</code> 的子类，都有 <code>area()</code> / <code>perimeter()</code> / <code>toString()</code>。</li>
+<li><code>for...of</code> 循环里只写了一句 <code>shape.toString()</code>，<strong>却让每种图形按各自的公式计算</strong>——圆用 πr²、矩形用宽×高、三角形用海伦公式。调用方<strong>完全不需要知道</strong>每个图形是什么类型，更没有 <code>if (是圆) ... else if (是矩形) ...</code>。这就是多态的威力：<strong>统一的接口，各异的实现。</strong></li>
+<li><code>reduce</code> 把每个图形的面积累加得到 <code>totalArea</code>（第 4 章学过），又用 <code>reduce</code> 挑出面积最大的图形。</li>
+</ul>
+<p>运行它：</p>
+<pre><code class="language-bash">node shapes.js
+</code></pre>
+<p>输出：</p>
+<pre><code>=== 图形清单 ===
+圆｜面积=78.54｜周长=31.42
+矩形｜面积=24.00｜周长=20.00
+正方形｜面积=9.00｜周长=12.00
+三角形｜面积=6.00｜周长=12.00
+=== 汇总 ===
+图形数量：4
+总面积：117.54
+面积最大的是：圆（78.54）
+</code></pre>
+<p>📌 回头看这个设计，它把本章知识串成了一条线：<strong><code>class</code> 定义类型，<code>extends</code> + <code>super</code> 实现继承与复用（<code>Square</code> 白拿 <code>Rectangle</code> 的算法），私有字段 <code>#</code> 封装数据，<code>new.target</code> 模拟抽象类，而 <code>toString</code>/<code>area</code> 的统一调用体现多态。</strong> 这正是面向对象在真实项目里的典型用法。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>加新图形</strong>：新增一个 <code>Ellipse</code>（椭圆，两个半轴 <code>a</code>、<code>b</code>），面积 <code>πab</code>，周长用近似公式 <code>2π√((a²+b²)/2)</code>。加进 <code>shapes</code> 数组，验证无需改动遍历代码——这体现了“对扩展开放“。</li>
+<li><strong>排序</strong>：把 <code>shapes</code> 按面积从大到小排序后打印（提示：<code>shapes.slice().sort((x, y) =&gt; y.area() - x.area())</code>）。</li>
+<li><strong>静态工厂</strong>：给 <code>Shape</code> 加一个静态方法 <code>Shape.fromConfig({ type, ...args })</code>，根据 <code>type</code> 字符串（<code>"circle"</code>/<code>"rectangle"</code>…）返回对应实例，体会 <code>static</code> 的用途。</li>
+<li><strong>相等判断</strong>：给每个图形加 <code>equals(other)</code>，当类型相同且面积相等时返回 <code>true</code>。</li>
+<li><strong>健壮性</strong>：给 <code>Circle</code> 的构造函数加校验，半径必须为正数，否则抛错，参考 <code>Triangle</code> 的写法。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们揭开了 JavaScript 面向对象的全貌：</p>
+<ul>
+<li><strong>工厂函数</strong>能批量造对象，但方法会重复创建，引出了<strong>原型</strong>。</li>
+<li><strong>原型（prototype）</strong> 是对象的“备用对象“；读属性时沿<strong>原型链</strong>层层向上查找，直到 <code>Object.prototype → null</code>。<code>hasOwnProperty</code> 只看自己，<code>in</code> 连原型链看；写属性只写在自己身上（<strong>遮蔽</strong>）。</li>
+<li><strong><code>new</code> 做四步</strong>：建新对象 → 原型指向 <code>构造函数.prototype</code> → 以新对象为 <code>this</code> 执行构造 → 返回该对象。我们手写了 <code>myNew</code> 印证。</li>
+<li><strong><code>class</code> 是原型的语法糖</strong>：constructor、实例方法（挂在 prototype）、公有/私有字段（<code>#</code>）、<code>static</code> 静态成员、getter/setter，方法本质仍在 <code>prototype</code> 上。</li>
+<li><strong>继承</strong>用 <code>extends</code> + <code>super</code>：子类 constructor 必须先 <code>super(...)</code> 再用 <code>this</code>；方法里 <code>super.方法()</code> 调父类实现；同名方法可<strong>重写</strong>。<code>instanceof</code> 沿原型链判断归属。</li>
+<li><strong>封装、继承、多态</strong>是三大特性；<strong>多态</strong>让“统一接口、各异实现“成为可能，几何图形库淋漓尽致地展示了它。</li>
+<li><strong>组合优于继承</strong>：能力可自由拼装时，用 <code>Object.assign</code> 组合往往比深继承更灵活。</li>
+</ul>
+<p><strong>自测题（先自己答，再运行代码验证）：</strong></p>
+<ol>
+<li>工厂函数创建对象有什么局限？原型如何解决它？</li>
+<li>用一句话说清 <code>new</code> 做的四件事。为什么 <code>myNew</code> 里要用 <code>Object.create</code> 和 <code>apply</code>？</li>
+<li>下面打印什么？为什么？
+<pre><code class="language-javascript">const a = { x: 1 };
+const b = Object.create(a);
+b.x = 2;
+console.log(a.x, b.x, b.hasOwnProperty("x"));
+</code></pre>
+</li>
+<li><code>class</code> 里的方法和公有字段，分别存在哪里（实例上还是 prototype 上）？私有字段 <code>#x</code> 有什么特点？</li>
+<li>子类 constructor 里，为什么必须先调用 <code>super()</code> 才能用 <code>this</code>？<code>super</code> 在 constructor 和普通方法里的用法有何不同？</li>
+<li>什么是多态？在几何图形库里，<code>for...of</code> 那段代码是怎么体现多态的？</li>
+<li><code>dog instanceof Animal</code> 为什么是 <code>true</code>？<code>instanceof</code> 到底在检查什么？</li>
+</ol>
+<p>（参考答案：1. 每个对象都复制一份相同方法，浪费内存；原型让所有实例共享同一份方法。2. 建新对象→原型指向构造函数的 prototype→以它为 this 执行构造→返回它；<code>Object.create</code> 完成前两步、<code>apply</code> 完成第三步的 this 绑定。3. 打印 <code>1 2 true</code>——<code>b.x=2</code> 在 b 自己身上建了 x 遮蔽了 a 的，a.x 不变，且 x 是 b 自己的属性。4. 方法在 <code>类.prototype</code> 上共享，公有字段在每个实例上各一份；<code>#x</code> 只能在类内访问，外部访问会语法报错。5. 因为父类构造未跑完 <code>this</code> 尚未初始化；constructor 里 <code>super()</code> 是调父类构造函数，方法里 <code>super.m()</code> 是调父类的方法 m。6. 同一接口不同实现、运行时按实际对象分派；<code>shape.toString()</code> 对每种图形调用各自的 <code>area</code>，无需类型判断。7. 因为 <code>Animal.prototype</code> 在 dog 的原型链上；<code>instanceof</code> 检查右侧的 <code>prototype</code> 是否出现在左侧对象的原型链中。）</p>
+<hr>
+<p>下一章，我们进入 <strong>第 6 章 · 错误处理与调试</strong>。本章的构造函数里我们已经用 <code>throw new Error(...)</code> 拦截了非法输入（无法构成的三角形、被直接实例化的抽象类）——但抛出的错误该如何<strong>捕获</strong>、如何优雅地<strong>恢复</strong>、如何自定义错误类型、又如何用调试工具定位问题？这些正是下一章的主题。有了本章的 <code>class</code> 与继承基础，你甚至能写出自己的<strong>自定义错误类</strong>（<code>class MyError extends Error</code>）。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch04.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch06.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch04.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch06.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

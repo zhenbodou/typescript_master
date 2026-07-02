@@ -1,0 +1,866 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 21 章 · 工具链：ESLint、Prettier 与打包器 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch21.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-21-章--工具链eslintprettier-与打包器"><a class="header" href="#第-21-章--工具链eslintprettier-与打包器">第 21 章 · 工具链：ESLint、Prettier 与打包器</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>到目前为止，我们写代码基本是“能跑就行“：随手敲，随手运行。但真实项目里，代码不是给自己一个人看的——它要和同事协作、要长期维护、要发布出去给别人用。这时候光“能跑“远远不够，你还需要一整套**工具链（toolchain）**来保证：</p>
+<ul>
+<li>团队里每个人写出来的代码<strong>长得一样</strong>（风格统一，不会因为“你用双引号我用单引号“吵起来）。</li>
+<li>一些低级错误、可疑写法能被<strong>自动发现</strong>，而不是等上线炸了才知道。</li>
+<li>源码（尤其是 TypeScript）能被<strong>编译、打包</strong>成可以真正运行或发布的<strong>构建产物（build artifact）</strong>。</li>
+</ul>
+<p>本章我们就来搭这套工具链。学完之后，你将能够：</p>
+<ul>
+<li>说清楚工具链里每个工具的<strong>分工</strong>，不再把它们搅成一团。</li>
+<li>用 <strong>Prettier</strong> 做代码格式化，并让它和你的编辑器联动。</li>
+<li>用 <strong>ESLint 9 的扁平配置（flat config）</strong> 做代码检查（lint），集成 <strong>typescript-eslint</strong>，并让它和 Prettier 和平共处。</li>
+<li>用 <strong>tsc</strong> 做类型检查、用 <strong>tsup</strong>（基于 esbuild）把 TypeScript 打包成 <code>dist/</code>，并理解“打包器“和“编译器“的区别。</li>
+<li>把这些操作组织成一组清爽的 <strong>npm scripts</strong>。</li>
+<li>了解 <strong>EditorConfig</strong> 和 <strong>Git hooks（husky / lint-staged）</strong>，让规范“自动执行“。</li>
+</ul>
+<p>最后，我们会亲手搭一个<strong>生产级项目脚手架</strong>，以后开新项目直接照抄。</p>
+<blockquote>
+<p>本章的示例脚手架放在 <code>code/ch21/starter/</code>，它是一个<strong>独立子项目</strong>，有自己的 <code>package.json</code>。它需要单独安装依赖，稍后会说明。</p>
+</blockquote>
+<hr>
+<h2 id="为什么需要工具链"><a class="header" href="#为什么需要工具链">为什么需要工具链</a></h2>
+<p>先想象一个没有工具链的团队协作场景。</p>
+<p>三个同事一起写一个项目。A 习惯用 2 个空格缩进、单引号、行尾不加分号；B 喜欢 4 个空格、双引号、每行都加分号；C 干脆 tab 和空格混着来。于是同一个文件里三种风格并存，<code>git diff</code> 里全是“某人重排了缩进“的噪音，真正的逻辑改动淹没其中。更糟的是，A 写了个 <code>if (user = admin)</code>（把 <code>==</code> 写成了 <code>=</code>），代码照样能跑，直到某天线上出了怪 bug 才发现。</p>
+<p>这三类问题，正好对应工具链要解决的三件事：</p>
+<ol>
+<li><strong>一致的代码风格（consistent style）</strong> → 交给<strong>格式化工具（formatter）</strong>，代表是 <strong>Prettier</strong>。</li>
+<li><strong>自动发现问题（catch bugs / bad patterns）</strong> → 交给<strong>代码检查工具（linter）</strong>，代表是 <strong>ESLint</strong>。</li>
+<li><strong>产出可运行 / 可发布的构建产物</strong> → 交给<strong>编译器（compiler，tsc）</strong> 和<strong>打包器（bundler，如 tsup、Vite）</strong>。</li>
+</ol>
+<p>📌 记住这个分工表，本章后面所有内容都是它的展开：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>工具</th><th>管什么</th><th>一句话</th></tr>
+</thead>
+<tbody>
+<tr><td>Prettier</td><td>代码“长什么样“</td><td>格式（缩进、引号、换行）</td></tr>
+<tr><td>ESLint</td><td>代码“有没有问题“</td><td>质量（可疑写法、潜在 bug）</td></tr>
+<tr><td>tsc</td><td>类型对不对</td><td>类型检查（可只查不产出）</td></tr>
+<tr><td>bundler（tsup 等）</td><td>打包成产物</td><td>把源码变成 dist</td></tr>
+</tbody>
+</table>
+</div>
+<p>它们各管一段，互不越界。理解这一点，你就不会再纠结“ESLint 能不能格式化““tsc 和打包器是不是重复了“这类问题了。</p>
+<hr>
+<h2 id="prettier把格式交给机器"><a class="header" href="#prettier把格式交给机器">Prettier：把格式交给机器</a></h2>
+<p><strong>Prettier</strong> 是一个“有主见的（opinionated）“代码格式化工具。它的核心理念很激进：<strong>不要在代码风格上浪费任何讨论时间</strong>。你把代码丢给它，它按一套规则重新排版输出，团队里所有人的代码从此长得一模一样。</p>
+<p>它能格式化的不只是 JS/TS，还有 JSON、CSS、HTML、Markdown、YAML 等。</p>
+<h3 id="先装上跑一次"><a class="header" href="#先装上跑一次">先装上，跑一次</a></h3>
+<p>在一个项目里安装 Prettier（作为开发依赖）：</p>
+<pre><code class="language-bash">npm install --save-dev prettier
+</code></pre>
+<p>假设我们有一段“很丑“的代码：</p>
+<pre><code class="language-typescript">// 格式化前
+const   user={name:"Alice",age:30,roles:['admin',"editor"]}
+function greet(person){return "hi "+person.name}
+</code></pre>
+<p>在命令行运行：</p>
+<pre><code class="language-bash">npx prettier --write src/index.ts
+</code></pre>
+<p><code>--write</code> 表示“就地改写文件“。运行后它会变成：</p>
+<pre><code class="language-typescript">// 格式化后
+const user = { name: 'Alice', age: 30, roles: ['admin', 'editor'] };
+function greet(person) {
+  return 'hi ' + person.name;
+}
+</code></pre>
+<p><strong>逐点拆解</strong>发生了什么：</p>
+<ul>
+<li>多余的空格被压平（<code>const   user</code> → <code>const user</code>）。</li>
+<li>对象字面量补上了空格和结尾分号。</li>
+<li>字符串引号被统一（这里统一成了单引号）。</li>
+<li>函数体从“挤在一行“被拆成了规范的多行缩进。</li>
+</ul>
+<p>注意：<strong>Prettier 只动“排版“，不动“逻辑“</strong>。它不会帮你把 <code>"hi "+person.name</code> 改成模板字符串，也不会重命名变量。它只关心“长什么样“。</p>
+<p>⚠️ <code>--write</code> 会直接改文件，第一次在一个已有项目里跑之前，请确保代码已经提交到 git，方便你查看它改了什么、必要时回退。</p>
+<h3 id="配置prettierrcjson"><a class="header" href="#配置prettierrcjson">配置：<code>.prettierrc.json</code></a></h3>
+<p>Prettier 号称“零配置“，但它确实开放了少量选项，让团队定下自己的偏好。在项目根目录建一个配置文件：</p>
+<pre><code class="language-json">// 文件：code/ch21/starter/.prettierrc.json
+{
+  "printWidth": 80,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "arrowParens": "always",
+  "endOfLine": "lf"
+}
+</code></pre>
+<p><strong>逐项解释</strong>这些常用选项：</p>
+<ul>
+<li><code>printWidth: 80</code>——每行最多 80 个字符，超过就尝试换行。这是 Prettier 做换行决策的“标尺“。</li>
+<li><code>semi: true</code>——语句结尾<strong>加</strong>分号。设为 <code>false</code> 则不加。</li>
+<li><code>singleQuote: true</code>——字符串用<strong>单引号</strong>。这是很多项目的偏好。</li>
+<li><code>trailingComma: "all"</code>——多行的数组、对象、函数参数，<strong>末尾也加逗号</strong>。好处是以后新增一项时，git diff 只显示“新增一行“，而不是“上一行末尾多了个逗号“。</li>
+<li><code>tabWidth: 2</code>——缩进用 2 个空格。</li>
+<li><code>arrowParens: "always"</code>——箭头函数参数<strong>总是</strong>加括号，即 <code>(x) =&gt; x</code> 而不是 <code>x =&gt; x</code>。统一形式，减少心智负担。</li>
+<li><code>endOfLine: "lf"</code>——行尾用 <code>\n</code>（Unix 风格）。跨 Windows/Mac 协作时，统一行尾能避免“整个文件都变了“的假 diff。</li>
+</ul>
+<p>💡 Prettier 故意<strong>没有</strong>“要不要 2 空格还是 4 空格该不该激烈争论“之外的一大堆选项。它的哲学就是“选项越少，争论越少”。别去找它没有的选项，那是设计使然。</p>
+<h3 id="prettierignore哪些不要碰"><a class="header" href="#prettierignore哪些不要碰"><code>.prettierignore</code>：哪些不要碰</a></h3>
+<p>有些文件不该被格式化：依赖目录、构建产物、锁文件等。用 <code>.prettierignore</code>（语法和 <code>.gitignore</code> 一样）排除它们：</p>
+<pre><code class="language-text"># 文件：code/ch21/starter/.prettierignore
+# 依赖与构建产物不需要格式化
+node_modules
+dist
+coverage
+
+# 锁文件由包管理器维护
+package-lock.json
+pnpm-lock.yaml
+</code></pre>
+<h3 id="与编辑器集成强烈推荐"><a class="header" href="#与编辑器集成强烈推荐">与编辑器集成（强烈推荐）</a></h3>
+<p>命令行手动跑 Prettier 太累了。真正舒服的用法是<strong>让编辑器保存时自动格式化</strong>。以 VS Code 为例：</p>
+<ol>
+<li>安装官方扩展 <strong>Prettier - Code formatter</strong>（发布者 <code>esbenp</code>）。</li>
+<li>在项目里建 <code>.vscode/settings.json</code>：</li>
+</ol>
+<pre><code class="language-json">// 文件：.vscode/settings.json（可选，团队共享编辑器配置）
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}
+</code></pre>
+<p>配好之后，你每次 <code>Ctrl/Cmd + S</code> 保存，代码就自动排整齐了——你甚至不用再关心格式，闭着眼睛写，保存即工整。这是 Prettier 体验最好的地方。</p>
+<h3 id="用-npm-scripts-包起来"><a class="header" href="#用-npm-scripts-包起来">用 npm scripts 包起来</a></h3>
+<p>除了编辑器，我们也希望能在命令行一键格式化整个项目（CI 里尤其需要）。在 <code>package.json</code> 里加两条脚本：</p>
+<pre><code class="language-jsonc">{
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  }
+}
+</code></pre>
+<ul>
+<li><code>npm run format</code>——格式化<strong>整个项目</strong>（<code>.</code> 表示当前目录，Prettier 会递归处理，并自动遵守 <code>.prettierignore</code>）。</li>
+<li><code>npm run format:check</code>——<strong>只检查不改写</strong>，如果有文件不符合规范就以非 0 退出码失败。这个特别适合放进 CI（持续集成）：谁提交了没格式化的代码，流水线就报红。</li>
+</ul>
+<hr>
+<h2 id="eslint自动发现代码问题"><a class="header" href="#eslint自动发现代码问题">ESLint：自动发现代码问题</a></h2>
+<p>Prettier 管“好不好看“，<strong>ESLint</strong> 管“对不对、好不好“。</p>
+<p><strong>Linting</strong> 这个词来自“lint“（衣服上的绒毛/棉絮）——linter 就是帮你挑出代码里那些“绒毛“：没用到的变量、可能是笔误的 <code>==</code>、永远不会执行的分支、<code>await</code> 忘了写……这些代码可能照样能跑，但都是隐患或坏味道。</p>
+<p>📌 关键区别：<strong>Prettier 重排代码但不改变含义；ESLint 关心代码的含义与质量，很多规则甚至能提示或修复潜在 bug。</strong> 两者互补，不是竞争。</p>
+<h3 id="关于版本eslint-9-与扁平配置"><a class="header" href="#关于版本eslint-9-与扁平配置">关于版本：ESLint 9 与扁平配置</a></h3>
+<p>这里要特别说明版本，因为 ESLint 近年经历了一次重要变化。</p>
+<p>老版本（ESLint 8 及更早）用一个叫 <code>.eslintrc.js</code>（或 <code>.eslintrc.json</code>）的配置文件，格式比较“魔法“：靠 <code>extends</code>、<code>env</code>、<code>plugins</code> 这些字段的字符串来层层继承，新手很难搞清楚规则到底从哪来。</p>
+<p>从 <strong>ESLint 9</strong>（2024 年发布并成为默认）开始，官方推行<strong>扁平配置（flat config）</strong>：配置文件改叫 <strong><code>eslint.config.js</code></strong>，本质就是导出一个<strong>数组</strong>，数组里每一项是一个普通的配置对象。它是标准的 JS 模块，<code>import</code> 什么、用什么规则一目了然，不再有隐藏的继承魔法。</p>
+<p>📌 <strong>本书用 ESLint 9 + flat config，这是当前（2024–2025）的现代默认写法。</strong> 如果你在网上看到 <code>.eslintrc</code> 开头的教程，那是旧写法，概念相通但文件格式不同，注意分辨。</p>
+<h3 id="安装"><a class="header" href="#安装">安装</a></h3>
+<p>我们要检查的是 TypeScript，所以除了 ESLint 本体，还需要 <strong>typescript-eslint</strong>（让 ESLint 看懂 TS 语法的官方集成包）：</p>
+<pre><code class="language-bash">npm install --save-dev eslint typescript-eslint eslint-config-prettier
+</code></pre>
+<ul>
+<li><code>eslint</code>——本体。</li>
+<li><code>typescript-eslint</code>——一个“套装“包，同时提供解析器（parser，让 ESLint 能读懂 TS）和一套 TS 规则。</li>
+<li><code>eslint-config-prettier</code>——一个“关闭冲突规则“的配置，稍后解释它为什么必不可少。</li>
+</ul>
+<h3 id="编写-eslintconfigjs"><a class="header" href="#编写-eslintconfigjs">编写 <code>eslint.config.js</code></a></h3>
+<p>来看我们脚手架里的完整配置，然后逐块拆解：</p>
+<pre><code class="language-js">// 文件：code/ch21/starter/eslint.config.js
+// ESLint 9 扁平配置（flat config）
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-config-prettier';
+
+export default tseslint.config(
+  // 1) 全局忽略：构建产物、依赖目录不参与 lint
+  {
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**'],
+  },
+
+  // 2) ESLint 官方推荐规则（针对普通 JS）
+  js.configs.recommended,
+
+  // 3) typescript-eslint 推荐规则（针对 TS）
+  ...tseslint.configs.recommended,
+
+  // 4) 项目自定义规则（放在推荐规则之后才能覆盖它们）
+  {
+    files: ['**/*.ts'],
+    rules: {
+      // 允许以下划线开头的参数/变量表示“故意不用”
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      // 禁止 console.log，但允许 console.warn / console.error
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      eqeqeq: ['error', 'always'],
+    },
+  },
+
+  // 5) 关闭所有与 Prettier 冲突的“格式类”规则，必须放在最后
+  prettier,
+);
+</code></pre>
+<p><strong>逐块拆解：</strong></p>
+<ul>
+<li>
+<p>顶部三行 <code>import</code>：因为这是标准 JS 模块，配置里用到的东西都是显式导入进来的，没有任何隐藏魔法。<code>@eslint/js</code> 是 ESLint 自带的（随 <code>eslint</code> 一起装好），提供官方推荐规则集。</p>
+</li>
+<li>
+<p><code>tseslint.config(...)</code>：这是 typescript-eslint 提供的<strong>辅助函数</strong>。你完全可以手写一个数组，但用这个函数能获得更好的类型提示，且能正确展开各种预设。它接收若干个配置对象，最终返回那个扁平数组。</p>
+</li>
+<li>
+<p><strong>第 1 块 <code>ignores</code></strong>：单独一个只有 <code>ignores</code> 字段的对象，会被当作<strong>全局忽略</strong>。这里排除构建产物、依赖等目录——它们不是我们写的代码，不该被检查。</p>
+</li>
+<li>
+<p><strong>第 2 块 <code>js.configs.recommended</code></strong>：ESLint 官方对普通 JavaScript 的推荐规则，比如“禁止重复声明变量““禁止不可达代码”。</p>
+</li>
+<li>
+<p><strong>第 3 块 <code>...tseslint.configs.recommended</code></strong>：注意前面的 <code>...</code>（展开运算符）——因为它本身是<strong>一个数组</strong>（包含解析器设置 + 一组 TS 规则），必须展开后铺进外层数组。这一块让 ESLint 具备理解和检查 TypeScript 的能力。</p>
+</li>
+<li>
+<p><strong>第 4 块自定义规则</strong>：<code>files: ['**/*.ts']</code> 把这块规则限定在 <code>.ts</code> 文件上。<code>rules</code> 里我们调整了三条：</p>
+<ul>
+<li><code>@typescript-eslint/no-unused-vars</code>：报告“声明了却没用到“的变量。我们加了 <code>argsIgnorePattern: '^_'</code>，表示“名字以 <code>_</code> 开头的参数是故意不用的，别报错“——这是一个常见约定。</li>
+<li><code>no-console</code>：把 <code>console.log</code> 标为警告（<code>warn</code>），但通过 <code>allow</code> 放行 <code>console.warn</code> 和 <code>console.error</code>（这两个通常是有意的日志）。</li>
+<li><code>eqeqeq</code>：强制使用 <code>===</code> / <code>!==</code>，禁止 <code>==</code> / <code>!=</code>，避免 JS 那套令人头疼的隐式类型转换。</li>
+</ul>
+<p>每条规则的第一个值是<strong>级别</strong>：<code>"off"</code>（关）、<code>"warn"</code>（警告，不影响退出码成功）、<code>"error"</code>（错误，会让命令失败）。</p>
+</li>
+<li>
+<p><strong>第 5 块 <code>prettier</code></strong>：把 <code>eslint-config-prettier</code> 放在<strong>最后</strong>。它的作用是<strong>关闭 ESLint 里所有“管格式“的规则</strong>（比如缩进、引号、分号）。为什么需要它？见下一节。</p>
+</li>
+</ul>
+<p>⚠️ <strong>顺序很重要</strong>。flat config 是数组，<strong>后面的配置会覆盖前面的</strong>。所以：推荐规则在前，你的自定义覆盖在中间，<code>eslint-config-prettier</code>（负责关闭格式规则）必须在最后，否则它的关闭会被前面的规则又打开。</p>
+<h3 id="为什么需要-eslint-config-prettier避免打架"><a class="header" href="#为什么需要-eslint-config-prettier避免打架">为什么需要 <code>eslint-config-prettier</code>：避免打架</a></h3>
+<p>ESLint 历史上也内置了一些“格式类“规则（比如 <code>indent</code>、<code>quotes</code>）。如果你同时开着这些规则<strong>又</strong>用 Prettier，两者就会互相打架：Prettier 想把代码排成一样，ESLint 又跳出来报格式错误，你陷入“改也不是不改也不是“的循环。</p>
+<p><code>eslint-config-prettier</code> 的唯一职责就是<strong>把 ESLint 里所有和格式相关的规则统统关掉</strong>，从而划清界限：</p>
+<ul>
+<li><strong>格式</strong> 100% 交给 Prettier。</li>
+<li><strong>代码质量</strong> 100% 交给 ESLint。</li>
+</ul>
+<p>这就是为什么它必须放最后、且不含任何“开启“规则——它只做“关闭“这一件事。</p>
+<p>💡 记住这句话就够了：<strong>用了 Prettier，就一定要配 <code>eslint-config-prettier</code>，否则两个工具会打架。</strong></p>
+<h3 id="运行-lint以及---fix"><a class="header" href="#运行-lint以及---fix">运行 lint，以及 <code>--fix</code></a></h3>
+<p>在 <code>package.json</code> 里加脚本：</p>
+<pre><code class="language-jsonc">{
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  }
+}
+</code></pre>
+<ul>
+<li><code>npm run lint</code>——检查整个项目，把发现的问题打印出来。有 <code>error</code> 时命令以非 0 退出（CI 会报红）。</li>
+<li><code>npm run lint:fix</code>——加上 <code>--fix</code>，ESLint 会<strong>自动修复能自动修的那部分问题</strong>（比如把 <code>!=</code> 改成 <code>!==</code>）。注意：并不是所有问题都能自动修，比如“未使用的变量“就得你自己判断该删还是该用。</li>
+</ul>
+<p>举个 <code>--fix</code> 的例子。检查前：</p>
+<pre><code class="language-typescript">if (status != 'done') {
+  const unused = 42;
+  doSomething();
+}
+</code></pre>
+<p><code>npm run lint</code> 会报两个问题：<code>!=</code> 违反 <code>eqeqeq</code>，<code>unused</code> 违反 <code>no-unused-vars</code>。运行 <code>npm run lint:fix</code> 后，<code>!=</code> 被自动改成 <code>!==</code>；但 <code>unused</code> <strong>不会</strong>被自动删除（ESLint 不敢替你决定删代码），它会继续作为错误提示，等你手动处理。</p>
+<h3 id="lint-与-format-的分工再强调一次"><a class="header" href="#lint-与-format-的分工再强调一次">lint 与 format 的分工（再强调一次）</a></h3>
+<p>新手最容易混淆这两者，我们用一张表彻底厘清：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th>Prettier（format）</th><th>ESLint（lint）</th></tr>
+</thead>
+<tbody>
+<tr><td>关心</td><td>代码长什么样</td><td>代码有没有问题</td></tr>
+<tr><td>例子</td><td>引号、缩进、换行、分号</td><td>未使用变量、<code>==</code>、<code>await</code> 漏写</td></tr>
+<tr><td>会改逻辑吗</td><td>不会</td><td><code>--fix</code> 可能改（如 <code>!=</code>→<code>!==</code>）</td></tr>
+<tr><td>典型命令</td><td><code>prettier --write</code></td><td><code>eslint . --fix</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>一个健康的项目<strong>两者都要有</strong>，各管一段。它们通过 <code>eslint-config-prettier</code> 划清边界，配合无间。</p>
+<hr>
+<h2 id="typescript-编译tsc-的三种用法"><a class="header" href="#typescript-编译tsc-的三种用法">TypeScript 编译：tsc 的三种用法</a></h2>
+<p>TypeScript 代码不能被 Node.js 或浏览器直接运行——运行前必须先**编译（compile）**成 JavaScript。做这件事的是 TypeScript 官方编译器 <strong><code>tsc</code></strong>。前面第 20 章我们已经详细讲过 <code>tsconfig.json</code>，这里聚焦 <code>tsc</code> 作为工具链一环的三种典型跑法。</p>
+<h3 id="用法一编译产出生成-dist"><a class="header" href="#用法一编译产出生成-dist">用法一：编译产出（生成 dist）</a></h3>
+<p>最基本的用法，直接运行：</p>
+<pre><code class="language-bash">npx tsc
+</code></pre>
+<p>它会读取 <code>tsconfig.json</code>，把 <code>src/</code> 下的 TS 编译成 JS，输出到配置里 <code>outDir</code> 指定的目录（我们脚手架里是 <code>dist/</code>）。如果开了 <code>"declaration": true</code>，还会同时生成 <code>.d.ts</code> 类型声明文件。</p>
+<h3 id="用法二监听模式watch"><a class="header" href="#用法二监听模式watch">用法二：监听模式（watch）</a></h3>
+<p>开发时你不想每改一次就手动编译一次，加 <code>--watch</code>（简写 <code>-w</code>）：</p>
+<pre><code class="language-bash">npx tsc --watch
+</code></pre>
+<p><code>tsc</code> 会常驻在终端里，<strong>监视文件变化</strong>，你一保存它就自动重新编译，并实时报告类型错误。适合开发过程中随时看到反馈。</p>
+<h3 id="用法三只检查不产出--noemit"><a class="header" href="#用法三只检查不产出--noemit">用法三：只检查不产出（<code>--noEmit</code>）</a></h3>
+<p>这是工具链里最常用的一种。有时你<strong>不需要 tsc 生成文件</strong>（因为产物交给了打包器，下一节讲），只想让它扮演一个纯粹的<strong>类型检查器</strong>：</p>
+<pre><code class="language-bash">npx tsc --noEmit
+</code></pre>
+<p><code>--noEmit</code> 意思是“不要发出（emit）任何文件“，只做类型检查，有类型错误就报错退出。我们把它包成脚本：</p>
+<pre><code class="language-jsonc">{
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
+</code></pre>
+<p>📌 为什么单独要一个 <code>typecheck</code>？因为很多现代打包器（包括我们下面用的 tsup）出于速度考虑，<strong>打包时并不做完整的类型检查</strong>——它们只管把 TS 语法去掉、转成 JS，速度飞快，但你写错了类型它可能视而不见。所以我们需要<strong>独立的一步</strong> <code>tsc --noEmit</code> 来专门守住类型正确性。这就引出了下一节：打包器和编译器到底什么关系。</p>
+<hr>
+<h2 id="打包器bundler为什么有哪些怎么用"><a class="header" href="#打包器bundler为什么有哪些怎么用">打包器（bundler）：为什么、有哪些、怎么用</a></h2>
+<h3 id="为什么要打包"><a class="header" href="#为什么要打包">为什么要打包</a></h3>
+<p>你可能会问：既然 <code>tsc</code> 就能把 TS 变成 JS，为什么还需要“打包器“？</p>
+<p>因为一个真实项目往往由<strong>几十上百个模块</strong>组成，还依赖了一堆 node_modules 里的第三方包。如果只用 <code>tsc</code>，你会得到几十个零散的 <code>.js</code> 文件，它们之间靠 <code>import</code> 互相引用。这在某些场景（尤其是要发布给别人用、或要在浏览器里加载）会带来问题：文件太多、加载慢、依赖关系混乱。</p>
+<p><strong>打包器（bundler）</strong> 做的事情是：从一个<strong>入口文件</strong>出发，顺着 <code>import</code> 把所有相关模块“串“起来，处理依赖、转译语法，最终产出<strong>少量、优化过的</strong>文件（常常就一两个），可以直接运行或发布。</p>
+<p>顺带它通常还做这些优化：</p>
+<ul>
+<li><strong>Tree shaking（摇树）</strong>：把没被用到的代码摇掉，减小体积。</li>
+<li><strong>Minify（压缩）</strong>：删空格、缩短变量名，让文件更小。</li>
+<li><strong>打包依赖</strong>：把用到的第三方代码一并纳入（或按需处理）。</li>
+</ul>
+<h3 id="bundler-vs-tsc一句话区别"><a class="header" href="#bundler-vs-tsc一句话区别">bundler vs tsc：一句话区别</a></h3>
+<p>📌 <strong><code>tsc</code> 是“编译器“，逐个文件把 TS 翻译成 JS，并做完整类型检查，但不合并、不优化。打包器是“打包器“，把多文件合并优化成产物，速度极快，但通常不做类型检查。</strong></p>
+<p>所以现代项目的常见组合是<strong>各取所长</strong>：</p>
+<ul>
+<li><strong>类型检查</strong> → <code>tsc --noEmit</code>（慢一点，但类型查得准）。</li>
+<li><strong>产物构建</strong> → 打包器（快，产物优化好，但不查类型）。</li>
+</ul>
+<p>两步分工，互不替代。</p>
+<h3 id="主流打包器速览了解定位即可"><a class="header" href="#主流打包器速览了解定位即可">主流打包器速览（了解定位即可）</a></h3>
+<p>生态里打包/构建工具很多，简单认识一下它们的定位：</p>
+<ul>
+<li><strong>esbuild</strong>——用 Go 写的<strong>超快</strong>打包/转译器，是很多上层工具的“引擎“。底层、极快，但配置相对偏底层。</li>
+<li><strong>Vite</strong>——面向<strong>前端应用</strong>（尤其配合 React/Vue）的开发+构建工具，开发服务器体验极佳。做网页应用时的首选，但对“打包一个库“来说偏重。</li>
+<li><strong>Rollup</strong>——老牌打包器，尤其擅长<strong>打包库（library）</strong>，tree shaking 做得早做得好。Vite 的生产构建底层就用它。</li>
+<li><strong>tsup</strong>——一个<strong>零配置</strong>的库打包工具，底层用 esbuild（快），但帮你把“生成 <code>.d.ts</code> 类型声明““同时输出多种模块格式“这些库作者常需要的事情都封装好了。<strong>对“把一个 TS 库打包成 dist“这个需求，它最省心。</strong></li>
+</ul>
+<p>💡 怎么选？做<strong>网页应用</strong>用 <strong>Vite</strong>；做<strong>要发布的库/CLI 工具</strong>用 <strong>tsup</strong>（省心）或 <strong>Rollup</strong>（更可控）；只想要<strong>底层极速转译</strong>用 <strong>esbuild</strong>。本章脚手架的目标是“一个标准 TS 项目/库“，所以我们选 <strong>tsup</strong>——它几乎不用配置就能干净利落地产出 <code>dist</code>。</p>
+<h3 id="用-tsup-打包最小示例"><a class="header" href="#用-tsup-打包最小示例">用 tsup 打包：最小示例</a></h3>
+<p>安装：</p>
+<pre><code class="language-bash">npm install --save-dev tsup
+</code></pre>
+<p>最简单的用法连配置文件都不用，直接命令行指定入口：</p>
+<pre><code class="language-bash">npx tsup src/index.ts
+</code></pre>
+<p>它会把 <code>src/index.ts</code>（及其 import 的所有模块）打包，默认输出到 <code>dist/</code>。不过为了清晰可控，我们还是写一个配置文件：</p>
+<pre><code class="language-ts">// 文件：code/ch21/starter/tsup.config.ts
+import { defineConfig } from 'tsup';
+
+export default defineConfig({
+  entry: ['src/index.ts'], // 入口文件
+  format: ['esm'], // 输出 ES Module
+  target: 'es2022', // 目标语法版本
+  dts: true, // 生成 .d.ts 类型声明文件
+  sourcemap: true, // 生成 source map，便于调试
+  clean: true, // 每次构建前清空 dist
+  minify: false, // 库通常不压缩，交给使用方按需处理
+});
+</code></pre>
+<p><strong>逐项拆解：</strong></p>
+<ul>
+<li><code>entry</code>——从哪个（些）文件开始打包。tsup 会顺着它的 <code>import</code> 自动收集依赖。</li>
+<li><code>format: ['esm']</code>——输出 ES Module 格式（<code>import</code>/<code>export</code>）。如果你还想兼容老的 CommonJS，可以写成 <code>['esm', 'cjs']</code>，tsup 会同时产出两份。</li>
+<li><code>target: 'es2022'</code>——目标 JS 语法版本，决定要不要把新语法降级。</li>
+<li><code>dts: true</code>——<strong>生成类型声明文件 <code>.d.ts</code></strong>。这是 tsup 相比裸 esbuild 的一大便利：库的使用者需要这些 <code>.d.ts</code> 才能获得类型提示。</li>
+<li><code>sourcemap: true</code>——生成 source map，调试打包后代码时能映射回原始 TS。</li>
+<li><code>clean: true</code>——每次构建前先清空 <code>dist/</code>，避免遗留旧文件。</li>
+<li><code>minify: false</code>——不压缩。库通常保持可读，压缩留给最终应用去做。</li>
+</ul>
+<p>把它包进脚本：</p>
+<pre><code class="language-jsonc">{
+  "scripts": {
+    "build": "tsup src/index.ts"
+  }
+}
+</code></pre>
+<p>运行 <code>npm run build</code>，你会看到类似输出：</p>
+<pre><code class="language-text">ESM dist/index.js     347.00 B
+DTS dist/index.d.ts   237.00 B
+⚡️ Build success
+</code></pre>
+<p><code>dist/</code> 里就有了打包好的 <code>index.js</code>、类型声明 <code>index.d.ts</code> 和 source map。这就是可以拿去运行或发布的<strong>构建产物</strong>。</p>
+<blockquote>
+<p>⚠️ 再强调：tsup 打包时<strong>不会</strong>帮你做完整类型检查。所以正确的构建流程是<strong>先 <code>npm run typecheck</code>（tsc 查类型），再 <code>npm run build</code>（tsup 出产物）</strong>。很多项目会把它们串起来，比如 <code>"build": "tsc --noEmit &amp;&amp; tsup src/index.ts"</code>，确保类型没问题才产出。</p>
+</blockquote>
+<hr>
+<h2 id="npm-scripts把一切组织起来"><a class="header" href="#npm-scripts把一切组织起来">npm scripts：把一切组织起来</a></h2>
+<p>前面每个工具我们都写了一条脚本，现在把它们汇总，形成一套<strong>标准命令</strong>。这是脚手架 <code>package.json</code> 里 <code>scripts</code> 部分的样子：</p>
+<pre><code class="language-jsonc">{
+  "scripts": {
+    "dev": "tsup src/index.ts --watch --onSuccess \"node dist/index.js\"",
+    "build": "tsup src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  }
+}
+</code></pre>
+<p><strong>逐条说明：</strong></p>
+<ul>
+<li><code>dev</code>——开发模式。<code>--watch</code> 让 tsup 监听改动自动重建，<code>--onSuccess "node dist/index.js"</code> 让每次构建成功后自动运行产物。改代码 → 自动重打包 → 自动重跑，反馈很快。</li>
+<li><code>build</code>——一次性打包产出 <code>dist/</code>。</li>
+<li><code>typecheck</code>——只做类型检查（<code>tsc --noEmit</code>）。</li>
+<li><code>lint</code> / <code>lint:fix</code>——检查 / 自动修复代码质量问题。</li>
+<li><code>format</code> / <code>format:check</code>——格式化 / 只检查格式。</li>
+</ul>
+<p>💡 记住这套约定俗成的脚本名（<code>dev</code>/<code>build</code>/<code>lint</code>/<code>format</code>/<code>typecheck</code>），几乎所有现代 JS/TS 项目都长这样。以后你接手别人的项目，<code>cat package.json</code> 看一眼 scripts，就知道怎么跑起来了。</p>
+<p>📌 一个团队里典型的“提交前检查“通常是：<code>npm run typecheck &amp;&amp; npm run lint &amp;&amp; npm run format:check</code>——类型对、没坏味道、格式规范，三关全过才允许提交。下一节我们看怎么让它<strong>自动</strong>执行。</p>
+<hr>
+<h2 id="editorconfig-与-git-hooks简介"><a class="header" href="#editorconfig-与-git-hooks简介">EditorConfig 与 Git hooks（简介）</a></h2>
+<p>工具配好了，但还有个现实问题：<strong>怎么保证团队里每个人真的会去跑这些命令？</strong> 靠自觉是不够的。这里介绍两个“让规范自动生效“的机制。</p>
+<h3 id="editorconfig跨编辑器的基础风格"><a class="header" href="#editorconfig跨编辑器的基础风格">EditorConfig：跨编辑器的基础风格</a></h3>
+<p>不是所有人都用 VS Code。有人用 WebStorm，有人用 Vim。<strong>EditorConfig</strong> 是一个被几乎所有编辑器支持的标准，用一个 <code>.editorconfig</code> 文件统一最基础的编辑行为（缩进、行尾、编码），这样无论用什么编辑器，打开这个项目时的基础风格都一致：</p>
+<pre><code class="language-text"># 文件：code/ch21/starter/.editorconfig
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+</code></pre>
+<p><strong>拆解：</strong></p>
+<ul>
+<li><code>root = true</code>——告诉编辑器“到此为止，别再往上层目录找 <code>.editorconfig</code> 了“。</li>
+<li><code>[*]</code>——对所有文件生效的通用规则：UTF-8 编码、LF 行尾、文件末尾留一个空行、去掉行尾多余空格、缩进用 2 空格。</li>
+<li><code>[*.md]</code>——针对 Markdown 的例外：Markdown 里行尾的两个空格是“换行“的意思，所以不能去掉行尾空格。</li>
+</ul>
+<p>EditorConfig 和 Prettier 有部分重叠（都管缩进），但它更底层、更通用，在编辑器<strong>打字的当下</strong>就生效，是一道“第一层防线“。</p>
+<h3 id="git-hookshusky--lint-staged"><a class="header" href="#git-hookshusky--lint-staged">Git hooks：husky + lint-staged</a></h3>
+<p><strong>Git hooks</strong> 是 git 提供的“钩子“——在特定操作（比如 <code>git commit</code>）发生前后自动执行脚本。我们可以利用它，在<strong>每次提交前自动跑 lint 和 format</strong>，把没规范的代码挡在提交之外。</p>
+<p>手动配置 git hooks 比较繁琐，社区有两个常用工具让它变简单：</p>
+<ul>
+<li><strong>husky</strong>——让 git hooks 的配置变得简单、可提交进仓库（这样团队每个人克隆下来都自动生效）。</li>
+<li><strong>lint-staged</strong>——只对<strong>本次提交暂存（staged）的文件</strong>跑检查，而不是整个项目。这样提交快，且不会因为别人留下的老问题连累你。</li>
+</ul>
+<p>典型搭配是：<code>git commit</code> 时，husky 触发 <code>pre-commit</code> 钩子，钩子里调用 lint-staged，lint-staged 对你即将提交的那几个文件跑 <code>eslint --fix</code> 和 <code>prettier --write</code>。配置大致长这样（了解即可，本章脚手架未强制引入，避免增加安装负担）：</p>
+<pre><code class="language-jsonc">// package.json 片段（示意）
+{
+  "lint-staged": {
+    "*.{ts,js}": ["eslint --fix", "prettier --write"],
+    "*.{json,md}": ["prettier --write"]
+  }
+}
+</code></pre>
+<p>💡 这套东西的价值在于：<strong>规范不再依赖人的自觉，而是被工具强制执行。</strong> 忘了格式化？提交时自动帮你格式化。写了 <code>==</code>？提交前就被拦下。这是成熟团队的标配。本书为了让脚手架安装轻量，没有默认引入 husky，你在真实项目里可以按需加上。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>
+<p>⚠️ <strong>ESLint 8 的旧配置（<code>.eslintrc</code>）和 ESLint 9 的新配置（<code>eslint.config.js</code>）不通用。</strong> 网上很多教程还是旧格式，照抄会在 ESLint 9 上报错。认准文件名：<code>eslint.config.js</code> 才是本书用的 flat config。</p>
+</li>
+<li>
+<p>⚠️ <strong>忘了装或忘了配 <code>eslint-config-prettier</code></strong>，会导致 ESLint 和 Prettier 在格式上互相打架。用 Prettier 就一定要配它，且放在 flat config 数组的<strong>最后</strong>。</p>
+</li>
+<li>
+<p>⚠️ <strong>flat config 是数组，顺序即优先级，后面覆盖前面。</strong> 自定义规则要放在推荐规则<strong>之后</strong>才能生效；<code>eslint-config-prettier</code> 要放在<strong>最末尾</strong>。</p>
+</li>
+<li>
+<p>⚠️ <strong>别指望打包器帮你查类型。</strong> tsup / esbuild 为了快，只做语法转译，不做类型检查。类型正确性必须靠独立的 <code>tsc --noEmit</code> 守住。CI 里一定要单独有 <code>typecheck</code> 这一步。</p>
+</li>
+<li>
+<p>⚠️ <strong><code>prettier --write</code> 和 <code>eslint --fix</code> 会改文件。</strong> 第一次在已有项目里跑之前先提交 git，方便查看和回退。</p>
+</li>
+<li>
+<p>💡 <strong>让编辑器保存即格式化</strong>（Prettier 插件 + <code>formatOnSave</code>），你就再也不用手动跑 format 了，体验天差地别。</p>
+</li>
+<li>
+<p>💡 <strong>把 <code>dist</code>、<code>node_modules</code>、<code>coverage</code> 同时写进 <code>.gitignore</code>、<code>.prettierignore</code> 和 ESLint 的 <code>ignores</code>。</strong> 这三个地方都要排除构建产物和依赖，漏一个就会有奇怪的报错或噪音。</p>
+</li>
+<li>
+<p>💡 <strong>脚本命名遵循社区约定</strong>（<code>dev</code>/<code>build</code>/<code>lint</code>/<code>format</code>/<code>typecheck</code>）。别自创名字，方便协作者和 CI 直接套用。</p>
+</li>
+<li>
+<p>💡 <strong>区分 <code>format</code>（写）和 <code>format:check</code>（只查）、<code>lint</code>（查）和 <code>lint:fix</code>（修）。</strong> 本地开发用“写/修“版本，CI 用“只查“版本（CI 不应该改代码，只该报告问题）。</p>
+</li>
+</ul>
+<hr>
+<h2 id="本章小项目标准项目脚手架"><a class="header" href="#本章小项目标准项目脚手架">本章小项目：标准项目脚手架</a></h2>
+<p>现在我们把本章所有工具攒成一个<strong>可以直接照抄的生产级项目模板</strong>，放在 <code>code/ch21/starter/</code>。以后你开任何新的 TS 项目，复制这个目录、改改名字就能开工。</p>
+<h3 id="目录结构"><a class="header" href="#目录结构">目录结构</a></h3>
+<pre><code class="language-text">code/ch21/starter/
+├── package.json          # 依赖与 npm scripts
+├── tsconfig.json         # TypeScript 编译配置
+├── tsup.config.ts        # 打包器配置
+├── eslint.config.js      # ESLint 9 扁平配置
+├── .prettierrc.json      # Prettier 配置
+├── .prettierignore       # Prettier 忽略清单
+├── .editorconfig         # 跨编辑器基础风格
+├── .gitignore
+├── README.md
+└── src/
+    └── index.ts          # 源码入口
+</code></pre>
+<p>前面各节我们已经逐个展示并拆解了 <code>package.json</code> 的 scripts、<code>.prettierrc.json</code>、<code>eslint.config.js</code>、<code>tsup.config.ts</code>、<code>.editorconfig</code>。这里补上剩下几块：<code>package.json</code> 全貌、<code>tsconfig.json</code> 和源码入口。</p>
+<h3 id="packagejson-全貌"><a class="header" href="#packagejson-全貌">package.json 全貌</a></h3>
+<pre><code class="language-json">// 文件：code/ch21/starter/package.json
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "第 21 章：生产级 TypeScript 项目脚手架（ESLint 9 + Prettier + tsup）",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsup src/index.ts --watch --onSuccess \"node dist/index.js\"",
+    "build": "tsup src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1"
+  }
+}
+</code></pre>
+<p><strong>拆解几个关键字段：</strong></p>
+<ul>
+<li><code>"type": "module"</code>——本项目用 ES Module（<code>import</code>/<code>export</code>），这是现代默认。</li>
+<li><code>"main"</code> / <code>"types"</code>——如果这个项目要作为库发布，<code>main</code> 指向打包后的入口 JS，<code>types</code> 指向类型声明文件。使用者 import 它时就能自动获得类型提示。</li>
+<li><code>devDependencies</code>——注意工具链的东西全是<strong>开发依赖</strong>：它们只在开发/构建时需要，最终产物不包含它们。版本号用了 ESLint 9、typescript-eslint 8、Prettier 3、TypeScript 5.7，都是本书写作时（2024–2025）的现代版本。</li>
+</ul>
+<h3 id="tsconfigjson"><a class="header" href="#tsconfigjson">tsconfig.json</a></h3>
+<pre><code class="language-json">// 文件：code/ch21/starter/tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
+</code></pre>
+<p>第 20 章已详细讲过这些选项，这里只点出与工具链相关的几个：<code>"strict": true</code> 打开全部严格类型检查（配合 <code>typecheck</code> 脚本）；<code>"declaration": true</code> 让 <code>tsc</code> 也能生成 <code>.d.ts</code>（虽然我们主要靠 tsup 的 <code>dts</code> 出声明）；<code>"outDir": "dist"</code> 与打包产物目录一致；<code>"verbatimModuleSyntax": true</code> 强制 import/export 语法清晰（配合 ESM 更稳）。</p>
+<h3 id="源码入口"><a class="header" href="#源码入口">源码入口</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch21/starter/src/index.ts
+
+/** 计算两数之和。 */
+export function add(a: number, b: number): number {
+  return a + b;
+}
+
+/** 计算两数之差。 */
+export function subtract(a: number, b: number): number {
+  return a - b;
+}
+
+/** 一个简单的问候函数。 */
+export function greet(name: string): string {
+  return `你好，${name}！`;
+}
+
+// 直接用 `node dist/index.js` 运行时的演示入口。
+// 作为库被 import 时，下面这段不会打印（因为没有顶层副作用调用它）。
+function main(): void {
+  console.warn(greet('世界'));
+  console.warn(`1 + 2 = ${add(1, 2)}`);
+}
+
+main();
+</code></pre>
+<p>这个入口既导出了几个可复用的函数（供别人 import），又有一个 <code>main()</code> 演示直接运行的效果。注意里面故意用了 <code>console.warn</code> 而不是 <code>console.log</code>——因为我们的 ESLint 规则把 <code>console.log</code> 标为警告，而放行 <code>console.warn</code>。这正好演示了 lint 规则在实际代码里的约束。</p>
+<h3 id="安装与运行"><a class="header" href="#安装与运行">安装与运行</a></h3>
+<p>这个脚手架是<strong>独立子项目</strong>，有自己的 <code>package.json</code>，不要用仓库根目录的依赖。请单独安装：</p>
+<pre><code class="language-bash">cd code/ch21/starter
+npm install
+</code></pre>
+<p>安装完成后，依次验证每条命令：</p>
+<pre><code class="language-bash">npm run typecheck    # 类型检查，应无输出（表示无错误）
+npm run lint         # 代码检查，应无输出（表示无问题）
+npm run format:check # 格式检查，应显示 "All matched files use Prettier code style!"
+npm run build        # 打包，dist/ 里生成 index.js / index.d.ts / index.js.map
+node dist/index.js   # 运行产物，应打印“你好，世界！”和“1 + 2 = 3”
+</code></pre>
+<blockquote>
+<p>📌 <strong>实测说明</strong>：本脚手架已在本地实际安装并运行验证通过——<code>typecheck</code>、<code>lint</code>、<code>format:check</code> 全部干净通过，<code>build</code> 成功产出 <code>dist/</code>（<code>index.js</code> 约 347 B、<code>index.d.ts</code>、source map），<code>node dist/index.js</code> 正确打印结果。你在自己机器上<strong>需联网 <code>npm install</code> 安装依赖后</strong>即可复现同样的结果。</p>
+</blockquote>
+<p>试着<strong>故意破坏</strong>代码来体会工具链的作用：把某个 <code>===</code> 改成 <code>==</code>，再跑 <code>npm run lint</code>，看它如何报 <code>eqeqeq</code> 错误；把某行缩进弄乱，跑 <code>npm run format</code> 看它自动修好。亲手感受一下“机器帮你守规范“的踏实感。</p>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们搭起了一套现代 JS/TS 项目的<strong>工具链</strong>，核心是理解每个工具的<strong>分工</strong>：</p>
+<ul>
+<li><strong>Prettier</strong> 管格式（长什么样），配置放在 <code>.prettierrc.json</code>，最佳体验是“编辑器保存即格式化“。</li>
+<li><strong>ESLint 9（flat config，<code>eslint.config.js</code>）</strong> 管代码质量（有没有问题），通过 typescript-eslint 支持 TS，用 <code>eslint-config-prettier</code> 与 Prettier 划清边界。<code>--fix</code> 能自动修一部分问题。</li>
+<li><strong>tsc</strong> 管类型检查，<code>tsc --noEmit</code> 是“只查不产出“的常用姿势。</li>
+<li><strong>打包器（本章用 tsup）</strong> 管构建产物，快速把 TS 打包成 <code>dist/</code>，但<strong>不查类型</strong>——所以类型检查要靠独立的 <code>tsc --noEmit</code>。</li>
+<li>这些操作用一组约定俗成的 <strong>npm scripts</strong>（<code>dev</code>/<code>build</code>/<code>lint</code>/<code>format</code>/<code>typecheck</code>）组织起来。</li>
+<li><strong>EditorConfig</strong> 和 <strong>Git hooks（husky + lint-staged）</strong> 让规范“自动生效“，不依赖人的自觉。</li>
+</ul>
+<p><strong>自测题</strong>（能答上来说明你真的懂了）：</p>
+<ol>
+<li>一句话说清 Prettier 和 ESLint 各管什么，它们会不会打架、如何避免。</li>
+<li>ESLint 9 的配置文件叫什么？它和旧的 <code>.eslintrc</code> 最大的区别是什么？</li>
+<li>flat config 是个数组，为什么 <code>eslint-config-prettier</code> 必须放在<strong>最后</strong>？</li>
+<li><code>tsc --noEmit</code> 是干什么的？为什么用了打包器还需要它？</li>
+<li>打包器（bundler）和编译器（tsc）的核心区别是什么？现代项目为什么常常两者都用？</li>
+<li>tsup 的 <code>dts: true</code> 选项有什么用？对“发布一个库“为什么重要？</li>
+<li>说出至少四个约定俗成的 npm script 名字，并说明各自作用。</li>
+</ol>
+<p>答完这些，你已经具备了独立搭建一个规范项目的能力。</p>
+<hr>
+<p>工具链保证了代码“写得规范、构建得出来“，但它<strong>无法保证代码逻辑是对的</strong>——<code>add</code> 函数会不会在某个边界值上算错？重构之后功能会不会悄悄坏掉？这些要靠<strong>测试</strong>来守护。下一章 <strong>第 22 章 · 测试与 TDD</strong>，我们就来给代码加上“逻辑正确性“的安全网，学习单元测试、断言、以及“测试驱动开发（TDD）“这种先写测试再写实现的开发方式。届时你会发现，测试脚本会自然地融入本章搭好的这套 npm scripts 里，成为工具链的又一环。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch20.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch22.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch20.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch22.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

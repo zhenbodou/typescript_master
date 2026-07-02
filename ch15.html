@@ -1,0 +1,968 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 15 章 · 函数类型、类与枚举 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch15.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-15-章--函数类型类与枚举"><a class="header" href="#第-15-章--函数类型类与枚举">第 15 章 · 函数类型、类与枚举</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>第 13、14 章我们给 TypeScript 打好了地基：变量与函数的类型注解、接口（interface）、类型别名（type alias）、联合（union）与交叉（intersection）类型。这一章我们把三块“日常写业务最离不开“的能力补齐：</p>
+<ul>
+<li><strong>把函数本身当成一等公民来标注类型</strong>。函数类型表达式、调用签名（call signature）、构造签名（construct signature）、<code>this</code> 参数、类型谓词（type predicate）——尤其是让新手又爱又怕的<strong>函数重载（overload）</strong>，我们要把它一次讲清、且<strong>不讲错</strong>。</li>
+<li><strong>在 TS 里写类（class）</strong>。第 4 章你已经会 JS 的 <code>class</code> 与原型了，这一章补上 TS 特有的那层“类型盔甲“：字段类型注解、访问修饰符 <code>public/private/protected</code>、<code>readonly</code>、<strong>参数属性</strong>这个省事的简写、<code>static</code>、getter/setter、<strong>抽象类 <code>abstract</code></strong>、<strong>类实现接口 <code>implements</code></strong>，以及一个高频面试题——<code>#</code> 私有字段和 <code>private</code> 到底差在哪。</li>
+<li>分清<strong>类作为“类型“和作为“值“的双重身份</strong>。</li>
+<li><strong>枚举（enum）</strong>：数字枚举、字符串枚举、<code>const enum</code>，重点讲它<strong>编译成 JS 之后长什么样</strong>（运行时形态）以及由此带来的坑；再讨论现代项目里越来越流行的替代方案——<strong>联合字面量类型 + <code>as const</code> 对象</strong>，以及两者怎么取舍。</li>
+<li>最后用一个**类型安全的有限状态机（Finite State Machine）**把 class + 联合类型 + 可辨识联合串起来实战。</li>
+</ul>
+<p>本章的 TypeScript 示例都用 <code>npx tsx ch15/文件.ts</code> 运行。我们从函数类型开始。</p>
+<hr>
+<h2 id="151-函数类型深入"><a class="header" href="#151-函数类型深入">15.1 函数类型深入</a></h2>
+<h3 id="1511-函数类型表达式"><a class="header" href="#1511-函数类型表达式">15.1.1 函数类型表达式</a></h3>
+<p>第 13 章我们已经给函数写过类型，但那是“内联“在函数定义上的。真正把<strong>函数的类型抽出来复用</strong>，靠的是<strong>函数类型表达式（function type expression）</strong>，语法是 <code>(参数: 类型) =&gt; 返回类型</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/01-func-types.ts
+type NumberMapper = (n: number) =&gt; number;
+
+const double: NumberMapper = (n) =&gt; n * 2; // n 的类型由 NumberMapper 推出，无需再写
+
+function mapNumbers(arr: number[], fn: NumberMapper): number[] {
+  return arr.map(fn);
+}
+console.log(mapNumbers([1, 2, 3], double)); // [ 2, 4, 6 ]
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>type NumberMapper = (n: number) =&gt; number</code> 起了一个名字，表示“一个接收 <code>number</code>、返回 <code>number</code> 的函数“。注意箭头 <code>=&gt;</code> 在<strong>类型位置</strong>表示“返回类型“，别和箭头函数的 <code>=&gt;</code> 混淆——它们长得一样但一个在类型里、一个在值里。</li>
+<li><code>const double: NumberMapper = (n) =&gt; n * 2</code>：因为左边已经写了类型，右边箭头函数的参数 <code>n</code> 就<strong>不用再标类型</strong>了，TS 会从 <code>NumberMapper</code> 反推出 <code>n: number</code>。这叫<strong>上下文类型推断（contextual typing）</strong>——类型信息“从左往右流“。</li>
+<li><code>mapNumbers</code> 的第二个参数 <code>fn: NumberMapper</code> 说明它要一个“数字映射函数“。把 <code>double</code> 传进去，类型严丝合缝。</li>
+</ul>
+<p>📌 函数类型表达式让你像传数据一样传“行为“，且行为的形状被类型钉死。回调、事件处理器、策略模式，全靠它。</p>
+<h3 id="1512-调用签名既能被调用又带属性"><a class="header" href="#1512-调用签名既能被调用又带属性">15.1.2 调用签名：既能被调用，又带属性</a></h3>
+<p>JS 里函数也是对象，可以往上挂属性（比如 <code>fn.count</code>）。普通的函数类型表达式没法同时描述“能被调用“和“带哪些属性“。这时用<strong>调用签名（call signature）</strong>，写在对象类型里：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/01-func-types.ts（续）
+type Counter = {
+  (): number; // 调用签名：像函数一样被调用，返回 number
+  count: number; // 同时它还带一个 count 属性
+  reset(): void;
+};
+
+function makeCounter(): Counter {
+  const fn = (() =&gt; {
+    fn.count += 1;
+    return fn.count;
+  }) as Counter;
+  fn.count = 0;
+  fn.reset = () =&gt; {
+    fn.count = 0;
+  };
+  return fn;
+}
+
+const tick = makeCounter();
+console.log(tick(), tick(), tick()); // 1 2 3
+console.log("count =", tick.count); // 3
+tick.reset();
+console.log("reset 后 count =", tick.count); // 0
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>对象类型里那行 <code>(): number</code> <strong>没有属性名</strong>，只有参数列表和返回类型——这就是调用签名，意思是“这个对象可以被当函数调用“。</li>
+<li>同一个类型里又写了 <code>count: number</code> 和 <code>reset(): void</code>，于是 <code>Counter</code> 描述的是“一个能被调用、还带 <code>count</code>/<code>reset</code> 的函数对象“。</li>
+<li><code>makeCounter</code> 里用 <code>as Counter</code> 做了一次类型断言（第 13 章学过），因为我们要先创建函数、再给它挂属性，中间那一刻它还不满足 <code>Counter</code>，用断言告诉 TS“信我，最终它会齐全“。</li>
+</ul>
+<p>💡 什么时候需要调用签名？当你要描述“带元数据的函数“——比如一个带 <code>.displayName</code> 的组件、一个带 <code>.cancel()</code> 的防抖函数。日常大多数函数用 15.1.1 的箭头写法就够了。</p>
+<h3 id="1513-this-参数类型"><a class="header" href="#1513-this-参数类型">15.1.3 <code>this</code> 参数类型</a></h3>
+<p>在对象方法里，<code>this</code> 指向谁取决于<strong>调用方式</strong>（第 4 章讲过 JS 的 <code>this</code> 之坑）。TS 允许你在参数列表<strong>最前面</strong>放一个名为 <code>this</code> 的“假参数“，专门标注 <code>this</code> 的类型：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/01-func-types.ts（续）
+interface Button {
+  label: string;
+  onClick(this: Button, times: number): void;
+}
+
+const btn: Button = {
+  label: "提交",
+  onClick(this: Button, times: number) {
+    console.log(`按钮「${this.label}」被点了 ${times} 次`);
+  },
+};
+btn.onClick(3); // 按钮「提交」被点了 3 次
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>onClick(this: Button, times: number)</code> 里的 <code>this: Button</code> 是<strong>纯类型标注</strong>，编译成 JS 后<strong>不会</strong>变成真实参数。所以调用时你只传 <code>times</code>（即 <code>btn.onClick(3)</code>），<code>this</code> 那一格是给类型检查看的。</li>
+<li>有了它，函数体里 <code>this.label</code> 就是类型安全的；而且如果你把 <code>onClick</code> 拆下来单独调用（<code>const f = btn.onClick; f(3)</code>），TS 会报错提醒你 <code>this</code> 上下文丢了。</li>
+</ul>
+<p>⚠️ 别把 <code>this</code> 参数和普通参数搞混：<code>this</code> 必须是<strong>第一个</strong>参数，且它不占实际调用的参数位。</p>
+<h3 id="1514-构造签名简介"><a class="header" href="#1514-构造签名简介">15.1.4 构造签名简介</a></h3>
+<p>调用签名描述“能被 <code>()</code> 调用“，那“能被 <code>new</code> 调用“呢？用<strong>构造签名（construct signature）</strong>，就是在前面加个 <code>new</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/01-func-types.ts（续）
+class Point {
+  constructor(public x: number, public y: number) {}
+}
+type PointCtor = new (x: number, y: number) =&gt; Point;
+
+function createInstance(Ctor: PointCtor, x: number, y: number): Point {
+  return new Ctor(x, y); // 因为 Ctor 有构造签名，才允许 new
+}
+const p = createInstance(Point, 3, 4);
+console.log("point =", p.x, p.y); // 3 4
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>type PointCtor = new (x: number, y: number) =&gt; Point</code> 描述“一个可以 <code>new</code>、接收两个 <code>number</code>、<code>new</code> 出来是 <code>Point</code> 的东西“——也就是 <code>Point</code> 这个类本身（类作为值就是它的构造函数）。</li>
+<li><code>createInstance</code> 接收一个构造器 <code>Ctor</code>，函数体里 <code>new Ctor(...)</code> 之所以合法，正是因为参数类型带构造签名。把类 <code>Point</code>（当值用）传进去即可。</li>
+</ul>
+<p>📌 构造签名是“工厂函数““依赖注入“这类模式的类型基础。第 16 章泛型会让它更强大（<code>new () =&gt; T</code>）。</p>
+<h3 id="1515-类型谓词函数简介"><a class="header" href="#1515-类型谓词函数简介">15.1.5 类型谓词函数简介</a></h3>
+<p>有时你想写一个“判断函数“，让 TS <strong>在调用它之后自动收窄类型</strong>。这靠<strong>类型谓词（type predicate）</strong>，返回类型写成 <code>参数名 is 某类型</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/01-func-types.ts（续）
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+const mixed: unknown[] = ["hi", 42, "world", true];
+for (const item of mixed) {
+  if (isString(item)) {
+    // 在这个分支里，item 被收窄为 string，可以安全调用 .toUpperCase()
+    console.log("字符串：", item.toUpperCase());
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>普通函数返回 <code>boolean</code> 只是“给出真假“；而返回 <code>value is string</code> 的函数在<strong>返回 <code>true</code> 的分支里</strong>，会让 TS 把 <code>value</code> 收窄成 <code>string</code>。</li>
+<li>所以 <code>if (isString(item))</code> 的花括号内，<code>item</code> 从 <code>unknown</code> 变成了 <code>string</code>，<code>item.toUpperCase()</code> 才不报错。</li>
+</ul>
+<p>⚠️ 类型谓词是你对编译器的<strong>承诺</strong>：你说“返回 true 就代表它是 string“，TS 就信了。如果你函数体里判断逻辑写错（比如判成 <code>typeof value === "number"</code>），TS 不会发现，运行时就会出错。类型谓词第 18 章会深入。</p>
+<h3 id="1516-函数重载一个函数多套签名"><a class="header" href="#1516-函数重载一个函数多套签名">15.1.6 函数重载：一个函数，多套签名</a></h3>
+<p>**函数重载（function overload）**解决这样的需求：同一个函数，<strong>参数不同时返回类型也不同</strong>，而且这种对应关系要能被类型系统精确表达。</p>
+<p>TS 的重载由两部分组成：</p>
+<ol>
+<li>若干条<strong>重载签名（overload signatures）</strong>——只有签名、没有函数体，它们是对外<strong>可见</strong>的“菜单“。</li>
+<li>一条<strong>实现签名（implementation signature）</strong>——带函数体，负责真正干活，但它对外<strong>完全不可见</strong>。</li>
+</ol>
+<p>看例子：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/02-overload.ts
+// 前面几行是「重载签名」（只有签名，没有函数体），对外可见。
+export function reverse(value: string): string;
+export function reverse&lt;T&gt;(value: T[]): T[];
+// 最后一行是「实现签名」（带函数体），对外【不可见】，只负责真正干活。
+export function reverse(value: string | unknown[]): string | unknown[] {
+  if (typeof value === "string") {
+    return value.split("").reverse().join("");
+  }
+  return value.slice().reverse();
+}
+
+const s = reverse("hello");
+console.log(s.toUpperCase()); // OLLEH —— s 是 string，能调 toUpperCase
+
+const a = reverse([1, 2, 3]);
+console.log(a.map((n) =&gt; n + 1)); // [ 4, 3, 2 ] —— a 是 number[]，能调 map
+</code></pre>
+<p><strong>逐段拆解——这里最容易讲错，务必看仔细：</strong></p>
+<ul>
+<li>前两行是重载签名：<code>reverse(string): string</code> 和 <code>reverse&lt;T&gt;(T[]): T[]</code>。它们只是“声明“，没有 <code>{}</code>。</li>
+<li>第三个 <code>reverse(...)</code>（带 <code>{}</code> 的那个）是实现签名。它的参数和返回类型必须<strong>足够宽</strong>，能覆盖上面两条重载——所以写成 <code>string | unknown[]</code>。</li>
+<li>调用时，TS <strong>只在重载签名里挑</strong>。<code>reverse("hello")</code> 匹配第一条，返回类型是 <code>string</code>，于是 <code>s.toUpperCase()</code> 合法；<code>reverse([1,2,3])</code> 匹配第二条，返回 <code>number[]</code>，于是 <code>a.map(...)</code> 合法。<strong>返回类型精确跟着入参走</strong>，这就是重载的价值。</li>
+</ul>
+<p>📌 <strong>重载最关键、最容易被讲错的一点：实现签名对外不可见。</strong> 也就是说，虽然实现签名写了 <code>value: string | unknown[]</code>，但外部<strong>不能</strong>按这个宽签名去调用。能被调用的只有那两条重载签名：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/02-overload.ts（续）
+// ⚠️ 下面这行会报错：没有一个重载签名匹配 (number)。实现签名对外不可见！
+// reverse(123);
+</code></pre>
+<p><code>reverse(123)</code> 报错——因为 <code>123</code> 既不匹配 <code>string</code> 也不匹配 <code>T[]</code>，而那个“看起来能接受任何东西“的实现签名根本不参与对外匹配。</p>
+<p>再看一个“用重载约束参数组合“的经典例子：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/02-overload.ts（续）
+function makeDate(timestamp: number): Date;
+function makeDate(year: number, month: number, day: number): Date;
+function makeDate(a: number, b?: number, c?: number): Date {
+  if (b !== undefined &amp;&amp; c !== undefined) {
+    return new Date(a, b - 1, c); // 月份从 0 开始，所以 b-1
+  }
+  return new Date(a);
+}
+
+console.log(makeDate(0).getUTCFullYear()); // 1970
+const d = makeDate(2026, 7, 2); // 用"年/月/日"三参重载
+console.log(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`); // 2026-7-2
+// makeDate(2026, 7); // ⚠️ 报错：没有接收 2 个参数的重载
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>两条重载分别声明“要么 1 个参数（时间戳），要么 3 个参数（年月日）“。</li>
+<li>实现签名用可选参数 <code>b?</code>、<code>c?</code> 来兼容这两种形态，函数体里再靠 <code>b/c</code> 是否为 <code>undefined</code> 分流。</li>
+<li>好处是 <code>makeDate(2026, 7)</code>（传 2 个）会被<strong>编译期拒绝</strong>——因为没有一条重载接收正好 2 个参数。这种“参数个数/组合级别的约束“，是重载相较于“一个参数写成联合类型“的独特能力。</li>
+</ul>
+<p>⚠️ <strong>重载的常见误区，逐条记牢：</strong></p>
+<ol>
+<li>实现签名<strong>不算</strong>一条对外重载。只写一条重载签名 + 一条实现签名时，很多人以为“有两条签名“，其实对外只有那一条重载签名。</li>
+<li>实现签名必须<strong>兼容所有</strong>重载签名，否则报错。</li>
+<li>重载签名要放在<strong>最前面</strong>，从上到下匹配，把<strong>更具体</strong>的放前面、更宽泛的放后面。</li>
+<li>很多场景其实<strong>不需要重载</strong>——如果返回类型不随入参变化，用联合类型或可选参数更简单。重载是“入参和返回类型有强关联“时才拿出来的重武器。</li>
+</ol>
+<hr>
+<h2 id="152-typescript-里的类"><a class="header" href="#152-typescript-里的类">15.2 TypeScript 里的类</a></h2>
+<p>第 4 章你已经掌握了 JS 的 <code>class</code>、继承、原型。TS 在此之上加了一层<strong>编译期的类型盔甲</strong>。</p>
+<h3 id="1521-字段类型访问修饰符readonlystaticgettersetter"><a class="header" href="#1521-字段类型访问修饰符readonlystaticgettersetter">15.2.1 字段类型、访问修饰符、readonly、static、getter/setter</a></h3>
+<p>一次性把这些放进一个“银行账户“类里看：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/03-class-basics.ts
+class BankAccount {
+  public readonly owner: string; // public：默认，任何地方可读；readonly：初始化后不可改
+  private _balance: number; // private：只有 BankAccount 内部能访问
+  protected currency: string; // protected：本类 + 子类内部能访问
+  static bankName = "TS 银行"; // static：属于"类"本身，而非某个实例
+
+  constructor(owner: string, initial: number, currency = "CNY") {
+    this.owner = owner;
+    this._balance = initial;
+    this.currency = currency;
+  }
+
+  deposit(amount: number): void {
+    if (amount &lt;= 0) throw new Error("存款必须为正数");
+    this._balance += amount;
+  }
+
+  get balance(): number {
+    return this._balance; // 读 account.balance 时执行
+  }
+
+  set balance(value: number) {
+    if (value &lt; 0) throw new Error("余额不能为负"); // 写 account.balance = x 时执行
+    this._balance = value;
+  }
+
+  static describe(): string {
+    return `欢迎使用 ${BankAccount.bankName}`;
+  }
+}
+</code></pre>
+<p><strong>逐段拆解访问修饰符——这块不能讲错：</strong></p>
+<ul>
+<li><strong><code>public</code></strong>：默认修饰符（不写就是它）。类内、子类、类外都能访问。<code>owner</code> 就是 public。</li>
+<li><strong><code>private</code></strong>：<strong>只有该类自己内部</strong>能访问，子类和外部都不行。<code>_balance</code> 是 private，外面写 <code>acc._balance</code> 会编译报错。</li>
+<li><strong><code>protected</code></strong>：类内部<strong>和子类内部</strong>能访问，但类外部不行。<code>currency</code> 是 protected——本类和将来继承它的子类能用，外部代码不能。</li>
+<li><strong><code>readonly</code></strong>：只读。可以在声明时或<strong>构造函数里</strong>赋值，此后不能再改。<code>owner</code> 是 <code>readonly</code>，<code>acc.owner = "别人"</code> 会报错。</li>
+<li><strong><code>static</code></strong>：属于<strong>类本身</strong>而不是实例。<code>bankName</code> 和 <code>describe()</code> 都是静态成员，用 <code>BankAccount.bankName</code>、<code>BankAccount.describe()</code> 访问，<strong>不能</strong>通过实例 <code>acc.bankName</code> 访问。</li>
+</ul>
+<p>⚠️ <strong>一句话记牢可见性范围：<code>public</code>（谁都行）⊃ <code>protected</code>（本类 + 子类）⊃ <code>private</code>（仅本类）。</strong></p>
+<p>再看 getter/setter 和 static 怎么用：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/03-class-basics.ts（续）
+const acc = new BankAccount("阿伟", 100);
+acc.deposit(50);
+console.log(acc.owner, "余额：", acc.balance); // 阿伟 余额： 150（走 getter）
+acc.balance = 200; // 走 setter（含校验）
+console.log("改后余额：", acc.balance); // 200
+console.log(BankAccount.describe()); // 欢迎使用 TS 银行（static 方法，用类名调）
+
+// acc.owner = "别人";   // ⚠️ 报错：owner 是 readonly
+// acc._balance = 999;   // ⚠️ 报错：_balance 是 private，外部不可访问
+// acc.balance = -1;     // 运行时抛错：余额不能为负
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>acc.balance</code>（读）表面像访问属性，实际执行了 <code>get balance()</code>；<code>acc.balance = 200</code>（写）实际执行了 <code>set balance(value)</code>，顺便做了“不能为负“的校验。getter/setter 让你<strong>用属性的语法，行方法的逻辑</strong>——校验、懒计算、日志都能藏进去。</li>
+<li><code>BankAccount.describe()</code> 用<strong>类名</strong>调用，因为它是静态方法。</li>
+</ul>
+<h3 id="1522-参数属性构造函数里的简写"><a class="header" href="#1522-参数属性构造函数里的简写">15.2.2 参数属性：构造函数里的简写</a></h3>
+<p>上面 <code>BankAccount</code> 的构造函数里写了一堆 <code>this.owner = owner</code> 这样的样板赋值，很啰嗦。TS 提供<strong>参数属性（parameter properties）</strong>：在构造函数参数前直接加修饰符，TS 就会<strong>自动声明同名字段并赋值</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/03-class-basics.ts（续）
+class Point3D {
+  // 等价于：声明 x/y/z 三个字段 + 在构造体里 this.x = x 等
+  constructor(
+    public readonly x: number,
+    public readonly y: number,
+    public readonly z: number,
+  ) {}
+
+  length(): number {
+    return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
+  }
+}
+
+const v = new Point3D(2, 3, 6);
+console.log("向量长度：", v.length()); // 7
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>constructor(public readonly x: number, ...)</code> 一行干了三件事：声明字段 <code>x</code>、把参数 <code>x</code> 赋给 <code>this.x</code>、并加上 <code>public readonly</code> 修饰。省掉了“先声明字段、再在构造体里 <code>this.x = x</code>“的重复。</li>
+<li>触发条件：参数前<strong>必须有至少一个修饰符</strong>（<code>public</code>/<code>private</code>/<code>protected</code>/<code>readonly</code>）。裸参数 <code>x: number</code>（没修饰符）就是普通参数，不会变成字段。</li>
+</ul>
+<p>💡 参数属性是 TS 里最实用的语法糖之一，数据类/值对象几乎都靠它，代码能省一大截。</p>
+<h3 id="1523-抽象类与-implements"><a class="header" href="#1523-抽象类与-implements">15.2.3 抽象类与 implements</a></h3>
+<p><strong>抽象类（<code>abstract class</code>）<strong>是“只能被继承、不能被 <code>new</code> 的模板“，它可以留下</strong>抽象成员</strong>逼子类去实现，也可以提供公共实现。<strong><code>implements</code></strong> 则让一个类<strong>承诺满足某个接口的形状</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch15/04-abstract-implements.ts
+interface Shape {
+  readonly name: string;
+  area(): number;
+}
+
+abstract class BaseShape implements Shape {
+  abstract readonly name: string; // 抽象字段：子类必须提供
+  abstract area(): number; // 抽象方法：只有签名，子类必须实现
+
+  // 非抽象方法：所有子类共享的公共逻辑
+  describe(): string {
+    return `${this.name} 的面积是 ${this.area().toFixed(2)}`;
+  }
+}
+
+class Circle extends BaseShape {
+  readonly name = "圆";
+  constructor(private radius: number) {
+    super(); // 子类构造函数必须先调 super()
+  }
+  area(): number {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+class Rectangle extends BaseShape {
+  readonly name = "矩形";
+  constructor(private w: number, private h: number) {
+    super();
+  }
+  area(): number {
+    return this.w * this.h;
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>interface Shape</code> 只描述“形状“：有个只读 <code>name</code>、一个 <code>area()</code> 方法。<code>implements Shape</code> 是 <code>BaseShape</code> 对编译器的承诺——“我一定长成 Shape 的样子”，如果没实现齐，编译报错。</li>
+<li><code>abstract class BaseShape</code> 用了 <code>abstract</code> 修饰 <code>name</code> 和 <code>area</code>：它们只有声明没有实现，<strong>逼子类去实现</strong>。但 <code>describe()</code> 是普通方法，是所有子类共享的公共逻辑——这正是抽象类比接口强的地方：<strong>接口只能描述形状，抽象类还能塞进公共实现</strong>。</li>
+<li><code>Circle</code> / <code>Rectangle</code> <code>extends BaseShape</code> 并实现了 <code>name</code> 和 <code>area()</code>。子类构造函数里 <code>super()</code> 必须先调（这是 JS 类的规则，第 4 章讲过）。</li>
+<li><code>implements</code> 和 <code>extends</code> 的区别：<code>implements</code> 只是<strong>类型检查</strong>（承诺形状），不会继承任何实现；<code>extends</code> 才是<strong>真继承</strong>（拿到父类的字段和方法）。一个类可以 <code>implements</code> 多个接口，但只能 <code>extends</code> 一个类。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch15/04-abstract-implements.ts（续）
+// const s = new BaseShape(); // ⚠️ 报错：不能创建抽象类的实例
+</code></pre>
+<p>⚠️ 抽象类<strong>不能被 <code>new</code></strong>。它是模板，实例化交给具体子类。</p>
+<h3 id="1524-类作为类型-vs-作为值"><a class="header" href="#1524-类作为类型-vs-作为值">15.2.4 类作为类型 vs 作为值</a></h3>
+<p>一个常被忽略但很重要的事实：<strong>声明一个类，同时创造了两样东西</strong>——</p>
+<ul>
+<li>一个<strong>值（value）</strong>：类的构造函数，可以 <code>new</code>，可以赋给变量、当参数传。</li>
+<li>一个<strong>类型（type）</strong>：它的<strong>实例类型</strong>，可以用在类型注解位置。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch15/04-abstract-implements.ts（续）
+// 用 BaseShape 作类型（它带公共方法 describe）；抽象类不能被 new，但能当类型用。
+const shapes: BaseShape[] = [new Circle(2), new Rectangle(3, 4)];
+for (const shape of shapes) {
+  console.log(shape.describe());
+}
+// 圆 的面积是 12.57
+// 矩形 的面积是 12.00
+
+const CircleCtor = Circle; // Circle 用作【值】——把构造函数赋给变量
+const c2 = new CircleCtor(1);
+console.log(c2.area().toFixed(2)); // 3.14
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>shapes: BaseShape[]</code> 里的 <code>BaseShape</code> 用作<strong>类型</strong>——表示“元素都是 BaseShape 的实例“。注意抽象类<strong>不能 <code>new</code>，但完全可以当类型用</strong>（因为 Circle/Rectangle 的实例都是它的子类型）。</li>
+<li><code>const CircleCtor = Circle</code> 里的 <code>Circle</code> 用作<strong>值</strong>——把构造函数本身赋给变量，之后 <code>new CircleCtor(1)</code> 照样能造实例。</li>
+</ul>
+<p>📌 记住这句话：<strong>在类型位置，类名指“实例的类型“；在值位置，类名指“构造函数“。</strong> 前面 15.1.4 的构造签名 <code>PointCtor</code> 描述的，正是“类作为值“那一面的类型。</p>
+<h3 id="1525--私有字段-vs-private"><a class="header" href="#1525--私有字段-vs-private">15.2.5 <code>#</code> 私有字段 vs <code>private</code></a></h3>
+<p>这是高频面试题，也是初学者最容易含糊的点。两者都表示“私有“，但<strong>机制完全不同</strong>：</p>
+<ul>
+<li><code>private</code> 是 <strong>TypeScript 的编译期检查</strong>。编译成 JS 后，这个“私有“就<strong>消失了</strong>——字段照样在对象上，运行时任何人都能读到。它是“君子协定“。</li>
+<li><code>#</code> 是 <strong>JavaScript 语言层面的真私有</strong>（ECMAScript 标准语法）。它在运行时也是私有的，类外部用<strong>任何手段</strong>都读不到。</li>
+</ul>
+<pre><code class="language-typescript">// 文件：code/ch15/04-abstract-implements.ts（续）
+class Secret {
+  #realKey = "hard-#-private"; // # 是 JS 运行时真正的私有
+  private softKey = "soft-private"; // private 只是 TS 编译期检查
+
+  reveal(): string {
+    return `${this.#realKey} / ${this.softKey}`;
+  }
+}
+
+const sec = new Secret();
+console.log(sec.reveal());
+// console.log(sec.#realKey);          // ⚠️ 语法错误：# 私有在类外不可见
+console.log("绕过 TS 读 private：", (sec as any).softKey); // soft-private —— 证明它运行时还在
+console.log("# 私有的属性名：", Object.keys(sec)); // 只有 softKey，看不到 #realKey
+</code></pre>
+<p><strong>逐段拆解——运行结果会给你实锤：</strong></p>
+<ul>
+<li><code>(sec as any).softKey</code> 输出 <code>"soft-private"</code>：证明 <code>private</code> 字段<strong>运行时依然存在</strong>，只要绕过 TS 的类型检查（用 <code>as any</code>）就能读到。所以 <code>private</code> 挡不住恶意/意外访问。</li>
+<li><code>Object.keys(sec)</code> 只列出 <code>["softKey"]</code>，<strong>看不到 <code>#realKey</code></strong>：证明 <code>#</code> 私有字段连“属性“都不算，运行时对外彻底隐形。</li>
+<li><code>sec.#realKey</code>（若取消注释）是<strong>语法错误</strong>——<code>#</code> 私有在类外根本无法书写。</li>
+</ul>
+<p>📌 <strong>怎么选？</strong> 想要“真正的封装、防外部访问“就用 <code>#</code>；只是“标记内部用、团队约定“或需要和老代码/装饰器/某些库配合，用 <code>private</code> 也行。新项目通常推荐 <code>#</code>，因为它是语言标准且是真私有。二者别混用同一个字段。</p>
+<hr>
+<h2 id="153-枚举enum"><a class="header" href="#153-枚举enum">15.3 枚举（enum）</a></h2>
+<p><strong>枚举（enum）<strong>用来给“一组命名的常量“起个类型。TS 的 enum 有点特殊——它</strong>既是类型也会生成运行时代码</strong>，这一点是所有坑的根源，务必理解。</p>
+<h3 id="1531-数字枚举与它的反向映射"><a class="header" href="#1531-数字枚举与它的反向映射">15.3.1 数字枚举与它的反向映射</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/05-enum.ts
+enum Direction {
+  Up, // 0
+  Down, // 1
+  Left, // 2
+  Right, // 3
+}
+console.log(Direction.Up, Direction.Right); // 0 3
+
+// ⚠️ 数字枚举有「反向映射（reverse mapping）」：既能名→值，也能值→名。
+console.log(Direction[0]); // "Up" —— 用数字反查名字
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>数字枚举不写值时，成员从 <code>0</code> 开始<strong>自动递增</strong>：<code>Up=0, Down=1, Left=2, Right=3</code>。</li>
+<li><code>Direction[0]</code> 竟然能反查出 <code>"Up"</code>——这叫<strong>反向映射（reverse mapping）</strong>。数字枚举编译后会生成一个<strong>双向填充</strong>的对象（<code>{0:"Up", Up:0, ...}</code>），既能名查值也能值查名。这让它体积更大，也更容易被误用（比如不小心把一个随便的数字当成枚举传进去）。</li>
+</ul>
+<h3 id="1532-字符串枚举"><a class="header" href="#1532-字符串枚举">15.3.2 字符串枚举</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/05-enum.ts（续）
+enum LogLevel {
+  Debug = "DEBUG",
+  Info = "INFO",
+  Warn = "WARN",
+  Error = "ERROR",
+}
+console.log(LogLevel.Warn); // "WARN"
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>字符串枚举要求<strong>每个成员都显式赋一个字符串</strong>，没有自动递增。</li>
+<li>字符串枚举<strong>没有反向映射</strong>（<code>LogLevel["WARN"]</code> 是 <code>undefined</code>）。这反而更安全：日志、存数据库、序列化到 JSON 时，值是可读的 <code>"WARN"</code> 而不是意义不明的 <code>2</code>，调试时一眼看懂。</li>
+</ul>
+<p>💡 <strong>优先用字符串枚举而非数字枚举</strong>——避开反向映射的额外体积，也避开“隐式数值“带来的各种坑。</p>
+<h3 id="1533-枚举的运行时形态"><a class="header" href="#1533-枚举的运行时形态">15.3.3 枚举的运行时形态</a></h3>
+<p>这是理解 enum 的关键：<strong>普通 enum 不是“编译期擦除“的，它会生成一个真实存在的对象。</strong></p>
+<pre><code class="language-typescript">// 文件：code/ch15/05-enum.ts（续）
+console.log("LogLevel 运行时对象：", LogLevel);
+// { Debug: 'DEBUG', Info: 'INFO', Warn: 'WARN', Error: 'ERROR' }
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>直接打印 <code>LogLevel</code>，能看到它在运行时就是一个普通对象。这意味着你可以遍历它、把它当值传递。</li>
+<li>代价：它<strong>占运行时体积</strong>，且和“接口/类型别名那种编译后完全消失“的东西不一样。这也是有人不喜欢 enum 的原因之一。</li>
+</ul>
+<h3 id="1534-const-enum编译期内联"><a class="header" href="#1534-const-enum编译期内联">15.3.4 const enum：编译期内联</a></h3>
+<p><code>const enum</code> 想解决“运行时体积“问题——它<strong>不生成对象</strong>，而是在编译时把每处引用<strong>直接替换成字面量值</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/05-enum.ts（续）
+const enum Planet {
+  Mercury,
+  Venus,
+  Earth,
+}
+const home = Planet.Earth; // 编译后直接被替换成字面量 2，Planet 对象根本不生成
+console.log("home =", home); // 2
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>Planet.Earth</code> 在编译后会被<strong>内联</strong>成 <code>2</code>，<code>Planet</code> 这个对象根本不会出现在产物里，省体积。</li>
+<li>⚠️ <strong>但 <code>const enum</code> 有坑</strong>：它依赖编译期“看得到定义并内联“。在<strong>跨模块</strong>、开启 <code>isolatedModules</code>、或用某些打包器（Babel、esbuild、Vite 的部分配置）<strong>逐文件转译</strong>的场景下，内联可能失效甚至报错。<strong>库作者尤其要避免对外暴露 <code>const enum</code></strong>。所以 <code>const enum</code> 虽好，用之前要确认你的构建链支持。</li>
+</ul>
+<h3 id="1535-现代替代联合字面量类型--as-const-对象"><a class="header" href="#1535-现代替代联合字面量类型--as-const-对象">15.3.5 现代替代：联合字面量类型 + as const 对象</a></h3>
+<p>因为 enum 的这些“运行时痕迹“和坑，现代 TS 项目里越来越多人用<strong>联合字面量类型 + <code>as const</code> 对象</strong>来替代枚举：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/05-enum.ts（续）
+const Color = {
+  Red: "red",
+  Green: "green",
+  Blue: "blue",
+} as const;
+
+// 从对象的值推出联合类型： "red" | "green" | "blue"
+type Color = (typeof Color)[keyof typeof Color];
+
+function paint(c: Color): void {
+  console.log("涂上", c);
+}
+paint(Color.Red); // 涂上 red
+paint("blue"); // 直接传字面量也行（enum 做不到这么自然）
+// paint("purple");    // ⚠️ 报错：不在联合类型里
+
+console.log("Color 对象的所有值：", Object.values(Color)); // [ 'red', 'green', 'blue' ]
+</code></pre>
+<p><strong>逐段拆解——这里信息量大，慢慢看：</strong></p>
+<ul>
+<li><code>const Color = {...} as const</code>：<code>as const</code>（第 13 章的字面量类型 + 常量断言）把对象<strong>冻结</strong>成最窄的字面量类型，<code>Red</code> 的类型不是宽泛的 <code>string</code> 而是精确的 <code>"red"</code>。</li>
+<li><code>type Color = (typeof Color)[keyof typeof Color]</code>：这行是从对象<strong>反推</strong>出联合类型的固定套路。<code>typeof Color</code> 拿到对象的类型，<code>keyof typeof Color</code> 拿到它所有键（<code>"Red" | "Green" | "Blue"</code>），再用索引访问 <code>[...]</code> 拿到所有值的类型——结果就是 <code>"red" | "green" | "blue"</code>。（这里 <code>Color</code> 同时是值和类型，属于合法的声明合并，互不冲突。）</li>
+<li>于是 <code>paint</code> 既能收 <code>Color.Red</code>（有命名常量的可读性），也能直接收 <code>"blue"</code>（字面量），这是普通 enum 做不到的自然。</li>
+<li>运行时 <code>Color</code> 只是一个普通对象，<code>Object.values(Color)</code> 就能遍历，<strong>没有任何编译魔法</strong>，打包器也不会有 <code>const enum</code> 那种坑。</li>
+</ul>
+<p>📌 <strong>enum vs 联合字面量，怎么取舍：</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>需求</th><th>推荐</th></tr>
+</thead>
+<tbody>
+<tr><td>想要最小运行时、能直接传字符串字面量、无构建坑</td><td><strong><code>as const</code> 对象 + 联合类型</strong></td></tr>
+<tr><td>团队已大量用 enum、想要数字自增语义或命名空间感</td><td><strong>enum</strong>（且优先字符串枚举）</td></tr>
+<tr><td>极端在意产物体积且构建链确定支持</td><td><code>const enum</code>（谨慎，别对外暴露）</td></tr>
+</tbody>
+</table>
+</div>
+<p>无论选哪个，<strong>尽量避开数字枚举的隐式数值和反向映射</strong>。</p>
+<hr>
+<h2 id="154-泛型预告"><a class="header" href="#154-泛型预告">15.4 泛型预告</a></h2>
+<p>你可能注意到，15.1.6 的 <code>reverse&lt;T&gt;(value: T[]): T[]</code> 和 15.1.4 里“能不能写成 <code>new () =&gt; T</code>“，都出现了一个尖括号里的 <code>T</code>。这就是<strong>泛型（generics）</strong>——“类型的参数”。</p>
+<p>它让你写出“对多种类型都成立、且保持类型关系“的代码：比如一个 <code>identity&lt;T&gt;(x: T): T</code>，你传 <code>number</code> 进去就返回 <code>number</code>、传 <code>string</code> 就返回 <code>string</code>，而不是丢失类型信息的 <code>any</code>。函数、类、接口、类型别名都能泛型化。下一章我们专门讲透它。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>重载的实现签名对外不可见</strong>。别以为写了实现签名就多了一条可调用签名——外部只能按重载签名调用。把更具体的重载放前面。</li>
+<li>⚠️ <strong><code>private</code> 不是真私有</strong>，编译成 JS 后运行时照样能读到（<code>as any</code> 就能绕过）。要真封装用 <code>#</code>。同一字段别混用二者。</li>
+<li>⚠️ <strong>参数属性要有修饰符才生效</strong>。<code>constructor(x: number)</code> 是普通参数；<code>constructor(public x: number)</code> 才会自动变字段。</li>
+<li>⚠️ <strong>抽象类不能 <code>new</code></strong>，但可以当类型用。抽象成员必须被子类实现。</li>
+<li>⚠️ <strong>数字枚举有反向映射</strong>、会隐式自增，容易误传。<strong>优先字符串枚举</strong>，或干脆用 <code>as const</code> 对象。</li>
+<li>⚠️ <strong><code>const enum</code> 有构建兼容坑</strong>，<code>isolatedModules</code> / Babel / esbuild 下可能失效；库的公共 API 不要用它。</li>
+<li>💡 <strong>本项目 tsconfig 下，每个示例文件最好带 <code>export {}</code> 或真实 <code>import/export</code></strong>，否则文件被当“全局脚本“，跨文件同名声明（如 <code>Point</code>、<code>Counter</code>）会冲突。本章代码文件已按此处理。</li>
+<li>💡 <strong>getter/setter 让你在“读写属性“时偷偷做校验/懒计算/日志</strong>，对外接口却保持属性的简洁语法。</li>
+<li>💡 <strong><code>this</code> 参数</strong>能在编译期就抓住“方法被摘下来单独调用导致 <code>this</code> 丢失“的经典 bug。</li>
+</ul>
+<hr>
+<h2 id="本章小项目有限状态机"><a class="header" href="#本章小项目有限状态机">本章小项目：有限状态机</a></h2>
+<p><strong>有限状态机（Finite State Machine，FSM）<strong>是一个到处都在用的模型：订单流转、红绿灯、播放器、审批流……它的核心是“<strong>在某个状态下，只有特定事件是合法的，且会把系统带到确定的下一个状态</strong>“。我们用 TS 把这个“合法性“变成</strong>类型安全 + 运行时都拦得住</strong>的东西。</p>
+<p>以<strong>订单状态</strong>为例：<code>pending</code>（待支付）→ <code>paid</code>（已支付）→ <code>shipped</code>（已发货）→ <code>delivered</code>（已送达），且在发货前可随时 <code>cancel</code>（取消）。</p>
+<h3 id="第-1-步用联合字面量类型定义状态与事件"><a class="header" href="#第-1-步用联合字面量类型定义状态与事件">第 1 步：用联合字面量类型定义状态与事件</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/state-machine.ts
+type OrderState =
+  | "pending" // 待支付
+  | "paid" // 已支付
+  | "shipped" // 已发货
+  | "delivered" // 已送达
+  | "cancelled"; // 已取消
+
+type OrderEvent =
+  | "pay" // 支付
+  | "ship" // 发货
+  | "deliver" // 送达
+  | "cancel"; // 取消
+</code></pre>
+<p><strong>逐段拆解：</strong> 用<strong>联合字面量类型</strong>（第 14 章）而不是 enum 来表达状态和事件——它们零运行时开销，且在下面的映射类型里能被完美利用。</p>
+<h3 id="第-2-步合法转移表"><a class="header" href="#第-2-步合法转移表">第 2 步：合法转移表</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/state-machine.ts（续）
+type TransitionTable = {
+  [S in OrderState]: {
+    [E in OrderEvent]?: OrderState;
+  };
+};
+
+const transitions: TransitionTable = {
+  pending: { pay: "paid", cancel: "cancelled" },
+  paid: { ship: "shipped", cancel: "cancelled" },
+  shipped: { deliver: "delivered" }, // 已发货就不能再取消了
+  delivered: {}, // 终态：无任何合法转移
+  cancelled: {}, // 终态
+};
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>TransitionTable</code> 用<strong>映射类型（mapped type）</strong>：外层 <code>[S in OrderState]</code> 表示“每个状态都要有一项“；内层 <code>[E in OrderEvent]?</code> 里那个 <code>?</code> 表示“事件是可选的“——<strong>没列出的事件就代表在该状态下非法</strong>。</li>
+<li><code>transitions</code> 是这张表的具体值。<code>shipped</code> 下只有 <code>deliver</code>，没有 <code>cancel</code>——用类型把“已发货不能取消“这条业务规则固化下来。<code>delivered</code>/<code>cancelled</code> 是<strong>终态</strong>，值为空对象 <code>{}</code>，任何事件都不合法。</li>
+<li>因为 <code>TransitionTable</code> 要求每个状态都有键，<strong>如果你漏写了某个状态（比如忘了 <code>cancelled</code>），TS 会当场报错</strong>——这就是类型安全的好处，转移表不会写漏。</li>
+</ul>
+<h3 id="第-3-步转移结果类型可辨识联合"><a class="header" href="#第-3-步转移结果类型可辨识联合">第 3 步：转移结果类型（可辨识联合）</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/state-machine.ts（续）
+type TransitionResult =
+  | { ok: true; from: OrderState; to: OrderState; event: OrderEvent }
+  | { ok: false; from: OrderState; event: OrderEvent; reason: string };
+
+interface HistoryEntry {
+  from: OrderState;
+  event: OrderEvent;
+  to: OrderState;
+  at: number; // 时间戳
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>TransitionResult</code> 是一个<strong>可辨识联合（discriminated union）</strong>（第 14 章），靠 <code>ok</code> 这个字面量字段区分成功/失败。成功时带 <code>to</code>（新状态），失败时带 <code>reason</code>（原因）。调用方 <code>if (result.ok)</code> 一判断，TS 就能收窄到对应分支——成功分支能访问 <code>to</code>，失败分支能访问 <code>reason</code>，各取所需。</p>
+<h3 id="第-4-步statemachine-类"><a class="header" href="#第-4-步statemachine-类">第 4 步：StateMachine 类</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/state-machine.ts（续）
+class OrderStateMachine {
+  #state: OrderState; // 用 # 私有，外部只能通过 getState() 读，不能乱改
+  readonly #history: HistoryEntry[] = [];
+  readonly #table: TransitionTable;
+
+  constructor(initial: OrderState = "pending", table: TransitionTable = transitions) {
+    this.#state = initial;
+    this.#table = table;
+  }
+
+  getState(): OrderState {
+    return this.#state;
+  }
+
+  getHistory(): readonly HistoryEntry[] {
+    return this.#history.slice(); // 返回副本，防止外部篡改内部数组
+  }
+
+  can(event: OrderEvent): boolean {
+    return this.#table[this.#state][event] !== undefined;
+  }
+
+  transition(event: OrderEvent): TransitionResult {
+    const from = this.#state;
+    const to = this.#table[from][event];
+
+    if (to === undefined) {
+      return {
+        ok: false,
+        from,
+        event,
+        reason: `状态「${from}」下不允许事件「${event}」`,
+      };
+    }
+
+    this.#state = to;
+    this.#history.push({ from, event, to, at: Date.now() });
+    return { ok: true, from, to, event };
+  }
+}
+</code></pre>
+<p><strong>逐段拆解——这是项目的核心：</strong></p>
+<ul>
+<li><code>#state</code>、<code>#history</code>、<code>#table</code> 全用 <code>#</code> <strong>真私有</strong>：外部无法直接改状态，只能通过 <code>transition</code> 走合法流程。这正是 15.2.5 学的封装。</li>
+<li><code>getState()</code> 只读地暴露当前状态；<code>getHistory()</code> 返回 <code>#history.slice()</code> 的<strong>副本</strong>，且返回类型标成 <code>readonly HistoryEntry[]</code>，双重保险防止外部篡改内部历史。</li>
+<li><code>can(event)</code> 查询“当前状态下这个事件合不合法“，靠 <code>this.#table[this.#state][event] !== undefined</code> 判断——转移表里有这项就合法。</li>
+<li><code>transition(event)</code> 是关键：先查 <code>to = 表[from][event]</code>。<strong>查不到（<code>undefined</code>）就返回失败、且完全不动状态</strong>；查得到就更新 <code>#state</code>、记一笔历史、返回成功。所有非法转移在<strong>运行时</strong>被稳稳拦下，返回结构化的失败结果而非抛异常——调用方能优雅处理。</li>
+</ul>
+<h3 id="第-5-步演示一系列转移"><a class="header" href="#第-5-步演示一系列转移">第 5 步：演示一系列转移</a></h3>
+<pre><code class="language-typescript">// 文件：code/ch15/state-machine.ts（续）
+const sm = new OrderStateMachine(); // 初始 pending
+console.log("初始状态：", sm.getState()); // pending
+
+const steps: OrderEvent[] = ["pay", "ship", "cancel", "deliver"];
+for (const event of steps) {
+  const result = sm.transition(event);
+  if (result.ok) {
+    console.log(`✅ ${result.from} --[${result.event}]--&gt; ${result.to}`);
+  } else {
+    console.log(`❌ 拒绝：${result.reason}（状态保持 ${result.from}）`);
+  }
+}
+</code></pre>
+<p>运行 <code>npx tsx ch15/state-machine.ts</code>，实测输出：</p>
+<pre><code>初始状态： pending
+✅ pending --[pay]--&gt; paid
+✅ paid --[ship]--&gt; shipped
+❌ 拒绝：状态「shipped」下不允许事件「cancel」（状态保持 shipped）
+✅ shipped --[deliver]--&gt; delivered
+最终状态： delivered
+成功转移次数（历史长度）： 3
+delivered 还能 cancel 吗？ false
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>pay</code>、<code>ship</code> 依次合法，状态一路推进。</li>
+<li>到 <code>shipped</code> 时试图 <code>cancel</code>——转移表里 <code>shipped</code> 没有 <code>cancel</code>，<code>transition</code> 返回 <code>ok:false</code>，状态<strong>纹丝不动</strong>保持 <code>shipped</code>。<code>if (result.ok)</code> 让 TS 在两个分支里分别看到 <code>to</code> 和 <code>reason</code>，这就是可辨识联合的威力。</li>
+<li>接着 <code>deliver</code> 合法，走到终态 <code>delivered</code>。历史里只记了 <strong>3 次成功转移</strong>（失败的 <code>cancel</code> 不入历史）。<code>can("cancel")</code> 返回 <code>false</code>，因为 <code>delivered</code> 是终态。</li>
+</ul>
+<h3 id="扩展练习加进入--离开回调"><a class="header" href="#扩展练习加进入--离开回调">扩展练习：加进入 / 离开回调</a></h3>
+<p>真实状态机常需要“进入某状态时做点事（发通知）、离开某状态时清理“。我们继承出一个带回调的版本：</p>
+<pre><code class="language-typescript">// 文件：code/ch15/state-machine.ts（续）
+type StateHook = (state: OrderState) =&gt; void;
+
+class HookedStateMachine extends OrderStateMachine {
+  #onEnter = new Map&lt;OrderState, StateHook&gt;();
+  #onLeave = new Map&lt;OrderState, StateHook&gt;();
+
+  onEnter(state: OrderState, hook: StateHook): this {
+    this.#onEnter.set(state, hook);
+    return this; // 返回 this 支持链式调用
+  }
+  onLeave(state: OrderState, hook: StateHook): this {
+    this.#onLeave.set(state, hook);
+    return this;
+  }
+
+  override transition(event: OrderEvent): TransitionResult {
+    const from = this.getState();
+    const result = super.transition(event); // 复用父类的合法性判断与状态变更
+    if (result.ok) {
+      this.#onLeave.get(from)?.(from); // 离开旧状态
+      this.#onEnter.get(result.to)?.(result.to); // 进入新状态
+    }
+    return result;
+  }
+}
+
+const hooked = new HookedStateMachine()
+  .onEnter("paid", () =&gt; console.log("🔔 进入 paid：给财务发通知"))
+  .onLeave("pending", () =&gt; console.log("🔔 离开 pending：清理待支付提醒"));
+
+hooked.transition("pay");
+console.log("hooked 当前状态：", hooked.getState()); // paid
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>HookedStateMachine extends OrderStateMachine</code>：靠继承复用父类全部的合法性判断，不重复造轮子。</li>
+<li><code>onEnter</code>/<code>onLeave</code> 把回调登记进 <code>Map</code>，并 <code>return this</code> 支持<strong>链式调用</strong>（<code>.onEnter(...).onLeave(...)</code>）。</li>
+<li><strong>重写（override）</strong> <code>transition</code>：先记下旧状态 <code>from</code>，调 <code>super.transition(event)</code> 让父类干合法性判断和状态变更这些脏活；只有 <code>result.ok</code> 时，才用 <code>?.()</code>（可选链调用，第 14 章）触发“离开旧状态““进入新状态“的回调——没登记回调时 <code>?.</code> 会安全跳过。<code>override</code> 关键字让 TS 校验你确实在重写父类方法（拼错方法名会报错）。</li>
+</ul>
+<p>运行时输出：</p>
+<pre><code>🔔 离开 pending：清理待支付提醒
+🔔 进入 paid：给财务发通知
+hooked 当前状态： paid
+</code></pre>
+<p><strong>你可以继续增强（提示在括号里）：</strong></p>
+<ol>
+<li><strong>让 <code>transition</code> 失败时抛错</strong>而不是返回 <code>ok:false</code>，做一个 <code>transitionOrThrow</code>。（提示：判断 <code>!result.ok</code> 就 <code>throw new Error(result.reason)</code>。）</li>
+<li><strong>泛型化</strong>成 <code>StateMachine&lt;S, E&gt;</code>，把状态/事件类型作为类型参数传入，一套代码复用给红绿灯、播放器。（提示：这正是下一章泛型的用武之地。）</li>
+<li><strong>加 <code>onTransition(from, event, to)</code> 全局回调</strong>，记录到日志系统。</li>
+<li><strong>持久化</strong>：把 <code>getState()</code> + <code>getHistory()</code> 序列化存储，重启后 <code>new OrderStateMachine(savedState)</code> 恢复。</li>
+</ol>
+<p>第 2 点会自然把你引向下一章。</p>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>这一章我们补齐了 TS 里“函数、类、枚举“三块日常主力：</p>
+<ul>
+<li><strong>函数类型</strong>：函数类型表达式 <code>(a: T) =&gt; R</code>；<strong>调用签名</strong>描述“可调用 + 带属性“的函数对象；<strong><code>this</code> 参数</strong>是编译期专用、不占实参；<strong>构造签名</strong> <code>new (...) =&gt; T</code> 描述“可 <code>new</code>“；<strong>类型谓词</strong> <code>x is T</code> 让调用后自动收窄。<strong>函数重载</strong>——多条对外可见的重载签名 + 一条对外不可见的实现签名，返回类型随入参精确变化。</li>
+<li><strong>类</strong>：字段类型注解；<code>public/protected/private</code> 三级可见性（谁都行 ⊃ 本类+子类 ⊃ 仅本类）；<code>readonly</code> 只读；<strong>参数属性</strong>在构造函数里一行搞定“声明+赋值+修饰“；<code>static</code> 属于类本身；getter/setter 用属性语法藏方法逻辑；<strong>抽象类</strong>是能带公共实现的模板、不能 <code>new</code>；<code>implements</code> 只做形状检查、<code>extends</code> 才真继承。</li>
+<li><strong>类的双重身份</strong>：类型位置指实例类型，值位置指构造函数。</li>
+<li><strong><code>#</code> vs <code>private</code></strong>：<code>#</code> 是运行时真私有；<code>private</code> 只是编译期君子协定，<code>as any</code> 就能绕过。</li>
+<li><strong>枚举</strong>：数字枚举会自增且有反向映射（体积大、易误用）；字符串枚举更安全可读；<strong>普通 enum 会生成运行时对象</strong>；<code>const enum</code> 内联省体积但有构建坑。现代替代——<strong><code>as const</code> 对象 + 联合字面量类型</strong>，零运行时魔法且能直接传字面量。</li>
+<li>小项目<strong>有限状态机</strong>：用联合字面量定义状态/事件、映射类型定义转移表、可辨识联合表达成功/失败、<code>#</code> 私有封装状态、<code>transition</code> 运行时拦截非法转移，并用继承 + <code>override</code> 扩展了进入/离开回调。</li>
+</ul>
+<p><strong>自测题（先自己答，再运行代码验证）：</strong></p>
+<ol>
+<li>函数重载里，为什么 <code>reverse(123)</code> 会报错，即便实现签名写的是 <code>value: string | unknown[]</code>？</li>
+<li><code>public</code>、<code>protected</code>、<code>private</code> 三者的可访问范围分别是什么？用一句话概括包含关系。</li>
+<li><code>#private</code> 和 TS 的 <code>private</code> 有什么本质区别？下面哪个能在运行时被 <code>Object.keys</code> 看到？</li>
+<li>参数属性 <code>constructor(public x: number)</code> 和普通参数 <code>constructor(x: number)</code> 有何不同？触发条件是什么？</li>
+<li>抽象类和接口都能描述“形状“，抽象类多了什么能力？抽象类能被 <code>new</code> 吗？</li>
+<li>数字枚举的“反向映射“是什么？为什么推荐优先用字符串枚举？普通 enum 编译后运行时长什么样？</li>
+<li>用 <code>as const</code> 对象替代 enum 有哪些好处？<code>type X = (typeof X)[keyof typeof X]</code> 这行在做什么？</li>
+<li>状态机的 <code>transition</code> 遇到非法事件时做了什么？为什么它返回 <code>TransitionResult</code> 而不是直接抛异常更好？</li>
+</ol>
+<p>（参考答案：1. 因为实现签名对外<strong>不可见</strong>，能被调用的只有那两条重载签名 <code>string</code> / <code>T[]</code>，<code>123</code> 都不匹配。2. <code>public</code>：类内/子类/类外都能访问；<code>protected</code>：本类+子类内部；<code>private</code>：仅本类内部。包含关系：public ⊃ protected ⊃ private。3. <code>#</code> 是 JS 语言级真私有、运行时对外彻底隐形；<code>private</code> 只是 TS 编译期检查、运行时字段还在，<code>as any</code> 能读到——所以 <code>Object.keys</code> 能看到 <code>private</code> 字段，看不到 <code>#</code> 字段。4. 带修饰符的参数会自动声明同名字段并赋值（省样板），普通参数只是局部参数；触发条件是参数前有 <code>public/private/protected/readonly</code> 至少一个。5. 抽象类还能提供<strong>公共实现</strong>（非抽象方法），接口只能描述形状；抽象类<strong>不能</strong> <code>new</code>。6. 反向映射指数字枚举编译后生成“值→名“的双向对象，<code>Direction[0]</code> 能查出 <code>"Up"</code>；字符串枚举无反向映射、值可读、更安全；普通 enum 编译后是一个真实存在的运行时对象。7. 好处：零运行时魔法、无构建坑、能直接传字符串字面量；那行是从对象类型里取所有值的类型，合成联合类型。8. 查转移表查不到就返回 <code>{ok:false, reason}</code> 且<strong>不改状态</strong>；返回结果比抛异常好，因为调用方能用可辨识联合优雅地分支处理成功/失败，不必用 try/catch 包裹。）</p>
+<hr>
+<p>下一章，我们进入 <strong>第 16 章 · 泛型（Generics）</strong>。本章多次擦边碰到它——<code>reverse&lt;T&gt;</code>、构造签名里的 <code>new () =&gt; T</code>、状态机“泛型化成 <code>StateMachine&lt;S, E&gt;</code>“的扩展练习。泛型是 TypeScript 从“能标类型“迈向“能表达类型之间关系“的分水岭：它让你写出既通用、又不丢失类型信息的函数、类和接口。掌握了它，你才算真正拿到了 TS 类型系统的钥匙。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch14.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch16.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch14.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch16.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

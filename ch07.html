@@ -1,0 +1,802 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 7 章 · 迭代器、生成器、Symbol 与集合类型 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch07.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-7-章--迭代器生成器symbol-与集合类型"><a class="header" href="#第-7-章--迭代器生成器symbol-与集合类型">第 7 章 · 迭代器、生成器、Symbol 与集合类型</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>前六章你已经掌握了变量、控制流、函数、闭包、面向对象。你会用 <code>for...of</code> 遍历数组、会用 <code>...</code> 展开、会解构。但你可能从没想过一个问题：</p>
+<blockquote>
+<p><code>for...of</code> 凭什么能遍历数组？它能遍历字符串、能遍历 <code>Map</code>，为什么就不能直接遍历一个普通对象 <code>{a:1}</code>？</p>
+</blockquote>
+<p>答案藏在一套叫**迭代协议（iteration protocol）**的“暗号”里。数组、字符串、<code>Map</code>、<code>Set</code> 都对上了这个暗号，普通对象没对上，所以 <code>for...of</code> 认它们、不认普通对象。这一章我们就把这套暗号彻底讲清，然后你会亲手让一个普通对象“对上暗号”，变得可迭代。</p>
+<p>学完本章你会：</p>
+<ul>
+<li>理解 <strong>Symbol</strong>：一种“绝对唯一”的值，以及它为什么是迭代协议的基石。</li>
+<li>讲透<strong>可迭代协议</strong>与<strong>迭代器协议</strong>：<code>for...of</code>、扩展运算符、解构背后都是同一套机制，并<strong>手写一个可迭代对象</strong>。</li>
+<li>掌握<strong>生成器（generator）</strong>：用 <code>function*</code> 和 <code>yield</code> 轻松造出迭代器，实现<strong>惰性求值</strong>和<strong>无限序列</strong>，还能<strong>双向通信</strong>。</li>
+<li>学会 <strong>Map</strong> 与 <strong>Set</strong> 两种集合类型，知道它们和普通对象、数组的区别，以及<strong>何时该用哪个</strong>。</li>
+<li>认识 <strong>WeakMap / WeakSet</strong>：什么是<strong>弱引用</strong>，它们为什么不可迭代，能用来做私有数据和缓存。</li>
+<li>本章小项目：用生成器实现一个<strong>惰性分页数据流</strong>，再配合 Map / Set 做分组统计与去重。</li>
+</ul>
+<p>这一章是通往下一章“异步编程”的桥梁——因为 <code>async/await</code> 的底层，正是本章的生成器。我们从 Symbol 讲起。</p>
+<hr>
+<h2 id="71-symbol一种绝对唯一的值"><a class="header" href="#71-symbol一种绝对唯一的值">7.1 Symbol：一种“绝对唯一”的值</a></h2>
+<p>我们已经学过 7 种数据类型里的几种：字符串、数字、布尔、<code>null</code>、<code>undefined</code>。ES6 又加了一种原始类型（primitive type）：<strong>Symbol</strong>。</p>
+<p>一句话概括：<strong>每个 Symbol 都是独一无二的，创造出来之后，世界上再没有第二个和它相等。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch07/01-symbol.js
+const a = Symbol("id");
+const b = Symbol("id");
+console.log("a === b ?", a === b); // false，两个不同的值
+console.log("a.description =", a.description); // "id"，只是给人看的标签
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>Symbol("id")</code> 创建一个 Symbol。注意<strong>没有 <code>new</code></strong>（<code>new Symbol()</code> 会报错）。</li>
+<li>括号里的 <code>"id"</code> 叫<strong>描述（description）</strong>，纯粹是给人调试时看的标签，<strong>不影响唯一性</strong>。</li>
+<li>所以 <code>a</code> 和 <code>b</code> 描述一样，却 <code>a === b</code> 为 <code>false</code>——它们是两个不同的值。</li>
+</ul>
+<p>你可能会想：一个“永远不等于别人”的值有什么用？它最经典的用途是<strong>作为对象的键（key）</strong>，做一把“别人配不出来的钥匙”。</p>
+<h3 id="symbol-作为对象的键"><a class="header" href="#symbol-作为对象的键">Symbol 作为对象的键</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/01-symbol.js（续）
+const ID = Symbol("id");
+const user = {
+  name: "小明",
+  [ID]: 1001, // 计算属性名：用变量的值作键
+};
+console.log("user.name =", user.name);
+console.log("user[ID] =", user[ID]); // 1001
+
+console.log("Object.keys:", Object.keys(user)); // 只有 "name"
+for (const k in user) console.log("for-in:", k); // 只有 "name"
+console.log("symbol keys:", Object.getOwnPropertySymbols(user)); // [ Symbol(id) ]
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>[ID]: 1001</code> 用到了第 3 章学的<strong>计算属性名</strong>语法：中括号里放一个表达式，它的值（这里是 Symbol <code>ID</code>）成为键。</li>
+<li>关键特性：<strong>Symbol 键不会出现在 <code>Object.keys()</code>、<code>for...in</code>、<code>JSON.stringify</code> 里</strong>。它像一个“隐藏抽屉”。</li>
+<li>想专门取出 Symbol 键，得用 <code>Object.getOwnPropertySymbols(user)</code>。</li>
+</ul>
+<p>💡 <strong>为什么有用</strong>：想象你在给别人的对象“挂”一点自己的元数据，又怕和对方已有的属性名（比如 <code>id</code>）撞车、怕被对方的遍历逻辑扫到。用一个 Symbol 当键，就绝对不会冲突，也不会被常规遍历干扰。库作者经常这么干。</p>
+<h3 id="symbolfor全局注册表"><a class="header" href="#symbolfor全局注册表">Symbol.for：全局注册表</a></h3>
+<p>普通 <code>Symbol()</code> 每次都造新的。但有时你想“按名字取回同一个 Symbol”，跨文件共享。这时用 <code>Symbol.for</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/01-symbol.js（续）
+const s1 = Symbol.for("app.token");
+const s2 = Symbol.for("app.token");
+console.log("s1 === s2 ?", s1 === s2); // true！注册表里同名返回同一个
+console.log("keyFor:", Symbol.keyFor(s1)); // "app.token"
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>Symbol.for("app.token")</code> 会去一个全局的“Symbol 注册表”里查：有叫 <code>app.token</code> 的就返回它，没有就新建一个登记进去。所以两次调用拿到的是<strong>同一个</strong> Symbol。<code>Symbol.keyFor</code> 则反过来，从 Symbol 查回它登记的名字。</p>
+<p>📌 记住区别：<code>Symbol("x")</code> 每次都新建、永不相等；<code>Symbol.for("x")</code> 同名共享、可跨模块取回。</p>
+<h3 id="知名-symbolwell-known-symbol"><a class="header" href="#知名-symbolwell-known-symbol">知名 Symbol（well-known symbol）</a></h3>
+<p>JavaScript 内置了一批特殊的 Symbol，用来当作语言各种行为的“钩子”。它们挂在 <code>Symbol</code> 上，比如 <code>Symbol.iterator</code>、<code>Symbol.toPrimitive</code> 等，统称<strong>知名 Symbol</strong>。</p>
+<p>它们的作用是：<strong>当你在对象上实现了某个知名 Symbol 对应的方法，就等于告诉语言“我支持某种能力”。</strong> 下面看一个 <code>Symbol.toPrimitive</code> 的例子，它控制“对象被转成原始值时”的行为：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/01-symbol.js（续）
+const range = {
+  from: 1,
+  to: 3,
+  [Symbol.toPrimitive](hint) {
+    if (hint === "string") return `范围 ${this.from}..${this.to}`;
+    return this.to - this.from; // number / default
+  },
+};
+console.log(`${range}`); // "范围 1..3"（模板字符串要 string）
+console.log(+range); // 2（+ 要 number）
+</code></pre>
+<p><strong>逐段拆解：</strong> 当 JS 需要把 <code>range</code> 变成原始值时，会去找它有没有 <code>[Symbol.toPrimitive]</code> 方法，有就调用它，并传入一个 <code>hint</code>（“string” / “number” / “default”）说明想要什么类型。这样我们就“劫持”了对象的类型转换行为。</p>
+<p>而所有知名 Symbol 里，本章的绝对主角是 <strong><code>Symbol.iterator</code></strong>——它决定一个对象能不能被 <code>for...of</code> 遍历。下一节登场。</p>
+<hr>
+<h2 id="72-迭代协议forof-背后的暗号"><a class="header" href="#72-迭代协议forof-背后的暗号">7.2 迭代协议：<code>for...of</code> 背后的暗号</a></h2>
+<p>现在回答开头的问题：<code>for...of</code> 到底认什么？答案是<strong>两个协议</strong>。别被“协议”吓到，它其实就是“约定好的方法名和返回格式”。</p>
+<h3 id="迭代器协议iterator-protocol"><a class="header" href="#迭代器协议iterator-protocol">迭代器协议（iterator protocol）</a></h3>
+<p>一个对象是<strong>迭代器（iterator）</strong>，当且仅当它有一个 <code>next()</code> 方法，每次调用返回一个形如 <code>{ value, done }</code> 的对象：</p>
+<ul>
+<li><code>value</code>：本次产出的值。</li>
+<li><code>done</code>：布尔值。<code>false</code> 表示“还有”，<code>true</code> 表示“到头了”。</li>
+</ul>
+<p>你可以把迭代器想象成一台<strong>取号机</strong>：每按一次 <code>next()</code>，吐出一个号（<code>value</code>）；号发完了，就一直吐 <code>{ value: undefined, done: true }</code>。</p>
+<h3 id="可迭代协议iterable-protocol"><a class="header" href="#可迭代协议iterable-protocol">可迭代协议（iterable protocol）</a></h3>
+<p>一个对象是<strong>可迭代对象（iterable）</strong>，当且仅当它有一个 <code>[Symbol.iterator]()</code> 方法，调用后<strong>返回一个迭代器</strong>。</p>
+<p>用取号机类比：可迭代对象是“取号机所在的大厅”，<code>[Symbol.iterator]()</code> 就是“领一台全新取号机”的动作。每次 <code>for...of</code> 开始遍历，都会先调用 <code>[Symbol.iterator]()</code> 领一台崭新的取号机，从头开始取。</p>
+<p>我们先手动“开一台取号机”，看清底层：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/02-iterable.js
+const arr = ["a", "b"];
+const it = arr[Symbol.iterator](); // 数组内置了 Symbol.iterator
+console.log(it.next()); // { value: 'a', done: false }
+console.log(it.next()); // { value: 'b', done: false }
+console.log(it.next()); // { value: undefined, done: true }
+</code></pre>
+<p><strong>逐段拆解：</strong> 数组本身是可迭代对象（内置了 <code>[Symbol.iterator]</code>）。我们手动调用它，拿到迭代器 <code>it</code>，然后一次次 <code>next()</code>——这正是 <code>for...of</code> 在背后帮你做的事。<code>for (const x of arr)</code> 约等于：反复 <code>it.next()</code>，只要 <code>done</code> 不是 <code>true</code>，就把 <code>value</code> 交给 <code>x</code>。</p>
+<h3 id="手写一个可迭代对象"><a class="header" href="#手写一个可迭代对象">手写一个可迭代对象</a></h3>
+<p>理论讲完，动手。我们造一个“数字区间”对象，让它能被 <code>for...of</code> 遍历：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/02-iterable.js（续）
+const range = {
+  from: 1,
+  to: 5,
+  [Symbol.iterator]() {
+    let current = this.from;
+    const last = this.to;
+    return {
+      next() {
+        if (current &lt;= last) {
+          return { value: current++, done: false };
+        }
+        return { value: undefined, done: true };
+      },
+    };
+  },
+};
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>range</code> 有一个 <code>[Symbol.iterator]()</code> 方法 —— 这一步让它成为<strong>可迭代对象</strong>。</li>
+<li>该方法内部用 <code>current</code> / <code>last</code> 记住进度，然后<strong>返回一个迭代器</strong>：一个带 <code>next()</code> 的对象。</li>
+<li><code>next()</code> 每次被调用：只要 <code>current &lt;= last</code>，就返回 <code>{ value: current++, done: false }</code>（先用 <code>current</code> 当 value，再自增）；否则返回 <code>{ done: true }</code> 宣告结束。</li>
+</ul>
+<p>📌 <strong>为什么把 <code>current</code> 定义在 <code>[Symbol.iterator]()</code> 内部、而不是对象上？</strong> 因为这样每次 <code>for...of</code> 领到的都是<strong>独立的</strong>迭代器，各自有自己的进度，互不干扰。这正是“大厅可以同时开好几台取号机”的设计。</p>
+<p>现在，这个对象“对上暗号”了，一堆语法立刻免费可用：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/02-iterable.js（续）
+for (const n of range) process.stdout.write(n + " "); // 1 2 3 4 5
+console.log([...range]); // [1,2,3,4,5]        —— 扩展运算符
+const [first, second] = range; // 1 2           —— 解构
+console.log(Array.from(range)); // [1,2,3,4,5]  —— Array.from
+</code></pre>
+<p>📌 <strong>一个重大认知</strong>：<code>for...of</code>、扩展运算符 <code>...</code>、数组解构、<code>Array.from</code>、<code>new Set(...)</code>、<code>Promise.all(...)</code>……<strong>它们全都建立在迭代协议之上</strong>。你实现了一个 <code>[Symbol.iterator]</code>，等于一次性解锁了这一整套语法。这就是“协议”的威力：一处约定，处处通用。</p>
+<p>⚠️ <strong>陷阱</strong>：普通对象 <code>{a:1, b:2}</code> <strong>没有</strong> <code>[Symbol.iterator]</code>，所以 <code>for...of {a:1}</code> 会报错 <code>is not iterable</code>。遍历对象请用 <code>for...in</code>（遍历键）或 <code>Object.entries(obj)</code>（它返回数组，是可迭代的）。别把 <code>for...of</code> 和 <code>for...in</code> 搞混。</p>
+<hr>
+<h2 id="73-生成器写迭代器的简单模式"><a class="header" href="#73-生成器写迭代器的简单模式">7.3 生成器：写迭代器的“简单模式”</a></h2>
+<p>上一节手写迭代器，要维护 <code>current</code>、要拼 <code>{value, done}</code>、要判断边界——有点繁琐。ES6 给了我们一个“外挂”：<strong>生成器（generator）</strong>，让你几乎不用管这些细节。</p>
+<p>生成器是一种特殊的函数，用 <code>function*</code>（星号）声明，内部用 <code>yield</code> 关键字“交出”一个值。</p>
+<pre><code class="language-javascript">// 文件：code/ch07/03-generator.js
+function* greet() {
+  yield "你好";
+  yield "世界";
+  return "结束";
+}
+
+const g = greet();
+console.log(g.next()); // { value: '你好', done: false }
+console.log(g.next()); // { value: '世界', done: false }
+console.log(g.next()); // { value: '结束', done: true }
+console.log(g.next()); // { value: undefined, done: true }
+</code></pre>
+<p><strong>逐段拆解——这里有个颠覆认知的点：</strong></p>
+<ul>
+<li>调用 <code>greet()</code> <strong>并不会执行函数体</strong>！它只是返回一个<strong>生成器对象</strong>（它同时是迭代器，也是可迭代对象）。</li>
+<li>只有当你调用 <code>.next()</code>，函数体才开始跑，<strong>跑到第一个 <code>yield</code> 就暂停</strong>，把 <code>yield</code> 后面的值作为 <code>value</code> 交出来（<code>done: false</code>）。</li>
+<li>再 <code>.next()</code>，函数从<strong>上次暂停处</strong>继续，跑到下一个 <code>yield</code> 再停。</li>
+<li>遇到 <code>return</code>（或函数体结束），产出最后一个 <code>value</code> 并 <code>done: true</code>。</li>
+</ul>
+<p>💡 这就是生成器的魔法：<strong>函数可以“暂停”和“恢复”</strong>。普通函数一旦调用就一口气跑完，生成器却能走走停停，把控制权在 <code>yield</code> 处交还给调用方。这个“暂停/恢复”能力，正是后面异步编程的基石。</p>
+<h3 id="用生成器实现迭代器"><a class="header" href="#用生成器实现迭代器">用生成器实现迭代器</a></h3>
+<p>还记得上一节那个繁琐的 <code>range</code> 吗？用生成器重写，简直不要太清爽：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/03-generator.js（续）
+function* rangeGen(from, to) {
+  for (let i = from; i &lt;= to; i++) {
+    yield i;
+  }
+}
+console.log([...rangeGen(1, 5)]); // [1,2,3,4,5]
+</code></pre>
+<p><strong>逐段拆解：</strong> 我们不用再手写 <code>next()</code>、不用拼 <code>{value, done}</code>、不用管 <code>done</code> —— 生成器全帮你搞定了。因为生成器对象天生可迭代，所以能直接 <code>[...]</code> 展开、<code>for...of</code>。<strong>以后要造迭代器，首选生成器。</strong></p>
+<h3 id="yield把迭代委托出去"><a class="header" href="#yield把迭代委托出去"><code>yield*</code>：把迭代委托出去</a></h3>
+<p><code>yield*</code>（yield 加星号）可以把迭代“转交”给另一个可迭代对象——它会把对方的每一项依次 yield 出来：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/03-generator.js（续）
+function* abc() {
+  yield "a";
+  yield "b";
+}
+function* combined() {
+  yield 1;
+  yield* abc(); // 展开 abc 的所有 yield
+  yield* [8, 9]; // 数组也可迭代，同样能委托
+  yield 2;
+}
+console.log([...combined()]); // [1,'a','b',8,9,2]
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>yield* abc()</code> 相当于“把 <code>abc()</code> 产出的每一项，都当成我自己的产出交出去”。<code>yield*</code> 后面可以跟任何可迭代对象（数组、字符串、其他生成器）。它常用于把小生成器组合成大生成器，或递归遍历树结构。</p>
+<h3 id="惰性求值与无限序列"><a class="header" href="#惰性求值与无限序列">惰性求值与无限序列</a></h3>
+<p>生成器最迷人的特性是<strong>惰性（lazy）</strong>：值是“按需生产”的，你不 <code>next</code>，它就不算下一个。这让我们能表达<strong>无限序列</strong>而不会死循环：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/03-generator.js（续）
+function* naturals() {
+  let n = 1;
+  while (true) {
+    yield n++; // 无限，但每次 next 只走一步
+  }
+}
+function take(iterable, count) {
+  const out = [];
+  for (const x of iterable) {
+    if (out.length &gt;= count) break;
+    out.push(x);
+  }
+  return out;
+}
+console.log(take(naturals(), 5)); // [1,2,3,4,5]
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>naturals()</code> 里是 <code>while(true)</code>——如果这是普通函数，直接卡死。但生成器不会：<code>yield</code> 会暂停，<code>while</code> 只有在你要下一个时才转一圈。</li>
+<li><code>take</code> 拿够 5 个就 <code>break</code>，于是 <code>naturals</code> 永远只被推进了 5 步。<strong>无限的定义、有限的执行</strong>，这就是惰性的价值：你可以描述一个巨大甚至无限的数据流，却只在真正需要时才付出计算代价。本章小项目正是靠这一点省下“多余的分页请求”。</li>
+</ul>
+<h3 id="双向通信nextvalue"><a class="header" href="#双向通信nextvalue">双向通信：<code>next(value)</code></a></h3>
+<p><code>yield</code> 不只是“出”，还能“进”。<code>yield</code> 是一个<strong>表达式</strong>，它的值由<strong>下一次</strong> <code>next(value)</code> 传入的参数决定——这让调用方能把数据“送回”生成器内部：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/03-generator.js（续）
+function* calculator() {
+  const x = yield "请给我第一个数";
+  const y = yield "请给我第二个数";
+  return x + y;
+}
+const c = calculator();
+console.log(c.next().value); // "请给我第一个数"（启动，忽略传入值）
+console.log(c.next(10).value); // 把 10 赋给 x，返回 "请给我第二个数"
+console.log(c.next(5).value); // 把 5 赋给 y，返回 15
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>第一次 <code>c.next()</code>：启动生成器，跑到第一个 <code>yield</code>，交出 <code>"请给我第一个数"</code>。此时函数停在 <code>yield</code> 处，<code>x</code> 还没有值。⚠️ 第一次 <code>next()</code> 传的参数<strong>会被忽略</strong>（因为还没有哪个 <code>yield</code> 在等它）。</li>
+<li><code>c.next(10)</code>：<code>10</code> 成为<strong>上一个</strong> <code>yield</code> 表达式的值，于是 <code>x = 10</code>；函数继续到第二个 <code>yield</code>，交出 <code>"请给我第二个数"</code>。</li>
+<li><code>c.next(5)</code>：<code>y = 5</code>；函数 <code>return x + y</code>，即 <code>15</code>。</li>
+</ul>
+<p>📌 这种“出一个值、等一个值回来”的双向管道，正是 <code>async/await</code> 的思想原型：把“暂停等待结果、拿到结果再继续”变成看起来同步的代码。第 8 章你会看到它开花结果。</p>
+<hr>
+<h2 id="74-map更强大的键值集合"><a class="header" href="#74-map更强大的键值集合">7.4 Map：更强大的键值集合</a></h2>
+<p>第 3 章我们用普通对象 <code>{}</code> 存键值对。但对象有几个恼人的限制：键只能是字符串或 Symbol、混着原型链上的属性、拿数量还得 <code>Object.keys().length</code>。ES6 的 <strong>Map</strong> 专门解决这些问题。</p>
+<p>Map 就是一张“键 → 值”的表，但比对象强在四点：<strong>键可以是任意类型、严格保持插入顺序、有 <code>size</code>、天生可迭代。</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch07/04-map.js
+const m = new Map();
+const objKey = { id: 1 };
+m.set("name", "小明"); // 字符串键
+m.set(42, "数字键"); // 数字键，不会被转成字符串
+m.set(objKey, "对象键"); // 对象也能当键！
+m.set(NaN, "NaN 也能当键");
+
+console.log(m.get(42)); // "数字键"
+console.log(m.get("42")); // undefined —— 42 和 "42" 是不同的键
+console.log(m.get(objKey)); // "对象键"
+console.log(m.get(NaN)); // "NaN 也能当键"
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>new Map()</code> 创建空 Map。<code>set(键, 值)</code> 存，<code>get(键)</code> 取。</li>
+<li><strong>键可以是任意类型</strong>：数字 <code>42</code> 和字符串 <code>"42"</code> 是<strong>两个不同的键</strong>（对象会把它们都变成 <code>"42"</code>）；对象、函数也能当键；连 <code>NaN</code> 都能当键（Map 内部认为 <code>NaN</code> 等于 <code>NaN</code>，这点比 <code>===</code> 友好）。</li>
+</ul>
+<pre><code class="language-javascript">// 文件：code/ch07/04-map.js（续）
+console.log(m.size); // 直接拿数量
+console.log(m.has(42)); // true —— 判断有没有某个键
+m.delete(42); // 删除某个键
+console.log(m.has(42)); // false
+</code></pre>
+<p><code>size</code> 直接给数量；<code>has</code> 判断存在；<code>delete</code> 删除。这些比对象方便太多（对象得 <code>key in obj</code>、<code>delete obj.key</code>、<code>Object.keys().length</code>）。</p>
+<h3 id="map-的有序迭代"><a class="header" href="#map-的有序迭代">Map 的有序迭代</a></h3>
+<p>Map 严格按<strong>插入顺序</strong>迭代，而且本身可迭代：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/04-map.js（续）
+const scores = new Map([
+  ["语文", 90],
+  ["数学", 85],
+  ["英语", 88],
+]);
+for (const [subject, score] of scores) {
+  console.log(`${subject} =&gt; ${score}`);
+}
+console.log([...scores.keys()]); // ['语文','数学','英语']
+console.log([...scores.values()]); // [90,85,88]
+console.log([...scores.entries()]); // [['语文',90],...]
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>new Map([[k,v],[k,v]])</code>：可以用“键值对数组”一次性初始化。</li>
+<li><code>for (const [subject, score] of scores)</code>：直接遍历 Map，每项是 <code>[键, 值]</code>，顺手解构。</li>
+<li><code>keys()</code> / <code>values()</code> / <code>entries()</code> 分别返回键、值、键值对的迭代器。</li>
+</ul>
+<h3 id="与普通对象互转"><a class="header" href="#与普通对象互转">与普通对象互转</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/04-map.js（续）
+const obj = Object.fromEntries(scores); // Map -&gt; 普通对象
+const back = new Map(Object.entries(obj)); // 普通对象 -&gt; Map
+</code></pre>
+<p><code>Object.fromEntries</code> 把键值对序列变成对象；<code>Object.entries</code> 反过来。两者是 Map 和对象之间的桥。</p>
+<p>⚠️ <strong>对象的坑演示：</strong></p>
+<pre><code class="language-javascript">// 文件：code/ch07/04-map.js（续）
+const plain = {};
+plain[1] = "a";
+console.log(Object.keys(plain)); // ['1'] —— 数字键 1 被悄悄转成字符串 '1'
+console.log("toString" in {}); // true —— 来自原型链，容易误判
+</code></pre>
+<p>对象把数字键 <code>1</code> 转成了字符串 <code>'1'</code>；而 <code>"toString" in {}</code> 是 <code>true</code>（继承自原型），如果你用对象当“字典”，很容易被这些继承来的键坑到。Map 没有这些问题——它只装你放进去的东西。</p>
+<hr>
+<h2 id="75-set自动去重的值集合"><a class="header" href="#75-set自动去重的值集合">7.5 Set：自动去重的值集合</a></h2>
+<p><strong>Set</strong> 是“值的集合”，最大特点是<strong>每个值唯一</strong>，重复的自动忽略。它最常见的用途就是<strong>去重</strong>。</p>
+<pre><code class="language-javascript">// 文件：code/ch07/05-set.js
+const nums = [1, 2, 2, 3, 3, 3, 4];
+const unique = new Set(nums);
+console.log(unique.size); // 4
+console.log([...unique]); // [1,2,3,4]
+console.log([...new Set(nums)]); // 一行去重的经典写法
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>new Set(可迭代对象)</code> 会遍历传入的值逐个加入，重复的被丢弃。<code>[...new Set(数组)]</code> 是<strong>数组去重</strong>的最优雅写法，请记住它。注意这里又用到了迭代协议：<code>new Set(...)</code> 接受任何可迭代对象，<code>[...set]</code> 也依赖 Set 的可迭代性。</p>
+<pre><code class="language-javascript">// 文件：code/ch07/05-set.js（续）
+const s = new Set();
+s.add("a").add("b").add("a"); // add 返回 Set 自身，可链式；重复 "a" 被忽略
+console.log(s.has("a")); // true
+s.delete("b");
+console.log([...s]); // ['a']
+</code></pre>
+<p><code>add</code> / <code>has</code> / <code>delete</code> 对应“加/查/删”，<code>add</code> 返回自身所以能链式调用。</p>
+<h3 id="集合运算并交差"><a class="header" href="#集合运算并交差">集合运算：并、交、差</a></h3>
+<p>配合扩展运算符和 <code>filter</code>，Set 能优雅地做数学上的集合运算：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/05-set.js（续）
+const A = new Set([1, 2, 3, 4]);
+const B = new Set([3, 4, 5, 6]);
+
+const union = new Set([...A, ...B]); // 并集
+console.log([...union]); // [1,2,3,4,5,6]
+
+const intersection = new Set([...A].filter((x) =&gt; B.has(x))); // 交集
+console.log([...intersection]); // [3,4]
+
+const difference = new Set([...A].filter((x) =&gt; !B.has(x))); // 差集 A-B
+console.log([...difference]); // [1,2]
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><strong>并集</strong>：把 A、B 全展开塞进新 Set，重复的自然被去掉。</li>
+<li><strong>交集</strong>：把 A 变成数组，筛出“也在 B 里”（<code>B.has(x)</code>）的。</li>
+<li><strong>差集 A−B</strong>：筛出“不在 B 里”（<code>!B.has(x)</code>）的。</li>
+</ul>
+<p>💡 用 <code>Set.has</code> 做“是否存在”判断是 <strong>O(1)</strong>（常数时间），比 <code>数组.includes</code>（要从头找，O(n)）快得多。当你要频繁判断“某个值在不在集合里”，Set 是首选。</p>
+<hr>
+<h2 id="76-weakmap-与-weakset弱引用"><a class="header" href="#76-weakmap-与-weakset弱引用">7.6 WeakMap 与 WeakSet：弱引用</a></h2>
+<p><code>Map</code> 和 <code>Set</code> 会<strong>牢牢抓住</strong>里面的键/值——只要它们在 Map 里，就永远不会被垃圾回收（garbage collection，GC）。这有时会造成<strong>内存泄漏</strong>。<code>WeakMap</code> / <code>WeakSet</code> 是它们的“弱引用（weak reference）”版本，专治这个问题。</p>
+<p>先理解“弱引用”：普通引用像用绳子拴住一个对象，只要绳子在，对象就不会被回收；弱引用像“只是看一眼、记个位置”，如果这个对象在<strong>别的地方</strong>已经没人用了，垃圾回收器可以随时把它回收掉，连同 WeakMap 里的记录一起清除。</p>
+<pre><code class="language-javascript">// 文件：code/ch07/06-weak.js
+const wm = new WeakMap();
+let key = { id: 1 };
+wm.set(key, "关联数据");
+console.log(wm.get(key)); // "关联数据"
+console.log(wm.has(key)); // true
+</code></pre>
+<p><code>WeakMap</code> 用法和 <code>Map</code> 类似（<code>set</code>/<code>get</code>/<code>has</code>/<code>delete</code>），但有三条硬限制：</p>
+<ol>
+<li><strong>键必须是对象</strong>（不能是字符串、数字等原始值）。</li>
+<li><strong>是弱引用</strong>：键对象在别处没人用了，就会被 GC 连带清掉。</li>
+<li><strong>不可迭代</strong>：没有 <code>size</code>，没有 <code>keys()</code>/<code>values()</code>，不能 <code>for...of</code>。</li>
+</ol>
+<p>📌 <strong>为什么不可迭代？</strong> 因为它的内容随时可能被垃圾回收清掉，<strong>遍历结果无法确定</strong>——你刚数到一半，几个键可能就被回收没了。为了避免这种不确定行为，语言干脆禁止遍历 WeakMap。这不是缺陷，是弱引用的必然结果。</p>
+<h3 id="用途一给对象存私有数据"><a class="header" href="#用途一给对象存私有数据">用途一：给对象存私有数据</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/06-weak.js（续）
+const privateData = new WeakMap();
+class BankAccount {
+  constructor(balance) {
+    privateData.set(this, { balance }); // 余额藏在模块级 WeakMap 里
+  }
+  deposit(amount) {
+    privateData.get(this).balance += amount;
+  }
+  getBalance() {
+    return privateData.get(this).balance;
+  }
+}
+const acc = new BankAccount(100);
+acc.deposit(50);
+console.log(acc.getBalance()); // 150
+console.log(acc.balance); // undefined —— 外部拿不到真正的余额
+</code></pre>
+<p><strong>逐段拆解：</strong> 真正的余额存在模块级的 <code>privateData</code> 这张 WeakMap 里，以 <code>this</code>（实例）为键。外部代码拿不到 <code>privateData</code>，所以拿不到余额（<code>acc.balance</code> 是 <code>undefined</code>），实现了<strong>真正的私有</strong>。而且——当某个账户实例被销毁、没人再引用它时，它在 <code>privateData</code> 里的记录会被自动清除，<strong>不会造成内存泄漏</strong>。这正是必须用 WeakMap 而不是普通 Map 的原因。</p>
+<h3 id="用途二缓存"><a class="header" href="#用途二缓存">用途二：缓存</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/06-weak.js（续）
+const cache = new WeakMap();
+function compute(objInput) {
+  if (cache.has(objInput)) return cache.get(objInput) + "（来自缓存）";
+  const result = `对 ${objInput.name} 的计算结果`;
+  cache.set(objInput, result);
+  return result;
+}
+const config = { name: "配置A" };
+console.log(compute(config)); // 首次计算
+console.log(compute(config)); // 命中缓存
+</code></pre>
+<p><strong>逐段拆解：</strong> 以对象为 key 缓存计算结果，第二次直接命中。妙处在于：当 <code>config</code> 这个对象在程序里彻底没人用了，缓存条目会被自动清理，你不用手动 <code>delete</code>，缓存不会无限膨胀。</p>
+<h3 id="weakset"><a class="header" href="#weakset">WeakSet</a></h3>
+<p><code>WeakSet</code> 同理：只能装对象、弱引用、不可迭代，常用于给对象“打标记”：</p>
+<pre><code class="language-javascript">// 文件：code/ch07/06-weak.js（续）
+const visited = new WeakSet();
+const node = { value: 1 };
+visited.add(node);
+console.log(visited.has(node)); // true —— 标记“这个节点访问过了”
+</code></pre>
+<p>比如遍历图结构时，用 WeakSet 记录“访问过的节点”，避免重复处理，又不担心遍历完后这些节点无法被回收。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<p><strong>1. <code>for...of</code> vs <code>for...in</code> 别搞混。</strong></p>
+<ul>
+<li><code>for...of</code> 走<strong>迭代协议</strong>，遍历<strong>值</strong>，用于数组、字符串、Map、Set 等可迭代对象；不能直接用于普通对象。</li>
+<li><code>for...in</code> 遍历对象<strong>可枚举的键</strong>（包括继承来的），用于对象。遍历数组时它给的是<strong>字符串下标</strong>且会扫到自定义属性，通常不该用它遍历数组。</li>
+</ul>
+<p><strong>2. Symbol 不能被隐式转成字符串。</strong> <code>"" + Symbol()</code> 会 <code>TypeError</code>。要转得显式：<code>String(sym)</code> 或 <code>sym.description</code>。</p>
+<p><strong>3. 生成器的第一次 <code>next(v)</code> 传参无效。</strong> 因为此时还没有任何 <code>yield</code> 在等待接收，传入的值被丢弃。要给生成器喂初值，得在创建时用参数，或先空跑一次 <code>next()</code>。</p>
+<p><strong>4. 一个迭代器只能用一次。</strong> 迭代器走到 <code>done: true</code> 就“用尽”了，再遍历得重新领一个。所以下面是坑：</p>
+<pre><code class="language-javascript">const gen = rangeGen(1, 3);
+console.log([...gen]); // [1,2,3]
+console.log([...gen]); // [] —— 已经用尽了！
+</code></pre>
+<p>如果需要反复遍历，遍历<strong>可迭代对象</strong>（每次 <code>for...of</code> 会重新领迭代器），而不是缓存单个迭代器。</p>
+<p><strong>5. 何时用 Map / Set，何时用对象 / 数组？</strong></p>
+<ul>
+<li><strong>键不是字符串/Symbol</strong>（比如用对象当键），或<strong>键是运行时动态、数量频繁增删</strong>，或<strong>需要保证顺序和 <code>size</code></strong> → 用 <strong>Map</strong>。</li>
+<li><strong>只是固定结构的一条记录、需要 JSON 序列化、需要方法</strong> → 用<strong>对象</strong>。</li>
+<li><strong>需要去重、需要频繁判断“存在与否”</strong> → 用 <strong>Set</strong>。</li>
+<li><strong>需要按下标、需要顺序、允许重复、要用 <code>map</code>/<code>filter</code>/<code>reduce</code></strong> → 用<strong>数组</strong>。</li>
+</ul>
+<p><strong>6. 需要“对象存活时自动清理关联数据”就用 WeakMap/WeakSet</strong>（私有数据、缓存、标记）；需要遍历、需要 size、键是原始值，就用 Map/Set。</p>
+<hr>
+<h2 id="本章小项目分页数据流"><a class="header" href="#本章小项目分页数据流">本章小项目：分页数据流</a></h2>
+<p>现在把生成器、Map、Set 揉进一个实用场景：<strong>分页数据流</strong>。</p>
+<p>真实世界里数据常常是“分页”的：接口一次只给你一页（比如 10 条），要更多得翻页。调用方却往往只想“像遍历一个普通列表一样”把数据一条条拿出来，不想关心翻页细节；有时甚至只想看前几条。生成器的<strong>惰性</strong>天生适合这个需求。</p>
+<p>完整代码见 <code>code/ch07/paginated-stream.js</code>，运行：<code>node paginated-stream.js</code>。</p>
+<h3 id="第一步模拟数据源与按页拉取"><a class="header" href="#第一步模拟数据源与按页拉取">第一步：模拟数据源与“按页拉取”</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/paginated-stream.js
+const PRODUCTS = [
+  { id: 1, name: "苹果", category: "水果", tags: ["生鲜", "热销"] },
+  // ... 共 10 条，见完整文件
+];
+
+function fetchPage(pageIndex, pageSize) {
+  const start = pageIndex * pageSize;
+  const items = PRODUCTS.slice(start, start + pageSize);
+  const hasNext = start + pageSize &lt; PRODUCTS.length;
+  return { items, hasNext };
+}
+</code></pre>
+<p><strong>逐段拆解：</strong> <code>fetchPage</code> 模拟“拉取第 N 页”：从大数组里切出这一页，并告诉调用方 <code>hasNext</code>（后面还有没有页）。真实项目里这一步通常是一次网络请求（返回 Promise），下一章学了异步后，你可以把它换成真正的 <code>fetch</code>——结构一模一样。</p>
+<h3 id="第二步核心生成器把分页变成一项项-yield"><a class="header" href="#第二步核心生成器把分页变成一项项-yield">第二步：核心生成器，把“分页”变成“一项项 yield”</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/paginated-stream.js（续）
+function* paginatedStream(pageSize = 3) {
+  let pageIndex = 0;
+  let hasNext = true;
+  while (hasNext) {
+    const page = fetchPage(pageIndex, pageSize);
+    console.log(`  [拉取第 ${pageIndex + 1} 页，共 ${page.items.length} 项]`);
+    for (const item of page.items) {
+      yield item; // 逐项交出去，把控制权还给调用方
+    }
+    hasNext = page.hasNext;
+    pageIndex++;
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>外层 <code>while (hasNext)</code>：一页页地拉，直到没有下一页。</li>
+<li>里面 <code>for...of page.items</code> + <code>yield item</code>：把当前页的每一项<strong>逐个</strong> yield 出去。</li>
+<li>那句 <code>console.log("[拉取第 N 页...]")</code> 是<strong>演示用的探针</strong>：它只在“真正去拉某一页”时才打印。看它什么时候打印，就能直观感受到惰性。</li>
+<li>关键：<code>yield</code> 会<strong>暂停</strong>。调用方拿到一项、处理完、再要下一项时，生成器才继续；只有当前页 yield 完了，才会绕回 <code>while</code> 顶部去拉下一页。<strong>没人要，就不拉。</strong></li>
+</ul>
+<h3 id="第三步只取前-n-项惰性工具"><a class="header" href="#第三步只取前-n-项惰性工具">第三步：只取前 N 项（惰性工具）</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/paginated-stream.js（续）
+function* take(iterable, count) {
+  let i = 0;
+  for (const item of iterable) {
+    if (i &gt;= count) return;
+    yield item;
+    i++;
+  }
+}
+</code></pre>
+<p><code>take</code> 从任意可迭代对象里“惰性地”取前 <code>count</code> 项，取够就 <code>return</code> 停止遍历。因为它一停，上游的 <code>paginatedStream</code> 也就跟着停了。</p>
+<h3 id="第四步map-分组统计--set-去重"><a class="header" href="#第四步map-分组统计--set-去重">第四步：Map 分组统计 + Set 去重</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/paginated-stream.js（续）
+function groupByCategory(iterable) {
+  const groups = new Map();
+  for (const product of iterable) {
+    if (!groups.has(product.category)) groups.set(product.category, []);
+    groups.get(product.category).push(product.name);
+  }
+  return groups;
+}
+
+function collectTags(iterable) {
+  const tags = new Set();
+  for (const product of iterable) {
+    for (const tag of product.tags) tags.add(tag);
+  }
+  return tags;
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>groupByCategory</code> 用 <strong>Map</strong> 把商品按分类归拢：键是分类名，值是该类商品名的数组。“没这个键就先建个空数组，再往里 push”是用 Map 做分组统计的经典模板。</li>
+<li><code>collectTags</code> 用 <strong>Set</strong> 收集所有出现过的标签，重复的自动去重。</li>
+</ul>
+<h3 id="运行效果亲眼看到惰性"><a class="header" href="#运行效果亲眼看到惰性">运行效果：亲眼看到惰性</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch07/paginated-stream.js（续，节选自 main）
+console.log("=== A. 遍历全部 ===");
+for (const product of paginatedStream(3)) {
+  console.log("  -&gt;", product.id, product.name);
+}
+
+console.log("=== B. 只取前 2 项（惰性：只拉取第 1 页！） ===");
+for (const product of take(paginatedStream(3), 2)) {
+  console.log("  -&gt;", product.id, product.name);
+}
+</code></pre>
+<p>运行 <code>node paginated-stream.js</code>，重点看 B 部分的输出：</p>
+<pre><code>=== B. 只取前 2 项（惰性：只拉取第 1 页！） ===
+  [拉取第 1 页，共 3 项]
+  -&gt; 1 苹果
+  -&gt; 2 香蕉
+</code></pre>
+<p>📌 <strong>这就是本项目的高光时刻</strong>：明明数据有 4 页，但因为我们只要前 2 项，<code>take</code> 拿够就停，于是<strong>只有第 1 页被拉取</strong>，第 2、3、4 页的 <code>fetchPage</code> 根本没被调用！如果这是真实的网络请求，你就实实在在<strong>省下了 3 次请求</strong>。这正是生成器惰性的实用价值——描述一个可能很大的数据流，却只为你真正用到的部分付出代价。</p>
+<p>C、D 部分则展示了用 Map 分组、用 Set 去重的结果（它们需要看完全部数据，所以会拉完 4 页）。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>改成真实异步</strong>：把 <code>fetchPage</code> 改成返回 <code>Promise</code>（用 <code>setTimeout</code> 模拟延迟），并把 <code>paginatedStream</code> 改成<strong>异步生成器</strong> <code>async function*</code>，用 <code>for await...of</code> 遍历。（学完第 8 章再回来做，这是本章到下一章的完美衔接。）</li>
+<li><strong>给 <code>paginatedStream</code> 加过滤</strong>：接受一个 <code>predicate</code> 函数，只 yield 满足条件的项（比如只要“热销”商品）。</li>
+<li><strong>实现 <code>map(iterable, fn)</code></strong> 惰性版：像数组的 <code>map</code>，但对任意可迭代对象生效且惰性。想想它和 <code>take</code> 组合起来能做什么。</li>
+<li><strong>用 Map 统计每个标签出现的次数</strong>（值从数组换成计数），输出出现最多的标签。</li>
+<li><strong>用 Set 求两页商品分类的交集</strong>：前 5 个商品出现的分类，与后 5 个商品出现的分类，哪些是共有的？</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>这一章我们打通了 JavaScript 的“迭代”体系和现代集合类型：</p>
+<ul>
+<li><strong>Symbol</strong> 是绝对唯一的原始值，常作对象键避免冲突；<code>Symbol.for</code> 走全局注册表可跨模块共享；<strong>知名 Symbol</strong>（尤其 <code>Symbol.iterator</code>）是语言的协议钩子。</li>
+<li><strong>迭代协议</strong>是 <code>for...of</code>、扩展、解构、<code>Array.from</code> 的共同底座：<strong>可迭代对象</strong>有 <code>[Symbol.iterator]()</code> 返回<strong>迭代器</strong>，迭代器有 <code>next()</code> 返回 <code>{value, done}</code>。我们<strong>手写</strong>了一个可迭代对象。</li>
+<li><strong>生成器</strong> <code>function*</code> + <code>yield</code> 是写迭代器的简单模式，能<strong>暂停/恢复</strong>，实现<strong>惰性求值</strong>与<strong>无限序列</strong>，还能通过 <code>next(v)</code> <strong>双向通信</strong>；<code>yield*</code> 委托给另一个可迭代对象。</li>
+<li><strong>Map</strong>：任意类型键、保序、有 <code>size</code>、可迭代，是比对象更纯粹的字典。<strong>Set</strong>：自动去重、O(1) 查存在、能做并交差。</li>
+<li><strong>WeakMap / WeakSet</strong>：弱引用、键必须是对象、<strong>不可迭代</strong>（因内容随时可能被 GC 清除），适合私有数据、缓存、打标记。</li>
+<li>小项目用生成器实现了<strong>惰性分页数据流</strong>，亲眼见证“只取前 N 项时不多拉一页”，并用 Map/Set 完成分组与去重。</li>
+</ul>
+<p><strong>自测题（先自己答，再运行代码验证）：</strong></p>
+<ol>
+<li><code>Symbol("x") === Symbol("x")</code> 和 <code>Symbol.for("x") === Symbol.for("x")</code> 分别是什么？为什么？</li>
+<li>一个对象要能被 <code>for...of</code> 遍历，必须实现什么方法？这个方法要返回什么？返回的东西又要有什么方法？</li>
+<li>调用一个生成器函数 <code>gen()</code> 时，函数体会立刻执行吗？什么时候才执行？</li>
+<li>下面打印什么？为什么第二个是 <code>[]</code>？
+<pre><code class="language-javascript">function* g() { yield 1; yield 2; }
+const it = g();
+console.log([...it]); // ?
+console.log([...it]); // ?
+</code></pre>
+</li>
+<li>为什么 <code>paginatedStream</code> 里“只取前 2 项”时，后面几页的 <code>fetchPage</code> 不会被调用？</li>
+<li>什么时候该用 Map 而不是普通对象？什么时候该用 Set 而不是数组？</li>
+<li>WeakMap 为什么不可迭代、没有 <code>size</code>？它的键为什么必须是对象？</li>
+</ol>
+<p>（参考答案：1. 前者 <code>false</code>——每个 <code>Symbol()</code> 都新建、永不相等；后者 <code>true</code>——<code>Symbol.for</code> 按名字从全局注册表返回同一个。2. 必须实现 <code>[Symbol.iterator]()</code>，它返回一个<strong>迭代器</strong>；迭代器要有 <code>next()</code> 方法，每次返回 <code>{value, done}</code>。3. 不会立刻执行，只返回一个生成器对象；直到第一次 <code>.next()</code>（或被 <code>for...of</code>/展开触发）才开始执行，且执行到第一个 <code>yield</code> 就暂停。4. <code>[1,2]</code> 和 <code>[]</code>——迭代器一次性用尽，第二次已无剩余。5. 因为生成器惰性：<code>take</code> 拿够 2 项就 <code>return</code>，上游 <code>for...of</code> 随之停止，<code>while</code> 循环没绕回去，后面页的 <code>fetchPage</code> 根本没被调用。6. 键非字符串/Symbol、需保序与 <code>size</code>、动态频繁增删时用 Map；需去重或频繁判断存在性时用 Set。7. 因为内容是弱引用、随时可能被垃圾回收清除，遍历结果不确定，所以禁止遍历、无 <code>size</code>；弱引用只对“可被回收的对象”有意义，原始值不参与 GC，故键必须是对象。）</p>
+<hr>
+<p>下一章，我们进入 <strong>第 8 章 · 异步编程：回调、Promise 与 async/await</strong>。你会惊喜地发现：本章的生成器——那个能“暂停、交出控制权、等值回来再继续”的家伙——正是异步的思想原型。<code>async/await</code> 读起来像同步代码，底层却是“遇到 <code>await</code> 就暂停、等结果回来再恢复”，和生成器的 <code>yield</code>/<code>next(v)</code> 如出一辙。带着本章对迭代与暂停的理解，异步将不再是玄学。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch06.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch08.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch06.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch08.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 0 章 · 环境搭建与运行方式 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch00.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-0-章--环境搭建与运行方式"><a class="header" href="#第-0-章--环境搭建与运行方式">第 0 章 · 环境搭建与运行方式</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<ul>
+<li>理解 JavaScript 到底“运行在哪里“，以及 Node.js 是什么。</li>
+<li>在你的电脑上装好 Node.js 和 VS Code。</li>
+<li>掌握运行 JS 代码的三种方式：REPL、<code>.js</code> 文件、浏览器控制台。</li>
+<li>提前认识运行 TypeScript 的方式（细节留到第 13 章）。</li>
+<li>跑通你的第一个程序，并完成本章小项目：一个“环境自检“脚本。</li>
+</ul>
+<hr>
+<h2 id="01-javascript-运行在哪里"><a class="header" href="#01-javascript-运行在哪里">0.1 JavaScript 运行在哪里？</a></h2>
+<p>很多人以为“JavaScript 是浏览器里的语言“。这句话在 2009 年之前是对的，但今天只对了一半。</p>
+<p>JavaScript 是一门<strong>语言</strong>，它需要一个<strong>引擎（engine）<strong>来执行。最有名的引擎是 Google 的 <strong>V8</strong>（Chrome 浏览器内置）。2009 年，有人把 V8 引擎从浏览器里“抠“出来，装上文件读写、网络等能力，做成了一个可以在</strong>操作系统上直接运行 JS</strong>的程序——这就是 <strong>Node.js</strong>。</p>
+<p>于是今天 JavaScript 有两大运行环境：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>环境</th><th>典型场景</th><th>能做的事</th><th>不能做的事</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>浏览器</strong></td><td>网页交互</td><td>操作网页（DOM）、发网络请求</td><td>直接读写你电脑的文件</td></tr>
+<tr><td><strong>Node.js</strong></td><td>后端服务、命令行工具、构建脚本</td><td>读写文件、开网络服务、访问数据库</td><td>操作网页（没有 DOM）</td></tr>
+</tbody>
+</table>
+</div>
+<p>本书大部分示例用 <strong>Node.js</strong> 运行——它更接近“通用编程语言“的体验，不需要打开浏览器就能跑代码，也是我们后面做后端开发的基础。只有讲 DOM 的第 10 章会回到浏览器。</p>
+<blockquote>
+<p>📌 记住这个心智模型：<strong>语言是 JavaScript，引擎是 V8，运行环境是浏览器或 Node.js。</strong> 后面遇到“这个函数为什么在 Node 里有、浏览器里没有“之类的问题，答案往往就在这张表里。</p>
+</blockquote>
+<hr>
+<h2 id="02-安装-nodejs"><a class="header" href="#02-安装-nodejs">0.2 安装 Node.js</a></h2>
+<p>打开 <a href="https://nodejs.org/">nodejs.org</a>，下载 <strong>LTS（长期支持）</strong> 版本安装即可。LTS 是稳定版，适合学习和生产。</p>
+<p>安装完成后，打开终端（macOS 用“终端 Terminal“，Windows 用“PowerShell“），输入下面两条命令验证：</p>
+<pre><code class="language-bash">node --version
+npm --version
+</code></pre>
+<p>如果分别打印出类似 <code>v20.x.x</code> 和 <code>10.x.x</code> 的版本号，说明安装成功。</p>
+<p>这里出现了两个命令：</p>
+<ul>
+<li><strong><code>node</code></strong>：Node.js 本体，用来运行 JS 代码。</li>
+<li><strong><code>npm</code></strong>（Node Package Manager）：随 Node 一起装好的<strong>包管理器</strong>，用来下载别人写好的代码库（第 9 章详解）。</li>
+</ul>
+<blockquote>
+<p>💡 <strong>进阶（可选）</strong>：如果你以后要在多个 Node 版本间切换，可以用 <a href="https://github.com/nvm-sh/nvm">nvm</a>（macOS/Linux）或 <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a> 管理版本。现在不必纠结，装个 LTS 就够学完全书。</p>
+</blockquote>
+<hr>
+<h2 id="03-安装并配置-vs-code"><a class="header" href="#03-安装并配置-vs-code">0.3 安装并配置 VS Code</a></h2>
+<p><a href="https://code.visualstudio.com/">VS Code</a> 是目前 JS/TS 开发最主流的编辑器，免费、跨平台，而且对 TypeScript 的支持是“亲儿子“级别（TS 和 VS Code 都是微软出品）。</p>
+<p>下载安装后，建议装两个扩展（在左侧扩展面板搜索安装）：</p>
+<ul>
+<li><strong>Prettier - Code formatter</strong>：自动格式化代码，让排版整齐（第 21 章会深入）。</li>
+<li><strong>ESLint</strong>：帮你揪出可疑写法（同样第 21 章详解）。</li>
+</ul>
+<p>现在先装好即可，配置后面用到再说。</p>
+<hr>
+<h2 id="04-运行-js-代码的三种方式"><a class="header" href="#04-运行-js-代码的三种方式">0.4 运行 JS 代码的三种方式</a></h2>
+<h3 id="方式一repl交互式随手试"><a class="header" href="#方式一repl交互式随手试">方式一：REPL（交互式，随手试）</a></h3>
+<p>在终端直接输入 <code>node</code> 回车，你会进入一个可以逐行输入、立刻得到结果的环境，这叫 <strong>REPL</strong>（Read-Eval-Print-Loop，读取-求值-打印-循环）：</p>
+<pre><code class="language-text">$ node
+Welcome to Node.js v20.x.x.
+&gt; 1 + 1
+2
+&gt; const name = "world"
+undefined
+&gt; `hello, ${name}`
+'hello, world'
+&gt; .exit
+</code></pre>
+<p>REPL 非常适合快速验证一个语法、试一个小表达式。想退出输入 <code>.exit</code> 或按两次 <code>Ctrl+C</code>。</p>
+<blockquote>
+<p>⚠️ 注意上面 <code>const name = "world"</code> 那行返回了 <code>undefined</code>——这不是报错。声明变量这个“动作“本身没有返回值，REPL 就显示 <code>undefined</code>。下一行用到 <code>name</code> 时，它确实是 <code>"world"</code>。</p>
+</blockquote>
+<h3 id="方式二运行-js-文件最常用"><a class="header" href="#方式二运行-js-文件最常用">方式二：运行 <code>.js</code> 文件（最常用）</a></h3>
+<p>真正写程序时，我们把代码存进文件。新建一个文件 <code>hello.js</code>：</p>
+<pre><code class="language-javascript">// 文件：code/ch00/hello.js
+console.log("你好，JavaScript！");
+console.log("1 到 5 的和是：", 1 + 2 + 3 + 4 + 5);
+</code></pre>
+<p><code>console.log(...)</code> 是最常用的一句代码，作用是把括号里的内容<strong>打印到终端</strong>。它是你调试程序、观察结果的头号工具。</p>
+<p>在终端进入文件所在目录，运行：</p>
+<pre><code class="language-bash">node hello.js
+</code></pre>
+<p>你会看到：</p>
+<pre><code class="language-text">你好，JavaScript！
+1 到 5 的和是： 15
+</code></pre>
+<p>恭喜，这就是一个完整的程序在运行了。<strong>本书绝大多数示例都用这种方式运行。</strong></p>
+<h3 id="方式三浏览器控制台"><a class="header" href="#方式三浏览器控制台">方式三：浏览器控制台</a></h3>
+<p>在任意网页按 <code>F12</code>（或右键“检查“）打开开发者工具，切到 <strong>Console（控制台）</strong> 标签，也能直接输入并运行 JS。这在调试网页时很有用，我们到第 10 章讲 DOM 时会用到。</p>
+<hr>
+<h2 id="05-提前认识运行-typescript"><a class="header" href="#05-提前认识运行-typescript">0.5 提前认识：运行 TypeScript</a></h2>
+<p>TypeScript 的代码存在 <code>.ts</code> 文件里，但 <strong>Node.js 不能直接运行 <code>.ts</code> 文件</strong>（它只认 JavaScript）。所以 TS 需要先“翻译“成 JS，这个过程叫<strong>编译（compile）</strong>。有两种常见做法，第 13 章会详细讲，这里先混个眼熟：</p>
+<pre><code class="language-bash"># 做法一：先编译成 .js，再用 node 运行
+npx tsc hello.ts     # 生成 hello.js
+node hello.js
+
+# 做法二：用 tsx 一步到位（内部帮你即时编译再运行）
+npx tsx hello.ts
+</code></pre>
+<p><code>npx</code> 是随 npm 一起来的命令，作用是“临时下载并运行一个工具“。本书 <code>code/</code> 目录已经配好了 <code>tsx</code>，你在 <code>code/</code> 下 <code>npm install</code> 之后，就能用 <code>npx tsx 某文件.ts</code> 直接跑 TS 示例。</p>
+<blockquote>
+<p>📌 现在<strong>不需要</strong>真的去装 TypeScript，这一节只是让你知道“TS 要先编译“这件事。等学到第 13 章我们再正式动手。</p>
+</blockquote>
+<hr>
+<h2 id="06-建立你的代码目录"><a class="header" href="#06-建立你的代码目录">0.6 建立你的代码目录</a></h2>
+<p>学习本书时，建议你自己建一个练习目录，比如 <code>my-practice/</code>，每章建一个子文件夹，把示例亲手敲进去。这样你的练习和本书自带的 <code>code/</code>（标准答案）互不干扰。</p>
+<p>本书自带代码在 <code>code/</code> 下，结构是：</p>
+<pre><code class="language-text">code/
+├── package.json      # 依赖清单
+├── tsconfig.json     # TS 配置
+├── ch00/             # 第 0 章示例
+├── ch01/             # 第 1 章示例
+└── ...
+</code></pre>
+<p>第一次使用前，在 <code>code/</code> 目录执行一次 <code>npm install</code>，把 <code>tsx</code>、<code>vitest</code> 等工具装好（第 9 章会讲清楚这一步在做什么）：</p>
+<pre><code class="language-bash">cd code
+npm install
+</code></pre>
+<hr>
+<h2 id="本章小项目环境自检脚本"><a class="header" href="#本章小项目环境自检脚本">本章小项目：环境自检脚本</a></h2>
+<p><strong>需求</strong>：写一个脚本 <code>doctor.js</code>，运行后打印当前环境信息，确认一切就绪。这既能验证你的环境，又能让你熟悉 <code>node</code> 运行文件的流程，还顺便认识几个 Node 内置对象。</p>
+<p><strong>目标输出</strong>（数字会因你的机器而不同）：</p>
+<pre><code class="language-text">==============================
+  环境自检 Environment Doctor
+==============================
+Node.js 版本 : v20.11.0
+操作系统     : darwin (arm64)
+当前工作目录 : /Users/you/master_book/code/ch00
+运行时间     : 2026-07-02 10:30:00
+✅ 恭喜，你的环境已经可以开始学习了！
+</code></pre>
+<h3 id="完整实现"><a class="header" href="#完整实现">完整实现</a></h3>
+<pre><code class="language-javascript">// 文件：code/ch00/doctor.js
+// 运行方式：node doctor.js
+
+// process 是 Node.js 提供的全局对象，代表"当前运行的这个进程"，
+// 里面藏着版本、平台、工作目录等信息。
+const nodeVersion = process.version; // 例如 "v20.11.0"
+const platform = process.platform; // "darwin"(mac) / "win32" / "linux"
+const arch = process.arch; // CPU 架构，如 "arm64" / "x64"
+const cwd = process.cwd(); // current working directory，当前所在目录
+
+// 生成一个"年-月-日 时:分:秒"格式的时间字符串。
+// new Date() 拿到当前时间，后面这些方法把它拆成各部分。
+const now = new Date();
+const pad = (n) =&gt; String(n).padStart(2, "0"); // 个位数前面补 0，如 5 -&gt; "05"
+const timestamp =
+  `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ` +
+  `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+// 开始打印报告。
+console.log("==============================");
+console.log("  环境自检 Environment Doctor");
+console.log("==============================");
+console.log("Node.js 版本 :", nodeVersion);
+console.log("操作系统     :", `${platform} (${arch})`);
+console.log("当前工作目录 :", cwd);
+console.log("运行时间     :", timestamp);
+
+// 简单校验：主版本号是否 &gt;= 18（本书示例的推荐下限）。
+// nodeVersion 形如 "v20.11.0"，slice(1) 去掉开头的 "v"，
+// split(".") 按点切成 ["20","11","0"]，取第 0 个并转成数字。
+const majorVersion = Number(nodeVersion.slice(1).split(".")[0]);
+
+if (majorVersion &gt;= 18) {
+  console.log("✅ 恭喜，你的环境已经可以开始学习了！");
+} else {
+  console.log("⚠️ 你的 Node 版本偏低，建议升级到 LTS（18 及以上）。");
+}
+</code></pre>
+<h3 id="逐段讲解"><a class="header" href="#逐段讲解">逐段讲解</a></h3>
+<ol>
+<li>
+<p><strong><code>process</code> 对象</strong>：这是 Node.js 的全局对象之一，不用 <code>import</code> 就能直接用。它代表“当前这个正在运行的 Node 进程“。<code>process.version</code>、<code>process.platform</code> 是属性（直接取值），<code>process.cwd()</code> 是方法（要加括号调用）——<strong>属性像名词、方法像动词</strong>，这个区分以后会反复用到。</p>
+</li>
+<li>
+<p><strong><code>new Date()</code></strong>：创建一个表示“此刻“的时间对象。<code>getMonth()</code> 有个著名的坑：它返回的月份从 <strong>0</strong> 开始（0 表示一月），所以要 <code>+ 1</code>。这类“反直觉“的设计，正是第 3 章讲对象和第 11 章讲日期时会提醒你的地方。</p>
+</li>
+<li>
+<p><strong><code>pad</code> 函数与 <code>padStart</code></strong>：<code>padStart(2, "0")</code> 的意思是“把字符串补到至少 2 位，不够就在前面填 <code>0</code>“。于是 <code>5</code> 变成 <code>"05"</code>，时间显示更整齐。这里我们第一次用到<strong>箭头函数</strong> <code>(n) =&gt; ...</code>，第 2 章会正式讲函数。</p>
+</li>
+<li>
+<p><strong>模板字符串</strong>：用反引号 <code>`</code> 包起来、内部用 <code>${...}</code> 嵌入变量的写法，叫<strong>模板字符串（template literal）</strong>，比用 <code>+</code> 拼接清爽得多。第 1 章详解。</p>
+</li>
+<li>
+<p><strong><code>if / else</code> 判断</strong>：根据主版本号给出不同提示。<code>Number(...)</code> 把字符串 <code>"20"</code> 转成数字 <code>20</code>，才能和 <code>18</code> 做大小比较——<strong>类型转换</strong>是第 1 章的重点。</p>
+</li>
+</ol>
+<h3 id="运行它"><a class="header" href="#运行它">运行它</a></h3>
+<pre><code class="language-bash">cd code/ch00
+node doctor.js
+</code></pre>
+<p>看到最后那行 <code>✅</code> 就说明你的环境完全就绪了。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li>让脚本额外打印 <code>process.env.HOME</code>（Mac/Linux）或 <code>process.env.USERPROFILE</code>（Windows），显示你的用户主目录。想想 <code>process.env</code> 是什么？（提示：环境变量，第 24 章会重点用到。）</li>
+<li>把版本下限从 18 改成一个很高的值（比如 999），运行看看会走到哪个分支、打印什么。体会 <code>if/else</code> 的分支逻辑。</li>
+<li>试着把 <code>doctor.js</code> 改写成 <code>doctor.ts</code>（改扩展名、内容不变），然后用 <code>npx tsx doctor.ts</code> 运行。你会发现——它照样能跑！因为<strong>所有合法的 JS 都是合法的 TS</strong>。这就是“TS 是 JS 超集“的第一手体验。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p><strong>本章重点回顾：</strong></p>
+<ul>
+<li>JavaScript 是语言，V8 是引擎，浏览器和 Node.js 是两大运行环境。</li>
+<li>Node.js 让 JS 能脱离浏览器、直接在操作系统上运行，是本书的主力环境。</li>
+<li><code>node 文件.js</code> 是最常用的运行方式；<code>node</code> 直接回车进入 REPL 适合随手试。</li>
+<li>TypeScript 要先编译成 JS 才能运行，本书用 <code>npx tsx</code> 一步执行。</li>
+<li><code>console.log</code> 是你最好的朋友；<code>process</code> 对象藏着运行环境的各种信息。</li>
+</ul>
+<p><strong>自测题：</strong></p>
+<ol>
+<li>为什么在浏览器里能操作网页、在 Node.js 里却不行？反过来 Node 能读写文件、浏览器却不行，原因是什么？</li>
+<li><code>node</code> 直接回车和 <code>node 文件.js</code> 有什么区别？各自适合什么场景？</li>
+<li>运行 <code>.ts</code> 文件为什么不能直接 <code>node xxx.ts</code>？中间少了哪一步？</li>
+<li><code>process.cwd()</code> 后面为什么有括号，而 <code>process.version</code> 后面没有？</li>
+</ol>
+<blockquote>
+<p>答案就在本章正文里。如果某题答不上来，回到对应小节重读一遍——这个习惯请贯穿全书。</p>
+</blockquote>
+<p>下一章，我们正式进入 JavaScript 语言本身，从变量和数据类型讲起。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="preface.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch01.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="preface.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch01.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

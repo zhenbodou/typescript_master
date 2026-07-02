@@ -1,0 +1,978 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 14 章 · 接口、类型别名、联合与交叉类型 - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch14.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-14-章--接口类型别名联合与交叉类型"><a class="header" href="#第-14-章--接口类型别名联合与交叉类型">第 14 章 · 接口、类型别名、联合与交叉类型</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>第 13 章我们迈进了 TypeScript 的大门：给变量、函数、对象加上<strong>类型注解（type annotation）</strong>，理解了类型推断、<code>any</code> 与 <code>unknown</code>、字面量类型与类型断言。那些工具让我们能描述“一个值是什么类型“。</p>
+<p>但真实项目里的类型远比“一个 <code>number</code>“复杂：一个用户对象有 <code>id</code>、<code>name</code>、<code>email</code>；一条通知可能是邮件、短信或推送，各自字段还不一样；一个 API 请求要么成功返回数据、要么失败返回错误码。<strong>如何把这些复杂的、有结构的、“多选一“的领域概念用类型精确表达出来？</strong> 这正是本章要解决的。</p>
+<p>学完本章，你会：</p>
+<ul>
+<li>用 <strong>接口（interface）</strong> 描述对象的“形状（shape）“：可选属性、只读属性、方法签名、索引签名，以及函数类型接口、可调用/可构造接口。</li>
+<li>掌握接口的 <strong>继承（extends，可多继承）</strong> 与 <strong>声明合并（declaration merging）</strong>。</li>
+<li>用 <strong>类型别名（type alias）</strong> 给任意类型起名字，并搞清楚 <code>type</code> 与 <code>interface</code> <strong>到底该用哪个</strong>。</li>
+<li>彻底吃透 <strong>联合类型（union type）</strong> <code>A | B</code>——TypeScript 建模“多选一“的核心武器，配合字面量类型做出“字符串枚举“的效果。</li>
+<li>理解 <strong>交叉类型（intersection type）</strong> <code>A &amp; B</code>——把多个类型合并成一个。</li>
+<li>攻克本章的重头戏 <strong>可辨识联合（discriminated union）</strong>：带公共标签字段的联合，配合 <code>switch</code> 做<strong>完全穷尽处理（exhaustiveness）</strong>，用 <code>never</code> 做编译期兜底检查。这是 TS 里最优雅、最实用的建模模式，没有之一。</li>
+<li>入门 <strong>类型收窄（narrowing）</strong>、<code>keyof</code> 与 <strong>索引访问类型（indexed access type）</strong> <code>T["key"]</code>。</li>
+</ul>
+<p>我们从最基础的“描述一个对象长什么样“开始。</p>
+<hr>
+<h2 id="141-接口描述对象的形状"><a class="header" href="#141-接口描述对象的形状">14.1 接口：描述对象的形状</a></h2>
+<p>第 13 章我们用<strong>内联对象类型</strong>注解过对象，像 <code>{ x: number; y: number }</code>。当这个形状要被反复使用时，每次都手写一遍既啰嗦又难维护。<strong>接口（interface）</strong> 就是给对象形状起个名字，一处定义、处处复用。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/01-interface.ts
+interface User {
+  readonly id: number; // 只读，创建后不可改
+  name: string;
+  age: number;
+  email?: string; // 可选属性，可有可无
+  greet(): string; // 方法签名
+  updateAge(newAge: number): void; // 带参数的方法签名
+}
+
+const alice: User = {
+  id: 1,
+  name: "Alice",
+  age: 30,
+  greet() {
+    return `你好，我叫 ${this.name}`;
+  },
+  updateAge(newAge) {
+    this.age = newAge;
+  },
+};
+
+console.log(alice.greet()); // 你好，我叫 Alice
+alice.updateAge(31);
+console.log("新年龄：", alice.age); // 31
+
+console.log("email 是否存在：", alice.email ?? "（未填写）");
+
+// alice.id = 2; // ⚠️ 取消注释会报错：Cannot assign to 'id' because it is a read-only property.
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>interface User { ... }</code> 定义了一个名叫 <code>User</code> 的接口。注意：接口<strong>只是编译期的类型描述</strong>，编译成 JavaScript 后会被完全抹掉，运行时不存在 <code>User</code> 这个东西。</li>
+<li><code>readonly id: number</code>：<code>readonly</code> 修饰符表示这个属性<strong>只能在创建时赋值，之后不能改</strong>。这在建模“实体 ID“这类不该变的字段时特别有用。</li>
+<li><code>name: string</code> 和 <code>age: number</code> 是普通的<strong>必填属性</strong>。</li>
+<li><code>email?: string</code>：属性名后加 <code>?</code> 表示<strong>可选属性（optional property）</strong>。有它没它都符合 <code>User</code> 类型。⚠️ 注意可选属性的实际类型是 <code>string | undefined</code>，所以取用前最好用 <code>??</code> 或先判断。</li>
+<li><code>greet(): string</code> 是<strong>方法签名（method signature）</strong>：一个不接参数、返回 <code>string</code> 的方法。<code>updateAge(newAge: number): void</code> 则接收一个 <code>number</code> 参数、无返回值（<code>void</code>）。</li>
+<li>定义 <code>alice</code> 时，TS 会逐一核对：必填属性都在吗？类型对吗？方法签名匹配吗？少一个必填属性、或类型对不上，都会立刻报错。注意 <code>updateAge(newAge)</code> 里我们<strong>没写参数类型</strong>——TS 根据接口“上下文推断“出 <code>newAge</code> 是 <code>number</code>，这叫<strong>上下文类型（contextual typing）</strong>。</li>
+</ul>
+<p>📌 接口的本质是一份“契约“：它规定了对象<strong>必须长什么样</strong>。只要一个对象满足这份契约（该有的属性都有、类型都对），它就能被当作这个类型使用——这就是 TypeScript 的<strong>结构化类型系统（structural typing）</strong>，也叫“鸭子类型“：走起来像鸭子、叫起来像鸭子，它就是鸭子。</p>
+<h3 id="索引签名描述键名不固定的对象"><a class="header" href="#索引签名描述键名不固定的对象">索引签名：描述“键名不固定“的对象</a></h3>
+<p>有时对象的键名不是提前定死的，比如一个“字符串到数字“的映射表。这时用<strong>索引签名（index signature）</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/01-interface.ts（续）
+interface StringToNumber {
+  [key: string]: number;
+}
+
+const scores: StringToNumber = {};
+scores["math"] = 95;
+scores["english"] = 88;
+console.log("数学成绩：", scores["math"]); // 95
+console.log("所有分数：", scores); // { math: 95, english: 88 }
+</code></pre>
+<ul>
+<li><code>[key: string]: number</code> 读作“任意 <code>string</code> 类型的键，对应的值都是 <code>number</code>“。<code>key</code> 只是个占位名字，叫 <code>k</code>、<code>prop</code> 都行。</li>
+<li>于是 <code>scores["math"] = 95</code> 合法，而 <code>scores["math"] = "满分"</code> 会报错（值不是 <code>number</code>）。</li>
+</ul>
+<p>⚠️ 索引签名很灵活但也“很松“：它允许任意键，编译器无法帮你 catch 拼写错误。能用固定属性描述的对象，优先用固定属性；只有键名确实动态时才用索引签名。</p>
+<hr>
+<h2 id="142-函数类型接口可调用与可构造接口"><a class="header" href="#142-函数类型接口可调用与可构造接口">14.2 函数类型接口、可调用与可构造接口</a></h2>
+<p>接口不只能描述“带属性的对象“，还能描述<strong>函数</strong>本身，以及“既能调用又带属性“的特殊对象。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/02-callable-construct.ts
+// 1) 用接口描述"函数类型"
+interface BinaryOp {
+  (a: number, b: number): number;
+}
+
+const add: BinaryOp = (a, b) =&gt; a + b;
+const mul: BinaryOp = (a, b) =&gt; a * b;
+console.log("add(2, 3) =", add(2, 3)); // 5
+console.log("mul(2, 3) =", mul(2, 3)); // 6
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>interface BinaryOp { (a: number, b: number): number }</code> 里那行 <code>(a, b): number</code> 没有方法名，它是一个<strong>调用签名（call signature）</strong>，表示“这个接口本身是一个函数“：接收两个 <code>number</code>，返回 <code>number</code>。</li>
+<li>于是 <code>add</code>、<code>mul</code> 都被约束成“符合 <code>BinaryOp</code> 形状的函数“。函数体里的 <code>a</code>、<code>b</code> 类型由接口推断而来，不必重写。</li>
+</ul>
+<p>💡 描述纯函数类型，用<strong>类型别名</strong> <code>type BinaryOp = (a: number, b: number) =&gt; number</code> 通常更简洁（下一节讲）。函数类型接口的真正价值，在于函数<strong>同时还带属性</strong>的场景——这就是<strong>可调用接口（callable interface）</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/02-callable-construct.ts（续）
+// 2) 可调用接口：既能当函数调用，本身又能带属性
+interface Counter {
+  (): number; // 可调用签名：直接 counter() 返回当前值
+  count: number; // 附加属性
+  reset(): void; // 附加方法
+}
+
+function makeCounter(): Counter {
+  const fn = (() =&gt; {
+    fn.count += 1;
+    return fn.count;
+  }) as Counter;
+  fn.count = 0;
+  fn.reset = () =&gt; {
+    fn.count = 0;
+  };
+  return fn;
+}
+
+const c = makeCounter();
+console.log(c(), c(), c()); // 1 2 3
+c.reset();
+console.log("重置后：", c()); // 1
+</code></pre>
+<ul>
+<li><code>Counter</code> 接口既有调用签名 <code>(): number</code>，又有属性 <code>count</code> 和方法 <code>reset</code>。这精确描述了“一个函数，同时挂着状态字段“这种在 JS 里很常见的模式。</li>
+<li><code>makeCounter</code> 内部先把箭头函数用 <code>as Counter</code> 断言（因为此刻还没挂上 <code>count</code>/<code>reset</code>，需要我们告诉编译器“稍后会补齐“），再补上属性和方法。</li>
+</ul>
+<p>再看<strong>可构造接口（constructable interface）</strong>，它用 <code>new</code> 签名描述“能被 <code>new</code> 的东西“，也就是构造器类型：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/02-callable-construct.ts（续）
+// 3) 可构造接口：用 new 签名描述"能被 new 的东西"
+interface PointCtor {
+  new (x: number, y: number): { x: number; y: number };
+}
+
+function createInstance(Ctor: PointCtor, x: number, y: number) {
+  return new Ctor(x, y);
+}
+
+class Point {
+  constructor(public x: number, public y: number) {}
+}
+
+const p = createInstance(Point, 3, 4);
+console.log("构造出的点：", p); // Point { x: 3, y: 4 }
+</code></pre>
+<ul>
+<li><code>new (x, y): {...}</code> 是<strong>构造签名（construct signature）</strong>，表示“用 <code>new</code> 调用它、传两个 <code>number</code>、得到一个 <code>{x, y}</code> 对象“。</li>
+<li><code>createInstance</code> 接收一个<strong>类本身</strong>（不是实例）作为参数，在函数内 <code>new</code> 它。这在写“工厂““依赖注入“这类框架代码时很常见——把类当值传来传去。</li>
+</ul>
+<p>📌 记住三种签名的区别：<code>(a): R</code> 是普通调用签名，<code>new (a): R</code> 是构造签名，<code>m(a): R</code> 是方法签名。绝大多数日常代码只用方法签名，另外两种在写工具/框架时才登场，知道有它们、看得懂即可。</p>
+<hr>
+<h2 id="143-接口继承与声明合并"><a class="header" href="#143-接口继承与声明合并">14.3 接口继承与声明合并</a></h2>
+<h3 id="extends接口继承可多继承"><a class="header" href="#extends接口继承可多继承">extends：接口继承（可多继承）</a></h3>
+<p>接口可以用 <code>extends</code> <strong>继承</strong>另一个接口，白拿它的全部成员，再补充自己的：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/03-extends-merge.ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Admin extends Person {
+  role: "admin";
+  permissions: string[];
+}
+
+const boss: Admin = {
+  name: "Boss",
+  age: 40,
+  role: "admin",
+  permissions: ["read", "write", "delete"],
+};
+console.log(`${boss.name} 拥有权限：${boss.permissions.join(", ")}`);
+</code></pre>
+<ul>
+<li><code>Admin extends Person</code> 意味着 <code>Admin</code> 拥有 <code>Person</code> 的 <code>name</code>、<code>age</code>，再加上自己的 <code>role</code>、<code>permissions</code>。所以定义 <code>boss</code> 时四个属性都得给全。</li>
+<li>注意 <code>role: "admin"</code> 用的是<strong>字面量类型</strong>：<code>role</code> 不是任意 <code>string</code>，而是<strong>必须恰好等于字符串 <code>"admin"</code></strong>。这为后面讲可辨识联合埋下伏笔。</li>
+</ul>
+<p>接口还能<strong>多继承</strong>——一次 <code>extends</code> 多个接口，用逗号分隔：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/03-extends-merge.ts（续）
+interface HasId {
+  id: number;
+}
+interface Timestamped {
+  createdAt: Date;
+  updatedAt: Date;
+}
+interface Article extends HasId, Timestamped {
+  title: string;
+}
+
+const post: Article = {
+  id: 100,
+  title: "TypeScript 入门",
+  createdAt: new Date("2026-01-01"),
+  updatedAt: new Date("2026-07-01"),
+};
+console.log(`文章 #${post.id}《${post.title}》创建于 ${post.createdAt.getFullYear()}`);
+</code></pre>
+<ul>
+<li><code>Article extends HasId, Timestamped</code> 同时继承了两个“能力接口“，<code>Article</code> 因此拥有 <code>id</code>、<code>createdAt</code>、<code>updatedAt</code>、<code>title</code> 全部四个字段。</li>
+<li>💡 这是一种很好的建模习惯：把公共字段（如 <code>id</code>、时间戳）抽成小接口，各实体按需组合。本章小项目就用到了它。</li>
+</ul>
+<h3 id="声明合并同名接口自动合并"><a class="header" href="#声明合并同名接口自动合并">声明合并：同名接口自动合并</a></h3>
+<p>TypeScript 有个独特机制：<strong>同名的 <code>interface</code> 会自动合并成一个</strong>，这叫<strong>声明合并（declaration merging）</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/03-extends-merge.ts（续）
+interface Box {
+  width: number;
+}
+interface Box {
+  height: number;
+}
+// 现在 Box 同时拥有 width 和 height
+const b: Box = { width: 10, height: 20 };
+console.log("盒子面积：", b.width * b.height); // 200
+</code></pre>
+<ul>
+<li>两次声明 <code>interface Box</code>，TS 不会报“重复定义“，而是把它们<strong>合并</strong>成 <code>{ width: number; height: number }</code>。</li>
+<li>这个特性最大的用途是<strong>扩展第三方库或全局类型</strong>：比如给 <code>window</code> 添加自定义属性、给某个库的接口补字段，你无需修改库源码，只要在自己的文件里再声明一次同名接口即可。</li>
+</ul>
+<p>⚠️ 声明合并是把双刃剑：它很强大，但也意味着“接口的定义可能分散在多处“，容易在不经意间被别处扩展。<strong>这也是 <code>interface</code> 与 <code>type</code> 的关键区别之一——<code>type</code> 不能声明合并</strong>（重复定义同名 <code>type</code> 会直接报错）。</p>
+<hr>
+<h2 id="144-类型别名给任意类型起名字"><a class="header" href="#144-类型别名给任意类型起名字">14.4 类型别名：给任意类型起名字</a></h2>
+<p><strong>类型别名（type alias）</strong> 用 <code>type</code> 关键字，给<strong>任意类型</strong>起一个名字——注意是“任意类型“，不只是对象。这是它比接口更宽广的地方。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/04-type-alias.ts
+type ID = number | string; // 联合类型别名
+type Point = { x: number; y: number }; // 对象类型别名
+type Pair&lt;T&gt; = [T, T]; // 元组类型别名（带泛型，第 19 章细讲）
+
+const userId: ID = "u_123";
+const origin: Point = { x: 0, y: 0 };
+const coords: Pair&lt;number&gt; = [3, 4];
+console.log(userId, origin, coords);
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>type ID = number | string</code>：给一个<strong>联合类型</strong>起名叫 <code>ID</code>。这是接口做不到的——<code>interface</code> 只能描述对象/函数形状，没法给“<code>number</code> 或 <code>string</code>“这种非对象类型命名。</li>
+<li><code>type Point = { ... }</code>：给对象形状起名，这和 <code>interface Point { ... }</code> 效果几乎一样。</li>
+<li><code>type Pair&lt;T&gt; = [T, T]</code>：给一个<strong>元组类型</strong>起名，还带了泛型参数（第 19 章详讲）。</li>
+</ul>
+<p><code>type</code> 也能用 <code>&amp;</code>（交叉类型，下节讲）实现类似继承的扩展：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/04-type-alias.ts（续）
+type Animal = { name: string };
+type Dog = Animal &amp; { breed: string }; // 交叉，等价于接口的 extends
+const d: Dog = { name: "旺财", breed: "柴犬" };
+console.log(`${d.name} 是一只 ${d.breed}`);
+</code></pre>
+<ul>
+<li><code>Dog = Animal &amp; { breed: string }</code> 让 <code>Dog</code> 同时拥有 <code>Animal</code> 的 <code>name</code> 和额外的 <code>breed</code>，效果类似 <code>interface Dog extends Animal</code>。</li>
+</ul>
+<h3 id="interface-vs-type到底用哪个"><a class="header" href="#interface-vs-type到底用哪个">interface vs type：到底用哪个？</a></h3>
+<p>这是初学者最纠结的问题。先看对比表：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>能力</th><th><code>interface</code></th><th><code>type</code></th></tr>
+</thead>
+<tbody>
+<tr><td>描述对象形状</td><td>✅</td><td>✅</td></tr>
+<tr><td>描述函数类型</td><td>✅（调用签名）</td><td>✅（<code>(a) =&gt; b</code>，更简洁）</td></tr>
+<tr><td>给联合类型命名</td><td>❌</td><td>✅ <code>A | B</code></td></tr>
+<tr><td>给基础/元组/字面量命名</td><td>❌</td><td>✅</td></tr>
+<tr><td>继承/扩展</td><td>✅ <code>extends</code></td><td>✅ 用 <code>&amp;</code></td></tr>
+<tr><td>声明合并（同名自动合并）</td><td>✅</td><td>❌（重复报错）</td></tr>
+<tr><td>被 <code>class</code> 用 <code>implements</code></td><td>✅</td><td>✅（若是对象类型）</td></tr>
+</tbody>
+</table>
+</div>
+<p>📌 <strong>实用选择建议：</strong></p>
+<ul>
+<li><strong>描述对象/类的形状</strong>——优先用 <code>interface</code>。它更贴近“面向对象“的直觉，<code>extends</code> 语义清晰，报错信息更友好，还支持声明合并（利于被扩展）。</li>
+<li><strong>需要联合、交叉、元组、给基础类型/函数类型起名、或做类型运算（如 <code>keyof</code>、映射类型）</strong>——必须用 <code>type</code>，因为 <code>interface</code> 做不到。</li>
+</ul>
+<p>一句话记忆：<strong>“形状用 interface，其它一律 type”</strong>。当然这不是铁律，团队保持一致最重要。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/04-type-alias.ts（续）
+type Direction = "up" | "down" | "left" | "right"; // 只能是这四个字符串之一
+type Handler = (e: string) =&gt; void; // 函数类型
+type ReadonlyPoint = Readonly&lt;Point&gt;; // 基于已有类型变换
+
+const move: Direction = "up";
+const onClick: Handler = (e) =&gt; console.log("事件：", e);
+const rp: ReadonlyPoint = { x: 1, y: 2 };
+console.log(move); // up
+onClick("click"); // 事件： click
+console.log(rp); // { x: 1, y: 2 }
+// rp.x = 5; // ⚠️ 报错：Readonly 使属性只读
+</code></pre>
+<ul>
+<li>这三行展示了 <code>type</code> 独有的场景：字面量联合、函数类型、以及用内置工具类型 <code>Readonly&lt;T&gt;</code> 基于已有类型<strong>变换</strong>出新类型（工具类型第 20 章详讲）。这些都是 <code>interface</code> 无法表达的。</li>
+</ul>
+<hr>
+<h2 id="145-联合类型建模多选一"><a class="header" href="#145-联合类型建模多选一">14.5 联合类型：建模“多选一“</a></h2>
+<p><strong>联合类型（union type）</strong> 用竖线 <code>|</code> 连接多个类型，表示“这个值是其中之一“。它是 TypeScript 建模能力的核心。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/05-union.ts
+function formatId(id: number | string): string {
+  return `ID: ${id}`;
+}
+console.log(formatId(123)); // ID: 123
+console.log(formatId("abc")); // ID: abc
+</code></pre>
+<ul>
+<li><code>id: number | string</code> 表示 <code>id</code> 可以是 <code>number</code> <strong>或</strong> <code>string</code>。</li>
+<li>⚠️ 关键约束：当一个值是联合类型时，你<strong>只能访问所有成员共有的成员</strong>。比如 <code>id</code> 上不能直接调 <code>.toFixed()</code>（<code>string</code> 没有）也不能调 <code>.toUpperCase()</code>（<code>number</code> 没有）——除非先<strong>收窄</strong>（见 14.7）。上面代码只用了模板字符串（对两者都合法），所以没问题。</li>
+</ul>
+<h3 id="字面量类型--联合--字符串枚举"><a class="header" href="#字面量类型--联合--字符串枚举">字面量类型 + 联合 = “字符串枚举”</a></h3>
+<p>联合类型配合<strong>字面量类型</strong>威力巨大，能做出比枚举更轻量、更灵活的“多选一取值“：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/05-union.ts（续）
+type LogLevel = "debug" | "info" | "warn" | "error";
+
+function log(level: LogLevel, message: string): void {
+  console.log(`[${level.toUpperCase()}] ${message}`);
+}
+log("info", "服务已启动"); // [INFO] 服务已启动
+log("error", "连接失败"); // [ERROR] 连接失败
+// log("verbose", "..."); // ⚠️ 报错：'verbose' 不在 LogLevel 允许的取值内
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>type LogLevel = "debug" | "info" | "warn" | "error"</code> 定义了一个只能取这四个字符串之一的类型。传入 <code>"verbose"</code> 会立刻报错。</li>
+<li>相比第 15 章要讲的 <code>enum</code>，这种“字面量联合“更轻量：它编译后<strong>不产生任何运行时代码</strong>（就是普通字符串），还能享受编辑器的自动补全。现代 TS 代码里，用字面量联合替代字符串枚举是主流做法。</li>
+</ul>
+<p>数字字面量也能这么玩：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/05-union.ts（续）
+type DiceRoll = 1 | 2 | 3 | 4 | 5 | 6;
+function roll(): DiceRoll {
+  return (Math.floor(Math.random() * 6) + 1) as DiceRoll;
+}
+console.log("掷出：", roll());
+</code></pre>
+<ul>
+<li><code>DiceRoll</code> 限定只能是 1~6。这里用了 <code>as DiceRoll</code> 断言，因为 <code>Math.floor(...) + 1</code> 的类型是宽泛的 <code>number</code>，编译器无法自动确认它落在 1~6 内，需要我们担保。</li>
+</ul>
+<hr>
+<h2 id="146-交叉类型合并多个类型"><a class="header" href="#146-交叉类型合并多个类型">14.6 交叉类型：合并多个类型</a></h2>
+<p><strong>交叉类型（intersection type）</strong> 用 <code>&amp;</code> 连接，表示“<strong>同时满足</strong>所有成员“。如果说联合 <code>A | B</code> 是“或“，交叉 <code>A &amp; B</code> 就是“与“。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/06-intersection.ts
+type WithId = { id: number };
+type WithName = { name: string };
+type WithTimestamps = { createdAt: Date; updatedAt: Date };
+
+// 交叉：同时拥有全部三组属性
+type Entity = WithId &amp; WithName &amp; WithTimestamps;
+
+const user: Entity = {
+  id: 1,
+  name: "Alice",
+  createdAt: new Date("2026-01-01"),
+  updatedAt: new Date("2026-07-01"),
+};
+console.log(`#${user.id} ${user.name}`);
+</code></pre>
+<ul>
+<li><code>Entity = WithId &amp; WithName &amp; WithTimestamps</code> 把三个小类型“合并“成一个，<code>Entity</code> 必须<strong>同时具备</strong>全部字段。这在效果上很像接口的多继承，是“组合小类型“的常用手段。</li>
+</ul>
+<p>一个典型用途是给类型“混入（mixin）“额外能力：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/06-intersection.ts（续）
+type Serializable = { toJSON(): string };
+type Loggable = { log(): void };
+type Model = WithId &amp; Serializable &amp; Loggable;
+
+const model: Model = {
+  id: 42,
+  toJSON() {
+    return JSON.stringify({ id: this.id });
+  },
+  log() {
+    console.log("Model:", this.toJSON());
+  },
+};
+model.log(); // Model: {"id":42}
+</code></pre>
+<ul>
+<li><code>Model</code> 既是“有 id 的东西“，又是“可序列化的东西“，还是“可打日志的东西“。交叉类型让我们把这些正交的能力自由拼装。</li>
+</ul>
+<p>⚠️ <strong>交叉的陷阱</strong>：如果两边有<strong>同名属性但类型不兼容</strong>，交叉的结果会坍缩成 <code>never</code>（一个“不可能有值“的类型），导致这个类型无法被赋值：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/06-intersection.ts（续）
+type A = { kind: "a" };
+type B = { kind: "b" };
+type Impossible = A &amp; B; // kind 同时要是 "a" 又要是 "b" → never
+// const imp: Impossible = { kind: "a" }; // 报错：无论填什么都不满足
+
+type KindType = Impossible["kind"]; // never
+const _check: KindType extends never ? true : false = true;
+console.log("Impossible.kind is never:", _check); // true
+</code></pre>
+<ul>
+<li><code>kind</code> 被要求“既是 <code>"a"</code> 又是 <code>"b"</code>“，这不可能同时成立，于是 <code>kind</code> 的类型变成 <code>never</code>，整个 <code>Impossible</code> 就没法有合法的值了。</li>
+<li>📌 记住：交叉 <code>&amp;</code> 适合<strong>合并不冲突的对象类型</strong>；如果你想表达的是“要么 A 要么 B“，那需要的是<strong>联合 <code>|</code></strong>，别用错了。</li>
+</ul>
+<hr>
+<h2 id="147-可辨识联合ts-建模的利器"><a class="header" href="#147-可辨识联合ts-建模的利器">14.7 可辨识联合：TS 建模的利器</a></h2>
+<p>现在到了本章最重要的部分。前面我们说过，联合类型的值“只能访问共有成员“。那如果各成员字段差异很大，怎么安全地区分处理？答案就是<strong>可辨识联合（discriminated union）</strong>，也叫“标签联合（tagged union）“。</p>
+<p>它的配方只有三步：</p>
+<ol>
+<li>每个成员是一个对象类型；</li>
+<li>每个成员都有一个<strong>同名的、值为字面量的公共字段</strong>（俗称“标签“或“辨识符“，如 <code>kind</code>、<code>type</code>、<code>status</code>）；</li>
+<li>用这些成员组成联合。</li>
+</ol>
+<p>之后就能靠检查这个标签字段，让编译器<strong>自动收窄</strong>到对应的成员类型。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/07-discriminated-union.ts
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+interface Rectangle {
+  kind: "rectangle";
+  width: number;
+  height: number;
+}
+interface Triangle {
+  kind: "triangle";
+  base: number;
+  height: number;
+}
+
+type Shape = Circle | Rectangle | Triangle;
+</code></pre>
+<ul>
+<li>三个接口的<strong>公共字段都叫 <code>kind</code></strong>，且每个的 <code>kind</code> 都是一个<strong>唯一的字面量</strong>（<code>"circle"</code>/<code>"rectangle"</code>/<code>"triangle"</code>）。这个字段就是“辨识符“。</li>
+<li><code>Shape</code> 是它们的联合：一个 <code>Shape</code> 要么是圆、要么是矩形、要么是三角形。</li>
+</ul>
+<p>现在用 <code>switch</code> 分支处理，见证收窄的魔力：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/07-discriminated-union.ts（续）
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle":
+      // 这里 shape 被收窄为 Circle，可以安全访问 radius
+      return Math.PI * shape.radius ** 2;
+    case "rectangle":
+      return shape.width * shape.height;
+    case "triangle":
+      return (shape.base * shape.height) / 2;
+    default: {
+      // 完全穷尽检查（exhaustiveness）：若上面漏了某个成员，
+      // shape 在这里就不是 never，赋值会报错，编译期就能发现遗漏
+      const _exhaustive: never = shape;
+      return _exhaustive;
+    }
+  }
+}
+</code></pre>
+<p><strong>逐段拆解（这段务必吃透）：</strong></p>
+<ul>
+<li><code>switch (shape.kind)</code> 对辨识符做分支。在 <code>case "circle"</code> 这个分支里，编译器<strong>知道</strong> <code>shape.kind === "circle"</code>，于是自动把 <code>shape</code> 的类型收窄为 <code>Circle</code>。因此 <code>shape.radius</code> 合法——而如果你在这个分支里写 <code>shape.width</code>，会立刻报错，因为 <code>Circle</code> 没有 <code>width</code>。这就是可辨识联合的核心价值：<strong>编译器帮你保证“只在正确的分支里访问正确的字段“</strong>。</li>
+<li>每个 <code>case</code> 分支里，<code>shape</code> 都被精确收窄到对应类型，享受完整的属性提示与检查。</li>
+<li>重点看 <code>default</code> 分支的 <code>const _exhaustive: never = shape</code>：这是<strong>完全穷尽检查（exhaustiveness check）<strong>的经典写法。它的原理是——如果前面的 <code>case</code> 已经覆盖了 <code>Shape</code> 的</strong>全部</strong>成员，那么代码走到 <code>default</code> 时，<code>shape</code> 的类型会被收窄为 <code>never</code>（因为所有可能都被排除了）。而 <code>never</code> 可以赋值给 <code>never</code>，编译通过。</li>
+<li>✨ <strong>但如果你以后给 <code>Shape</code> 加了第四种图形（比如 <code>Pentagon</code>）却忘了加对应的 <code>case</code></strong>，那么 <code>default</code> 分支里 <code>shape</code> 的类型就还剩 <code>Pentagon</code>（不是 <code>never</code>），<code>const _exhaustive: never = shape</code> 就会<strong>编译报错</strong>：“类型 <code>Pentagon</code> 不能赋值给 <code>never</code>”。于是你在<strong>编译期</strong>就被提醒“有个分支忘了处理“，而不是等到运行时出 bug。</li>
+</ul>
+<p>📌 这套“字面量标签 + switch 收窄 + never 兜底“的组合拳，是 TypeScript 建模状态机、事件、API 响应、领域对象的<strong>最佳实践</strong>。请务必把它变成肌肉记忆。</p>
+<h3 id="用-in-与-typeof-收窄"><a class="header" href="#用-in-与-typeof-收窄">用 <code>in</code> 与 <code>typeof</code> 收窄</a></h3>
+<p>可辨识联合是最优雅的收窄方式，但不是唯一的。当成员之间<strong>没有统一标签字段</strong>时，还能用 <code>in</code> 操作符（检查属性是否存在）或 <code>typeof</code> 收窄：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/07-discriminated-union.ts（续）
+type Fish = { swim: () =&gt; void };
+type Bird = { fly: () =&gt; void };
+function move(animal: Fish | Bird) {
+  if ("swim" in animal) {
+    animal.swim(); // 收窄为 Fish
+  } else {
+    animal.fly(); // 收窄为 Bird
+  }
+}
+move({ swim: () =&gt; console.log("游泳") }); // 游泳
+move({ fly: () =&gt; console.log("飞行") }); // 飞行
+</code></pre>
+<ul>
+<li><code>"swim" in animal</code> 为真时，编译器推断 <code>animal</code> 是拥有 <code>swim</code> 的那个成员（<code>Fish</code>），否则是 <code>Bird</code>。</li>
+<li>而 14.5 里用 <code>typeof x === "number"</code> 收窄基础类型，是同一个思路。这些收窄手段第 18 章会系统展开，这里先建立直觉：<strong>通过运行时可检查的条件，把宽泛的联合类型逐步缩小到具体类型。</strong></li>
+</ul>
+<p>（补充：14.5 里 <code>describe</code> 函数用 <code>typeof</code> 分别收窄了 <code>number</code>、<code>string</code>、<code>boolean</code>，可对照回看。）</p>
+<hr>
+<h2 id="148-keyof-与索引访问类型入门"><a class="header" href="#148-keyof-与索引访问类型入门">14.8 keyof 与索引访问类型入门</a></h2>
+<p>最后两个小工具，为后续泛型章节铺路。</p>
+<p><strong><code>keyof T</code></strong> 取出一个对象类型<strong>所有键组成的联合</strong>；<strong>索引访问类型 <code>T["key"]</code></strong> 取出某个属性的类型。</p>
+<pre><code class="language-typescript">// 文件：code/ch14/08-keyof-indexed.ts
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  inStock: boolean;
+}
+
+// keyof Product 得到所有键组成的联合："id" | "title" | "price" | "inStock"
+type ProductKey = keyof Product;
+
+// 索引访问类型：取出某个属性的类型
+type PriceType = Product["price"]; // number
+type IdOrTitle = Product["id" | "title"]; // number | string
+
+const key: ProductKey = "title";
+const price: PriceType = 99.9;
+console.log(key, price); // title 99.9
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li><code>keyof Product</code> 的结果是字面量联合 <code>"id" | "title" | "price" | "inStock"</code>。它让“键名“本身变成一种类型。</li>
+<li><code>Product["price"]</code> 用属性名“索引“进类型，取出该属性的类型 <code>number</code>。</li>
+<li><code>Product["id" | "title"]</code> 甚至能用<strong>联合当索引</strong>，取出 <code>number | string</code>。</li>
+</ul>
+<p>这两个特性组合起来，能写出<strong>类型安全的属性读取函数</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/08-keyof-indexed.ts（续）
+function getProp&lt;T, K extends keyof T&gt;(obj: T, k: K): T[K] {
+  return obj[k];
+}
+
+const laptop: Product = { id: 1, title: "笔记本", price: 6999, inStock: true };
+const t = getProp(laptop, "title"); // t 的类型是 string
+const p = getProp(laptop, "price"); // p 的类型是 number
+console.log(`${t}：￥${p}`); // 笔记本：￥6999
+// getProp(laptop, "color"); // ⚠️ 报错："color" 不是 Product 的键
+</code></pre>
+<ul>
+<li><code>K extends keyof T</code> 约束了第二个参数 <code>k</code> 只能是 <code>T</code> 真实存在的键——传 <code>"color"</code> 会报错。</li>
+<li>返回类型 <code>T[K]</code> 精确地是“那个键对应的类型“：取 <code>"title"</code> 返回 <code>string</code>，取 <code>"price"</code> 返回 <code>number</code>，绝不含糊。</li>
+</ul>
+<p>💡 泛型（<code>&lt;T, K&gt;</code>）第 19 章才正式讲，这里你只需感受到：<code>keyof</code> 和索引访问让类型能“随取值联动“，这是 TypeScript 类型系统真正强大的地方。看懂即可，暂不必自己写。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>可选属性 <code>?</code> 的类型含 <code>undefined</code></strong>。<code>email?: string</code> 的实际类型是 <code>string | undefined</code>，直接当 <code>string</code> 用（如 <code>email.length</code>）会在 <code>strict</code> 模式报错，务必先判断或用 <code>??</code> 兜底。</li>
+<li>⚠️ <strong>联合类型只能访问共有成员</strong>。想访问某个成员独有的属性，必须先收窄（<code>typeof</code>/<code>in</code>/字面量标签），别硬来。</li>
+<li>⚠️ <strong>该用联合的地方误用了交叉</strong>。“要么 A 要么 B“是联合 <code>|</code>；“同时是 A 和 B“才是交叉 <code>&amp;</code>。对两个标签不同的对象类型做交叉，会得到 <code>never</code>。</li>
+<li>⚠️ <strong>可辨识联合一定要写 <code>default</code> 的 <code>never</code> 兜底</strong>。这是“加了新成员却忘了处理“的编译期保险，几乎零成本，收益巨大。别省。</li>
+<li>📌 <strong>辨识符字段要用字面量类型</strong>，不能是宽泛的 <code>string</code>。写成 <code>kind: string</code> 就丧失了收窄能力，编译器无从区分。</li>
+<li>📌 <strong>形状优先 <code>interface</code>，其它优先 <code>type</code></strong>。需要联合/交叉/元组/映射时只能用 <code>type</code>；描述对象/类形状时 <code>interface</code> 更合适、报错更友好、可声明合并。</li>
+<li>💡 <strong>公共字段抽成小接口再组合</strong>（<code>extends</code> 多个或 <code>&amp;</code>），比在每个大接口里重复写 <code>id</code>、时间戳更易维护。</li>
+<li>💡 <strong>优先用字面量联合替代字符串 <code>enum</code></strong>：更轻量、无运行时代码、补全一样好用（枚举的取舍第 15 章讨论）。</li>
+</ul>
+<hr>
+<h2 id="本章小项目领域模型建模"><a class="header" href="#本章小项目领域模型建模">本章小项目：领域模型建模</a></h2>
+<p>我们来给一个<strong>小型电商领域</strong>建模，把本章所有知识点串起来：用 <code>interface</code> + 交叉定义实体，用<strong>可辨识联合</strong>建模支付方式、通知、API 响应，并用 <code>switch</code> + <code>never</code> 做完全穷尽处理。</p>
+<p>先看实体建模——公共字段抽成小接口，靠继承组合：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/domain-model.ts
+interface HasId {
+  readonly id: string;
+}
+interface Timestamped {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface User extends HasId, Timestamped {
+  name: string;
+  email: string;
+  vipLevel?: 1 | 2 | 3; // 可选 + 字面量联合
+}
+
+interface Product extends HasId, Timestamped {
+  title: string;
+  price: number; // 单位：分，避免浮点误差
+  stock: number;
+}
+</code></pre>
+<ul>
+<li><code>HasId</code> 和 <code>Timestamped</code> 是可复用的“能力接口“，<code>User</code> 与 <code>Product</code> 都 <code>extends</code> 它们，避免重复写 <code>id</code>、时间戳。</li>
+<li><code>vipLevel?: 1 | 2 | 3</code> 一行里同时用到了<strong>可选属性</strong>和<strong>数字字面量联合</strong>：要么不填，要么只能是 1/2/3。</li>
+</ul>
+<p>接着是核心——用可辨识联合建模<strong>支付方式</strong>，每种方式字段各不相同，靠 <code>method</code> 辨识：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/domain-model.ts（续）
+interface AlipayPayment {
+  method: "alipay";
+  account: string;
+}
+interface WechatPayment {
+  method: "wechat";
+  openId: string;
+}
+interface CardPayment {
+  method: "card";
+  cardNumber: string;
+  bank: string;
+}
+interface CashOnDelivery {
+  method: "cod"; // 货到付款，无需额外字段
+}
+
+type Payment = AlipayPayment | WechatPayment | CardPayment | CashOnDelivery;
+
+function describePayment(p: Payment): string {
+  switch (p.method) {
+    case "alipay":
+      return `支付宝支付（账号 ${maskTail(p.account)}）`;
+    case "wechat":
+      return `微信支付（openId ${maskTail(p.openId)}）`;
+    case "card":
+      return `${p.bank}银行卡支付（尾号 ${p.cardNumber.slice(-4)}）`;
+    case "cod":
+      return "货到付款";
+    default:
+      return assertNever(p); // 漏掉任何一种 method，这里就会编译报错
+  }
+}
+</code></pre>
+<p><strong>逐段拆解：</strong></p>
+<ul>
+<li>四个接口各有独特字段（支付宝有 <code>account</code>、微信有 <code>openId</code>、银行卡有 <code>cardNumber</code>/<code>bank</code>、货到付款啥都不加），但都带 <code>method</code> 标签。</li>
+<li><code>describePayment</code> 在每个 <code>case</code> 里，<code>p</code> 都被收窄到对应类型，所以能安全访问各自的独有字段：<code>case "card"</code> 里 <code>p.bank</code>、<code>p.cardNumber</code> 都合法，换到别的分支就不合法。</li>
+<li><code>default</code> 用 <code>assertNever(p)</code> 兜底，这是把 14.7 的 <code>never</code> 检查<strong>抽成了一个可复用函数</strong>（见下文）。</li>
+</ul>
+<p>再看<strong>通知</strong>，同样的模式，辨识符换成 <code>channel</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/domain-model.ts（续）
+interface EmailNotification {
+  channel: "email";
+  to: string;
+  subject: string;
+  body: string;
+}
+interface SmsNotification {
+  channel: "sms";
+  phone: string;
+  text: string;
+}
+interface PushNotification {
+  channel: "push";
+  deviceToken: string;
+  title: string;
+  badge: number;
+}
+
+type Notification = EmailNotification | SmsNotification | PushNotification;
+
+function renderNotification(n: Notification): string {
+  switch (n.channel) {
+    case "email":
+      return `邮件 → ${n.to}｜主题：${n.subject}`;
+    case "sms":
+      return `短信 → ${n.phone}｜${truncate(n.text, 10)}`;
+    case "push":
+      return `推送 → 设备 ${maskTail(n.deviceToken)}｜${n.title}（角标 ${n.badge}）`;
+    default:
+      return assertNever(n);
+  }
+}
+</code></pre>
+<ul>
+<li>完全是支付方式的翻版，说明这套模式<strong>可以套用到任何“多态数据“上</strong>。邮件/短信/推送的展示逻辑各不相同，但都被统一在一个函数里安全处理。</li>
+</ul>
+<p>第三个例子——用<strong>泛型 + 可辨识联合</strong>建模 API 响应“要么成功、要么失败“：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/domain-model.ts（续）
+type ApiResult&lt;T&gt; =
+  | { status: "ok"; data: T }
+  | { status: "error"; code: number; message: string };
+
+function handleResult&lt;T&gt;(res: ApiResult&lt;T&gt;): string {
+  switch (res.status) {
+    case "ok":
+      return `成功：${JSON.stringify(res.data)}`;
+    case "error":
+      return `失败[${res.code}]：${res.message}`;
+    default:
+      return assertNever(res);
+  }
+}
+</code></pre>
+<ul>
+<li><code>ApiResult&lt;T&gt;</code> 用 <code>status</code> 辨识：成功分支带泛型数据 <code>data: T</code>，失败分支带 <code>code</code>/<code>message</code>。这正是真实项目里包装接口返回的标准做法——调用方 <code>switch</code> 一下就能安全区分成功和失败，绝不会在失败时误读 <code>data</code>。</li>
+</ul>
+<p>最后是共用的工具函数，尤其是 <code>assertNever</code>：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/domain-model.ts（续）
+// exhaustiveness 检查：参数类型必须是 never，否则说明联合没被穷尽
+function assertNever(x: never): never {
+  throw new Error(`未处理的分支：${JSON.stringify(x)}`);
+}
+
+function maskTail(s: string): string {
+  if (s.length &lt;= 3) return "***";
+  return s.slice(0, 3) + "***";
+}
+
+function truncate(s: string, max: number): string {
+  return s.length &gt; max ? s.slice(0, max) + "…" : s;
+}
+</code></pre>
+<ul>
+<li><code>assertNever(x: never)</code> 是完全穷尽检查的“官方“写法：参数类型是 <code>never</code>，只有当调用点的实参确实被收窄成了 <code>never</code>（即所有成员都已处理）才编译通过。一旦联合新增了成员而某个 <code>switch</code> 没跟上，对应的 <code>assertNever(...)</code> 调用就会<strong>编译报错</strong>，精确指出遗漏。它的返回类型也是 <code>never</code>，所以能放在 <code>return</code> 后面而不破坏函数的返回类型。运行时若真被执行（理论上不该发生），则抛错，双保险。</li>
+</ul>
+<p>运行演示：</p>
+<pre><code class="language-typescript">// 文件：code/ch14/domain-model.ts（续，演示部分节选）
+const payments: Payment[] = [
+  { method: "alipay", account: "alice@example.com" },
+  { method: "wechat", openId: "ox_abc123def" },
+  { method: "card", cardNumber: "6222021234567890", bank: "招商" },
+  { method: "cod" },
+];
+console.log("=== 支付方式 ===");
+for (const p of payments) console.log("-", describePayment(p));
+</code></pre>
+<p>用 <code>npx tsx ch14/domain-model.ts</code> 运行，输出：</p>
+<pre><code class="language-text">=== 支付方式 ===
+- 支付宝支付（账号 ali***）
+- 微信支付（openId ox_***）
+- 招商银行卡支付（尾号 7890）
+- 货到付款
+
+=== 通知渲染 ===
+- 邮件 → bob@example.com｜主题：订单已发货
+- 短信 → 13800001111｜您的验证码是 884…
+- 推送 → 设备 dtk***｜限时秒杀（角标 3）
+
+=== API 响应 ===
+- 成功：{"id":"p1","title":"机械键盘","price":299...
+- 失败[404]：商品不存在
+
+用户 Alice（VIP2）建模完成。
+</code></pre>
+<p>📌 回头看整个设计，本章知识点全被串起来了：<strong><code>interface</code> + <code>extends</code> 定义实体、抽公共能力接口复用；字面量类型当辨识符；联合类型建模“多选一“；<code>switch</code> 收窄让每个分支安全访问独有字段；<code>assertNever</code> + <code>never</code> 做完全穷尽检查</strong>。这套组合是 TypeScript 在真实业务里最高频、最可靠的建模范式。</p>
+<h3 id="扩展练习"><a class="header" href="#扩展练习">扩展练习</a></h3>
+<ol>
+<li><strong>加一种支付方式</strong>：新增 <code>interface ApplePay { method: "applepay"; token: string }</code>，把它加进 <code>Payment</code> 联合，然后<strong>故意先不改 <code>describePayment</code></strong>，观察 <code>assertNever(p)</code> 那行报什么错——亲身体会 exhaustiveness 检查如何在编译期揪出遗漏。再补上 <code>case "applepay"</code> 让它通过。</li>
+<li><strong>加通知渠道</strong>：仿照支付，给 <code>Notification</code> 加一个 <code>"webhook"</code> 渠道（字段 <code>url: string</code>、<code>payload: string</code>），补全 <code>renderNotification</code>。</li>
+<li><strong>订单可辨识联合</strong>：定义 <code>type OrderStatus</code>，用 <code>status</code> 辨识 <code>"pending"</code>（待付款，带 <code>amount</code>）、<code>"shipped"</code>（已发货，带 <code>trackingNo</code>）、<code>"completed"</code>（已完成，带 <code>completedAt: Date</code>）三种状态，写函数返回中文状态描述并做 <code>never</code> 兜底。</li>
+<li><strong>用 keyof 写取值函数</strong>：给 <code>Product</code> 写一个 <code>pick&lt;K extends keyof Product&gt;(p: Product, keys: K[])</code>，返回只含指定键的新对象（提示：返回类型可先用 <code>Partial&lt;Product&gt;</code>，工具类型第 20 章讲）。</li>
+<li><strong>交叉组合</strong>：定义 <code>type AuditedProduct = Product &amp; { auditedBy: string; auditedAt: Date }</code>，构造一个值并打印，体会用 <code>&amp;</code> 给已有类型追加字段。</li>
+</ol>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>本章我们掌握了 TypeScript 描述“有结构的数据“和“多选一的数据“的全套武器：</p>
+<ul>
+<li><strong>接口（interface）</strong> 描述对象形状：可选属性 <code>?</code>、只读属性 <code>readonly</code>、方法签名、索引签名；还能描述函数类型（调用签名）、可调用接口、可构造接口（<code>new</code> 签名）。</li>
+<li>接口用 <strong><code>extends</code></strong> 继承（可多继承）；<strong>同名接口自动声明合并</strong>——这是 <code>interface</code> 独有、<code>type</code> 没有的能力。</li>
+<li><strong>类型别名 <code>type</code></strong> 能给<strong>任意类型</strong>命名（联合、交叉、元组、函数、字面量）。选择口诀：<strong>形状用 <code>interface</code>，其它用 <code>type</code></strong>。</li>
+<li><strong>联合类型 <code>A | B</code></strong> 表示“多选一“，配合<strong>字面量类型</strong>做出轻量的“字符串枚举“效果；联合值只能访问共有成员，需收窄后才能访问独有成员。</li>
+<li><strong>交叉类型 <code>A &amp; B</code></strong> 表示“同时满足“，用来合并/混入类型；同名冲突字段会坍缩成 <code>never</code>。</li>
+<li><strong>可辨识联合</strong>（字面量标签 + <code>switch</code> 收窄）是 TS 建模的利器；<strong><code>assertNever</code> + <code>never</code></strong> 的完全穷尽检查能在编译期揪出漏处理的分支。</li>
+<li><strong>收窄</strong>入门：<code>typeof</code>、<code>in</code>、字面量标签。<strong><code>keyof T</code></strong> 取键的联合，<strong><code>T["key"]</code></strong> 取属性类型，二者组合能写出类型安全的取值函数。</li>
+</ul>
+<p><strong>自测题（先自己答，再运行代码验证）：</strong></p>
+<ol>
+<li><code>readonly</code> 和 <code>?</code>（可选）分别解决什么问题？可选属性 <code>email?: string</code> 的真实类型是什么？</li>
+<li><code>interface</code> 和 <code>type</code> 各自能做而对方不能做的事分别是什么？你日常会怎么在两者间选择？</li>
+<li>联合类型的值为什么“只能访问共有成员“？怎么才能访问某个成员独有的属性？</li>
+<li>联合 <code>|</code> 和交叉 <code>&amp;</code> 的语义区别是什么？下面 <code>X</code> 的 <code>kind</code> 是什么类型，能构造出合法的 <code>X</code> 值吗？
+<pre><code class="language-typescript">type X = { kind: "a"; v: number } &amp; { kind: "b"; v: number };
+</code></pre>
+</li>
+<li>可辨识联合的三个必要条件是什么？辨识符字段为什么必须是字面量类型而不能是 <code>string</code>？</li>
+<li><code>default</code> 分支里 <code>const _exhaustive: never = shape</code> 是如何在“新增成员却忘了处理“时报错的？请用“收窄到 never“的原理解释。</li>
+<li><code>keyof Product</code> 和 <code>Product["price"]</code> 分别得到什么？<code>getProp(laptop, "color")</code> 为什么会报错？</li>
+</ol>
+<p>（参考答案：1. <code>readonly</code> 禁止创建后修改属性，<code>?</code> 表示属性可有可无；<code>email?: string</code> 的真实类型是 <code>string | undefined</code>。2. <code>interface</code> 独有声明合并、语义更贴近对象/类；<code>type</code> 独有给联合/交叉/元组/基础类型/函数类型命名及类型运算。日常：描述对象/类形状用 <code>interface</code>，需要联合交叉等用 <code>type</code>。3. 因为值可能是任一成员，只有共有成员才保证一定存在；用 <code>typeof</code>/<code>in</code>/字面量标签收窄后才能访问独有属性。4. <code>|</code> 是“或“、<code>&amp;</code> 是“与“；<code>X</code> 的 <code>kind</code> 要同时是 <code>"a"</code> 和 <code>"b"</code>，坍缩为 <code>never</code>，无法构造合法值。5. 每个成员是对象、都有同名的字面量公共字段、组成联合；辨识符若是 <code>string</code> 就无法区分不同成员，丧失收窄能力。6. 若所有成员都被 <code>case</code> 覆盖，走到 <code>default</code> 时 <code>shape</code> 被收窄为 <code>never</code>，可赋给 <code>never</code>；一旦漏了某成员，<code>shape</code> 在 <code>default</code> 里还剩那个成员类型（非 <code>never</code>），赋值给 <code>never</code> 便报错。7. <code>keyof Product</code> 得到 <code>"id" | "title" | "price" | "inStock"</code>，<code>Product["price"]</code> 得到 <code>number</code>；<code>"color"</code> 不在 <code>keyof Product</code> 里，违反 <code>K extends keyof T</code> 约束故报错。）</p>
+<hr>
+<p>学到这里，你已经能用类型精确描述“数据长什么样“和“数据有哪几种“了。但一个程序不只有数据，还有<strong>行为</strong>——函数如何被类型化（参数、返回值、重载、可选参数）、<code>class</code> 在 TypeScript 里如何标注、以及 <code>enum</code> 枚举到底该不该用、和本章的字面量联合怎么取舍。这些正是<strong>第 15 章：函数类型、类与枚举</strong>要展开的内容。我们下一章见。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch13.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch15.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch13.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch15.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

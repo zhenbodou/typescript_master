@@ -1,0 +1,1020 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第 23 章 · Node.js 后端开发与 REST API - JavaScript &amp; TypeScript 从入门到精通</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="一本面向零基础读者、系统讲解 JavaScript 与 TypeScript 直至精通的中文教程，配有详尽示例与每章小项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-dbb5a7ff.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c9d72d09.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">JavaScript &amp; TypeScript 从入门到精通</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/zhenbodou/typescript_master/edit/main/src/ch23.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="第-23-章--nodejs-后端开发与-rest-api"><a class="header" href="#第-23-章--nodejs-后端开发与-rest-api">第 23 章 · Node.js 后端开发与 REST API</a></h1>
+<h2 id="本章目标"><a class="header" href="#本章目标">本章目标</a></h2>
+<p>到目前为止，我们写的程序几乎都是“自己跑给自己看“——命令行脚本、测试用例、类型练习。但真实世界里，软件常常要作为一个<strong>服务（service）<strong>长期运行，等着别人来“敲门“：浏览器、手机 App、另一台服务器……它们通过网络发来请求，你的程序处理后再把结果送回去。这类程序就是</strong>后端（backend）</strong>，而它们之间最通用的对话方式，就是 <strong>HTTP</strong>。</p>
+<p>这一章我们要把“写脚本“升级成“写服务“。你会先亲手用 Node 内置的 <code>node:http</code> 搓一个最原始的 HTTP 服务器——不为了好用，而是为了看清框架到底替我们做了什么；然后引入业界最流行的 Web 框架 <strong>Express</strong>，理解它的路由、<code>req</code>/<code>res</code>、中间件（middleware）这套核心模型；最后用 Express + TypeScript 搭一个<strong>结构清晰、分层合理、有校验有错误处理</strong>的任务管理 REST API。</p>
+<p>学完本章，你将能够：</p>
+<ul>
+<li>复习并说清 HTTP 的骨架：请求/响应、方法（GET/POST/PUT/PATCH/DELETE）、状态码、headers、body、JSON。</li>
+<li>用 <code>node:http</code> 手写最小服务器，理解“请求 body 是流“、“路由就是 if/else“这些底层真相。</li>
+<li>说清 <strong>REST</strong> 风格：资源、URL 设计、无状态（stateless）、幂等性（idempotency）与常见约定。</li>
+<li>用 Express 写路由，读取路由参数（route params）、查询参数（query params）和请求体（body）。</li>
+<li>真正理解<strong>中间件</strong>这套洋葱模型，并手写日志、CORS、鉴权、错误处理中间件。</li>
+<li>用 <code>express.Router()</code> 把路由<strong>模块化</strong>。</li>
+<li>给外部输入做<strong>请求校验</strong>，并用<strong>统一错误处理中间件</strong>收口所有错误。</li>
+<li>用 TypeScript + <code>@types/express</code> 写出类型安全的 Express 应用。</li>
+<li>用 <code>curl</code> 和一个“supertest 风格“的冒烟脚本测试 API。</li>
+</ul>
+<p>本章的核心代码是一个独立子项目 <code>code/ch23/api/</code>，它有自己的 <code>package.json</code>。<strong>运行前需要先进入该目录执行 <code>npm install</code></strong>，然后用 <code>npx tsx src/server.ts</code> 启动。</p>
+<p>📌 <strong>一句话记住本章</strong>：后端服务 = <strong>一个长期监听端口、按“请求→路由→处理→响应“循环工作的程序</strong>；Express 帮你把这个循环写得优雅，而 REST 是给这个循环定的一套“好好说话“的规矩。</p>
+<hr>
+<h2 id="http-基础复习一次请求到底长什么样"><a class="header" href="#http-基础复习一次请求到底长什么样">HTTP 基础复习：一次请求到底长什么样</a></h2>
+<p>在写任何服务器之前，先把 HTTP 这门“对话语言“的语法过一遍。HTTP 是<strong>请求-响应（request-response）<strong>模型：客户端发一条</strong>请求（request）</strong>，服务器回一条<strong>响应（response）</strong>，一来一回，然后连接就可以结束了。</p>
+<p>一条 HTTP 请求由四部分组成：</p>
+<pre><code class="language-http">POST /tasks HTTP/1.1            ← 请求行：方法 + 路径 + 协议版本
+Host: localhost:3000           ← 请求头（headers），key: value
+Content-Type: application/json
+                               ← 一个空行，分隔头和体
+{"title":"买牛奶"}              ← 请求体（body）
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>请求行（request line）</strong>：<code>POST</code> 是<strong>方法（method）</strong>，表明“我想干什么“；<code>/tasks</code> 是<strong>路径（path）</strong>，表明“对哪个资源干“；<code>HTTP/1.1</code> 是协议版本。</li>
+<li><strong>请求头（headers）</strong>：一堆 <code>键: 值</code>，携带元信息。比如 <code>Content-Type: application/json</code> 告诉服务器“我的 body 是 JSON 格式“。</li>
+<li><strong>空行</strong>：头和体之间<strong>必须</strong>有一个空行来分隔——这是协议规定。</li>
+<li><strong>请求体（body）</strong>：真正要提交的数据。不是每个请求都有 body（<code>GET</code> 通常没有，<code>POST</code> 通常有）。</li>
+</ul>
+<p>服务器的响应结构几乎对称：</p>
+<pre><code class="language-http">HTTP/1.1 201 Created           ← 状态行：协议 + 状态码 + 原因短语
+Content-Type: application/json
+Location: /tasks/abc123
+
+{"id":"abc123","title":"买牛奶","done":false}
+</code></pre>
+<h3 id="http-方法表达意图"><a class="header" href="#http-方法表达意图">HTTP 方法：表达“意图“</a></h3>
+<p>方法不是随便选的，每个都有约定的语义：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方法</th><th>意图</th><th>幂等？</th><th>典型用途</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GET</code></td><td>读取资源</td><td>是</td><td>查列表、查单个</td></tr>
+<tr><td><code>POST</code></td><td>新建资源</td><td>否</td><td>创建一条数据</td></tr>
+<tr><td><code>PUT</code></td><td>整体替换资源</td><td>是</td><td>用完整数据覆盖</td></tr>
+<tr><td><code>PATCH</code></td><td>局部更新资源</td><td>否*（约定上不保证）</td><td>只改某几个字段</td></tr>
+<tr><td><code>DELETE</code></td><td>删除资源</td><td>是</td><td>删掉一条数据</td></tr>
+</tbody>
+</table>
+</div>
+<p>📌 **幂等（idempotent）**指的是“同一个请求发一次和发 N 次，对服务器状态的最终影响相同“。<code>DELETE /tasks/1</code> 删一次和删十次，结果都是“1 号任务没了“，所以幂等；而 <code>POST /tasks</code> 发十次会创建十条任务，所以不幂等。幂等性很重要：网络会抖动，客户端可能重发，幂等的接口重发无害。</p>
+<h3 id="状态码表达结果"><a class="header" href="#状态码表达结果">状态码：表达“结果“</a></h3>
+<p>响应用**状态码（status code）**告诉客户端结果如何。按首位数字分五大类：</p>
+<ul>
+<li><strong>2xx 成功</strong>：<code>200 OK</code>（成功，通常带 body）、<code>201 Created</code>（新建成功）、<code>204 No Content</code>（成功但没有 body，常用于 DELETE）。</li>
+<li><strong>3xx 重定向</strong>：<code>301</code>/<code>302</code>（资源换地方了），本章用不到。</li>
+<li><strong>4xx 客户端错误</strong>：<code>400 Bad Request</code>（你请求有问题，比如 body 不合法）、<code>401 Unauthorized</code>（没登录）、<code>403 Forbidden</code>（登录了但没权限）、<code>404 Not Found</code>（资源不存在）、<code>409 Conflict</code>（冲突，如重复创建）。</li>
+<li><strong>5xx 服务器错误</strong>：<code>500 Internal Server Error</code>（服务器自己崩了）。</li>
+</ul>
+<p>⚠️ <strong>别把 4xx 和 5xx 搞混。</strong> 4xx 是“**你（客户端）**错了“，5xx 是“**我（服务器）**错了“。校验失败该返回 400，而不是 500——500 意味着你的代码抛了没接住的异常。这个区分对排查问题至关重要。</p>
+<hr>
+<h2 id="用-nodehttp-手写最小服务器看清底层"><a class="header" href="#用-nodehttp-手写最小服务器看清底层">用 node:http 手写最小服务器：看清底层</a></h2>
+<p>框架很好用，但如果一上来就用框架，你会把很多“魔法“当成理所当然。我们先用 Node 内置的 <code>node:http</code> 模块（不需要安装任何依赖）搓一个最小服务器，亲眼看看一个请求进来时，最原始的 API 长什么样。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/raw-http.ts
+import http from "node:http";
+
+// createServer 接收一个「请求处理函数」，每来一个请求就调用它一次。
+// req 是 IncomingMessage（可读流），res 是 ServerResponse（可写流）。
+const server = http.createServer((req, res) =&gt; {
+  const { method, url } = req;
+
+  // 最原始的「路由」：就是一堆 if/switch，根据 method + 路径分发。
+  if (method === "GET" &amp;&amp; url === "/hello") {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.end(JSON.stringify({ message: "你好，世界" }));
+    return;
+  }
+  // …（POST /echo 与 404 见完整文件）
+});
+
+server.listen(3000, () =&gt; {
+  console.log("原始 HTTP 服务器已启动：http://localhost:3000");
+});
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>http.createServer(handler)</code> 创建一个服务器对象。<code>handler</code> 是<strong>每个请求都会被调用一次</strong>的回调，签名是 <code>(req, res) =&gt; void</code>。</li>
+<li><code>req</code>（IncomingMessage）代表进来的请求。它是一个<strong>可读流（readable stream）</strong>——注意这点，body 不是现成的字符串，得自己收。<code>req.method</code> 是方法字符串，<code>req.url</code> 是路径加查询串。</li>
+<li><code>res</code>（ServerResponse）代表要发出去的响应。它是一个<strong>可写流（writable stream）</strong>。你用 <code>res.statusCode</code> 设状态码、<code>res.setHeader()</code> 设响应头、<code>res.end(body)</code> 把 body 写出去并结束响应。</li>
+<li><strong>“路由“在这一层就是裸的 <code>if/else</code></strong>：手动比较 <code>method</code> 和 <code>url</code>。想象一下你有几十个端点，这里会变成一坨恐怖的 if 森林——这正是我们后面需要框架的原因之一。</li>
+<li><code>server.listen(3000, cb)</code> 让服务器**监听（listen）**3000 端口。这一步之后，进程不会退出，而是“挂“在那里等请求——这就是“服务“和“脚本“的本质区别：脚本跑完就结束，服务要一直活着。</li>
+</ul>
+<p>那 <code>POST</code> 的 body 怎么读？这里藏着新手最容易踩的坑：<strong>body 是分块流式到达的</strong>。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/raw-http.ts（节选：POST /echo 的处理）
+if (method === "POST" &amp;&amp; url === "/echo") {
+  const chunks: Buffer[] = [];
+  req.on("data", (chunk: Buffer) =&gt; {
+    chunks.push(chunk); // 每来一块数据触发一次 data
+  });
+  req.on("end", () =&gt; {
+    const raw = Buffer.concat(chunks).toString("utf-8"); // 收齐后拼起来
+    try {
+      const data = raw ? JSON.parse(raw) : {}; // 自己 parse JSON
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.end(JSON.stringify({ youSent: data }));
+    } catch {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ error: "请求体不是合法 JSON" }));
+    }
+  });
+  return;
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>请求体可能很大，网络会把它切成若干**块（chunk）**陆续送达。每到一块，<code>req</code> 触发一次 <code>"data"</code> 事件，我们把这些 <code>Buffer</code> 块攒进数组。</li>
+<li>当所有块都到齐，<code>req</code> 触发 <code>"end"</code> 事件。这时用 <code>Buffer.concat</code> 把碎块拼成完整 Buffer，再 <code>toString</code> 成字符串。</li>
+<li><strong>我们约定 body 是 JSON，所以要手动 <code>JSON.parse</code></strong>。如果客户端发来的不是合法 JSON，<code>parse</code> 会抛异常，我们接住并返回 <code>400</code>。</li>
+<li>看到没？“把 JSON body 解析成对象“这件小事，裸写居然要监听两个事件 + 手动拼接 + 手动 parse + 手动兜错。Express 的 <code>express.json()</code> 中间件，一行就替你做完了全部。</li>
+</ul>
+<p>运行体验一下：</p>
+<pre><code class="language-bash">npx tsx ch23/raw-http.ts
+# 另开一个终端：
+curl http://localhost:3000/hello
+curl -X POST http://localhost:3000/echo -H "Content-Type: application/json" -d '{"name":"张三"}'
+</code></pre>
+<p>💡 <strong>这个练习的价值不在“能用“，而在“祛魅“。</strong> 当你后面用 <code>res.json(obj)</code> 时，你会知道它内部无非是 <code>setHeader('Content-Type', ...)</code> + <code>end(JSON.stringify(obj))</code>；当你用 <code>req.body</code> 时，你会知道有个中间件替你收了流、parse 了 JSON。框架不是魔法，是“把这些重复劳动封装好的普通代码“。</p>
+<hr>
+<h2 id="rest-风格给接口定一套好好说话的规矩"><a class="header" href="#rest-风格给接口定一套好好说话的规矩">REST 风格：给接口定一套好好说话的规矩</a></h2>
+<p>同样是“任务管理“，你可以设计成 <code>GET /getAllTasks</code>、<code>POST /createTask</code>、<code>POST /deleteTaskById</code>……也可以设计成一套统一、可预测的接口。后者就是 <strong>REST（Representational State Transfer）<strong>风格。REST 不是协议、不是标准，而是一套</strong>设计约定</strong>，核心思想是：<strong>把系统里的一切建模成“资源（resource）“，用 URL 定位资源，用 HTTP 方法表达对资源的操作。</strong></p>
+<p>以“任务“为例，REST 风格的接口长这样：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>操作</th><th>方法 + URL</th><th>说明</th></tr>
+</thead>
+<tbody>
+<tr><td>列出所有任务</td><td><code>GET /tasks</code></td><td>集合资源</td></tr>
+<tr><td>获取某个任务</td><td><code>GET /tasks/:id</code></td><td>单个资源</td></tr>
+<tr><td>新建任务</td><td><code>POST /tasks</code></td><td>向集合里加一个</td></tr>
+<tr><td>局部更新任务</td><td><code>PATCH /tasks/:id</code></td><td>改某几个字段</td></tr>
+<tr><td>删除任务</td><td><code>DELETE /tasks/:id</code></td><td>删掉单个</td></tr>
+</tbody>
+</table>
+</div>
+<p>REST 的几条关键约定，逐条理解：</p>
+<ul>
+<li><strong>资源用名词，不用动词。</strong> URL 里应该是 <code>/tasks</code>（名词复数），而不是 <code>/getTasks</code>（动词）。“想干什么“由 HTTP 方法表达，不由 URL 表达。<code>GET /tasks</code> 和 <code>DELETE /tasks/1</code> 里，URL 都指同一类资源，动作在方法上。</li>
+<li><strong>用层级表达从属关系。</strong> <code>GET /tasks/1/comments</code> 表示“1 号任务下的评论集合“，URL 的层级结构天然表达了资源之间的隶属。</li>
+<li><strong>无状态（stateless）。</strong> 服务器不为某个客户端“记住上一次请求“。每个请求都必须自带一切必要信息（比如身份用 token 每次都带上）。这样任何一台服务器都能处理任何请求，方便水平扩展。⚠️ 这不代表“不能有数据库“——数据库里的持久数据是<strong>资源状态</strong>，不是<strong>会话状态</strong>；无状态说的是后者。</li>
+<li><strong>善用状态码。</strong> 创建成功回 <code>201</code>，删除成功回 <code>204</code>，找不到回 <code>404</code>，校验失败回 <code>400</code>。让状态码承载“结果类型“，客户端一看状态码就知道大局。</li>
+<li><strong>利用方法的幂等性。</strong> <code>GET</code>/<code>PUT</code>/<code>DELETE</code> 设计成幂等的，<code>POST</code>/<code>PATCH</code> 不保证。这让客户端在网络不稳时能安全重试幂等请求。</li>
+</ul>
+<p>💡 <strong>REST 不是教条，而是“降低惊讶“的工具。</strong> 当所有接口都遵循同一套约定，任何人（包括半年后的你）看到 <code>DELETE /tasks/5</code> 都能秒懂它干什么、成功该回什么码。一致性本身就是巨大的价值。</p>
+<hr>
+<h2 id="引入-express路由reqres中间件"><a class="header" href="#引入-express路由reqres中间件">引入 Express：路由、req/res、中间件</a></h2>
+<p>现在正式请出 <strong>Express</strong>——Node 生态里最流行、资料最多的 Web 框架。它做的事，本质就是把上面那坨 <code>if (method &amp;&amp; url)</code> 变成优雅的路由表，并提供一套强大的<strong>中间件</strong>机制。</p>
+<p>本章的完整应用在 <code>code/ch23/api/</code> 子项目里，它有独立的 <code>package.json</code>：</p>
+<pre><code class="language-json">// 文件：code/ch23/api/package.json（节选）
+{
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "smoke": "tsx scripts/smoke.ts"
+  },
+  "dependencies": { "express": "^4.19.2" },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>"type": "module"</code> 让这个子项目用 <strong>ES Module</strong>（<code>import</code>/<code>export</code>）而非 CommonJS。</li>
+<li><code>express</code> 是运行时依赖；<code>@types/express</code> 是它的<strong>类型声明包</strong>——Express 本身用 JS 写的，<code>@types/express</code> 单独提供 TS 类型（第 20 章讲过 <code>@types/*</code> 这套机制）。</li>
+<li><code>tsx</code> 让我们直接跑 <code>.ts</code> 文件而不必先编译；<code>typescript</code> 用来做 <code>tsc --noEmit</code> 类型检查。</li>
+</ul>
+<p>📌 <strong>先装依赖再运行</strong>：</p>
+<pre><code class="language-bash">cd code/ch23/api
+npm install
+npx tsx src/server.ts
+</code></pre>
+<h3 id="一个最小的-express-应用"><a class="header" href="#一个最小的-express-应用">一个最小的 Express 应用</a></h3>
+<p>先不管分层，看 Express 最核心的三样东西：<code>app</code>、路由、<code>req</code>/<code>res</code>。</p>
+<pre><code class="language-typescript">// 一个概念性的最小 Express 应用（讲解用）
+import express from "express";
+
+const app = express();          // 创建应用实例
+
+app.get("/tasks", (req, res) =&gt; {
+  res.json({ items: [] });      // res.json 自动设 Content-Type 并序列化
+});
+
+app.listen(3000, () =&gt; console.log("listening on 3000"));
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>express()</code> 返回一个 <code>app</code> 对象，它既是“配置中心“也是那个能被 <code>listen</code> 的请求处理器。</li>
+<li><code>app.get(path, handler)</code> 注册一个路由：当 <code>GET /tasks</code> 进来时，调用 <code>handler</code>。类似还有 <code>app.post</code>、<code>app.patch</code>、<code>app.delete</code>。<strong>这就取代了裸 http 里那坨 if。</strong></li>
+<li><code>handler</code> 的签名是 <code>(req, res) =&gt; void</code>。<code>req</code> 是增强版的请求对象（比裸 <code>IncomingMessage</code> 多了 <code>req.params</code>、<code>req.query</code>、<code>req.body</code> 等便利属性），<code>res</code> 是增强版响应对象。</li>
+<li><code>res.json(obj)</code> 一步到位：设 <code>Content-Type: application/json</code>、<code>JSON.stringify(obj)</code>、<code>end</code>。还记得裸 http 里我们手动做的三步吗？这里一行。</li>
+</ul>
+<h3 id="读取三种输入路由参数查询参数请求体"><a class="header" href="#读取三种输入路由参数查询参数请求体">读取三种输入：路由参数、查询参数、请求体</a></h3>
+<p>一个真实接口的输入可能来自三个地方，Express 分别放在三个属性里：</p>
+<pre><code class="language-typescript">// 讲解用：三种输入的读取方式
+app.get("/tasks/:id", (req, res) =&gt; {
+  const id = req.params.id;         // 路由参数：URL 路径里的 :id
+  res.json({ id });
+});
+
+app.get("/tasks", (req, res) =&gt; {
+  const done = req.query.done;      // 查询参数：?done=true 里的 done（永远是字符串！）
+  const page = req.query.page;      // ?page=2
+  res.json({ done, page });
+});
+
+app.post("/tasks", (req, res) =&gt; {
+  const body = req.body;            // 请求体：需要 express.json() 中间件才有值
+  res.json({ received: body });
+});
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>路由参数（route params）</strong>：路径里用 <code>:id</code> 声明的占位符，运行时从 <code>req.params.id</code> 取。<code>GET /tasks/abc</code> 时 <code>req.params.id === "abc"</code>。</li>
+<li><strong>查询参数（query params）</strong>：URL 里 <code>?</code> 后面的键值对。⚠️ <strong>它们永远是字符串</strong>（或字符串数组）。<code>?done=true</code> 里 <code>req.query.done</code> 是字符串 <code>"true"</code>，不是布尔 <code>true</code>。想当布尔用必须自己转换——这是个高频陷阱。</li>
+<li><strong>请求体（body）</strong>：<code>req.body</code>。但注意，<strong>Express 默认不解析 body</strong>，<code>req.body</code> 是 <code>undefined</code>！必须先挂上 <code>express.json()</code> 中间件，它才会把 JSON body 解析成对象。这就引出了下一个核心概念。</li>
+</ul>
+<h3 id="中间件express-的灵魂"><a class="header" href="#中间件express-的灵魂">中间件：Express 的灵魂</a></h3>
+<p><strong>中间件（middleware）<strong>是理解 Express 的钥匙。一个中间件就是一个函数，签名 <code>(req, res, next) =&gt; void</code>。Express 把所有中间件和路由排成一条</strong>流水线</strong>，请求进来后<strong>按注册顺序</strong>依次流过每一个中间件；每个中间件可以：</p>
+<ol>
+<li>读或改 <code>req</code>/<code>res</code>（比如解析 body、加日志、校验身份）；</li>
+<li>调用 <code>next()</code> 把控制权交给下一个中间件；</li>
+<li>或者直接 <code>res.send(...)</code> 结束响应，<strong>不调 next</strong>，请求就此终结。</li>
+</ol>
+<pre><code class="language-typescript">// 讲解用：中间件的流水线模型
+const app = express();
+
+app.use((req, res, next) =&gt; {
+  console.log("① 我先执行");
+  next();                    // 交棒给下一个
+});
+
+app.use((req, res, next) =&gt; {
+  console.log("② 我第二个执行");
+  next();
+});
+
+app.get("/", (req, res) =&gt; {
+  console.log("③ 路由处理器，最后执行");
+  res.send("done");
+});
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>app.use(fn)</code> 注册一个<strong>全局中间件</strong>，对所有请求生效。请求会先过 ①，再过 ②，最后到路由处理器 ③。</li>
+<li><strong>顺序至关重要</strong>：注册顺序就是执行顺序。如果日志中间件注册在路由后面，它就永远不会对那些路由生效。</li>
+<li><strong><code>next()</code> 是流水线的传送带</strong>。⚠️ 忘了调 <code>next()</code>（又没结束响应），请求就会“卡死“在这个中间件里，客户端一直等到超时——这是最常见的 Express bug。</li>
+<li>路由处理器 <code>(req, res) =&gt; ...</code> 其实也是一种“终点中间件“：它通常不调 <code>next</code>，而是直接 <code>res.send</code>/<code>res.json</code> 结束响应。</li>
+</ul>
+<p>理解了这个模型，<code>express.json()</code> 就不神秘了——它只是一个“官方提供的、负责收 body 流并 parse JSON 挂到 <code>req.body</code>“的中间件。你 <code>app.use(express.json())</code>，它就被插进流水线，在它之后的所有处理器就都能读到 <code>req.body</code> 了。</p>
+<hr>
+<h2 id="用-typescript-组织-express-应用分层结构"><a class="header" href="#用-typescript-组织-express-应用分层结构">用 TypeScript 组织 Express 应用：分层结构</a></h2>
+<p>小 demo 可以把所有代码堆在一个文件里，但真实项目需要<strong>分层</strong>，让每一层只操心一件事。本章的任务 API 分成四层，请求从上往下流：</p>
+<pre><code>路由层 routes/     ← 只管 HTTP：解析 req、调 service、发 res
+业务层 services/   ← 只管业务规则：筛选、分页、"找不到就 404"
+数据层 store/      ← 只管数据存哪：本章是内存数组，第 24 章换数据库
+中间件 middleware/ ← 横切关注点：日志、CORS、错误处理
+</code></pre>
+<p>📌 <strong>分层的核心收益：可替换性。</strong> 因为“数据存哪“被隔离在 <code>store/</code> 一层，第 24 章我们把内存数组换成数据库时，上面的 service 和 route <strong>几乎不用动</strong>。这就是“面向接口而非实现“在架构层面的体现。</p>
+<h3 id="数据层内存-store"><a class="header" href="#数据层内存-store">数据层：内存 store</a></h3>
+<p>先从最底层看起。数据层只暴露“增删改查“的原始能力，不含任何业务判断。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/store/taskStore.ts
+import { randomUUID } from "node:crypto";
+import type { Task } from "../types.js";
+
+// 内存里的「表」。进程重启就没了——这正是我们要在第 24 章解决的问题。
+const tasks: Task[] = [];
+
+export const taskStore = {
+  findAll(): Task[] {
+    return [...tasks]; // 返回拷贝，避免外部直接改到内部数组
+  },
+  findById(id: string): Task | undefined {
+    return tasks.find((t) =&gt; t.id === id);
+  },
+  create(data: { title: string; done: boolean }): Task {
+    const task: Task = {
+      id: randomUUID(),
+      title: data.title,
+      done: data.done,
+      createdAt: new Date().toISOString(),
+    };
+    tasks.push(task);
+    return task;
+  },
+  update(id: string, patch: Partial&lt;Pick&lt;Task, "title" | "done"&gt;&gt;): Task | undefined {
+    const task = tasks.find((t) =&gt; t.id === id);
+    if (!task) return undefined;
+    if (patch.title !== undefined) task.title = patch.title;
+    if (patch.done !== undefined) task.done = patch.done;
+    return task;
+  },
+  remove(id: string): boolean {
+    const index = tasks.findIndex((t) =&gt; t.id === id);
+    if (index === -1) return false;
+    tasks.splice(index, 1);
+    return true;
+  },
+};
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>const tasks: Task[] = []</code> 就是我们的“数据库“——一个进程内的数组。⚠️ <strong>进程一重启，数据就全没了</strong>。这在开发阶段够用，但显然不能上生产，第 24 章会换成真数据库。</li>
+<li><code>randomUUID()</code> 是 Node 内置的、生成唯一 id 的函数，省得我们自己维护自增计数器。</li>
+<li><code>findAll</code> 返回 <code>[...tasks]</code> 而不是 <code>tasks</code> 本身——<strong>返回拷贝</strong>，防止调用方拿到内部数组的引用后乱改，破坏封装。</li>
+<li><code>update</code> 用了 <code>Partial&lt;Pick&lt;Task, "title" | "done"&gt;&gt;</code>（第 16 章的工具类型）：<code>Pick</code> 挑出 <code>title</code> 和 <code>done</code> 两个字段，<code>Partial</code> 让它们都可选。语义就是“可以只改这两个字段中的任意几个“。</li>
+<li>注意这一层<strong>没有任何“找不到该怎么办“的业务判断</strong>——它诚实地返回 <code>undefined</code> 或 <code>false</code>，把“该报什么错“的决定权交给上层。</li>
+</ul>
+<h3 id="领域模型与错误类型"><a class="header" href="#领域模型与错误类型">领域模型与错误类型</a></h3>
+<p>数据层依赖的类型和自定义错误：</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/types.ts
+export interface Task {
+  id: string;
+  title: string;
+  done: boolean;
+  createdAt: string; // ISO 8601 字符串
+}
+export interface CreateTaskInput { title: string; done?: boolean; }
+export interface UpdateTaskInput { title?: string; done?: boolean; }
+</code></pre>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/errors.ts
+// 让「业务错误」携带一个 HTTP 状态码，统一错误处理中间件据此决定返回什么码。
+export class HttpError extends Error {
+  status: number;
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+    this.name = "HttpError";
+  }
+}
+export class NotFoundError extends HttpError {
+  constructor(message = "资源不存在") { super(404, message); this.name = "NotFoundError"; }
+}
+export class ValidationError extends HttpError {
+  details: string[];
+  constructor(details: string[]) {
+    super(400, "请求校验失败");
+    this.name = "ValidationError";
+    this.details = details;
+  }
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>核心设计：<strong>让错误对象自己携带 HTTP 状态码</strong>。<code>HttpError</code> 继承内置 <code>Error</code>，多加一个 <code>status</code> 字段。</li>
+<li><code>NotFoundError</code> 固定 <code>status = 404</code>，<code>ValidationError</code> 固定 <code>status = 400</code> 并额外带一个 <code>details</code> 数组（具体哪些字段不合法）。</li>
+<li>这样一来，业务代码里只要 <code>throw new NotFoundError(...)</code>，无需关心 HTTP 细节；后面统一的错误中间件会 <code>instanceof</code> 判断类型，读出 <code>status</code> 和 <code>message</code>，转成合适的响应。<strong>抛错的地方和处理错的地方彻底解耦</strong>。</li>
+</ul>
+<h3 id="业务层service"><a class="header" href="#业务层service">业务层：service</a></h3>
+<p>业务层把 store 的原始能力组合成“对上层有意义的操作“，并在这里落地业务规则（如“找不到就 404“、筛选、分页）。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/services/taskService.ts
+import { NotFoundError } from "../errors.js";
+import { taskStore } from "../store/taskStore.js";
+import type { CreateTaskInput, Task, UpdateTaskInput } from "../types.js";
+
+export interface ListQuery { done?: boolean; page: number; pageSize: number; }
+export interface ListResult { items: Task[]; page: number; pageSize: number; total: number; }
+
+export const taskService = {
+  list(query: ListQuery): ListResult {
+    let all = taskStore.findAll();
+    if (query.done !== undefined) {
+      all = all.filter((t) =&gt; t.done === query.done);       // 1) 筛选
+    }
+    all.sort((a, b) =&gt; (a.createdAt &lt; b.createdAt ? 1 : -1)); // 2) 排序：新的在前
+    const total = all.length;
+    const start = (query.page - 1) * query.pageSize;
+    const items = all.slice(start, start + query.pageSize);   // 3) 分页切片
+    return { items, page: query.page, pageSize: query.pageSize, total };
+  },
+  getById(id: string): Task {
+    const task = taskStore.findById(id);
+    if (!task) throw new NotFoundError(`找不到 id 为 ${id} 的任务`);
+    return task;
+  },
+  create(input: CreateTaskInput): Task {
+    return taskStore.create({ title: input.title, done: input.done ?? false });
+  },
+  update(id: string, patch: UpdateTaskInput): Task {
+    const updated = taskStore.update(id, patch);
+    if (!updated) throw new NotFoundError(`找不到 id 为 ${id} 的任务`);
+    return updated;
+  },
+  remove(id: string): void {
+    if (!taskStore.remove(id)) throw new NotFoundError(`找不到 id 为 ${id} 的任务`);
+  },
+};
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>list</code> 体现了列表接口的三板斧：<strong>筛选 → 排序 → 分页</strong>。先按 <code>done</code> 过滤，再按创建时间倒序，最后用 <code>slice</code> 切出当前页。返回体带上 <code>total</code>（筛选后总数），让客户端知道一共有多少条、能算出多少页。</li>
+<li><strong>分页计算</strong>：第 <code>page</code> 页（从 1 开始）、每页 <code>pageSize</code> 条，起始下标是 <code>(page - 1) * pageSize</code>。这是分页最经典的公式，务必记牢。</li>
+<li><code>getById</code>/<code>update</code>/<code>remove</code> 在 store 返回“找不到“的信号（<code>undefined</code>/<code>false</code>）时，统一 <code>throw new NotFoundError(...)</code>。<strong>这就是“找不到就 404“这条业务规则的落点</strong>——它不该在 store 里（store 只管数据），也不该在 route 里重复写（每个用到 id 的路由都要判），放在 service 层集中处理最合适。</li>
+<li><code>create</code> 里的 <code>input.done ?? false</code>：用**空值合并（第 6 章）**给 <code>done</code> 一个默认值——客户端没传就默认“未完成“。</li>
+</ul>
+<h3 id="中间件日志cors错误处理"><a class="header" href="#中间件日志cors错误处理">中间件：日志、CORS、错误处理</a></h3>
+<p>三个横切中间件。先看日志：</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/middleware/logger.ts
+import type { Request, Response, NextFunction } from "express";
+
+export function requestLogger(req: Request, res: Response, next: NextFunction): void {
+  const start = Date.now();
+  // res 在响应发送完毕后触发 "finish"，这时才知道最终状态码和总耗时。
+  res.on("finish", () =&gt; {
+    const ms = Date.now() - start;
+    console.log(`${req.method} ${req.originalUrl} → ${res.statusCode} (${ms}ms)`);
+  });
+  next(); // 一定要调用，否则请求卡死
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>从 <code>express</code> 导入 <code>Request</code>/<code>Response</code>/<code>NextFunction</code> 三个类型（来自 <code>@types/express</code>），给参数标上类型——这就是“用 TS 写 Express“的日常。</li>
+<li>进入时记 <code>start</code> 时间戳。但此刻还不知道最终状态码（路由还没跑）。所以我们监听 <code>res</code> 的 <code>"finish"</code> 事件——它在响应完全发出后触发，那时 <code>res.statusCode</code> 才是最终值。</li>
+<li>计算耗时并打印一行 <code>方法 路径 → 状态码 (耗时)</code>。这种结构化日志对排查线上问题极有帮助。</li>
+<li>最后 <code>next()</code> 放行。这个中间件“只观察不拦截“，所以必须放行。</li>
+</ul>
+<p>CORS 中间件——理解“CORS 本质就是加几个响应头“：</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/middleware/cors.ts
+import type { Request, Response, NextFunction } from "express";
+
+export function simpleCors(req: Request, res: Response, next: NextFunction): void {
+  res.setHeader("Access-Control-Allow-Origin", "*");          // 允许的来源
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {  // 浏览器的预检请求，直接回 204 放行
+    res.sendStatus(204);
+    return;
+  }
+  next();
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>**CORS（Cross-Origin Resource Sharing，跨源资源共享）**解决的是浏览器安全策略问题：默认情况下，<code>https://a.com</code> 的网页用 fetch 调 <code>https://b.com</code> 的 API 会被浏览器拦截。服务器需要通过 <code>Access-Control-Allow-*</code> 系列响应头，明确“我允许来自某某源的跨域请求“。</li>
+<li><code>Access-Control-Allow-Origin: *</code> 表示允许任意源。⚠️ <strong>生产环境不要用 <code>*</code></strong>，应收窄到你信任的具体域名，否则任何网站都能调你的 API。</li>
+<li><strong>预检（preflight）</strong>：浏览器发跨域“非简单请求“（比如带 JSON body 的 POST）前，会先自动发一个 <code>OPTIONS</code> 请求“问路“。我们检测到 <code>OPTIONS</code> 就直接回 <code>204</code> 表示允许，不必往下走业务逻辑。</li>
+<li>💡 真实项目请用成熟的 <a href="https://www.npmjs.com/package/cors"><code>cors</code></a> 包，功能更全。这里手写只为让你看清 CORS 的本质——不过是几个响应头的约定。</li>
+</ul>
+<p>最关键的<strong>统一错误处理中间件</strong>：</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/middleware/errorHandler.ts
+import type { Request, Response, NextFunction } from "express";
+import { HttpError, ValidationError } from "../errors.js";
+
+export function errorHandler(
+  err: unknown,
+  _req: Request,
+  res: Response,
+  _next: NextFunction, // 必须声明第 4 个参数，否则 Express 不把它当错误处理器
+): void {
+  if (err instanceof ValidationError) {
+    res.status(err.status).json({ error: err.message, details: err.details });
+    return;
+  }
+  if (err instanceof HttpError) {
+    res.status(err.status).json({ error: err.message });
+    return;
+  }
+  console.error("未处理的错误:", err);          // 未预期错误：打日志
+  res.status(500).json({ error: "服务器内部错误" }); // 不泄露内部细节
+}
+
+export function notFoundHandler(_req: Request, res: Response): void {
+  res.status(404).json({ error: "Not Found：请求的路径不存在" });
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>错误处理中间件的“魔法特征“是它有 4 个参数 <code>(err, req, res, next)</code></strong>。Express 靠“参数个数是否为 4“来识别它。⚠️ 即使你用不到 <code>next</code>，也<strong>必须</strong>把它写在签名里（哪怕加下划线前缀表示不用），否则 Express 会把它当成普通中间件，永远收不到错误。</li>
+<li>只有当某个中间件/路由<strong>抛出异常</strong>或<strong>调用 <code>next(err)</code></strong> 时，Express 才会跳过后续普通中间件，直接进到错误处理中间件。</li>
+<li>处理逻辑分三档：<code>ValidationError</code> → 400 带 <code>details</code>；其它 <code>HttpError</code>（如 <code>NotFoundError</code>）→ 用它自带的 <code>status</code> 和 <code>message</code>；<strong>兜底</strong> → 未预期的异常打到服务器日志、给客户端回 <code>500</code> 但<strong>不暴露内部堆栈</strong>（暴露堆栈是安全隐患）。</li>
+<li><code>notFoundHandler</code> 是“路径没匹配上“的兜底，注册在所有业务路由之后。它和错误处理器的区别：这个处理“路由没命中“，那个处理“处理过程中抛了错“。</li>
+</ul>
+<p>📌 <strong>“统一错误处理“为什么重要？</strong> 没有它，你得在<strong>每一个</strong>路由里写 <code>try/catch</code>，重复且容易漏。有了它，业务代码只管“正常流程 + 该抛错时抛错”，所有错误自动汇聚到一处转成规范响应。这是 Express 中间件机制最漂亮的应用之一。</p>
+<h3 id="请求校验"><a class="header" href="#请求校验">请求校验</a></h3>
+<p>外部传进来的 body 是不可信的 <code>unknown</code>，必须校验后才能当作可信类型使用（呼应第 18 章“在边界收窄“的思想）。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/validation.ts（节选：创建校验）
+import { ValidationError } from "./errors.js";
+import type { CreateTaskInput } from "./types.js";
+
+function isPlainObject(value: unknown): value is Record&lt;string, unknown&gt; {
+  return typeof value === "object" &amp;&amp; value !== null &amp;&amp; !Array.isArray(value);
+}
+
+export function parseCreateTask(body: unknown): CreateTaskInput {
+  const errors: string[] = [];
+  if (!isPlainObject(body)) throw new ValidationError(["请求体必须是一个 JSON 对象"]);
+
+  const { title, done } = body;
+  if (typeof title !== "string" || title.trim() === "") {
+    errors.push("title 必填，且必须是非空字符串");
+  } else if (title.length &gt; 200) {
+    errors.push("title 长度不能超过 200 个字符");
+  }
+  if (done !== undefined &amp;&amp; typeof done !== "boolean") {
+    errors.push("done 如果提供，必须是布尔值");
+  }
+  if (errors.length &gt; 0) throw new ValidationError(errors);
+
+  return { title: (title as string).trim(), done: done as boolean | undefined };
+}
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>isPlainObject</code> 是一个<strong>类型守卫（type guard，第 18 章）</strong>：返回类型 <code>value is Record&lt;string, unknown&gt;</code>，校验通过后 TS 就知道 <code>value</code> 是对象，能安全解构。注意排除了 <code>null</code> 和数组（它们 <code>typeof</code> 也是 <code>"object"</code>）。</li>
+<li>校验策略是<strong>收集所有错误</strong>再一次性抛出，而不是遇到第一个错就返回——这样客户端一次就能看到所有问题，体验更好。</li>
+<li>每条规则都很朴素：<code>title</code> 必须是非空字符串且不超长；<code>done</code> 若提供必须是布尔。这就是“手写校验“，逻辑清晰、零依赖。</li>
+<li>校验全过后，返回一个类型为 <code>CreateTaskInput</code> 的<strong>可信对象</strong>（顺手 <code>trim</code> 了 title）。此后 service 层拿到的就是干净数据，无需再防。</li>
+<li><code>parseUpdateTask</code>（完整文件里）逻辑类似，额外规定“PATCH 至少要传 title 或 done 之一“，否则这个 PATCH 毫无意义。</li>
+</ul>
+<p>💡 真实项目常用 <a href="https://zod.dev/"><code>zod</code></a> 这类校验库来声明式地定义 schema，能自动推导类型、生成错误信息。手写校验是为了让你看清底层在做什么；学有余力可以把这里换成 zod 练手。</p>
+<h3 id="路由层把-http-和业务粘起来"><a class="header" href="#路由层把-http-和业务粘起来">路由层：把 HTTP 和业务粘起来</a></h3>
+<p>路由层是最上面一层，只负责“HTTP 进出“：从 <code>req</code> 取参数、调 service、把结果写进 <code>res</code>。用 <code>express.Router()</code> 把 <code>/tasks</code> 相关路由封装成独立模块。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/routes/tasks.ts
+import { Router } from "express";
+import type { Request, Response } from "express";
+import { taskService } from "../services/taskService.js";
+import { parseCreateTask, parseUpdateTask } from "../validation.js";
+
+export const tasksRouter = Router();
+
+function parseListQuery(req: Request) {
+  const { done, page, pageSize } = req.query;
+  let doneFilter: boolean | undefined;
+  if (done === "true") doneFilter = true;
+  else if (done === "false") doneFilter = false;
+  const pageNum = Math.max(1, Number.parseInt(String(page ?? "1"), 10) || 1);
+  const sizeNum = Math.min(100, Math.max(1, Number.parseInt(String(pageSize ?? "10"), 10) || 10));
+  return { done: doneFilter, page: pageNum, pageSize: sizeNum };
+}
+
+tasksRouter.get("/", (req: Request, res: Response) =&gt; {
+  res.status(200).json(taskService.list(parseListQuery(req)));
+});
+
+tasksRouter.get("/:id", (req: Request, res: Response) =&gt; {
+  res.status(200).json(taskService.getById(req.params.id));
+});
+
+tasksRouter.post("/", (req: Request, res: Response) =&gt; {
+  const created = taskService.create(parseCreateTask(req.body));
+  res.setHeader("Location", `/tasks/${created.id}`); // 指向新资源
+  res.status(201).json(created);
+});
+
+tasksRouter.patch("/:id", (req: Request, res: Response) =&gt; {
+  const updated = taskService.update(req.params.id, parseUpdateTask(req.body));
+  res.status(200).json(updated);
+});
+
+tasksRouter.delete("/:id", (req: Request, res: Response) =&gt; {
+  taskService.remove(req.params.id);
+  res.status(204).end(); // 无响应体
+});
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><code>Router()</code> 创建一个“迷你 app“：你在它上面注册的路由，之后会被整体挂到某个前缀下。这让主应用文件保持干净，路由按资源分文件。</li>
+<li><code>parseListQuery</code> 专门处理查询参数的“脏活“。还记得吗——<strong>查询参数永远是字符串</strong>。所以 <code>done</code> 要跟字符串 <code>"true"</code>/<code>"false"</code> 比较；<code>page</code>/<code>pageSize</code> 要 <code>parseInt</code> 转数字，并做边界兜底（页码至少 1，每页 1~100）。这些防御让接口面对乱七八糟的输入也不会崩。</li>
+<li>每个路由都极薄：取参数 → 调 service → 写响应。<strong>没有 try/catch</strong>——因为校验和 service 抛出的错误会自动冒泡到统一错误处理中间件。这正是分层 + 统一错误处理带来的简洁。</li>
+<li>状态码严格遵守 REST 约定：查询/更新成功 <code>200</code>，创建成功 <code>201</code>（并用 <code>Location</code> 头指向新资源），删除成功 <code>204</code>（<code>res.end()</code> 不带 body）。</li>
+<li>⚠️ <strong>关于异步错误</strong>：本章的处理器都是<strong>同步</strong>的，同步抛的错 Express 4 能自动接住。但如果处理器是 <code>async</code> 的（第 24 章接数据库后就是），<code>async</code> 函数里 <code>await</code> 抛的错 Express 4 <strong>不会</strong>自动接——你得手动 <code>try/catch</code> 后 <code>next(err)</code>，或用一个 <code>asyncHandler</code> 包裹器。这个坑我们留到第 24 章处理真实异步时再展开。</li>
+</ul>
+<h3 id="组装app-与-server"><a class="header" href="#组装app-与-server">组装：app 与 server</a></h3>
+<p>最后把所有部件拼起来。刻意把“创建 app“和“监听端口“分成两个文件——这样测试能只 import <code>app</code> 而不真的占用端口。</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/app.ts
+import express from "express";
+import { requestLogger } from "./middleware/logger.js";
+import { simpleCors } from "./middleware/cors.js";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { tasksRouter } from "./routes/tasks.js";
+
+export function createApp() {
+  const app = express();
+
+  // —— 全局中间件，注册顺序 = 执行顺序 ——
+  app.use(simpleCors);       // 1) CORS 尽早，好让预检快速返回
+  app.use(requestLogger);    // 2) 日志
+  app.use(express.json());   // 3) 解析 JSON body → req.body
+
+  app.get("/health", (_req, res) =&gt; res.status(200).json({ status: "ok" }));
+
+  app.use("/tasks", tasksRouter); // 把 router 挂到 /tasks 前缀下
+
+  // —— 收尾：404 与统一错误处理，必须放在最后 ——
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+  return app;
+}
+</code></pre>
+<pre><code class="language-typescript">// 文件：code/ch23/api/src/server.ts
+import { createApp } from "./app.js";
+
+const app = createApp();
+const PORT = Number(process.env.PORT ?? 3000);
+app.listen(PORT, () =&gt; {
+  console.log(`任务 API 已启动：http://localhost:${PORT}`);
+});
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li><strong>中间件注册顺序反映流水线顺序</strong>：CORS → 日志 → JSON 解析 → 路由 → 404 → 错误处理。这个顺序不是随意的：CORS 要最早（好处理预检）；<code>express.json()</code> 必须在路由<strong>之前</strong>（否则路由里 <code>req.body</code> 是空的）；<code>notFoundHandler</code> 和 <code>errorHandler</code> 必须在<strong>最后</strong>（前者兜没命中的路径，后者兜所有抛出的错）。</li>
+<li><code>app.use("/tasks", tasksRouter)</code>：把 router **挂载（mount）**到 <code>/tasks</code> 前缀。于是 router 里写的 <code>"/"</code> 实际对应 <code>/tasks</code>，<code>"/:id"</code> 对应 <code>/tasks/:id</code>。前缀在这里统一加，router 内部不用重复写。</li>
+<li><code>createApp()</code> 返回配好的 app 但<strong>不监听</strong>；<code>server.ts</code> 才 <code>listen</code>。这个拆分让 <code>scripts/smoke.ts</code> 能 <code>import { createApp }</code> 后自己控制端口，方便测试（这正是 <code>supertest</code> 的核心思路）。</li>
+<li><code>process.env.PORT ?? 3000</code> 让端口可通过环境变量配置——配置从环境读，是第 24 章的重要主题。</li>
+</ul>
+<p>启动它：</p>
+<pre><code class="language-bash">cd code/ch23/api
+npm install     # 首次运行前必须
+npx tsx src/server.ts
+</code></pre>
+<p>看到 <code>任务 API 已启动：http://localhost:3000</code> 就说明服务跑起来了。</p>
+<hr>
+<h2 id="测试-apicurl-与冒烟脚本"><a class="header" href="#测试-apicurl-与冒烟脚本">测试 API：curl 与冒烟脚本</a></h2>
+<p>服务跑起来后，怎么验证它对不对？两种方式。</p>
+<h3 id="方式一curl-手动打"><a class="header" href="#方式一curl-手动打">方式一：curl 手动打</a></h3>
+<p><code>curl</code> 是命令行 HTTP 客户端，最适合手动摸接口。<code>-i</code> 显示响应头（含状态码），<code>-X</code> 指定方法，<code>-H</code> 加请求头，<code>-d</code> 带 body。</p>
+<pre><code class="language-bash"># 1) 创建一个任务
+curl -i -X POST http://localhost:3000/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title":"买牛奶"}'
+</code></pre>
+<p>预期响应 <code>201 Created</code>：</p>
+<pre><code class="language-http">HTTP/1.1 201 Created
+Location: /tasks/…uuid…
+Content-Type: application/json; charset=utf-8
+
+{"id":"…uuid…","title":"买牛奶","done":false,"createdAt":"2026-07-02T08:00:00.000Z"}
+</code></pre>
+<pre><code class="language-bash"># 2) 校验失败：空 title → 400，带 details
+curl -i -X POST http://localhost:3000/tasks \
+  -H "Content-Type: application/json" -d '{"title":""}'
+# → 400 {"error":"请求校验失败","details":["title 必填，且必须是非空字符串"]}
+
+# 3) 列表（支持筛选与分页）
+curl "http://localhost:3000/tasks"
+curl "http://localhost:3000/tasks?done=false&amp;page=1&amp;pageSize=5"
+# → {"items":[…],"page":1,"pageSize":5,"total":1}
+
+# 4) 查询单个（把上面返回的 id 填进去）
+curl http://localhost:3000/tasks/&lt;id&gt;          # → 200 + 任务对象
+curl -i http://localhost:3000/tasks/not-exist  # → 404
+
+# 5) 局部更新：标记完成
+curl -X PATCH http://localhost:3000/tasks/&lt;id&gt; \
+  -H "Content-Type: application/json" -d '{"done":true}'
+# → 200 + 更新后的任务
+
+# 6) 删除
+curl -i -X DELETE http://localhost:3000/tasks/&lt;id&gt;  # → 204 No Content
+</code></pre>
+<p>逐段拆解：把这六步跑一遍，你就完整验证了 CRUD（增查改删）全流程，以及校验失败（400）和资源不存在（404）两条错误路径。注意观察状态码——它们精确对应了我们在 REST 小节定的约定。</p>
+<h3 id="方式二冒烟脚本supertest-思想"><a class="header" href="#方式二冒烟脚本supertest-思想">方式二：冒烟脚本（supertest 思想）</a></h3>
+<p>手动 curl 适合探索，但每次改代码都手打一遍太累。更好的做法是<strong>用代码把整套流程跑一遍并自动断言</strong>——这就是 <a href="https://www.npmjs.com/package/supertest"><code>supertest</code></a> 这类库的思路。我们不引入新依赖，直接用 Node 内置的 <code>fetch</code> 写一个冒烟脚本：</p>
+<pre><code class="language-typescript">// 文件：code/ch23/api/scripts/smoke.ts（节选）
+import { createApp } from "../src/app.js";
+
+const app = createApp();
+// 监听随机端口（0 = 系统分配），拿到端口后用 fetch 打自己
+const server = await new Promise&lt;import("node:http").Server&gt;((resolve) =&gt; {
+  const s = app.listen(0, () =&gt; resolve(s));
+});
+const addr = server.address();
+const port = typeof addr === "object" &amp;&amp; addr ? addr.port : 3000;
+const base = `http://localhost:${port}`;
+
+let res = await fetch(`${base}/tasks`);
+assert(res.status === 200, "GET /tasks → 200");
+// …依次测创建、校验、查询、更新、筛选、删除，最后 server.close()
+</code></pre>
+<p>逐段拆解：</p>
+<ul>
+<li>关键技巧：<code>import { createApp }</code> 拿到 app，用 <code>app.listen(0)</code> 让系统<strong>随机分配一个空闲端口</strong>，避免和别的进程抢 3000。拿到实际端口后，用 <code>fetch</code> 打这个地址。</li>
+<li>因为 <code>createApp</code> 和 <code>listen</code> 是分开的，测试能完全掌控 app 的生命周期——起服务、跑断言、关服务。这就是前面刻意拆分 <code>app.ts</code>/<code>server.ts</code> 的回报。</li>
+<li>每步 <code>assert</code> 检查状态码和响应内容，任何一步不符就抛错、脚本非零退出。这本质上是一个“集成测试“。</li>
+</ul>
+<p>运行：</p>
+<pre><code class="language-bash">cd code/ch23/api
+npm install
+npm run smoke
+</code></pre>
+<p>全绿输出 <code>全部冒烟测试通过 ✅</code> 就说明八条路径（空列表、创建、校验失败、查询、404、更新、筛选、删除）全部符合预期。</p>
+<p>💡 把这个脚本接进第 22 章学的测试框架（如 Vitest + supertest），就是标准的<strong>API 集成测试</strong>了。本章用手写脚本，是为了不引入新概念、聚焦于 Express 本身。</p>
+<hr>
+<h2 id="常见坑与最佳实践"><a class="header" href="#常见坑与最佳实践">常见坑与最佳实践</a></h2>
+<ul>
+<li>⚠️ <strong>忘了 <code>app.use(express.json())</code>，<code>req.body</code> 是 <code>undefined</code>。</strong> 这是新手第一大坑。Express 默认不解析 body，必须显式挂上解析中间件，且要挂在用到 <code>req.body</code> 的路由<strong>之前</strong>。</li>
+<li>⚠️ <strong>查询参数永远是字符串。</strong> <code>?done=true</code> 里 <code>req.query.done</code> 是 <code>"true"</code> 不是 <code>true</code>；<code>?page=2</code> 是 <code>"2"</code> 不是 <code>2</code>。当布尔/数字用之前必须手动转换并做边界防御。</li>
+<li>⚠️ <strong>中间件忘了 <code>next()</code>。</strong> 观察型中间件（日志、CORS 放行）如果忘了调 <code>next()</code> 又没结束响应，请求会卡到超时。写完中间件先问自己：“我放行了吗？”</li>
+<li>⚠️ <strong>错误处理中间件必须有 4 个参数。</strong> 少写一个 <code>next</code>，Express 就不认它是错误处理器。而且它必须注册在所有路由<strong>之后</strong>。</li>
+<li>⚠️ <strong>Express 4 不自动接 async 错误。</strong> 同步抛错能接住，但 <code>async</code> 处理器里 <code>await</code> 抛的错默认会“漏掉“。接数据库（第 24 章）后处理器变异步，务必用 <code>try/catch + next(err)</code> 或 <code>asyncHandler</code> 包裹。（Express 5 已改进这一点。）</li>
+<li>⚠️ <strong>别在 5xx 里泄露内部细节。</strong> 未预期错误给客户端回笼统的 <code>500 服务器内部错误</code>，具体堆栈只打到服务器日志。暴露堆栈会泄露代码结构，是安全隐患。</li>
+<li>📌 <strong>状态码要用对。</strong> 客户端错误（校验失败）是 4xx 不是 5xx；创建用 201、删除用 204。状态码是 API 的“第一语言“，用错会误导调用方。</li>
+<li>📌 <strong>分层不是过度设计。</strong> 哪怕内存 store 只有几行，把它单独分层的价值会在第 24 章换数据库时兑现——上层几乎不用改。</li>
+<li>💡 <strong>CORS 生产别用 <code>*</code>。</strong> 把 <code>Access-Control-Allow-Origin</code> 收窄到你信任的域名。开发用成熟的 <code>cors</code> 包而非手写。</li>
+<li>💡 <strong>校验放在最外层（路由入口）。</strong> 让不可信数据在进入 service 前就被拦下，service 及以下各层拿到的永远是干净数据。</li>
+</ul>
+<hr>
+<h2 id="本章小项目任务管理-rest-api"><a class="header" href="#本章小项目任务管理-rest-api">本章小项目：任务管理 REST API</a></h2>
+<p>前面的代码其实已经把小项目讲完了——它就是 <code>code/ch23/api/</code> 这个完整、可运行、分层清晰的子项目。这里把它作为一个整体回顾一遍，帮你建立“全景图“。</p>
+<p><strong>目标</strong>：用 Express + TypeScript 实现任务（Task）管理 REST API，含 <code>GET /tasks</code>（<code>?done=</code> 筛选 + 分页）、<code>GET /tasks/:id</code>、<code>POST /tasks</code>（带校验）、<code>PATCH /tasks/:id</code>、<code>DELETE /tasks/:id</code>，数据存内存。</p>
+<p><strong>分层与文件</strong>：</p>
+<pre><code>src/
+  server.ts               入口：createApp() 后 listen
+  app.ts                  组装：中间件流水线 + 路由挂载 + 错误收口
+  types.ts                Task 及输入类型
+  errors.ts               HttpError / NotFoundError / ValidationError
+  validation.ts           parseCreateTask / parseUpdateTask（手写校验）
+  routes/tasks.ts         路由层（express.Router，只做 HTTP 进出）
+  services/taskService.ts 业务层（筛选/分页/找不到就 404）
+  store/taskStore.ts      数据层（内存数组，第 24 章换数据库）
+  middleware/
+    logger.ts             请求日志
+    cors.ts               极简 CORS
+    errorHandler.ts       统一错误处理 + 404 兜底
+scripts/smoke.ts          冒烟测试（supertest 思想）
+</code></pre>
+<p><strong>一个请求的完整旅程</strong>（以 <code>POST /tasks</code> 为例，把全章串起来）：</p>
+<ol>
+<li>请求进入 → <code>simpleCors</code> 加 CORS 头 → <code>requestLogger</code> 记下起点 → <code>express.json()</code> 把 body 解析进 <code>req.body</code>。</li>
+<li>匹配到 <code>tasksRouter</code> 的 <code>POST /</code>。处理器调 <code>parseCreateTask(req.body)</code> 校验：不合法就 <code>throw ValidationError</code>，直接跳到错误中间件回 400。</li>
+<li>校验通过 → 调 <code>taskService.create(input)</code> → service 调 <code>taskStore.create(...)</code> 往内存数组里塞一条、生成 id 和时间戳。</li>
+<li>处理器设 <code>Location</code> 头、<code>res.status(201).json(created)</code> 返回新资源。</li>
+<li>响应发出，<code>res</code> 触发 <code>"finish"</code>，<code>requestLogger</code> 打印 <code>POST /tasks → 201 (xms)</code>。</li>
+</ol>
+<p><strong>运行与验证</strong>：</p>
+<pre><code class="language-bash">cd code/ch23/api
+npm install
+npx tsx src/server.ts      # 启动
+# 另开终端用上一节的 curl 命令逐个验证
+npm run smoke              # 或一键跑完整冒烟测试
+npm run typecheck          # tsc --noEmit，确认类型全绿
+</code></pre>
+<p>这个项目为后续两章打了地基：<strong>第 24 章</strong>把 <code>store/taskStore.ts</code> 换成真正的数据库、把端口等配置从环境变量读入，而 route 和 service 几乎不动；<strong>第 26 章</strong>的综合项目会在这套骨架上继续叠加功能。</p>
+<hr>
+<h2 id="小结与自测"><a class="header" href="#小结与自测">小结与自测</a></h2>
+<p>这一章我们完成了从“写脚本“到“写服务“的跨越：</p>
+<ul>
+<li><strong>HTTP 骨架</strong>：请求/响应、方法、状态码、headers、body、JSON，是所有后端沟通的公共语言。</li>
+<li><strong>底层原理</strong>：用 <code>node:http</code> 手写服务器，看清“路由是 if、body 是流、JSON 要自己 parse“——框架只是把这些封装好。</li>
+<li><strong>REST 风格</strong>：资源用名词、方法表意图、无状态、善用状态码与幂等性，本质是“降低惊讶“的一致性约定。</li>
+<li><strong>Express 核心</strong>：<code>app</code>/路由/<code>req</code>/<code>res</code>，以及灵魂——<strong>中间件流水线</strong>（顺序即执行序，<code>next()</code> 是传送带）。</li>
+<li><strong>工程化</strong>：用 TS + <code>@types/express</code> 分层组织（route→service→store + 中间件），手写校验、统一错误处理、请求日志、CORS，并用 curl 和冒烟脚本验证。</li>
+</ul>
+<p>自测题（先自己答，再回代码里印证）：</p>
+<ol>
+<li><code>POST</code> 和 <code>PUT</code> 谁是幂等的？为什么？删除同一资源两次应该分别返回什么状态码比较合理？</li>
+<li>不写 <code>app.use(express.json())</code> 会怎样？为什么它必须注册在路由之前？</li>
+<li>Express 靠什么识别“错误处理中间件“？它必须注册在什么位置？</li>
+<li><code>req.params</code>、<code>req.query</code>、<code>req.body</code> 分别对应 URL 的哪一部分？其中哪个的值“永远是字符串“？</li>
+<li>为什么把“创建 app“和“监听端口“拆成两个文件？这对测试有什么好处？</li>
+<li>我们把“找不到就返回 404“这条规则放在了哪一层（route/service/store）？为什么放这里而不是别处？</li>
+<li>（挑战）如果把某个路由处理器改成 <code>async</code> 并在里面 <code>await</code> 一个会 reject 的操作，当前的错误中间件还能接住吗？该怎么补救？</li>
+</ol>
+<p>答完这些，你就真正掌握了用 Node + Express + TypeScript 写 REST API 的核心。<strong>下一章（第 24 章 · 数据持久化与配置管理）</strong>，我们要解决本章遗留的两大“不体面“：数据存内存一重启就没、配置写死在代码里。我们会把 <code>taskStore</code> 接到真正的数据库、把端口/连接串等配置规范地从环境变量与配置文件读入——你会亲眼看到，正因为本章分好了层，这些改动几乎不会波及 route 和 service。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch22.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch24.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch22.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch24.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
